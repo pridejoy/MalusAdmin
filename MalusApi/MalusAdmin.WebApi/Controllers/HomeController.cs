@@ -1,14 +1,26 @@
 ﻿using System.Reflection;
 using MalusAdmin.Common;
+using MalusAdmin.Servers.WeatherForecast;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MalusAdmin.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
+    /// <summary>
+    /// 测试控制器
+    /// </summary>
     public class HomeController : ApiControllerBase
     {
+        public IWeatherForecastService _IweatherForecastService;
+        public HomeController(IWeatherForecastService IweatherForecastService) 
+        { 
+            _IweatherForecastService = IweatherForecastService;
+        } 
+        /// <summary>
+        /// 统一返回
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public ApiResult<string> Index()
@@ -16,34 +28,15 @@ namespace MalusAdmin.WebApi.Controllers
             return SuccessResult("string");
         }
 
-        [HttpPost]
-        public string Two()
-        {
-
-
-            var allowAnonymousEndpoints = new List<string>();
-            // 获取程序集中的所有控制器类型
-            var controllerTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(type => type.IsSubclassOf(typeof(Controller)) && !type.IsAbstract);
-            // 遍历所有控制器和动作方法
-            foreach (var controllerType in controllerTypes)
-            {
-                var controllerActions = controllerType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(method => method.DeclaringType == controllerType && method.GetCustomAttribute<NonActionAttribute>() == null);
-                foreach (var action in controllerActions)
-                {
-                    // 检查动作方法或控制器类是否标记有[AllowAnonymous]特性
-                    if (action.GetCustomAttribute<AllowAnonymousAttribute>() != null || controllerType.GetCustomAttribute<AllowAnonymousAttribute>() != null)
-                    {
-                        // 构造动作方法的URL模板
-                        var selector = controllerType.Name + "." + action.Name;
-                        allowAnonymousEndpoints.Add(selector);
-                    }
-                }
-            }
-
-            return "";
+        /// <summary>
+        /// 查询天气情况
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost] 
+        public  async Task<ApiResult<IEnumerable<WeatherForecast>>> WeatherForecastGet()
+        { 
+            var A= await _IweatherForecastService.Get();
+            return SuccessResult(A);
         }
         
     }
