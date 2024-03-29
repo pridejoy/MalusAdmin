@@ -26,7 +26,7 @@ namespace MalusAdmin.WebApi
                 options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 options.Filters.Add<RequestActionFilter>();
-            })
+            }) 
             // 配置Api行为选项
             .ConfigureApiBehaviorOptions(options =>
             {
@@ -57,7 +57,7 @@ namespace MalusAdmin.WebApi
             // 替换默认 PermissionChecker
             //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
 
-
+ 
             //Token
             builder.Services.AddSingleton<ITokenService, GuidTokenService>();
 
@@ -96,6 +96,11 @@ namespace MalusAdmin.WebApi
 
                 });
             }
+
+
+            //Token验证
+            app.UseMiddleware<CheckToken>();
+
 
             app.UseHttpsRedirection();
             // UseCors 必须在 UseRouting 之后，UseResponseCaching、UseAuthorization 之前

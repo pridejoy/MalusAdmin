@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,5 +25,19 @@ public static class EnumHelper
             descriptions[value] = attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
         return descriptions;
+    }
+
+    public static string GetDescription(Enum value)
+    {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+
+        FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
+
+        DescriptionAttribute attribute = Attribute.GetCustomAttribute(fieldInfo, typeof(DescriptionAttribute)) as DescriptionAttribute;
+
+        return attribute == null ? value.ToString() : attribute.Description;
     }
 }

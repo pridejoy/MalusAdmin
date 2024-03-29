@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MalusAdmin.Common\MalusAdmin.Common.csproj" />
     <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
     <ProjectReference Include="..\MalusAdmin.Servers\MalusAdmin.Servers.csproj" />

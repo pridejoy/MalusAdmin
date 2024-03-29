@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MalusAdmin.Common.Components.Cache;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,22 +21,13 @@ namespace MalusAdmin.Common
             // 根据情况，启用 Redis 或 DistributedMemoryCache
             if (AppSettings.Redis.Enabled)
             {
-                services.AddStackExchangeRedisCache(options =>
-                {
-                    options.Configuration = AppSettings.Redis.ConnectionString;
-                    options.InstanceName = AppSettings.Redis.Instance;
-                });
+                services.AddSingleton<ICacheService, RedisCacheService>();
             }
             else
             {
-                services.AddDistributedMemoryCache();
+                services.AddSingleton<ICacheService, MemoryCacheService>();
             }
-            //更多的缓存实现方式
-            
-
-            //
-            var cache = services.BuildServiceProvider().GetService<IDistributedCache>();
-            if (cache != null) CacheHelper.Configure(cache);
+            //更多的缓存实现方式 
             return services;
         }
 

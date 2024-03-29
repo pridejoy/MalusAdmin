@@ -36,8 +36,9 @@ public static class AppSettings
         }
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     }
-     
-    #region 以下存放的全部都是静态配置
+
+    #region 以下存放的全部都是静态配置 
+
     /// <summary>
     /// 允许跨域请求列表
     /// </summary>

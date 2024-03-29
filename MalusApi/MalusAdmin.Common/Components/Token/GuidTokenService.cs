@@ -10,29 +10,33 @@ namespace MalusAdmin.Common
 {
     public class GuidTokenService : ITokenService
     {
-      
-        static string tokenTag = App.AppSettings.System.TokenTag;
-        static int expiresTime = App.AppSettings.GuidToken.ExpiresTime;
-        static string checkKey = App.StaticData.CacheKey_CheckToken;
+        readonly ICacheService _cacheService;
+        public GuidTokenService(ICacheService cacheService)
+        {
+            _cacheService = cacheService;
+        }
+        static string tokenTag = "token";
+        static int expiresTime = 60;
+        static string checkKey = "CheckToken_";
         private string GetToken(HttpContext httpContext)
         {
             if (httpContext == null) throw new SystemException("参数错误");
             return httpContext.Request.Headers[tokenTag];
         }
 
-        public async bool CheckToken(HttpContext httpContext)
+        public bool CheckToken(HttpContext httpContext)
         {
             string token = GetToken(httpContext);
             if (string.IsNullOrWhiteSpace(token))
             {
                 return false;
             }
-            TokenData tokenData = CacheHelper.GetObjectAsync<TokenData>(token);
+            TokenData tokenData = _cacheService.Get<TokenData>(token);
             if (tokenData == null)
             {
                 return false;
             }
-            if (await CacheHelper.Exists(checkKey + tokenData.UserId))
+            if (_cacheService.Exists(checkKey + tokenData.UserId))
             {
                 return false;
             }
@@ -41,7 +45,7 @@ namespace MalusAdmin.Common
         public string GenerateToken(HttpContext httpContext, TokenData tokenData)
         {
             string token = Guid.NewGuid().ToString("N");
-            CacheHelper.SetAsync(token, tokenData, new TimeSpan(0, expiresTime, 0));
+            _cacheService.Add(token, tokenData, new TimeSpan(0, expiresTime, 0));
             return token;
         }
 
