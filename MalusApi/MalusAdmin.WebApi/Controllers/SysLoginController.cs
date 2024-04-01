@@ -24,7 +24,17 @@ namespace MalusAdmin.WebApi.Controllers
         public async Task<JsonR> Login(SysUserLoginIn input)
         { 
             return ResultCode.Success.JsonR(await _sysUserService.Login(input));
-        } 
+        }
 
+
+        /// <summary>
+        /// 获取登录用户的信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<JsonR> GetUserInfo()
+        {
+            return ResultCode.Success.JsonR(await _sysUserService.GetUserInfo());
+        }
     }
 }

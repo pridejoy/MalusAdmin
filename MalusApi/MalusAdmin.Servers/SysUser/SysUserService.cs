@@ -78,6 +78,7 @@ namespace MalusAdmin.Servers
             return new SysUserLoginOut() { Id=user.Id,Name=user.Name,Token=UserToken };
         }
 
+         
         /// <summary>
         /// 获取登录用户的路由信息
         /// </summary>
@@ -102,6 +103,14 @@ namespace MalusAdmin.Servers
             return true;
         }
 
-         
+        /// <summary>
+        /// 获取用户的信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<GetUserInfoOut> GetUserInfo()
+        {
+
+            return new GetUserInfoOut();
+        }
     }
 }

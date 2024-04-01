@@ -6,13 +6,13 @@ import { request } from '../request';
  * @param userName User name
  * @param password Password
  */
-export function fetchLogin(userName: string, password: string) {
+export function fetchLogin(account: string, passWord: string) {
   return request<any>({
-    url: '/auth/login',
+    url: '/SysLogin/Login',
     method: 'post',
     data: {
-      userName,
-      password
+      account,
+      passWord
     }
   });
 }

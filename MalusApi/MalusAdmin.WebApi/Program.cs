@@ -1,3 +1,4 @@
+using MalusAdmin.Common.Components.Token;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -55,20 +56,17 @@ namespace MalusAdmin.WebApi
             // 添加jwt认证
             //builder.Services.AddJwtSetup();
             // 添加自定义授权
-            //builder.Services.AddAuthorizationSetup();
+            builder.Services.AddAuthorizationSetup();
             // 替换默认 PermissionChecker
             //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-
- 
+             
             //Token
-            builder.Services.AddSingleton<ITokenService, GuidTokenService>();
+            builder.Services.AddSingleton<ITokenService, GuidTokenService>(); 
 
             // 添加跨域支持
             builder.Services.AddCorsSetup();
             // 添加EndpointsApiExplorer
-            builder.Services.AddEndpointsApiExplorer();
-
-
+            builder.Services.AddEndpointsApiExplorer(); 
 
             var app = builder.Build();
 
@@ -98,12 +96,10 @@ namespace MalusAdmin.WebApi
 
                 });
             }
-
-
+             
             //Token验证
             app.UseMiddleware<CheckToken>();
-
-
+             
             app.UseHttpsRedirection();
             // UseCors 必须在 UseRouting 之后，UseResponseCaching、UseAuthorization 之前
             app.UseCors();

@@ -15,13 +15,13 @@ namespace MalusAdmin.Common
         {
             _cacheService = cacheService;
         }
-        static string tokenTag = "token";
+        static string tokenTag = "Token";
         static int expiresTime = 60;
         static string checkKey = "CheckToken_";
         private string GetToken(HttpContext httpContext)
         {
             if (httpContext == null) throw new SystemException("参数错误");
-            return httpContext.Request.Headers[tokenTag];
+            return httpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ","");
         }
 
         public bool CheckToken(HttpContext httpContext)

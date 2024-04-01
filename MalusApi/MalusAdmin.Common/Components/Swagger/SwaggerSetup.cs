@@ -40,30 +40,27 @@ namespace MalusAdmin.Common
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
 
                 // api有"Authorize" 特性， header中添加 token 传递到后台
-                //options.OperationFilter<AuthenticationOperationFilter>();
+                options.OperationFilter<TokenOperationFilter>();
                 // 添加授权要求
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] {}
-                    }
-                });
+         
 
                 // 接入Jwt认证，swagger右上角加上手动可以添加token的按钮
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                //options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                //{
+                //    Scheme = "Bearer",
+                //    BearerFormat = "JWT",
+                //    Description = "在下面输入框输入Token,不用输入Bearer[空格] ",
+                //    Name = "Authorization",
+                //    In = ParameterLocation.Header,
+                //    Type = SecuritySchemeType.Http
+                //});
+
+                options.AddSecurityDefinition("Token", new OpenApiSecurityScheme
                 {
                     Scheme = "Bearer",
-                    BearerFormat = "JWT",
+                    BearerFormat = "Token",
                     Description = "在下面输入框输入Token,不用输入Bearer[空格] ",
-                    Name = "Authorization",
+                    Name = "Token",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http
                 });
