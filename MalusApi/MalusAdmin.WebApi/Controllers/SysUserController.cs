@@ -14,18 +14,16 @@ namespace MalusAdmin.WebApi.Controllers
         public SysUserController(SysUserService userService)
         {
             _sysUserService = userService;
-        }
-         
-
+        } 
 
         /// <summary>
         /// 获取用户登录的信息
         /// </summary>
         /// <returns></returns> 
         [HttpGet]
-        public async Task<ApiResult<SysUserLoginOut>> GetUserInfo(SysUserLoginIn input)
-        {
-            return SuccessResult<SysUserLoginOut>(await _sysUserService.Login(input));
+        public async Task<JsonR> GetUserInfo(SysUserLoginIn input)
+        { 
+            return ResultCode.Success.JsonR(await _sysUserService.GetUserInfo(input));
         }
 
 

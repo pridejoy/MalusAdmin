@@ -111,7 +111,7 @@ namespace MalusAdmin.WebApi
             // 使用身份验证
             app.UseAuthentication();
             // 然后是授权中间件
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             //使用静态文件
             app.UseStaticFiles();

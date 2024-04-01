@@ -11,12 +11,14 @@ namespace MalusAdmin.Servers
         /// <summary>
         ///登录账号
         /// </summary>
+        /// <example>admin</example>
         public String? Account { get; set; }
-         
+
 
         /// <summary>
         ///密码
         /// </summary>
+        /// <example>123456</example>
         public String? PassWord { get; set; }
     }
 }

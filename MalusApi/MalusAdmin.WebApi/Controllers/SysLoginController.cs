@@ -14,8 +14,7 @@ namespace MalusAdmin.WebApi.Controllers
         public SysLoginController(SysUserService userService)
         {
             _sysUserService = userService;
-        }
-         
+        } 
         /// <summary>
         /// 用户登录
         /// </summary>

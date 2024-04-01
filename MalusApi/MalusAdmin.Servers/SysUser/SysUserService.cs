@@ -28,6 +28,12 @@ namespace MalusAdmin.Servers
             _HttpContext = httpContext.HttpContext;
         }
 
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
         {  
             var user =await _db.Queryable<TSysUser>()
@@ -71,5 +77,31 @@ namespace MalusAdmin.Servers
 
             return new SysUserLoginOut() { Id=user.Id,Name=user.Name,Token=UserToken };
         }
+
+        /// <summary>
+        /// 获取登录用户的路由信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> GetUserRoute()
+        {
+            return true;
+        }
+
+
+        /// <summary>
+        /// 获取登录用户的按钮信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> GetUserBtns()
+        {
+
+            return true;
+        }
+
+         
     }
 }

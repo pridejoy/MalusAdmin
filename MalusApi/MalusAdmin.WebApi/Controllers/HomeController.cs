@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace MalusAdmin.WebApi.Controllers
 {
     /// <summary>
-    /// 测试控制器
+    /// 测试服务
     /// </summary>
+    [AllowAnonymous]
     public class HomeController : ApiControllerBase
     {
         public IWeatherForecastService _IweatherForecastService;
@@ -21,8 +22,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// 统一返回
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpGet] 
         public JsonR Index()
         {
             return ResultCode.Success.JsonR("string");
