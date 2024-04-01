@@ -16,11 +16,11 @@ namespace MalusAdmin.WebApi.Filter
         public void OnException(ExceptionContext context)
         {
             //异常返回结果包装
-            //var rspResult = ApiResult<object>.ErrorResult(context.Exception.Message);
+            var rspResult = ApiResult<object>.ErrorResult(context.Exception.Message);
             ////日志记录
             _logger.LogError(context.Exception, context.Exception.Message);
             context.ExceptionHandled = true;
-            //context.Result = new InternalServerErrorObjectResult(rspResult);
+            context.Result = new InternalServerErrorObjectResult(rspResult);
         }
 
         public class InternalServerErrorObjectResult : ObjectResult

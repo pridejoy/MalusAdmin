@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MalusAdmin.Common;
+using MalusAdmin.Encryption;
 using MalusAdmin.Entity;
 using MalusAdmin.Request;
 using MalusAdmin.Servers.SysUser.Dto;
+using Microsoft.AspNetCore.Http;
 using NetTaste;
 using SqlSugar;
 
 namespace MalusAdmin.Servers
 {
-    public class SysUserService: BaseServer
+    public class SysUserService
     {
         private readonly ISqlSugarClient _db;
+        private readonly ITokenService _TokenService;
+        private readonly HttpContext _HttpContext;
 
-        public SysUserService(ISqlSugarClient db)
+        public SysUserService(ISqlSugarClient db, ITokenService tokenService, IHttpContextAccessor httpContext)
         {
             _db = db;
+            _TokenService = tokenService;
+            _HttpContext = httpContext.HttpContext;
         }
 
         public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
@@ -26,7 +33,7 @@ namespace MalusAdmin.Servers
             var user =await _db.Queryable<TSysUser>()
                 .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
 
-            if (user.PassWord != input.PassWord)
+            if (user.PassWord != Md5Util.Encrypt(input.PassWord) )
             {  
               throw new Exception("密码输入错误");
             }
@@ -48,18 +55,18 @@ namespace MalusAdmin.Servers
             string UserToken = _TokenService.GenerateToken(_HttpContext, tokenData);
 
             #region 添加登录日志
-            TSysLoginLog sysLoginLog = new TSysLoginLog();
-            sysLoginLog.UserId = user.Id;
-            sysLoginLog.DeptId = user.DeptId;
-            sysLoginLog.IP = RequestInfoUtil.GetIp(_HttpContext);
-            sysLoginLog.IPInfo = RequestInfoUtil.GetIpInfo(sysLoginLog.IP).ToString();
-            sysLoginLog.UAStr = RequestInfoUtil.GetUserAgent(_HttpContext);
-            var UAInfo = RequestInfoUtil.GetUserAgentInfo(sysLoginLog.UAStr);
-            sysLoginLog.Browser = UAInfo.Browser;
-            sysLoginLog.OS = UAInfo.OS;
-            sysLoginLog.Device = UAInfo.Device;
+            //TSysLoginLog sysLoginLog = new TSysLoginLog();
+            //sysLoginLog.UserId = user.Id;
+            //sysLoginLog.DeptId = user.DeptId;
+            //sysLoginLog.IP = RequestInfoUtil.GetIp(_HttpContext);
+            //sysLoginLog.IPInfo = RequestInfoUtil.GetIpInfo(sysLoginLog.IP).ToString();
+            //sysLoginLog.UAStr = RequestInfoUtil.GetUserAgent(_HttpContext);
+            //var UAInfo = RequestInfoUtil.GetUserAgentInfo(sysLoginLog.UAStr);
+            //sysLoginLog.Browser = UAInfo.Browser;
+            //sysLoginLog.OS = UAInfo.OS;
+            //sysLoginLog.Device = UAInfo.Device;
 
-            await _db.Insertable(sysLoginLog).ExecuteCommandAsync();
+            //await _db.Insertable(sysLoginLog).ExecuteCommandAsync();
             #endregion
 
             return new SysUserLoginOut() { Id=user.Id,Name=user.Name,Token=UserToken };

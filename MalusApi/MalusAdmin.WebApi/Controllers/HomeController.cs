@@ -23,9 +23,9 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public ApiResult<string> Index()
+        public JsonR Index()
         {
-            return SuccessResult("string");
+            return ResultCode.Success.JsonR("string");
         }
 
         /// <summary>
@@ -33,10 +33,9 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost] 
-        public  async Task<ApiResult<IEnumerable<WeatherForecast>>> WeatherForecastGet()
-        { 
-            var A= await _IweatherForecastService.Get();
-            return SuccessResult(A);
+        public async Task<JsonR> WeatherForecastGet()
+        {  
+            return ResultCode.Success.JsonR(await _IweatherForecastService.Get());
         }
         
     }

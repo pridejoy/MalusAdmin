@@ -13,7 +13,7 @@
         {
             //Tode 自动获取allow的特性的接口
             //var IgnoreVerifyTokenPaths = AssemblyHelper.GetAllowAnonymousEndpoints();
-            var IgnoreVerifyTokenPaths = new string[] { "/Home" };
+            var IgnoreVerifyTokenPaths = new string[] { "/Home", "api/SysLogin/Login" };
 
             if (!IgnoreVerifyTokenPaths.ToList().Exists(s => context.Request.Path.ToString().Contains(s)))
             {

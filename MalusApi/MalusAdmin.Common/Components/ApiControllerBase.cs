@@ -10,23 +10,24 @@ using Microsoft.AspNetCore.Mvc;
 namespace MalusAdmin.Common
 {
     [ApiController]
-    [Route("api/[controller]")]
- 
+    [Route("api/[controller]/[action]")]
+    [Produces("application/json")] //返回数据的格式 直接约定为Json
+
     public class ApiControllerBase : ControllerBase
     {
 
         //public readonly ILogService _LogService;
-        public readonly ITokenService _TokenService;
-        public readonly ICacheService _CacheService;
-        public readonly HttpContext _HttpContext;
-        public ApiControllerBase(
-            ITokenService tokenService, ICacheService cacheService, HttpContext httpContext)
-        {
-            //_LogService = logService;
-            _TokenService = tokenService;
-            _CacheService = cacheService;
-            _HttpContext = httpContext;
-        }
+        //public readonly ITokenService _TokenService;
+        //public readonly ICacheService _CacheService;
+        //public readonly HttpContext _HttpContext;
+        //public ApiControllerBase(
+        //    ITokenService tokenService, ICacheService cacheService, HttpContext httpContext)
+        //{
+        //    //_LogService = logService;
+        //    _TokenService = tokenService;
+        //    _CacheService = cacheService;
+        //    _HttpContext = httpContext;
+        //}
         /// <summary>
         /// 成功状态返回结果
         /// </summary>

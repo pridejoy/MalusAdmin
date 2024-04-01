@@ -1,0 +1,31 @@
+﻿using MalusAdmin.Servers;
+using MalusAdmin.Servers.SysUser.Dto;
+using Microsoft.AspNetCore.Authorization;
+
+namespace MalusAdmin.WebApi.Controllers
+{
+    /// <summary>
+    /// 登录服务
+    /// </summary>
+    public class SysLoginController : ApiControllerBase
+    {
+        private readonly SysUserService _sysUserService;
+
+        public SysLoginController(SysUserService userService)
+        {
+            _sysUserService = userService;
+        }
+         
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<JsonR> Login(SysUserLoginIn input)
+        { 
+            return ResultCode.Success.JsonR(await _sysUserService.Login(input));
+        } 
+
+    }
+}

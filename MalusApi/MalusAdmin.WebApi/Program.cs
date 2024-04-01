@@ -18,6 +18,8 @@ namespace MalusAdmin.WebApi
             // »º´æ
             builder.Services.AddCacheSetup();
 
+            //HttpContext
+            builder.Services.AddHttpContextAccessor();
 
             // Ìí¼Ó¹ýÂËÆ÷
             builder.Services.AddControllers(options =>
@@ -66,7 +68,7 @@ namespace MalusAdmin.WebApi
             // Ìí¼ÓEndpointsApiExplorer
             builder.Services.AddEndpointsApiExplorer();
 
-             
+
 
             var app = builder.Build();
 

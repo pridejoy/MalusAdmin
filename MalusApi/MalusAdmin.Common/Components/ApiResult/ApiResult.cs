@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dm;
+using Mapster.Utils;
 
 namespace MalusAdmin.Common
 {
@@ -97,4 +99,82 @@ namespace MalusAdmin.Common
         [Description("请求异常")]
         Error = -1
     }
+
+    #region 接口返回的Json对象
+    /// <summary>
+    /// JsonR 接口返回的Json对象
+    /// </summary>
+    [Serializable]
+    public class JsonR
+    {
+        public JsonR()
+        {
+            code = -1;
+            message = string.Empty;
+            body = null;
+        }
+        /// <summary>
+        /// 返回码
+        /// </summary>
+        public int code { get; set; }
+        /// <summary>
+        /// 返回说明
+        /// </summary>
+        public string message { get; set; }
+        /// <summary>
+        /// 返回数据体 可为空
+        /// </summary>
+        public object body { get; set; }
+    }
+    #endregion
+
+    #region JsonR 接口返回的Json对象
+    [Serializable]
+    public class JsonR<T>
+    {
+        public JsonR()
+        {
+            code = -1;
+            message = string.Empty;
+            body = default(T);
+        }
+        /// <summary>
+        /// 返回码
+        /// </summary>
+        public int code { get; set; }
+        /// <summary>
+        /// 返回说明
+        /// </summary>
+        public string message { get; set; }
+        /// <summary>
+        /// 返回数据体 可为空
+        /// </summary>
+        public T body { get; set; }
+    }
+    #endregion
+    public static class Tools
+    {
+
+        #region //根据枚举返回对应的状态码
+        /// <summary>
+        /// 根据枚举返回对应的状态码
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="obj"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static JsonR JsonR(this Enum Code, object obj = null, string message = "")
+        { 
+            return new JsonR()
+            {
+                code = Code.GetHashCode(),
+                message = string.IsNullOrEmpty(message) ? EnumHelper.GetDescription(Code) : message,
+                body = obj
+            };
+        } 
+        #endregion
+    }
+
+
+
 }

@@ -24,4 +24,10 @@
 		<PackageReference Include="IPTools.China" Version="1.6.0" />
 
 	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Helper\Request\ip2region.db">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 </Project>
