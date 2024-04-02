@@ -13,5 +13,5 @@ global using Swashbuckle.AspNetCore.SwaggerUI;
 
 
 
-global  using MalusAdmin.Common;
+global using MalusAdmin.Common;
 global using MalusAdmin.WebApi.Filter;

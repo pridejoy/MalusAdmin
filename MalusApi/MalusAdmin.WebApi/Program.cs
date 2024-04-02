@@ -69,6 +69,10 @@ namespace MalusAdmin.WebApi
             builder.Services.AddEndpointsApiExplorer(); 
 
             var app = builder.Build();
+             
+            //写入静态类供全局获取
+            App.Instance = app.Services;
+            App.Configuration = builder.Configuration;
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -101,11 +105,14 @@ namespace MalusAdmin.WebApi
             app.UseMiddleware<CheckToken>();
              
             app.UseHttpsRedirection();
+
+            app.UseRouting();
             // UseCors 必须在 UseRouting 之后，UseResponseCaching、UseAuthorization 之前
             app.UseCors();
 
             // 使用身份验证
             app.UseAuthentication();
+
             // 然后是授权中间件
             app.UseAuthorization();
 

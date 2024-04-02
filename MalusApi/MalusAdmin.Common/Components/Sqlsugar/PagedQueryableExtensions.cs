@@ -85,3 +85,36 @@ public class SqlSugarPagedList<TEntity>
 public class PagedModel : SqlSugarPagedList<object>
 {
 }
+
+
+public class PageList<T>
+{
+    public int PageNo { get; set; }
+    public int PageSize { get; set; }
+    public int TotalPage { get; set; }
+    public int TotalRows { get; set; }
+    public IEnumerable<T> Rows { get; set; }
+}
+
+/// <summary>
+/// 小诺分页列表结果
+/// </summary>
+public static class PageResult
+{
+    /// <summary>
+    /// 替换sqlsugar分页
+    /// </summary>
+    /// <param name="page"></param>
+    /// <returns></returns>
+    public static PageList<T> PagedResult<T>(this SqlSugarPagedList<T> page)
+    {
+        return new PageList<T>
+        {
+            PageNo = page.PageIndex,
+            PageSize = page.PageSize,
+            TotalPage = page.TotalPages,
+            TotalRows = page.TotalCount,
+            Rows = page.Items
+        };
+    }
+}

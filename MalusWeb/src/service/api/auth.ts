@@ -1,4 +1,16 @@
-import { request } from '../request';
+import { request } from '../request/';
+
+import request2 from '../request/request';
+
+// 登录接口方法
+export const reqLogin = (account: string, passWord: string) => {
+  return request2.post<any, any>('api/SysLogin/Login', { account, passWord });
+};
+
+/** Get user info */
+export const GetUserInfo = () => {
+  return request2.get<any>('api/SysLogin/GetUserInfo');
+};
 
 /**
  * Login
@@ -29,7 +41,7 @@ export function fetchGetUserInfo() {
  */
 export function fetchRefreshToken(refreshToken: string) {
   return request<Api.Auth.LoginToken>({
-    url: '/auth/refreshToken',
+    url: 'api/auth/refreshToken',
     method: 'post',
     data: {
       refreshToken

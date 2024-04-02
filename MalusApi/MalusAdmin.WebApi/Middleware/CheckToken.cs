@@ -1,4 +1,7 @@
-﻿namespace MalusAdmin.WebApi
+﻿using System.Text;
+using Microsoft.AspNetCore.Http;
+
+namespace MalusAdmin.WebApi
 {
     public class CheckToken
     {
@@ -21,9 +24,11 @@
                 {
                     ITokenService tokenService = serviceScope.ServiceProvider.GetService<ITokenService>();
                     if (!tokenService.CheckToken(context))
-                    {
+                    { 
                         context.Response.StatusCode = 401;
-                        await context.Response.WriteAsync("登录已过期，请重新登录");
+                        context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                        var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
+                        await context.Response.WriteAsync(rspResult.ToJson());
                         return;
                     }
                     else

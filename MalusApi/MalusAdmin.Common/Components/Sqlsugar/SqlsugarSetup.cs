@@ -8,15 +8,12 @@ namespace MalusAdmin.Common
     public static class SqlsugarSetup
     {
         public static void AddSqlsugarSetup(this IServiceCollection services)
-        {
-
+        { 
             //注释这行，我是从本地文件读取的，下一行解除注释
             var ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
-
-
+             
             //数据库链接,修改配置里面的SqlServerConnection的字符串
-            //var ConnectionString= AppSettings.GetValue("SqlServerConnection");
-
+            //var ConnectionString= AppSettings.GetValue("SqlServerConnection"); 
 
             var configConnection = new ConnectionConfig
             {
@@ -55,14 +52,15 @@ namespace MalusAdmin.Common
                  
 
             };
-
-
-
+              
             //SqlSugarScope线程是安全的
             SqlSugarScope sqlSugar = new SqlSugarScope(configConnection, sqlclient);
 
             //这边是SqlSugarScope用AddSingleton
             services.AddSingleton<ISqlSugarClient>(sqlSugar);
+
+            // 注册 SqlSugar 仓储
+            services.AddScoped(typeof(SqlSugarRepository<>));
         }
 
     }

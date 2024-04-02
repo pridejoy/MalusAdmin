@@ -32,6 +32,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<JsonR> GetUserInfo()
         {
             return ResultCode.Success.JsonR(await _sysUserService.GetUserInfo());

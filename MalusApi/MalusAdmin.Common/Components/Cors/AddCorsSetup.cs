@@ -26,7 +26,9 @@ public static class CorsServiceCollectionExtensions
                 if (AppSettings.AllowCors.Any(c => c == "*"))
                 {
                     // 允许任意跨域
-                    policy.AllowAnyOrigin();
+                    policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 }
                 else
                 {

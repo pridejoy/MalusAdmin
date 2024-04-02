@@ -8,6 +8,8 @@ import { createServiceConfig } from '../../src/utils/service';
  * @param isDev - Is development environment
  */
 export function createViteProxy(env: Env.ImportMeta, isDev: boolean) {
+
+  console.log("服务器代理",env,isDev);
   const isEnableHttpProxy = isDev && env.VITE_HTTP_PROXY === 'Y';
 
   if (!isEnableHttpProxy) return undefined;

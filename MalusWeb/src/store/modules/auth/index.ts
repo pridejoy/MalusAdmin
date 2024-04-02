@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { useLoading } from '@sa/hooks';
 import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
-import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+import { GetUserInfo, reqLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
 import { $t } from '@/locales';
 import { useRouteStore } from '../route';
@@ -53,12 +53,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
 
-    const { data: loginToken, error } = await fetchLogin(userName, password);
-
-    if (!error) {
-      const pass = await loginByToken(loginToken);
-
-      if (pass) {
+    const res = await reqLogin(userName, password);
+    if (res.code === 1) {
+      localStg.set('token', res.body.token);
+      const getuserinfores = await GetUserInfo();
+      console.log('dengluyou1', getuserinfores);
+      if (getuserinfores) {
         await routeStore.initAuthRoute();
 
         if (redirect) {
@@ -78,27 +78,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     }
 
     endLoading();
-  }
-
-  async function loginByToken(loginToken: Api.Auth.LoginToken) {
-    // 1. stored in the localStorage, the later requests need it in headers
-    localStg.set('token', loginToken.token);
-    localStg.set('refreshToken', loginToken.refreshToken);
-
-    const { data: info, error } = await fetchGetUserInfo();
-
-    if (!error) {
-      // 2. store user info
-      localStg.set('userInfo', info);
-
-      // 3. update store
-      token.value = loginToken.token;
-      Object.assign(userInfo, info);
-
-      return true;
-    }
-
-    return false;
   }
 
   return {

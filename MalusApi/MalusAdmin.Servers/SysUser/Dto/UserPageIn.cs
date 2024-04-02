@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MalusAdmin.Servers
+namespace MalusAdmin.Servers.SysUser.Dto
 {
-    public interface IBaseService
+    public class UserPageIn:PageParamBase
     {
     }
 }
