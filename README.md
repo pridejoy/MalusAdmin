@@ -3,35 +3,52 @@
 #### 介绍
 Net开源后台管理
 
+.NET Core / .NET7  入门级项目 + Vue3/Vite5 + NaiveUI  后台管理系统
+
+关键词：入门级、通用后台管理系统、前后端分离、用户权限管理系统。
+
+
+
+项目使用文档 : https://www.dotnetshare.com/
+
+
+
 #### 软件架构
-软件架构说明
 
 
-#### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+前后端分离，使用 JWT 认证。
 
-#### 使用说明
+后端：基于 .NET7 和 [sqlsugar](https://www.donet5.com/Home/Doc?typeId=1215) ，集成常用组件，从0到1搭建。
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+前端：基于 [Soybean Admin](https://gitee.com/honghuangdc/soybean-admin) 做适配，主技术栈：Vue3、**NaiveUI 版本**
 
 
-#### 特技
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## 体验地址
+
+暂无:
+
+管理员：sa    密码：123456 
+
+目前使用部署方式：Nginx 运行前端、dotnet 命令运行后端。
+
+ 
+
+## 业务能力
+
+- 组织架构
+  - 组织机构（organization）
+  - 岗位（position）
+  - 用户（user）
+- 权限管理
+  - 应用（application）
+  - 菜单（menu）
+  - 角色（role）
+- 开发管理
+  - 数据字典（dictionary、dictionaryItem）
+- 日志管理
+  - 操作日志（log operating）
+  - 异常日志（log exception）
+
+ 

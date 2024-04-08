@@ -8,8 +8,8 @@ export const reqLogin = (account: string, passWord: string) => {
 };
 
 /** Get user info */
-export const GetUserInfo = () => {
-  return request2.get<any>('api/SysLogin/GetUserInfo');
+export const getTokenUserInfo = () => {
+  return request2.get<any, any>('api/SysLogin/GetUserInfo');
 };
 
 /**

@@ -111,6 +111,7 @@ namespace MalusAdmin.Servers
         /// 获取用户的信息
         /// </summary>
         /// <returns></returns>
+       
         public async Task<GetUserInfoOut> GetUserInfo()
         {
 

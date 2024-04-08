@@ -8,7 +8,7 @@ import { setupI18n } from './locales';
 import App from './App.vue';
 
 axios({
-  url: 'http://localhost:5172/api/Home/Index',
+  url: 'https://localhost:7154/api/Home/Index',
   method: 'get',
   headers: {
     token: 'a1f3af2394af4bcaa16f08d91190db45'

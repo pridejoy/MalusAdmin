@@ -9,6 +9,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(config => {
   const token = localStg.get('token');
+  console.log('token:', token);
   if (token) {
     config.headers.token = token;
   }
@@ -23,7 +24,7 @@ request.interceptors.response.use(
   error => {
     console.log('响应拦截器:', error);
     window.$message?.error(error.message);
-    return Promise.reject(error);
+    return null;
   }
 );
 export default request;

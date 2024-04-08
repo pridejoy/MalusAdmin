@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { useLoading } from '@sa/hooks';
 import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
-import { GetUserInfo, reqLogin } from '@/service/api';
+import { getTokenUserInfo, reqLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
 import { $t } from '@/locales';
 import { useRouteStore } from '../route';
@@ -18,17 +18,17 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
 
-  /** is super role in static route */
+  /** 是静态路由中的超级角色 */
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
     return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
   });
 
-  /** Is login */
+  /** 是登录名 */
   const isLogin = computed(() => Boolean(token.value));
 
-  /** Reset auth store */
+  /** 重置身份验证存储 */
   async function resetStore() {
     const authStore = useAuthStore();
 
@@ -44,21 +44,18 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   /**
-   * Login
+   * 登录
    *
    * @param userName User name
    * @param password Password
-   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   * @param [redirect=true] 登录后是否重定向。默认值为`true`. Default is `true`
    */
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
-
     const res = await reqLogin(userName, password);
     if (res.code === 1) {
-      localStg.set('token', res.body.token);
-      const getuserinfores = await GetUserInfo();
-      console.log('dengluyou1', getuserinfores);
-      if (getuserinfores) {
+      const pass = await loginByToken(res.body.token);
+      if (pass) {
         await routeStore.initAuthRoute();
 
         if (redirect) {
@@ -80,6 +77,26 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     endLoading();
   }
 
+  async function loginByToken(loginToken: string) {
+    // 1. stored in the localStorage, the later requests need it in headers
+    localStg.set('token', loginToken);
+    // localStg.set('refreshToken', loginToken.refreshToken);
+
+    const userInfores = await getTokenUserInfo();
+
+    if (userInfores.code === 1) {
+      // 2. store user info
+      localStg.set('userInfo', userInfores);
+
+      // 3. update store
+      // token.value = loginToken.token;
+      Object.assign(userInfo, userInfores);
+
+      return true;
+    }
+
+    return false;
+  }
   return {
     token,
     userInfo,
