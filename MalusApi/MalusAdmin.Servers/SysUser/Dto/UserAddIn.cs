@@ -7,9 +7,8 @@ using SqlSugar;
 
 namespace MalusAdmin.Servers.SysUser.Dto
 {
-    public class UserPageIn:PageParamBase
-    {
-
+    public class UserAddIn
+    { 
         /// <summary>
 		///登录账号
 		/// </summary> 
@@ -34,7 +33,7 @@ namespace MalusAdmin.Servers.SysUser.Dto
         ///状态(10正常，00冻结)
         ///默认值:10
         /// </summary> 
-        public String Status { get; set; }
+        public int Status { get; set; }
 
         /// <summary>
         ///头像

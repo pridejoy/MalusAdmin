@@ -43,26 +43,6 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
       minWidth: 100
     },
     {
-      key: 'userGender',
-      title: $t('page.manage.user.userGender'),
-      align: 'center',
-      width: 100,
-      render: row => {
-        if (row.userGender === null) {
-          return null;
-        }
-
-        const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
-          1: 'primary',
-          2: 'error'
-        };
-
-        const label = $t(userGenderRecord[row.userGender]);
-
-        return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
-      }
-    },
-    {
       key: 'nickName',
       title: $t('page.manage.user.nickName'),
       align: 'center',

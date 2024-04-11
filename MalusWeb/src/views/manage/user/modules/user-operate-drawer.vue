@@ -39,17 +39,13 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<
-  Api.SystemManage.User,
-  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
->;
+type Model = Pick<Api.SystemManage.User, 'userName' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
     userName: '',
-    userGender: null,
     nickName: '',
     userPhone: '',
     userEmail: '',
@@ -127,11 +123,6 @@ watch(visible, () => {
       <NForm ref="formRef" :model="model" :rules="rules">
         <NFormItem :label="$t('page.manage.user.userName')" path="userName">
           <NInput v-model:value="model.userName" :placeholder="$t('page.manage.user.form.userName')" />
-        </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userGender')" path="userGender">
-          <NRadioGroup v-model:value="model.userGender">
-            <NRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
-          </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.nickName')" path="nickName">
           <NInput v-model:value="model.nickName" :placeholder="$t('page.manage.user.form.nickName')" />

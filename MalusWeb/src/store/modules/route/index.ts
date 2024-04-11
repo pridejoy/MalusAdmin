@@ -194,10 +194,10 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     tabStore.initHomeTab();
   }
 
-  /** Init static auth route */
+  /** 初始化静态身份验证路由 */
   async function initStaticAuthRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes();
-
+    debugger;
     if (authStore.isStaticSuper) {
       addAuthRoutes(staticAuthRoutes);
     } else {
@@ -230,7 +230,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     }
   }
 
-  /** handle auth routes */
+  /** 处理身份验证路由 */
   function handleAuthRoutes() {
     const sortRoutes = sortRoutesByOrder(authRoutes.value);
 

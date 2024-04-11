@@ -10,6 +10,7 @@ using MalusAdmin.Encryption;
 using MalusAdmin.Entity;
 using MalusAdmin.Request;
 using MalusAdmin.Servers.SysUser.Dto;
+using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetTaste;
@@ -47,7 +48,7 @@ namespace MalusAdmin.Servers
             {  
               throw new Exception("密码输入错误");
             }
-            if (user.Status != "10")
+            if (user.Status != 10)
             {
                 throw new Exception("该账户已被冻结"); 
             }
@@ -124,7 +125,11 @@ namespace MalusAdmin.Servers
         }
 
 
-
+        /// <summary>
+        /// 用户列表分页
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public async Task<PageList<TSysUser>> PageList(UserPageIn input)
         {
             var dictTypes = await _sysUserRep.AsQueryable() 
@@ -134,46 +139,45 @@ namespace MalusAdmin.Servers
         }
 
         /// <summary>
-        /// 添加
+        /// 添加用户
         /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<bool> Add(UserPageIn input)
+        /// <returns></returns> 
+        public async Task<bool> Add(UserAddIn input)
         {
-            return true;
+            var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
+            if(isExist) ResultCode.Fail.JsonR("已存在当前账号");
+            var entity = input.Adapt<TSysUser>();
+            entity.PassWord= Md5Util.Encrypt(input.PassWord);
+            return await _sysUserRep.InsertReturnIdentityAsync(entity)>0;  
         }
 
-        
 
-        ///// <summary>
-        ///// 删除字典类型
-        ///// </summary>
-        ///// <param name="input"></param>
-        ///// <returns></returns>
-        //public async Task Delete(Core.PrimaryKeyParam input)
-        //{
-        //    var dictType = await _sysDictTypeRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        //    if (dictType == null) throw Oops.Oh(ErrorCode.D3000);
-        //    await _sysDictTypeRep.DeleteAsync(dictType);
-        //    await _sysDictDataService.DeleteByTypeId(input.Id);
-        //}
 
-        ///// <summary>
-        ///// 更新字典类型
-        ///// </summary>
-        ///// <param name="input"></param>
-        ///// <returns></returns>
-        //public async Task Update(EditDictTypeInput input)
-        //{
-        //    var isExist = await _sysDictTypeRep.AnyAsync(u => u.Id == input.Id);
-        //    if (!isExist) throw Oops.Oh(ErrorCode.D3000);
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<bool> Delete(int userId)
+        {
+            var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
+            if (entity==null) ResultCode.Fail.JsonR("为找到当前账号");
+            entity.SysIsDelete=true;
+            return  await _sysUserRep.UpdateAsync(entity)>0;
+        }
 
-        //    // 排除自己并且判断与其他是否相同
-        //    isExist = await _sysDictTypeRep.AnyAsync(u => (u.Name == input.Name || u.Code == input.Code) && u.Id != input.Id);
-        //    if (isExist) throw Oops.Oh(ErrorCode.D3001);
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<bool> Update(UserEditIn input)
+        {
+            var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
+            if (entity == null) ResultCode.Fail.JsonR("为找到当前账号"); 
 
-        //    var dictType = input.Adapt<SysDictType>();
-        //    await _sysDictTypeRep.AsUpdateable(dictType).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
-        //}
+            var sysUser = input.Adapt<TSysUser>();
+            return await _sysUserRep.AsUpdateable(sysUser).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync()>0;
+        }
     }
 }

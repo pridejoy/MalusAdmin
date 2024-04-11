@@ -54,7 +54,7 @@ const customRoutes: CustomRoute[] = [
   }
 ];
 
-/** create routes when the auth route mode is static */
+/** 当身份验证路由模式为静态时创建路由 */
 export function createStaticRoutes() {
   const constantRoutes: ElegantRoute[] = [];
 

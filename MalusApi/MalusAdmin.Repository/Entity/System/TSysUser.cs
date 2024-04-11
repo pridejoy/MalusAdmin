@@ -96,7 +96,7 @@ namespace MalusAdmin.Entity {
 		///默认值:10
 		/// </summary>
 		[SugarColumn(ColumnName = "Status", DefaultValue = "10")]
-		public String Status { get; set; }
+		public int Status { get; set; }
 
 		/// <summary>
 		///头像

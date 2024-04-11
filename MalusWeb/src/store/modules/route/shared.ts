@@ -4,7 +4,7 @@ import { $t } from '@/locales';
 import { useSvgIcon } from '@/hooks/common/icon';
 
 /**
- * Filter auth routes by roles
+ * 按角色筛选身份验证路由
  *
  * @param routes Auth routes
  * @param roles Roles
@@ -14,7 +14,7 @@ export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: stri
 }
 
 /**
- * Filter auth route by roles
+ * 按角色筛选身份验证路由
  *
  * @param route Auth route
  * @param roles Roles
@@ -38,7 +38,7 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]) {
 }
 
 /**
- * sort route by order
+ * 按顺序对路线排序
  *
  * @param route route
  */
@@ -52,7 +52,7 @@ function sortRouteByOrder(route: ElegantConstRoute) {
 }
 
 /**
- * sort routes by order
+ * 按顺序对路线排序
  *
  * @param routes routes
  */
@@ -64,7 +64,7 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
 }
 
 /**
- * Get global menus by auth routes
+ * 通过身份验证路由获取全局菜单
  *
  * @param routes Auth routes
  */
@@ -87,7 +87,7 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
 }
 
 /**
- * Update locale of global menus
+ * 更新全局菜单的区域设置
  *
  * @param menus
  */
@@ -140,7 +140,7 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
 }
 
 /**
- * Get cache route names
+ * 获取缓存路由名称
  *
  * @param routes Vue routes (two levels)
  */
@@ -160,7 +160,7 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
 }
 
 /**
- * Is route exist by route name
+ * 是否按路由名称存在路由
  *
  * @param routeName
  * @param routes
@@ -170,7 +170,7 @@ export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantCons
 }
 
 /**
- * Recursive get is route exist by route name
+ * 递归get是按路由名称存在的路由
  *
  * @param route
  * @param routeName
@@ -190,7 +190,7 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
 }
 
 /**
- * Get selected menu key path
+ * 获取所选菜单键路径
  *
  * @param selectedKey
  * @param menus

@@ -18,10 +18,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
 
+  console.log('userInfo', userInfo);
   /** 是静态路由中的超级角色 */
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
+    return true;
     return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
   });
 
@@ -89,7 +91,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
       localStg.set('userInfo', userInfores);
 
       // 3. update store
-      // token.value = loginToken.token;
+      // token.value = loginToken;
+      console.log('gengxinqidezhi1', userInfo);
       Object.assign(userInfo, userInfores);
 
       return true;
