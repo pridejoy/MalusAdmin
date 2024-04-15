@@ -33,8 +33,10 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     apiParams,
     columns: config.columns,
     transformer: res => {
-      const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
-
+      const { records = [], pageNo = 1, pageSize = 10, totalRows = 0 } = res.data || {};
+      const current = pageNo;
+      const size = pageSize;
+      const total = totalRows;
       const recordsWithIndex = records.map((item, index) => {
         return {
           ...item,
@@ -108,8 +110,8 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
       pagination.page = page;
 
       updateSearchParams({
-        current: page,
-        size: pagination.pageSize!
+        pageNo: page,
+        pageSize: pagination.pageSize!
       });
 
       getData();
@@ -119,8 +121,8 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
       pagination.page = 1;
 
       updateSearchParams({
-        current: pagination.page,
-        size: pageSize
+        pageNo: pagination.page,
+        pageSize
       });
 
       getData();

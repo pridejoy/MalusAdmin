@@ -8,11 +8,11 @@ declare namespace Api {
     /** common params of paginating */
     interface PaginatingCommonParams {
       /** current page number */
-      current: number;
+      pageNo: number;
       /** page size */
-      size: number;
+      pageSize: number;
       /** total count */
-      total: number;
+      totalRows: number;
     }
 
     /** common params of paginating query list data */
@@ -33,13 +33,15 @@ declare namespace Api {
       /** record id */
       id: number;
       /** record creator */
-      createBy: string;
+      sysCreateUser: number;
       /** record create time */
-      createTime: string;
+      sysCreateTime: string;
+      sysDeleteUser: number;
+      sysDeleteTime: string;
       /** record updater */
-      updateBy: string;
+      sysUpdateUser: string;
       /** record update time */
-      updateTime: string;
+      sysUpdateTime: string;
       /** record status */
       status: EnableStatus | null;
     } & T;
@@ -88,7 +90,7 @@ declare namespace Api {
    * backend api module: "systemManage"
    */
   namespace SystemManage {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'pageNo' | 'pageSize'>;
 
     /** role */
     type Role = Common.CommonRecord<{
@@ -122,21 +124,20 @@ declare namespace Api {
     /** user */
     type User = Common.CommonRecord<{
       /** user name */
-      userName: string;
+      account: string;
       /** user nick name */
-      nickName: string;
+      name: string;
       /** user phone */
-      userPhone: string;
+      tel: string;
       /** user email */
-      userEmail: string;
+      email: string;
       /** user role code collection */
-      userRoles: string[];
+      // roleId: string[];
     }>;
 
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
-        CommonSearchParams
+      Pick<Api.SystemManage.User, 'account' | 'name' | 'tel' | 'email' | 'status'> & CommonSearchParams
     >;
 
     /** user list */

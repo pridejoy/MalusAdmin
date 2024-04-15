@@ -1,20 +1,24 @@
-# Malus.Net
 
-#### 介绍
-Net开源后台管理
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">MalusAdmin</h1>
+<h4 align="center">基于 Vue3/TypeScript/NaiveUI 和 NET7 & Sqlsugar  开发的后台管理框架。</h4>
 
-.NET Core / .NET7  入门级项目 + Vue3/Vite5 + NaiveUI  后台管理系统
+<p align="center">
+    <a style="margin-right: 5px">
+       <img src="https://img.shields.io/badge/MalusAdmin-v1.0.1-brightgreen" alt="MalusAdmin">
+    </a>
+    <a style="margin-right: 5px">
+       <img src="https://gitee.com/Pridejoy/wallpaper.net/badge/star.svg?theme=dark" alt="MalusAdmin">
+    </a>
+    <a style="margin-right: 5px">
+       <img src="https://gitee.com/Pridejoy/wallpaper.net/badge/fork.svg?theme=dark" alt="MalusAdmin">
+    </a>
+</p>
 
-关键词：入门级、通用后台管理系统、前后端分离、用户权限管理系统。
+## 简介
 
+基于NET Core  | NET7 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的后台管理框架,提供快速开发解决方案。 
 
-
-项目使用文档 : https://www.dotnetshare.com/
-
-
-
-#### 软件架构
-
+## 特性
 
 
 前后端分离，使用 JWT 认证。
@@ -25,30 +29,41 @@ Net开源后台管理
 
 
 
-## 体验地址
+## 预览
 
-暂无:
-
-管理员：sa    密码：123456 
-
-目前使用部署方式：Nginx 运行前端、dotnet 命令运行后端。
-
+- **账户**
+  >  账号：admin   
+  密码：1Q2W3E
+  
+- **演示**
+  <!-- > [maluts.hunji.xyz](https://maluts.hunji.xyz) -->
+  暂不提供
+- **文档**
+  > [www.dotnetshare.com](https://www.dotnetshare.com/) 
  
 
-## 业务能力
+## 演示
 
-- 组织架构
-  - 组织机构（organization）
-  - 岗位（position）
-  - 用户（user）
-- 权限管理
-  - 应用（application）
-  - 菜单（menu）
-  - 角色（role）
-- 开发管理
-  - 数据字典（dictionary、dictionaryItem）
-- 日志管理
-  - 操作日志（log operating）
-  - 异常日志（log exception）
+<table>
+    <tr>
+        <td><img src="https://gitee.com/MalusAdmin/images/raw/master/1.png" alt=""/></td>
+        <td><img src="https://gitee.com/MalusAdmin/images/raw/master/2.png" alt=""/></td>
+    </tr>
+</table>
 
- 
+
+
+ ## 交流
+
+- 请移步右上角  **一键三连** :kissing_heart
+- 公众号：[![Net分享](https://img.shields.io/badge/Net分享-blue.svg)](https://www.dotnetshare.com/images/netfenxiang.png)
+- 若发现bug，请提Issues。
+
+## 开源
+
+**源于开源，回归开源**
+
+* 感谢Soybean Admin开源的[Soybean Admin](https://gitee.com/honghuangdc/soybean-admin) 
+* 感谢SqlSugar开源的[SqlSugar](https://www.donet5.com/Home/Doc?typeId=1215) 
+* 感谢Naive UI 开源的[Naive UI](https://www.naiveui.com/zh-CN/os-theme)
+* 感谢 柒愿 开源的[QiAdmin](https://gitee.com/zero202101/QiAdmin)

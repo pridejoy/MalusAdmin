@@ -1,9 +1,9 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { fetchGetUserList } from '@/service/api';
+import { getSysUserPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
+import { enableStatusRecord } from '@/constants/business';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import UserOperateDrawer from './modules/user-operate-drawer.vue';
 import UserSearch from './modules/user-search.vue';
@@ -11,18 +11,16 @@ import UserSearch from './modules/user-search.vue';
 const appStore = useAppStore();
 
 const { columns, columnChecks, data, getData, loading, mobilePagination, searchParams, resetSearchParams } = useTable({
-  apiFn: fetchGetUserList,
+  apiFn: getSysUserPage,
   apiParams: {
-    current: 1,
-    size: 10,
+    pageNo: 1,
+    pageSize: 10,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
-    status: null,
-    userName: null,
-    userGender: null,
-    nickName: null,
-    userPhone: null,
-    userEmail: null
+    status: null
+    // nickName: null,
+    // userPhone: null,
+    // userEmail: null
   },
   columns: () => [
     {
@@ -37,25 +35,25 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
       width: 64
     },
     {
-      key: 'userName',
+      key: 'account',
       title: $t('page.manage.user.userName'),
       align: 'center',
       minWidth: 100
     },
     {
-      key: 'nickName',
+      key: 'name',
       title: $t('page.manage.user.nickName'),
       align: 'center',
       minWidth: 100
     },
     {
-      key: 'userPhone',
+      key: 'tel',
       title: $t('page.manage.user.userPhone'),
       align: 'center',
       width: 120
     },
     {
-      key: 'userEmail',
+      key: 'email',
       title: $t('page.manage.user.userEmail'),
       align: 'center',
       minWidth: 200

@@ -93,7 +93,7 @@ public class PageList<T>
     public int PageSize { get; set; }
     public int TotalPage { get; set; }
     public int TotalRows { get; set; }
-    public IEnumerable<T> Rows { get; set; }
+    public IEnumerable<T> Records { get; set; }
 }
 
 /// <summary>
@@ -114,7 +114,7 @@ public static class PageResult
             PageSize = page.PageSize,
             TotalPage = page.TotalPages,
             TotalRows = page.TotalCount,
-            Rows = page.Items
+            Records = page.Items
         };
     }
 }

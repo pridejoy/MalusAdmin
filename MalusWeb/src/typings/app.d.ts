@@ -627,39 +627,23 @@ declare namespace App {
     }
   }
 
-  /** Service namespace */
+  /** 服务命名空间 */
   namespace Service {
-    /** Other baseURL key */
-    type OtherBaseURLKey = 'demo';
-
+    /** 服务配置项接口 */
     interface ServiceConfigItem {
-      /** The backend service base url */
+      /** 后端服务基础 URL */
       baseURL: string;
-      /** The proxy pattern of the backend service base url */
+      /** 后端服务基础 URL 的代理模式 */
       proxyPattern: string;
     }
 
-    interface OtherServiceConfigItem extends ServiceConfigItem {
-      key: OtherBaseURLKey;
-    }
-
-    /** The backend service config */
-    interface ServiceConfig extends ServiceConfigItem {
-      /** Other backend service config */
-      other: OtherServiceConfigItem[];
-    }
-
-    interface SimpleServiceConfig extends Pick<ServiceConfigItem, 'baseURL'> {
-      other: Record<OtherBaseURLKey, string>;
-    }
-
-    /** The backend service response data */
+    /** 后端服务响应数据 */
     type Response<T = unknown> = {
-      /** The backend service response code */
+      /** 后端服务响应代码 */
       code: string;
-      /** The backend service response message */
+      /** 后端服务响应消息 */
       message: string;
-      /** The backend service response data */
+      /** 后端服务响应数据体 */
       body: T;
     };
   }

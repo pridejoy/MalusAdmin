@@ -33,7 +33,7 @@ export default defineConfig(configEnv => {
       host: '0.0.0.0',
       port: 9527,
       open: true,
-      // proxy: createViteProxy(viteEnv, configEnv.command === 'serve'),
+      //  proxy: createViteProxy(viteEnv, configEnv.command === 'serve'),
       proxy: {
         // 字符串简写写法：http://localhost:5173/foo -> http://localhost:4567/foo  '/api': ''
         '/api': {

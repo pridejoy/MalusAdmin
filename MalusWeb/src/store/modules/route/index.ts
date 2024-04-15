@@ -208,7 +208,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   async function initStaticAuthRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes();
     console.log('获取静态的路由信息', authRoutes.value);
-    debugger;
+    // debugger;
     if (authStore.isStaticSuper) {
       addAuthRoutes(staticAuthRoutes);
     } else {
@@ -227,7 +227,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     // const { data, error } = await fetchGetUserRoutes();
     const { authRoutes: routes } = createStaticRoutes();
     console.log('获取动态的路由信息', routes);
-    debugger;
+    // debugger;
     const home = 'home';
     addAuthRoutes(routes);
 

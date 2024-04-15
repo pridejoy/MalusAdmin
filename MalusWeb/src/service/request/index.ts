@@ -2,12 +2,15 @@ import type { AxiosResponse } from 'axios';
 import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
 import { useAuthStore } from '@/store/modules/auth';
 import { localStg } from '@/utils/storage';
-import { getServiceBaseURL } from '@/utils/service';
+// import { getServiceBaseURL } from '@/utils/service';
 import { $t } from '@/locales';
 import { handleRefreshToken } from './shared';
 
-const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
-const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
+// const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
+// const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
+
+const baseURL = import.meta.env.VITE_SERVICE_BASE_URL;
+// console.log('baseURL', baseURL);
 
 interface InstanceState {
   /** whether the request is refreshing token */
@@ -24,15 +27,21 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
 
       // set token
       const token = localStg.get('token');
-      const Authorization = token ? `${token}` : null;
-      Object.assign(headers, { Authorization });
+      // const Authorization = token ? `${token}` : null;
+      // 更改 请求头信息
+      headers.Token = token ? `${token}` : null;
+      // Object.assign(headers, { Authorization });
 
       return config;
     },
     isBackendSuccess(response) {
       // when the backend response code is "0000"(default), it means the request is success
       // to change this logic by yourself, you can modify the `VITE_SERVICE_SUCCESS_CODE` in `.env` file
-      return response.data.code === import.meta.env.VITE_SERVICE_SUCCESS_CODE;
+      console.log('response1', response.data.code === import.meta.env.VITE_SERVICE_SUCCESS_CODE);
+      console.log('response2', response.data.code);
+      console.log('response3', import.meta.env.VITE_SERVICE_SUCCESS_CODE);
+      // return response.data.code === import.meta.env.VITE_SERVICE_SUCCESS_CODE;
+      return true;
     },
     async onBackendFail(response, instance) {
       const authStore = useAuthStore();
@@ -46,22 +55,22 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
         window.removeEventListener('beforeunload', handleLogout);
       }
 
-      // when the backend response code is in `logoutCodes`, it means the user will be logged out and redirected to login page
+      // 当后端响应代码在logoutCodes中时，意味着用户将会登出并被重定向到登录页面。
       const logoutCodes = import.meta.env.VITE_SERVICE_LOGOUT_CODES?.split(',') || [];
       if (logoutCodes.includes(response.data.code)) {
         handleLogout();
         return null;
       }
 
-      // when the backend response code is in `modalLogoutCodes`, it means the user will be logged out by displaying a modal
+      // 当后端响应代码在modalLogoutCodes中时，意味着用户将会通过显示一个模态框来被登出。
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
       if (modalLogoutCodes.includes(response.data.code)) {
-        // prevent the user from refreshing the page
+        // 阻止用户刷新页面
         window.addEventListener('beforeunload', handleLogout);
 
         window.$dialog?.error({
           title: 'Error',
-          content: response.data.msg,
+          content: response.data.message,
           positiveText: $t('common.confirm'),
           maskClosable: false,
           onPositiveClick() {
@@ -75,8 +84,8 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
         return null;
       }
 
-      // when the backend response code is in `expiredTokenCodes`, it means the token is expired, and refresh token
-      // the api `refreshToken` can not return error code in `expiredTokenCodes`, otherwise it will be a dead loop, should return `logoutCodes` or `modalLogoutCodes`
+      // 当后端响应代码处于“expiredTokeCodes”中时，表示令牌已过期，并刷新令牌
+      // api“refreshToken”不能在“expiredTokeCodes”中返回错误代码，否则它将是一个死循环，应返回“logoutCodes”或“modalLogoutCodes”`
       const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
       if (expiredTokenCodes.includes(response.data.code) && !request.state.isRefreshingToken) {
         request.state.isRefreshingToken = true;
@@ -93,28 +102,28 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
       return null;
     },
     transformBackendResponse(response) {
-      console.log('response', response);
+      console.log('请求返回信息:', response.data.body);
       return response.data.body;
     },
     onError(error) {
-      // when the request is fail, you can show error message
-
+      // 当请求失败时，您可以显示错误消息
+      console.log('当请求失败', error);
       let message = error.message;
       let backendErrorCode = '';
 
-      // get backend error message and code
+      // 获取后端错误消息和代码
       if (error.code === BACKEND_ERROR_CODE) {
         message = error.response?.data?.message || message;
         backendErrorCode = error.response?.data?.code || '';
       }
 
-      // the error message is displayed in the modal
+      // 错误消息显示在模态中
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
       if (modalLogoutCodes.includes(backendErrorCode)) {
         return;
       }
 
-      // when the token is expired, refresh token and retry request, so no need to show error message
+      // 当令牌过期时，刷新令牌并重试请求，因此无需显示错误消息
       const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
       if (expiredTokenCodes.includes(backendErrorCode)) {
         return;
@@ -124,45 +133,3 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     }
   }
 );
-
-// export const demoRequest = createRequest<App.Service.DemoResponse>(
-//   {
-//     baseURL: otherBaseURL.demo
-//   },
-//   {
-//     async onRequest(config) {
-//       const { headers } = config;
-
-//       // set token
-//       const token = localStg.get('token');
-//       const Authorization = token ? `Bearer ${token}` : null;
-//       Object.assign(headers, { Authorization });
-
-//       return config;
-//     },
-//     isBackendSuccess(response) {
-//       // when the backend response code is "200", it means the request is success
-//       // you can change this logic by yourself
-//       return response.data.status === '200';
-//     },
-//     async onBackendFail(_response) {
-//       // when the backend response code is not "200", it means the request is fail
-//       // for example: the token is expired, refresh token and retry request
-//     },
-//     transformBackendResponse(response) {
-//       return response.data.result;
-//     },
-//     onError(error) {
-//       // when the request is fail, you can show error message
-
-//       let message = error.message;
-
-//       // show backend error message
-//       if (error.code === BACKEND_ERROR_CODE) {
-//         message = error.response?.data?.message || message;
-//       }
-
-//       window.$message?.error(message);
-//     }
-//   }
-// );
