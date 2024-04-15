@@ -3,7 +3,7 @@ import { computed, reactive, ref, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { fetchGetAllRoles } from '@/service/api';
 import { $t } from '@/locales';
-import { enableStatusOptions, userGenderOptions } from '@/constants/business';
+import { enableStatusOptions } from '@/constants/business';
 
 defineOptions({
   name: 'UserOperateDrawer'
@@ -157,4 +157,5 @@ watch(visible, () => {
   </NDrawer>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

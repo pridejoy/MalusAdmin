@@ -65,7 +65,7 @@ namespace MalusAdmin.Entity {
 		///部门ID
 		/// </summary>
 		[SugarColumn(ColumnName = "DeptId")]
-		public Int32 DeptId { get; set; }
+		public int DeptId { get; set; }
 
 		/// <summary>
 		///登录账号
@@ -89,7 +89,7 @@ namespace MalusAdmin.Entity {
 		///角色ID
 		/// </summary>
 		[SugarColumn(ColumnName = "RoleId")]
-		public Int32 RoleId { get; set; }
+		public int RoleId { get; set; }
 
 		/// <summary>
 		///状态(10正常，00冻结)

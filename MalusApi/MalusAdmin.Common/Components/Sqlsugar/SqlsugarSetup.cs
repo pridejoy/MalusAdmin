@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SqlSugar;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -39,6 +40,55 @@ namespace MalusAdmin.Common
                     Console.ForegroundColor = originColor;
                    
                 };
+                db.Aop.DataExecuting = (oldValue, entityInfo) =>
+                {
+                    try
+                    {
+
+                        if (entityInfo.OperationType == DataFilterType.InsertByObject)
+                        {
+                            if (entityInfo.PropertyName == "SysCreateUser")
+                            {
+                                ITokenService tokenService = App.GetService<ITokenService>();
+                                HttpContext httpContext = App.GetService<IHttpContextAccessor>().HttpContext;
+                                TokenData token = tokenService.ParseToken(httpContext);
+                                if (token != null)
+                                {
+                                    entityInfo.SetValue(token.UserId);
+                                }
+
+                            }
+                            else if (entityInfo.PropertyName == "DeptId" && entityInfo.EntityName != "TSysUser")
+                            {
+                                ITokenService tokenService = App.GetService<ITokenService>();
+                                HttpContext httpContext = App.GetService<IHttpContextAccessor>().HttpContext;
+                                TokenData token = tokenService.ParseToken(httpContext);
+                                if (token != null)
+                                {
+                                    entityInfo.SetValue(token.UserDept);
+                                }
+                            }
+                        }
+                        else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
+                        {
+                            if (entityInfo.PropertyName == "SysUpdateUser")
+                            {
+                                ITokenService tokenService = App.GetService<ITokenService>();
+                                HttpContext httpContext = App.GetService<HttpContext>();
+                                TokenData token = tokenService.ParseToken(httpContext);
+                                if (token != null)
+                                {
+                                    entityInfo.SetValue(token.UserId);
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
+                };
                 db.Aop.OnError = ex =>
                 {
                     if (ex.Parametres == null) return;
@@ -47,10 +97,7 @@ namespace MalusAdmin.Common
                     var pars = db.Utilities.SerializeObject(((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
                     Console.ForegroundColor = originColor;
                     Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars +" \r\n");
-                };
-               
-                 
-
+                }; 
             };
               
             //SqlSugarScope线程是安全的

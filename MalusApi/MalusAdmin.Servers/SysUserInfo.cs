@@ -13,7 +13,7 @@ namespace MalusAdmin.Servers
         public readonly ITokenService _TokenService;
         public readonly ICacheService _CacheService;
         public readonly HttpContext _HttpContext;
-        public SysUserInfo( ITokenService tokenService, ICacheService cacheService, HttpContext httpContext)
+        public SysUserInfo(ITokenService tokenService, ICacheService cacheService, HttpContext httpContext)
         { 
             _TokenService = tokenService;
             _CacheService = cacheService;

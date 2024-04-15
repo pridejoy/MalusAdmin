@@ -1,5 +1,10 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing.Patterns;
+
 
 namespace MalusAdmin.WebApi
 {
@@ -7,40 +12,77 @@ namespace MalusAdmin.WebApi
     {
         readonly RequestDelegate _next;
         readonly IServiceScopeFactory _serviceScopeFactory;
-        public CheckToken(RequestDelegate next, IServiceScopeFactory serviceScopeFactory)
+        private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
+
+        public CheckToken(RequestDelegate next, IServiceScopeFactory serviceScopeFactory, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
             _next = next;
             _serviceScopeFactory = serviceScopeFactory;
+            _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         }
         public async Task InvokeAsync(HttpContext context)
         {
             //Tode 自动获取allow的特性的接口
-            //var IgnoreVerifyTokenPaths = AssemblyHelper.GetAllowAnonymousEndpoints();
-            var IgnoreVerifyTokenPaths = new string[] { "/Home", "api/SysLogin/Login", "api/SysLogin/GetUserInfo" };
-
-            if (!IgnoreVerifyTokenPaths.ToList().Exists(s => context.Request.Path.ToString().Contains(s)))
+            var endpoint = context.GetEndpoint();
+            if (endpoint != null)
             {
-                using (IServiceScope serviceScope = _serviceScopeFactory.CreateScope())
+                var routePattern = (endpoint as RouteEndpoint)?.RoutePattern?.RawText;
+                if (routePattern != null)
                 {
-                    ITokenService tokenService = serviceScope.ServiceProvider.GetService<ITokenService>();
-                    if (!tokenService.CheckToken(context))
-                    { 
-                        context.Response.StatusCode = 401;
-                        context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-                        var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
-                        await context.Response.WriteAsync(rspResult.ToJson());
-                        return;
-                    }
-                    else
+                    var actionDescriptor = GetActionDescriptor(routePattern);
+                    if (actionDescriptor != null)
                     {
-                        tokenService.RefreshToken(context);
+                        var allowAnonymousAttribute = actionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().FirstOrDefault();
+                        if (allowAnonymousAttribute != null)
+                        {
+                            // 输出带有 [AllowAnonymous] 特性的接口路由信息
+                            Console.WriteLine($"[AllowAnonymous] found in route: {routePattern}");
+                        }
+                        else
+                        {
+                            using (IServiceScope serviceScope = _serviceScopeFactory.CreateScope())
+                            {
+                                ITokenService tokenService = serviceScope.ServiceProvider.GetService<ITokenService>();
+                                if (!tokenService.CheckToken(context))
+                                {
+                                    context.Response.StatusCode = 401;
+                                    context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                                    var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
+                                    await context.Response.WriteAsync(rspResult.ToJson());
+                                    return;
+                                }
+                                else
+                                {
+                                    tokenService.RefreshToken(context);
+                                }
+                            }
+                        }
                     }
                 }
             }
+
+      
             await _next(context);
 
 
 
+        }
+
+
+
+
+        private ControllerActionDescriptor GetActionDescriptor(string routePattern)
+        {
+            var actionDescriptors = _actionDescriptorCollectionProvider.ActionDescriptors.Items;
+            foreach (var actionDescriptor in actionDescriptors)
+            {
+                var actionRoutePattern = (actionDescriptor.EndpointMetadata.FirstOrDefault(meta => meta is RoutePattern) as RoutePattern)?.RawText;
+                if (actionRoutePattern != null && actionRoutePattern.Equals(routePattern))
+                {
+                    return actionDescriptor as ControllerActionDescriptor;
+                }
+            }
+            return null;
         }
     }
 }

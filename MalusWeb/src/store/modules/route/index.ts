@@ -55,16 +55,25 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /** auth routes */
   const authRoutes = shallowRef<ElegantConstRoute[]>([]);
 
+  /**
+   * 向路由列表中添加认证路由。
+   *
+   * @param routes {ElegantConstRoute[]} 待添加认证信息的路由数组。
+   *
+   *   此函数首先将已存在的认证路由映射到一个 Map 中，然后将待添加的路由也添加到这个 Map 中， 最后将 Map 中的值转换回数组，更新认证路由列表。
+   */
   function addAuthRoutes(routes: ElegantConstRoute[]) {
+    // 创建一个映射，用于存储认证路由的名称和路由对象
     const authRoutesMap = new Map(authRoutes.value.map(route => [route.name, route]));
 
+    // 遍历传入的路由数组，并将其添加到认证路由映射中
     routes.forEach(route => {
       authRoutesMap.set(route.name, route);
     });
 
+    // 更新认证路由列表，用映射中的值替换原有数组
     authRoutes.value = Array.from(authRoutesMap.values());
   }
-
   const removeRouteFns: (() => void)[] = [];
 
   /** Global menus */
@@ -185,18 +194,20 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** Init auth route */
   async function initAuthRoute() {
-    if (authRouteMode.value === 'static') {
-      await initStaticAuthRoute();
-    } else {
-      await initDynamicAuthRoute();
-    }
-
+    // if (authRouteMode.value === 'static') {
+    //   await initStaticAuthRoute();
+    // } else {
+    //   await initDynamicAuthRoute();
+    // }
+    // await initStaticAuthRoute();
+    await initDynamicAuthRoute();
     tabStore.initHomeTab();
   }
 
   /** 初始化静态身份验证路由 */
   async function initStaticAuthRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes();
+    console.log('获取静态的路由信息', authRoutes.value);
     debugger;
     if (authStore.isStaticSuper) {
       addAuthRoutes(staticAuthRoutes);
@@ -213,21 +224,20 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** Init dynamic auth route */
   async function initDynamicAuthRoute() {
-    const { data, error } = await fetchGetUserRoutes();
+    // const { data, error } = await fetchGetUserRoutes();
+    const { authRoutes: routes } = createStaticRoutes();
+    console.log('获取动态的路由信息', routes);
+    debugger;
+    const home = 'home';
+    addAuthRoutes(routes);
 
-    if (!error) {
-      const { routes, home } = data;
+    handleAuthRoutes();
 
-      addAuthRoutes(routes);
+    setRouteHome(home);
 
-      handleAuthRoutes();
+    handleUpdateRootRouteRedirect(home);
 
-      setRouteHome(home);
-
-      handleUpdateRootRouteRedirect(home);
-
-      setIsInitAuthRoute(true);
-    }
+    setIsInitAuthRoute(true);
   }
 
   /** 处理身份验证路由 */

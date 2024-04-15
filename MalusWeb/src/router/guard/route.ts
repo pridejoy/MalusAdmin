@@ -29,13 +29,13 @@ export function createRouteGuard(router: Router) {
     const rootRoute: RouteKey = 'root';
     const loginRoute: RouteKey = 'login';
     const noAuthorizationRoute: RouteKey = '403';
-
+    // debugger;
     const isLogin = Boolean(localStg.get('token'));
     const needLogin = !to.meta.constant;
     const routeRoles = to.meta.roles || [];
-
-    const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role));
-
+    console.log(authStore.userInfo);
+    // const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role));
+    const hasRole = true;
     const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole;
 
     const routeSwitches: CommonType.StrategicPattern[] = [
