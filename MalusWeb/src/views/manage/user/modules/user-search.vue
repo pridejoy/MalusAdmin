@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { $t } from '@/locales';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { enableStatusOptions, userGenderOptions } from '@/constants/business';
+import { enableStatusOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
 defineOptions({
@@ -69,9 +69,11 @@ async function search() {
           <NInput v-model:value="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
         </NFormItemGi>
 -->
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.userEmail')" path="userEmail" class="pr-24px">
+        <!--
+ <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.userEmail')" path="userEmail" class="pr-24px">
           <NInput v-model:value="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
-        </NFormItemGi>
+        </NFormItemGi> 
+-->
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.userStatus')" path="userStatus" class="pr-24px">
           <NSelect
             v-model:value="model.status"

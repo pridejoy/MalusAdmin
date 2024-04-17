@@ -9,7 +9,7 @@ namespace MalusAdmin.Servers.SysUser.Dto
 {
     public class UserPageOut
     {
-
+        public int id { get; set; }
         /// <summary>
 		///登录账号
 		/// </summary> 
@@ -41,11 +41,6 @@ namespace MalusAdmin.Servers.SysUser.Dto
         /// <summary>
         ///邮箱
         /// </summary> 
-        public String Email { get; set; }
-
-        /// <summary>
-        ///备注
-        /// </summary> 
-        public String Remark { get; set; }
+        public String Email { get; set; } 
     }
 }

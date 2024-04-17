@@ -39,25 +39,25 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.User, 'userName' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'>;
+type Model = Pick<Api.SystemManage.User, 'account' | 'name' | 'tel' | 'email' | 'userRoles' | 'status'>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
-    userName: '',
-    nickName: '',
-    userPhone: '',
-    userEmail: '',
+    account: '',
+    name: '',
+    tel: '',
+    email: '',
     userRoles: [],
     status: null
   };
 }
 
-type RuleKey = Extract<keyof Model, 'userName' | 'status'>;
+type RuleKey = Extract<keyof Model, 'account' | 'status'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  userName: defaultRequiredRule,
+  account: defaultRequiredRule,
   status: defaultRequiredRule
 };
 
@@ -122,16 +122,16 @@ watch(visible, () => {
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
         <NFormItem :label="$t('page.manage.user.userName')" path="userName">
-          <NInput v-model:value="model.userName" :placeholder="$t('page.manage.user.form.userName')" />
+          <NInput v-model:value="model.account" :placeholder="$t('page.manage.user.form.userName')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.nickName')" path="nickName">
-          <NInput v-model:value="model.nickName" :placeholder="$t('page.manage.user.form.nickName')" />
+        <NFormItem :label="$t('page.manage.user.nickName')" path="name">
+          <NInput v-model:value="model.name" :placeholder="$t('page.manage.user.form.nickName')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userPhone')" path="userPhone">
-          <NInput v-model:value="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
+          <NInput v-model:value="model.tel" :placeholder="$t('page.manage.user.form.userPhone')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userEmail')" path="email">
-          <NInput v-model:value="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
+          <NInput v-model:value="model.email" :placeholder="$t('page.manage.user.form.userEmail')" />
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
@@ -157,5 +157,4 @@ watch(visible, () => {
   </NDrawer>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

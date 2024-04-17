@@ -37,13 +37,14 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
       const current = pageNo;
       const size = pageSize;
       const total = totalRows;
+
       const recordsWithIndex = records.map((item, index) => {
         return {
           ...item,
           index: (current - 1) * size + index + 1
         };
       });
-
+      // console.log('records', recordsWithIndex);
       return {
         data: recordsWithIndex,
         pageNum: current,
