@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MalusAdmin.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using SqlSugar;
 
 namespace MalusAdmin.Servers.WeatherForecast
 {
@@ -16,11 +17,32 @@ namespace MalusAdmin.Servers.WeatherForecast
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-         
-        readonly IHttpContextAccessor _httpContext; 
+        private readonly ISqlSugarClient _db;
+        readonly IHttpContextAccessor _httpContext;
 
+        public WeatherForecastService(ISqlSugarClient db)
+        { 
+        
+          _db = db;
+        }
 
-       public async Task<IEnumerable<WeatherForecast>> Get()
+        /// <summary>
+        /// 生成实体
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task CreatClass(string values)
+        {
+            _db.DbFirst.IsCreateAttribute().StringNullable()
+                .Where(x=>x.StartsWith(values))
+                .CreateClassFile("D:\\PrideJoy\\MalusAdmin\\MalusApi\\MalusAdmin.Repository\\Entity", "Models");
+        }
+
+        /// <summary>
+        /// 测试
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
             var MyList = Enumerable.Range(1, 2).Select(index => new WeatherForecast
             {

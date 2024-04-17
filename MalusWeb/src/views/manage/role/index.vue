@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { fetchGetRoleList } from '@/service/api';
+import { getSysRolePage } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -11,15 +11,13 @@ import RoleSearch from './modules/role-search.vue';
 const appStore = useAppStore();
 
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
-  apiFn: fetchGetRoleList,
+  apiFn: getSysRolePage,
   apiParams: {
-    current: 1,
-    size: 10,
+    pageNo: 1,
+    pageSize: 10,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
-    status: null,
-    roleName: null,
-    roleCode: null
+    status: null
   },
   columns: () => [
     {
@@ -34,19 +32,13 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center'
     },
     {
-      key: 'roleName',
+      key: 'name',
       title: $t('page.manage.role.roleName'),
       align: 'center',
       minWidth: 120
     },
     {
-      key: 'roleCode',
-      title: $t('page.manage.role.roleCode'),
-      align: 'center',
-      minWidth: 120
-    },
-    {
-      key: 'roleDesc',
+      key: 'desc',
       title: $t('page.manage.role.roleDesc'),
       minWidth: 120
     },

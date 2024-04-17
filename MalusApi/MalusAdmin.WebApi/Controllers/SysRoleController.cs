@@ -21,6 +21,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpGet]
+        [Permission("角色查询分页")]
         public async Task<JsonR> PageList([FromQuery] UserPageIn input)
         {
             return ResultCode.Success.JsonR(await _sysRoleService.PageList(input));
@@ -31,6 +32,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpPost]
+        [Permission("角色添加")]
         public async Task<JsonR> Add(RoleAddandUpIn input)
         {
             return ResultCode.Success.JsonR(await _sysRoleService.Add(input));
@@ -42,6 +44,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpPost("{id}")]
+        [Permission("角色删除")]
         public async Task<JsonR> Delete(int id)
         {
             return ResultCode.Success.JsonR(await _sysRoleService.Delete(id));
@@ -54,6 +57,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpPost]
+        [Permission("角色更新")]
         public async Task<JsonR> Update(RoleAddandUpIn input)
         {
             return ResultCode.Success.JsonR(await _sysRoleService.Update(input));
@@ -64,7 +68,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// 角色列表
         /// </summary>
         /// <returns></returns> 
-        [HttpPost]
+        [HttpPost] 
         public async Task<JsonR> List()
         {
             return ResultCode.Success.JsonR(await _sysRoleService.List());

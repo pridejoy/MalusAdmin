@@ -22,6 +22,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpGet]
+        [Permission("用户信息分页查询")]
         public async Task<JsonR> PageList([FromQuery] UserPageIn input)
         {
             return ResultCode.Success.JsonR(await _sysUserService.PageList(input));
@@ -33,6 +34,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpPost]
+        [Permission("用户信息添加")]
         public async Task<JsonR> Add(UserAddIn input)
         {
             return ResultCode.Success.JsonR(await _sysUserService.Add(input));
@@ -44,6 +46,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpPost("{id}")]
+        [Permission("用户信息删除")]
         public async Task<JsonR> Delete(int id)
         {
             return ResultCode.Success.JsonR(await _sysUserService.Delete(id));
@@ -56,6 +59,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// </summary>
         /// <returns></returns> 
         [HttpPost]
+        [Permission("用户信息更新")]
         public async Task<JsonR> Update(UserEditIn input)
         {
             return ResultCode.Success.JsonR(await _sysUserService.Update(input));

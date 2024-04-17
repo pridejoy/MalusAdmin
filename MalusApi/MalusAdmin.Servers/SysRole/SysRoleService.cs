@@ -50,7 +50,7 @@ namespace MalusAdmin.Servers
         /// <returns></returns> 
         public async Task<bool> Add(RoleAddandUpIn input)
         {
-            var isExist = await _sysRoleRep.Where(x => x.Id == input.Id).AnyAsync();
+            var isExist = await _sysRoleRep.Where(x => x.Name == input.Name).AnyAsync();
             if (isExist) ResultCode.Fail.JsonR("已存在当前角色");
             var entity = input.Adapt<TSysRole>(); 
             return await _sysRoleRep.InsertReturnIdentityAsync(entity) > 0;

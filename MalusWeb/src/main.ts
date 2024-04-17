@@ -6,15 +6,16 @@ import { setupStore } from './store';
 import { setupRouter } from './router';
 import { setupI18n } from './locales';
 import App from './App.vue';
-// import { getSysUserPage } from './service/api/sysuser';
+import { getRolesList } from './service/api';
 
-// getSysUserPage()
-//   .then(res => {
-//     console.log(res);
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
+getRolesList()
+  .then(res => {
+    console.log(res);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
 // axios({
 //   url: 'https://localhost:7154/api/Home/Index',
 //   method: 'get',

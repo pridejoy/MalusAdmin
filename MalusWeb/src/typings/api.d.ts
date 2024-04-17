@@ -26,7 +26,7 @@ declare namespace Api {
      * - "1": enabled
      * - "2": disabled
      */
-    type EnableStatus = '10' | '0';
+    type EnableStatus = '1' | '2';
 
     /** common record */
     type CommonRecord<T = any> = {
@@ -95,23 +95,21 @@ declare namespace Api {
     /** role */
     type Role = Common.CommonRecord<{
       /** role name */
-      roleName: string;
-      /** role code */
-      roleCode: string;
+      name: string;
       /** role description */
-      roleDesc: string;
+      desc: string;
     }>;
 
     /** role search params */
     type RoleSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & CommonSearchParams
+      Pick<Api.SystemManage.Role, 'name' | 'status'> & CommonSearchParams
     >;
 
     /** role list */
     type RoleList = Common.PaginatingQueryRecord<Role>;
 
     /** all role */
-    type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
+    type AllRole = Pick<Role, 'id' | 'name'>;
 
     /**
      * user gender

@@ -1,174 +1,116 @@
 using System;
 using SqlSugar;
 
-namespace MalusAdmin.Entity {
+namespace MalusAdmin.Entity
+{
 	/// <summary>
 	/// t_sys_menu:数据库映射类
 	/// 
 	/// </summary>
 	[Serializable]
 	[SugarTable("t_sys_menu")]
-	public class TSysMenu {
+	public class TSysMenu:ModelBase
+    {
+         
+        /// <summary>
+        /// Desc:父级菜单ID
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public int ParentId { get; set; }
 
-		/// <summary>
-		///主键
-		/// </summary>
-		[SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
-		public Int32 Id { get; set; }
+        /// <summary>
+        /// Desc:菜单类型1 .目录 2.菜单
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public int MenuType { get; set; }
 
-		/// <summary>
-		///系统字段-创建人
-		/// </summary>
-		[SugarColumn(ColumnName = "SysCreateUser")]
-		public Int32 SysCreateUser { get; set; }
+        /// <summary>
+        /// Desc:菜单名称
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string? MenuName { get; set; }
 
-		/// <summary>
-		///系统字段-创建时间
-		///默认值:CURRENT_TIMESTAMP
-		/// </summary>
-		[SugarColumn(ColumnName = "SysCreateTime", IsOnlyIgnoreInsert = true)]
-		public DateTime SysCreateTime { get; set; }
+        /// <summary>
+        /// Desc:路由名称
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string RouteName { get; set; }
 
-		/// <summary>
-		///系统字段-修改人
-		/// </summary>
-		[SugarColumn(ColumnName = "SysUpdateUser")]
-		public Int32 SysUpdateUser { get; set; }
+        /// <summary>
+        /// Desc:路由路径
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string RoutePath { get; set; }
 
-		/// <summary>
-		///系统字段-修改时间
-		///默认值:CURRENT_TIMESTAMP
-		/// </summary>
-		[SugarColumn(ColumnName = "SysUpdateTime", IsOnlyIgnoreInsert = true)]
-		public DateTime SysUpdateTime { get; set; }
+        /// <summary>
+        /// Desc:菜单状态
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public int? Status { get; set; }
 
-		/// <summary>
-		///系统字段-删除人
-		/// </summary>
-		[SugarColumn(ColumnName = "SysDeleteUser")]
-		public Int32 SysDeleteUser { get; set; }
+        /// <summary>
+        /// Desc:隐藏菜单
+        /// Default:0
+        /// Nullable:False
+        /// </summary>           
+        public bool HideInMenu { get; set; }
 
-		/// <summary>
-		///系统字段-删除时间
-		/// </summary>
-		[SugarColumn(ColumnName = "SysDeleteTime", IsOnlyIgnoreInsert = true)]
-		public DateTime SysDeleteTime { get; set; }
+        /// <summary>
+        /// Desc:排序
+        /// Default:0
+        /// Nullable:True
+        /// </summary>           
+        public int? Sort { get; set; }
 
-		/// <summary>
-		///系统字段-删除标记
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "SysIsDelete", DefaultValue = "0")]
-		public Boolean SysIsDelete { get; set; }
+        /// <summary>
+        /// Desc:页面组件
+        /// Default:
+        /// Nullable:False
+        /// </summary>           
+        public string Component { get; set; }
 
-		/// <summary>
-		///父级ID
-		/// </summary>
-		[SugarColumn(ColumnName = "ParentId")]
-		public Int32 ParentId { get; set; }
+        /// <summary>
+        /// Desc:图标
+        /// Default:0
+        /// Nullable:False
+        /// </summary>           
+        public string Icon { get; set; }
 
-		/// <summary>
-		///菜单标题
-		/// </summary>
-		[SugarColumn(ColumnName = "Title")]
-		public String Title { get; set; }
+        /// <summary>
+        /// Desc:图标类型
+        /// Default:0
+        /// Nullable:False
+        /// </summary>           
+        public bool IconType { get; set; }
 
-		/// <summary>
-		///菜单图标
-		/// </summary>
-		[SugarColumn(ColumnName = "Icon")]
-		public String Icon { get; set; }
+        /// <summary>
+        /// Desc:
+        /// Default:1
+        /// Nullable:True
+        /// </summary>           
+        public bool? KeepAlive { get; set; }
 
-		/// <summary>
-		///路由名称
-		/// </summary>
-		[SugarColumn(ColumnName = "Name")]
-		public String Name { get; set; }
+        /// <summary>
+        /// Desc:
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string? Redirect { get; set; }
 
-		/// <summary>
-		///路由地址
-		/// </summary>
-		[SugarColumn(ColumnName = "Path")]
-		public String Path { get; set; }
+        /// <summary>
+        /// Desc:
+        /// Default:
+        /// Nullable:True
+        /// </summary>           
+        public string? Href { get; set; }
 
-		/// <summary>
-		///组件路径
-		/// </summary>
-		[SugarColumn(ColumnName = "Component")]
-		public String Component { get; set; }
-
-		/// <summary>
-		///是否隐藏
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "IsHide", DefaultValue = "0")]
-		public Boolean IsHide { get; set; }
-
-		/// <summary>
-		///是否缓存
-		///默认值:1
-		/// </summary>
-		[SugarColumn(ColumnName = "IsKeepAlive", DefaultValue = "1")]
-		public Boolean IsKeepAlive { get; set; }
-
-		/// <summary>
-		///是否内嵌网址
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "IsIframe", DefaultValue = "0")]
-		public Boolean IsIframe { get; set; }
-
-		/// <summary>
-		///是否固定(不允许关闭)
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "IsAffix", DefaultValue = "0")]
-		public Boolean IsAffix { get; set; }
-
-		/// <summary>
-		///是否外部连接(新标签打开)
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "IsLink", DefaultValue = "0")]
-		public Boolean IsLink { get; set; }
-
-		/// <summary>
-		///重定向地址
-		/// </summary>
-		[SugarColumn(ColumnName = "Redirect")]
-		public String Redirect { get; set; }
-
-		/// <summary>
-		///外部或者Iframe网址
-		/// </summary>
-		[SugarColumn(ColumnName = "Url")]
-		public String Url { get; set; }
-
-		/// <summary>
-		///菜单类型
-		///默认值:Menu
-		/// </summary>
-		[SugarColumn(ColumnName = "Type", DefaultValue = "Menu")]
-		public String Type { get; set; }
-
-		/// <summary>
-		///排序
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "Sort", DefaultValue = "0")]
-		public Int32 Sort { get; set; }
-
-		/// <summary>
-		///访问的api控制器名称
-		/// </summary>
-		[SugarColumn(ColumnName = "ApiTag")]
-		public String ApiTag { get; set; }
-
-		/// <summary>
-		///操作权限
-		/// </summary>
-		[SugarColumn(ColumnName = "Permission")]
-		public String Permission { get; set; }
+   
 
     }
 }
