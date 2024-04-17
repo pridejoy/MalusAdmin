@@ -108,9 +108,9 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         /// 获取用户按钮权限
         /// </summary>
         /// <returns></returns>
-        public async Task<List<TSysUserPermission>> GetUserButtonPermiss()
+        public async Task<List<TSysUserPermission>> GetUserButtonPermiss(int UserId)
         {
-            return await _sysuserpermissionRep.Where(x=>x.UserId==1).ToListAsync() ;
+            return await _sysuserpermissionRep.Where(x=>x.UserId== UserId).ToListAsync() ;
         }
 
 

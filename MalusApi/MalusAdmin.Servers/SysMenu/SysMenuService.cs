@@ -36,11 +36,10 @@ namespace MalusAdmin.Servers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<PageList<SysMenuPageOut>> PageList(UserPageIn input)
+        public async Task<PageList<TSysMenu>> PageList(UserPageIn input)
         {
-            var dictTypes = await _sysMenuRep.AsQueryable()
+            var dictTypes = await _sysMenuRep.Context.Queryable<TSysMenu>().ToTree(x=>x.children,x=>x.Id,0).
                  //.WhereIF(!string.IsNullOrWhiteSpace(input.SearchValue), u => u.Name.Contains(input.SearchValue.Trim()))
-                 .Select<SysMenuPageOut>()
                  .ToPagedListAsync(input.PageNo, input.PageSize);
             return dictTypes.PagedResult();
         }

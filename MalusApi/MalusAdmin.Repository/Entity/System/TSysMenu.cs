@@ -110,7 +110,11 @@ namespace MalusAdmin.Entity
         /// </summary>           
         public string? Href { get; set; }
 
-   
 
+        /// <summary>
+        /// 子菜单
+        /// </summary>
+        [SqlSugar.SugarColumn(IsIgnore = true)]
+        public List<TSysMenu> children { get; set; }
     }
 }
