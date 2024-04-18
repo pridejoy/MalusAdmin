@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MalusAdmin.Common;
 using MalusAdmin.Entity;
+using MalusAdmin.Servers.SysRolePermission.Dto;
 using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -15,14 +16,14 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
     /// <summary>
     /// 用户按钮权限
     /// </summary>
-    public class SysUserPermissionService
+    public class SysRolePermissionService
     { 
-        private readonly SqlSugarRepository<TSysUserPermission> _sysuserpermissionRep;  // 仓储
+        private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep;  // 仓储
         private readonly ITokenService _TokenService;
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
         private readonly ICacheService _cacheService;
 
-        public SysUserPermissionService(SqlSugarRepository<TSysUserPermission> sysuserpermissionRep,
+        public SysRolePermissionService(SqlSugarRepository<TSysRolePermission> sysuserpermissionRep,
             ICacheService cacheService,
             ITokenService tokenService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
@@ -85,22 +86,22 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         /// 删除用户所有的权限信息
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> DeleteUserButtonPermiss(int UserId)
+        public async Task<bool> DeleteUserButtonPermiss(int RoleId)
         { 
-            return await _sysuserpermissionRep.DeleteAsync(x => x.UserId == UserId)>0;
+            return await _sysuserpermissionRep.DeleteAsync(x => x.RoleId == RoleId) >0;
         }
 
         /// <summary>
         /// 为用户添加按钮权限
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> AddUserButtonPermiss(List<string> PermissionId)
+        public async Task<bool> AddUserButtonPermiss(UpdateRoleButtonIn Input)
         {
             await DeleteUserButtonPermiss(0);
-            var list=new List<TSysUserPermission>();
-            PermissionId.ForEach(x =>
+            var list=new List<TSysRolePermission>();
+            Input.PermissionId.ForEach(x =>
             {
-                list.Add(new TSysUserPermission { UserId = 1, UserPermiss = x });
+                list.Add(new TSysRolePermission { RoleId = Input.RoleId, UserPermiss = x });
             }); 
             return await _sysuserpermissionRep.InsertAsync(list)>0; 
         }
@@ -108,9 +109,9 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         /// 获取用户按钮权限
         /// </summary>
         /// <returns></returns>
-        public async Task<List<TSysUserPermission>> GetUserButtonPermiss(int UserId)
+        public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
         {
-            return await _sysuserpermissionRep.Where(x=>x.UserId== UserId).ToListAsync() ;
+            return await _sysuserpermissionRep.Where(x=>x.RoleId == RoleId).ToListAsync() ;
         }
 
 

@@ -43,13 +43,13 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.Role, 'name'  | 'desc' | 'status'>;
+type Model = Pick<Api.SystemManage.Role, 'name' | 'desc' | 'status'>;
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
-    name: '', 
+    name: '',
     desc: '',
     status: null
   };
@@ -58,13 +58,13 @@ function createDefaultModel(): Model {
 type RuleKey = Exclude<keyof Model, 'roleDesc'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  roleName: defaultRequiredRule,
-  roleCode: defaultRequiredRule,
+  name: defaultRequiredRule,
+  desc: defaultRequiredRule,
   status: defaultRequiredRule
 };
 
 const roleId = computed(() => props.rowData?.id || -1);
-
+console.log('roleId', roleId);
 const isEdit = computed(() => props.operateType === 'edit');
 
 function handleUpdateModelWhenEdit() {
@@ -75,6 +75,7 @@ function handleUpdateModelWhenEdit() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    console.log('props.rowData', props.rowData);
   }
 }
 
@@ -103,11 +104,13 @@ watch(visible, () => {
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
         <NFormItem :label="$t('page.manage.role.roleName')" path="roleName">
-          <NInput v-model:value="model.roleName" :placeholder="$t('page.manage.role.form.roleName')" />
+          <NInput v-model:value="model.name" :placeholder="$t('page.manage.role.form.roleName')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.role.roleCode')" path="roleCode">
+        <!--
+ <NFormItem :label="$t('page.manage.role.roleCode')" path="roleCode">
           <NInput v-model:value="model.roleCode" :placeholder="$t('page.manage.role.form.roleCode')" />
         </NFormItem>
+-->
         <NFormItem :label="$t('page.manage.role.roleStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
             <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />

@@ -8,16 +8,16 @@ namespace MalusAdmin.Entity
     /// 
     /// </summary>
     [Serializable]
-	[SugarTable("t_sys_user_button_permiss")]
-	public class TSysUserPermission:ModelBase
+	[SugarTable("t_sys_role_permiss")]
+	public class TSysRolePermission:ModelBase
     {
 
         /// <summary>
-        /// Desc:用户id
+        /// Desc:角色id
         /// Default:
         /// Nullable:False
         /// </summary>           
-        public int UserId { get; set; }
+        public int RoleId { get; set; }
 
         /// <summary>
         /// Desc:用户访问接口的权限

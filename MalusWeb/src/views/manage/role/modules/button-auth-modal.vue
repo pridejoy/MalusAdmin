@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 import { $t } from '@/locales';
-
+import { getSysRoleAllPermission } from '@/service/api';
 defineOptions({
   name: 'ButtonAuthModal'
 });
@@ -23,34 +23,28 @@ function closeModal() {
 
 const title = computed(() => $t('common.edit') + $t('page.manage.role.buttonAuth'));
 
-type ButtonConfig = {
-  id: string;
-  name: string;
-};
-
-const tree = shallowRef<ButtonConfig[]>([]);
+const tree = shallowRef<ResRolePermission[]>([]);
 
 async function getAllButtons() {
   // request
-  tree.value = [
-    // { id: 1, label: 'button1', code: 'code1' },
-    // { id: 2, label: 'button2', code: 'code2' },
-    // { id: 3, label: 'button3', code: 'code3' },
-  ];
+  getSysRoleAllPermission().then(res => {
+    tree.value = res.data;
+  });
 }
 
-const checks = shallowRef<number[]>([]);
+const checks = shallowRef<string[]>([]);
 
 async function getChecks() {
   console.log(props.roleId);
   // request
-  checks.value = [1, 2, 3, 4, 5];
+  // 获取当前已经勾选的id
+  checks.value = ['api:SysRole:Add'];
 }
 
 function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
-
+  // 修改当前已经勾选的id
   window.$message?.success?.($t('common.modifySuccess'));
 
   closeModal();
@@ -70,7 +64,8 @@ init();
     <NTree
       v-model:checked-keys="checks"
       :data="tree"
-      key-field="id"
+      key-field="permissionId"
+      label-field="permissionName"
       block-line
       checkable
       expand-on-click

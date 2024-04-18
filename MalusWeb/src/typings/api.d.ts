@@ -21,12 +21,12 @@ declare namespace Api {
     }
 
     /**
-     * enable status
+     * enable status 状态
      *
-     * - "1": enabled
-     * - "2": disabled
+     * - "1": enabled 启用
+     * - "0"， disabled 禁用
      */
-    type EnableStatus = '1' | '2';
+    type EnableStatus = '0' | '1';
 
     /** common record */
     type CommonRecord<T = any> = {

@@ -48,7 +48,7 @@ namespace MalusAdmin.Servers
             {  
               throw new Exception("密码输入错误");
             }
-            if (user.Status != 10)
+            if (user.Status != 1)
             {
                 throw new Exception("该账户已被冻结"); 
             }

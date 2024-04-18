@@ -4,12 +4,12 @@ import request2 from '../request/request';
 
 // 登录接口方法
 export const reqLogin = (account: string, passWord: string) => {
-  return request2.post<any, any>('api/SysLogin/Login', { account, passWord });
+  return request2.post<any, any>('/SysLogin/Login', { account, passWord });
 };
 
 /** Get user info */
 export const getTokenUserInfo = () => {
-  return request2.get<any, any>('api/SysLogin/GetUserInfo');
+  return request2.get<any, any>('/SysLogin/GetUserInfo');
 };
 
 /**

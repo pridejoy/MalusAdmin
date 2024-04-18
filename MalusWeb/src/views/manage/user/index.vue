@@ -67,14 +67,12 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
         if (row.status === null) {
           return null;
         }
-
         const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
-          10: 'success',
-          0: 'warning'
+          0: 'warning',
+          1: 'success',
+          2: 'warning'
         };
-
         const label = $t(enableStatusRecord[row.status]);
-
         return <NTag type={tagMap[row.status]}>{label}</NTag>;
       }
     },

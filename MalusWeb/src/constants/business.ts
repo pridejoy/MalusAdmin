@@ -1,7 +1,7 @@
 import { transformRecordToOption } from '@/utils/common';
 
 export const enableStatusRecord: Record<Api.Common.EnableStatus, App.I18n.I18nKey> = {
-  '10': 'page.manage.common.status.enable',
+  '1': 'page.manage.common.status.enable',
   '0': 'page.manage.common.status.disable'
 };
 

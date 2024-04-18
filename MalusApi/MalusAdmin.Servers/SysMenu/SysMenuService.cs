@@ -32,16 +32,15 @@ namespace MalusAdmin.Servers
 
 
         /// <summary>
-        /// 列表分页
+        /// 菜单树状查询
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<PageList<TSysMenu>> PageList(UserPageIn input)
+        public async Task<List<TSysMenu>> GetTreeList()
         {
-            var dictTypes = await _sysMenuRep.Context.Queryable<TSysMenu>().ToTree(x=>x.children,x=>x.Id,0).
-                 //.WhereIF(!string.IsNullOrWhiteSpace(input.SearchValue), u => u.Name.Contains(input.SearchValue.Trim()))
-                 .ToPagedListAsync(input.PageNo, input.PageSize);
-            return dictTypes.PagedResult();
+            var sysmenulist = await _sysMenuRep.Context.Queryable<TSysMenu>()
+                .ToTreeAsync(x => x.children, x => x.Id, 0);
+            return sysmenulist;
         }
 
 
@@ -77,7 +76,7 @@ namespace MalusAdmin.Servers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<bool> Update(RoleAddandUpIn input)
+        public async Task<bool> Update(MenuAddandUpIn input)
         {
             var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == input.Id);
             if (entity == null) ResultCode.Fail.JsonR("为找到当前账号");
