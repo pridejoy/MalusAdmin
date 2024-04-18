@@ -101,7 +101,7 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
       return null;
     },
     transformBackendResponse(response) {
-      console.log('请求返回信息:', response.data.body);
+      // console.log('请求返回信息:', response.data.body);
       return response.data.body;
     },
     onError(error) {

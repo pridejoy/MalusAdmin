@@ -26,9 +26,9 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns> 
         [HttpGet]
         [Permission("菜单树状列表")]
-        public async Task<JsonR> PageList()
+        public async Task<JsonR> MenuTreeList()
         {
-            return ResultCode.Success.JsonR(await _service.GetTreeList());
+            return ResultCode.Success.JsonR(await _service.MenuTreeList());
         }
 
 

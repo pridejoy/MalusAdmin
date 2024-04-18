@@ -31,9 +31,8 @@ namespace MalusAdmin.Entity {
 		/// <summary>
 		///是否启用
 		///默认值:1
-		/// </summary>
-		[SugarColumn(ColumnName = "Status", DefaultValue = "1")]
-		public Boolean Status { get; set; }
+		/// </summary> 
+		public int Status { get; set; }
 
 		/// <summary>
 		///数据范围(字典数据DataRang)

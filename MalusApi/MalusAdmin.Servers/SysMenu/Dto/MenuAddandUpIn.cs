@@ -9,6 +9,10 @@ namespace MalusAdmin.Servers.SysMenu
     public class MenuAddandUpIn
     {
         /// <summary>
+        /// 菜单id
+        /// </summary>
+        public int? Id { get; set; }
+        /// <summary>
         /// Desc:父级菜单ID
         /// Default:
         /// Nullable:False
@@ -97,13 +101,13 @@ namespace MalusAdmin.Servers.SysMenu
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string? Redirect { get; set; }
+        //public string? Redirect { get; set; }
 
         /// <summary>
         /// Desc:
         /// Default:
         /// Nullable:True
         /// </summary>           
-        public string? Href { get; set; }
+        //public string? Href { get; set; }
     }
 }

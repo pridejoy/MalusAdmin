@@ -6,9 +6,9 @@ import { setupStore } from './store';
 import { setupRouter } from './router';
 import { setupI18n } from './locales';
 import App from './App.vue';
-import { getSysRoleAllPermission } from './service/api';
+import { getSysRolePage } from './service/api';
 
-getSysRoleAllPermission()
+getSysRolePage()
   .then(res => {
     console.log(res);
   })

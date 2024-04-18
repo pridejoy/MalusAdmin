@@ -36,10 +36,10 @@ namespace MalusAdmin.Servers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<List<TSysMenu>> GetTreeList()
+        public async Task<List<TSysMenu>> MenuTreeList()
         {
             var sysmenulist = await _sysMenuRep.Context.Queryable<TSysMenu>()
-                .ToTreeAsync(x => x.children, x => x.Id, 0);
+                .ToTreeAsync(x => x.children, x => x.ParentId, 0);
             return sysmenulist;
         }
 

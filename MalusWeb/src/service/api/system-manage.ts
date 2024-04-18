@@ -53,7 +53,7 @@ export function fetchGetMenuList() {
 /** get all pages */
 export function fetchGetAllPages() {
   return request<string[]>({
-    url: '/systemManage/getAllPages',
+    url: '/SysMenu/GetTreeList',
     method: 'get'
   });
 }

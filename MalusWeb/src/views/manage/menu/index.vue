@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
+import { getMenuTreeList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -19,7 +19,7 @@ const { bool: drawerVisible, setTrue: openDrawer, setFalse: _closeDrawer } = use
 const wrapperRef = ref<HTMLElement | null>(null);
 
 const { columns, columnChecks, data, loading, pagination, getData } = useTable({
-  apiFn: fetchGetMenuList,
+  apiFn: getMenuTreeList,
   columns: () => [
     {
       type: 'selection',
@@ -37,9 +37,9 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       align: 'center',
       width: 80,
       render: row => {
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
+        const tagMap: any = {
           1: 'default',
-          2: 'primary'
+          0: 'primary'
         };
 
         const label = $t(menuTypeRecord[row.menuType]);
@@ -214,7 +214,7 @@ function handleAddChildMenu(item: Api.SystemManage.Menu) {
 const allPages = ref<string[]>([]);
 
 async function getAllPages() {
-  const { data: pages } = await fetchGetAllPages();
+  const { data: pages } = await fetchGetTreeList();
   allPages.value = pages || [];
 }
 

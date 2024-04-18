@@ -1,7 +1,7 @@
 import { request } from '../request';
 
 /** 角色分页 */
-export function getSysRolePage(params?: any) {
+export function getSysRolePage(params?: Api.SystemManage.RoleSearchParams) {
   return request<Api.SystemManage.Role>({
     url: '/SysRole/PageList',
     method: 'get',
