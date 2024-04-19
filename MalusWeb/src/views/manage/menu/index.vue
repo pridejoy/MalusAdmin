@@ -153,7 +153,7 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       width: 230,
       render: row => (
         <div class="flex-center justify-end gap-8px">
-          {row.menuType == '1' && (
+          {row.menuType == 1 && (
             <NButton type="primary" ghost size="small" onClick={() => handleAddChildMenu(row)}>
               {$t('page.manage.menu.addChildMenu')}
             </NButton>

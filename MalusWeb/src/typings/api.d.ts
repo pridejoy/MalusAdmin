@@ -43,7 +43,7 @@ declare namespace Api {
       /** record update time */
       sysUpdateTime: string;
       /** record status */
-      status: EnableStatus | null;
+      status: EnableStatus | number | null;
     } & T;
   }
 
@@ -166,13 +166,13 @@ declare namespace Api {
      * - "1": iconify icon
      * - "2": local icon
      */
-    type IconType = '1' | '2';
+    type IconType = 1 | 2;
 
     type Menu = Common.CommonRecord<{
       /** parent menu id */
       parentId: number;
       /** menu type */
-      menuType: MenuType;
+      menuType: number;
       /** menu name */
       menuName: string;
       /** route name */
@@ -192,7 +192,7 @@ declare namespace Api {
       /** icon type */
       iconType: IconType;
       /** menu order */
-      order: number;
+      sort: number;
       /** whether to cache the route */
       keepAlive?: boolean;
       /** outer link */

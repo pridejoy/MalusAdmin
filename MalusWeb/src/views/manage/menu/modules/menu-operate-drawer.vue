@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { computed, reactive, watch } from 'vue';
 import type { SelectOption } from 'naive-ui';
+import { key } from 'localforage';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
@@ -22,6 +23,17 @@ interface Props {
   /** all pages */
   allPages: string[];
 }
+
+const enableStatus: any = [
+  {
+    key: 1,
+    name: '启用'
+  },
+  {
+    key: 0,
+    name: '禁用'
+  }
+];
 
 const props = defineProps<Props>();
 
@@ -58,7 +70,7 @@ type Model = Pick<
   | 'component'
   | 'status'
   | 'hideInMenu'
-  | 'order'
+  | 'sort'
   | 'parentId'
 > & {
   layout: string;
@@ -69,17 +81,17 @@ const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
-    menuType: '1',
+    menuType: 1,
     menuName: '',
     icon: '',
-    iconType: '1',
+    iconType: 1,
     routeName: '',
     routePath: '',
     layout: '',
     page: '',
-    status: null,
+    status: 1,
     hideInMenu: false,
-    order: 0,
+    sort: 0,
     parentId: 0
   };
 }
@@ -106,7 +118,7 @@ const localIconOptions = localIcons.map<SelectOption>(item => ({
 
 const showLayout = computed(() => model.parentId === 0);
 
-const showPage = computed(() => model.menuType === '2');
+const showPage = computed(() => model.menuType == 2);
 
 const pageOptions = computed(() => {
   const allPages = [...props.allPages];
@@ -137,7 +149,7 @@ const layoutOptions: CommonType.Option[] = [
 function handleUpdateModel() {
   if (props.operateType === 'add') {
     Object.assign(model, createDefaultModel());
-
+    console.log('model', model);
     return;
   }
 
@@ -164,7 +176,10 @@ async function handleSubmit() {
   await validate();
 
   model.component = transformLayoutAndPageToComponent(model.layout, model.page);
-
+  // 提交事件
+  if (props.operateType === 'add') {
+    console.log('tijiao', model);
+  }
   // request
   window.$message?.success($t('common.updateSuccess'));
   closeDrawer();
@@ -197,14 +212,14 @@ watch(visible, () => {
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.icon')" path="icon">
-          <template v-if="model.iconType === '1'">
+          <template v-if="model.iconType == 1">
             <NInput v-model:value="model.icon" :placeholder="$t('page.manage.menu.form.icon')" class="flex-1">
               <template #suffix>
                 <SvgIcon v-if="model.icon" :icon="model.icon" class="text-icon" />
               </template>
             </NInput>
           </template>
-          <template v-if="model.iconType === '2'">
+          <template v-if="model.iconType == 2">
             <NSelect
               v-model:value="model.icon"
               :placeholder="$t('page.manage.menu.form.localIcon')"
@@ -230,7 +245,7 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.menuStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio v-for="item in enableStatus" :key="item.key" :value="item.key" :label="item.name" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.hideInMenu')" path="hideInMenu">
@@ -240,7 +255,7 @@ watch(visible, () => {
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.order')" path="order">
-          <NInputNumber v-model:value="model.order" :placeholder="$t('page.manage.menu.form.order')" />
+          <NInputNumber v-model:value="model.sort" :placeholder="$t('page.manage.menu.form.order')" />
         </NFormItem>
       </NForm>
       <template #footer>
