@@ -39,10 +39,14 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       render: row => {
         const tagMap: any = {
           1: 'default',
-          0: 'primary'
+          2: 'primary'
         };
 
-        const label = $t(menuTypeRecord[row.menuType]);
+        const menuType: any = {
+          '1': 'page.manage.menu.type.directory',
+          '2': 'page.manage.menu.type.menu'
+        };
+        const label = $t(menuType[row.menuType]);
 
         return <NTag type={tagMap[row.menuType]}>{label}</NTag>;
       }
@@ -66,7 +70,7 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       align: 'center',
       width: 60,
       render: row => {
-        const icon = row.iconType === '1' ? row.icon : undefined;
+        const icon = row.iconType == '1' ? row.icon : undefined;
 
         const localIcon = row.iconType === '2' ? row.icon : undefined;
 
@@ -98,14 +102,16 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
         if (row.status === null) {
           return null;
         }
-
         const tagMap: any = {
           1: 'success',
           0: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
-
+        const enableStatus: any = {
+          '1': 'page.manage.common.status.enable',
+          '0': 'page.manage.common.status.disable'
+        };
+        const label = $t(enableStatus[row.status]);
         return <NTag type={tagMap[row.status]}>{label}</NTag>;
       }
     },
@@ -115,16 +121,17 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       align: 'center',
       width: 80,
       render: row => {
-        const hide: CommonType.YesOrNo = row.hideInMenu ? 'Y' : 'N';
-
-        const tagMap: Record<CommonType.YesOrNo, NaiveUI.ThemeColor> = {
-          Y: 'error',
-          N: 'default'
+        interface TagMapType {
+          [key: string]: 'error' | 'default';
+        }
+        const hide: boolean = row.hideInMenu as boolean;
+        const tagMap: TagMapType = {
+          是: 'error',
+          否: 'default'
         };
 
-        const label = $t(yesOrNoRecord[hide]);
-
-        return <NTag type={tagMap[hide]}>{label}</NTag>;
+        // 直接在 JSX 中使用条件渲染，避免使用中间变量 hideStr
+        return <NTag type={tagMap[hide ? '是' : '否'] || 'default'}>{hide ? '是' : '否'}</NTag>;
       }
     },
     {
@@ -134,7 +141,7 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       align: 'center'
     },
     {
-      key: 'order',
+      key: 'sort',
       title: $t('page.manage.menu.order'),
       align: 'center',
       width: 60
@@ -146,7 +153,7 @@ const { columns, columnChecks, data, loading, pagination, getData } = useTable({
       width: 230,
       render: row => (
         <div class="flex-center justify-end gap-8px">
-          {row.menuType === '1' && (
+          {row.menuType == '1' && (
             <NButton type="primary" ghost size="small" onClick={() => handleAddChildMenu(row)}>
               {$t('page.manage.menu.addChildMenu')}
             </NButton>
@@ -213,9 +220,12 @@ function handleAddChildMenu(item: Api.SystemManage.Menu) {
 
 const allPages = ref<string[]>([]);
 
+const allMenus = ref<Api.SystemManage.MenuList[]>([]);
 async function getAllPages() {
-  const { data: pages } = await fetchGetTreeList();
-  allPages.value = pages || [];
+  await getMenuTreeList().then(res => {
+    console.log('菜单的数据', res);
+    // allMenus.value = res ? res.data : [];
+  });
 }
 
 function init() {

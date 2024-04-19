@@ -87,7 +87,7 @@ namespace MalusAdmin.Entity
         /// Default:0
         /// Nullable:False
         /// </summary>           
-        public bool IconType { get; set; }
+        public int IconType { get; set; }
 
         /// <summary>
         /// Desc:

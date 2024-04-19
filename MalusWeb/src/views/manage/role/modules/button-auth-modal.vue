@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { log } from 'node:console';
 import { computed, shallowRef } from 'vue';
 import { $t } from '@/locales';
-import { getSysRoleAllPermission } from '@/service/api';
+import { addUserButtonPermiss, getRoleButen, getSysRoleAllPermission } from '@/service/api';
 defineOptions({
   name: 'ButtonAuthModal'
 });
@@ -35,14 +36,15 @@ async function getAllButtons() {
 const checks = shallowRef<string[]>([]);
 
 async function getChecks() {
-  console.log(props.roleId);
-  // request
-  // 获取当前已经勾选的id
-  checks.value = ['api:SysRole:Add'];
+  getRoleButen({ RoleId: props.roleId }).then(res => {
+    console.log(res);
+    checks.value = res.data !== null ? res.data : [];
+  });
 }
 
 function handleSubmit() {
   console.log(checks.value, props.roleId);
+  addUserButtonPermiss({ roleId: props.roleId, permissionId: checks.value }).then(res => {});
   // request
   // 修改当前已经勾选的id
   window.$message?.success?.($t('common.modifySuccess'));

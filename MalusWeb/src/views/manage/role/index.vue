@@ -48,15 +48,15 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center',
       width: 100,
       render: row => {
-        // if (row.status === null) {
-        //   return null;
-        // }
-        // const tagMap: any = {
-        //   1: 'success',
-        //   0: 'warning'
-        // };
-        // const label = $t(enableStatusRecord[row.status]);
-        // return <NTag type={tagMap[row.status]}>{label}</NTag>;
+        if (row.status === null) {
+          return null;
+        }
+        const tagMap: any = {
+          1: 'success',
+          0: 'warning'
+        };
+        const label = $t(enableStatusRecord[row.status]);
+        return <NTag type={tagMap[row.status]}>{label}</NTag>;
       }
     },
     {

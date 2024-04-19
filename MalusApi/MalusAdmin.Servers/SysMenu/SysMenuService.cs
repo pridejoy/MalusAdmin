@@ -11,6 +11,7 @@ using MalusAdmin.Servers.SysRole;
 using MalusAdmin.Servers.SysUser.Dto;
 using Mapster;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using SqlSugar;
 
 namespace MalusAdmin.Servers
@@ -36,11 +37,18 @@ namespace MalusAdmin.Servers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<List<TSysMenu>> MenuTreeList()
+        public async Task<PageList<TSysMenu>> MenuTreeList()
         {
             var sysmenulist = await _sysMenuRep.Context.Queryable<TSysMenu>()
                 .ToTreeAsync(x => x.children, x => x.ParentId, 0);
-            return sysmenulist;
+            return new PageList<TSysMenu>
+            {
+                PageNo = 1,
+                PageSize = 999,
+                TotalPage = 1,
+                TotalRows = sysmenulist.Count,
+                Records = sysmenulist
+            };
         }
 
 

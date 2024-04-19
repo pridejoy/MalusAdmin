@@ -97,7 +97,7 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         /// <returns></returns>
         public async Task<bool> AddUserButtonPermiss(UpdateRoleButtonIn Input)
         {
-            await DeleteUserButtonPermiss(0);
+            await DeleteUserButtonPermiss(Input.RoleId);
             var list=new List<TSysRolePermission>();
             Input.PermissionId.ForEach(x =>
             {

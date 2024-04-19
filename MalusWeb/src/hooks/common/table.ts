@@ -44,7 +44,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
           index: (current - 1) * size + index + 1
         };
       });
-      // console.log('records', recordsWithIndex);
+      console.log('表格加载返回的数据:', recordsWithIndex);
       return {
         data: recordsWithIndex,
         pageNum: current,
