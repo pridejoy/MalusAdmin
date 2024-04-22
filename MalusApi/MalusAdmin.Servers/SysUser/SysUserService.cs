@@ -132,7 +132,7 @@ namespace MalusAdmin.Servers
         public async Task<PageList<TSysUser>> PageList(UserPageIn input)
         {
             var dictTypes = await _sysUserRep.AsQueryable() 
-                 .WhereIF(!string.IsNullOrWhiteSpace(input.SearchValue), u => u.Name.Contains(input.SearchValue.Trim()))
+                 .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord), u => u.Name.Contains(input.KeyWord.Trim()))
                  //.Select<UserPageOut>()
                  .ToPagedListAsync(input.PageNo, input.PageSize);
             return dictTypes.PagedResult();

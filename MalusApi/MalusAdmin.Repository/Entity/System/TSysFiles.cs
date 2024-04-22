@@ -1,7 +1,8 @@
 using System;
 using SqlSugar;
 
-namespace MalusAdmin.Entity {
+namespace MalusAdmin.Entity 
+{
 	/// <summary>
 	/// t_sys_files:数据库映射类
 	/// 

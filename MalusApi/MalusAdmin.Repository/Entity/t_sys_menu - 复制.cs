@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using MalusAdmin.Common;
+using MalusAdmin.Common.Model;
 using MalusAdmin.Entity;
 using SqlSugar;
 

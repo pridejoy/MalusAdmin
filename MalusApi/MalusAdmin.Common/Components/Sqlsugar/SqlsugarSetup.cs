@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
+using System.Reflection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SqlSugar;
+using StackExchange.Redis;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using MalusAdmin.Common.Model;
 
 namespace MalusAdmin.Common
 {
@@ -24,9 +29,11 @@ namespace MalusAdmin.Common
                 ConfigId = 1
             };
 
+            // 文档地址：https://www.donet5.com/Home/Doc?typeId=1204
             Action<SqlSugarClient> sqlclient = db =>
             {
-                // 文档地址：https://www.donet5.com/Home/Doc?typeId=1204
+                
+                // 打印SQL语句
                 db.Aop.OnLogExecuting = (sql, parameters) =>
                 {
                     var originColor = Console.ForegroundColor;
@@ -40,6 +47,7 @@ namespace MalusAdmin.Common
                     Console.ForegroundColor = originColor;
                    
                 };
+                //数据处理：增、删 和 改
                 db.Aop.DataExecuting = (oldValue, entityInfo) =>
                 {
                     try
@@ -89,6 +97,12 @@ namespace MalusAdmin.Common
                     }
 
                 };
+                //查询事件 
+                db.Aop.DataExecuted = (value, entity) =>
+                { 
+
+                };
+
                 db.Aop.OnError = ex =>
                 {
                     if (ex.Parametres == null) return;
@@ -97,7 +111,42 @@ namespace MalusAdmin.Common
                     var pars = db.Utilities.SerializeObject(((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
                     Console.ForegroundColor = originColor;
                     Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars +" \r\n");
-                }; 
+                };
+
+                //监控所有超过1秒的Sql 
+                db.Aop.OnLogExecuted = (sql, p) =>
+                {
+                    if (db.Ado.SqlExecutionTime.TotalSeconds > 1)
+                    {
+                        //代码CS文件名
+                        var fileName = db.Ado.SqlStackTrace.FirstFileName;
+                        //代码行数
+                        var fileLine = db.Ado.SqlStackTrace.FirstLine;
+                        //方法名
+                        var FirstMethodName = db.Ado.SqlStackTrace.FirstMethodName;
+                        //db.Ado.SqlStackTrace.MyStackTraceList[1].xxx 获取上层方法的信息
+
+                        Console.WriteLine("【" + DateTime.Now + "——执行SQL超时】\r\n" + fileName + " \r\n");
+                    };
+                };
+
+
+                //全局过滤器
+                List<Type> types = GetSugarTableTypes();
+                // 配置加删除全局过滤器
+                foreach (var entityType in types)
+                {
+                    if (!entityType.GetProperty("SysIsDelete").IsEmpty() )
+                    { //判断实体类中包含IsDeleted属性
+                      //构建动态Lambda
+                        var lambda = DynamicExpressionParser.ParseLambda(new[] { Expression.Parameter(entityType, "it") }, typeof(bool), $"{nameof(ModelBase.SysIsDelete)} ==  @0", false);
+                        db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda)
+                        {
+                            IsJoinQuery = true
+                        }); //将Lambda传入过滤器
+                    }
+                }
+                    
             };
               
             //SqlSugarScope线程是安全的
@@ -110,5 +159,25 @@ namespace MalusAdmin.Common
             services.AddScoped(typeof(SqlSugarRepository<>));
         }
 
+        public static List<Type>  GetSugarTableTypes()
+{
+            var assemblies = AssemblyHelper.GetAssemblies("MalusAdmin.Repository"); ;
+
+            var types = new List<Type>();
+
+            foreach (var assembly in assemblies)
+            {
+                // 获取所有类型
+                var assemblyTypes = assembly.GetTypes();
+
+                // 筛选出带有SugarTable特性的非抽象类
+                types.AddRange(assemblyTypes.Where(type =>
+                    !type.IsAbstract &&
+                    type.IsDefined(typeof(SugarTable), true) // true 表示从继承层次结构中搜索特性
+                ));
+            }
+
+            return types;
+        }
     }
 }

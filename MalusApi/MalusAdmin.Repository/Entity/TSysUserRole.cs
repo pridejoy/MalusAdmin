@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using MalusAdmin.Common;
+using MalusAdmin.Common.Model;
 using MalusAdmin.Entity;
 using SqlSugar;
 
@@ -21,5 +23,7 @@ namespace Models
         /// 角色id
         /// </summary>
         public int RoleId { get; set; }
+
+         
     }
 }

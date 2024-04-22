@@ -12,7 +12,7 @@ public class PageParamBase
     /// <summary>
     /// 搜索值
     /// </summary>
-    public virtual string SearchValue { get; set; }
+    public virtual string KeyWord { get; set; }
 
     /// <summary>
     /// 当前页码

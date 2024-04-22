@@ -1,4 +1,6 @@
 using System;
+using MalusAdmin.Common;
+using MalusAdmin.Common.Model;
 using SqlSugar;
 
 namespace MalusAdmin.Entity

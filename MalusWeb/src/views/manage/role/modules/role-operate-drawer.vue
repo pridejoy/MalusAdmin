@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
 import { useBoolean } from '@sa/hooks';
+import { add } from 'lodash-es';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
-import { updateSysRole } from '@/service/api';
+import { addSysRole, updateSysRole } from '@/service/api';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
 defineOptions({
@@ -97,15 +98,31 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   // request
-  // console.log('提交表单', model);
-  updateSysRole(model).then(res => {
-    // console.log('请求成功', res);
-    if (res.data) {
-      window.$message?.success($t('common.updateSuccess'));
-      closeDrawer();
-      emit('submitted');
-    }
-  });
+  if (props.operateType === 'add') {
+    // console.log('当前接收的数据', model);
+    // console.log('提交表单', model);
+    addSysRole(model).then(res => {
+      // console.log('请求成功', res);
+      if (res.data) {
+        window.$message?.success('添加成功');
+        closeDrawer();
+        emit('submitted');
+      }
+    });
+  }
+
+  if (props.operateType === 'edit') {
+    // console.log('当前接收的数据', model);
+    // console.log('提交表单', model);
+    updateSysRole(model).then(res => {
+      // console.log('请求成功', res);
+      if (res.data) {
+        window.$message?.success($t('common.updateSuccess'));
+        closeDrawer();
+        emit('submitted');
+      }
+    });
+  }
 }
 
 watch(visible, () => {

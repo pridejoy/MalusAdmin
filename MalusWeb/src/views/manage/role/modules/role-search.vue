@@ -17,6 +17,8 @@ const emit = defineEmits<Emits>();
 const model = defineModel<Api.SystemManage.RoleSearchParams>('model', { required: true });
 
 function reset() {
+  console.log('重置事件');
+  model.value.keyword = '';
   emit('reset');
 }
 
@@ -29,13 +31,13 @@ function search() {
   <NCard :title="$t('common.search')" :bordered="false" size="small" class="card-wrapper">
     <NForm :model="model" label-placement="left" :label-width="80">
       <NGrid responsive="screen" item-responsive>
-        <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.role.roleName')" path="roleName" class="pr-24px">
-          <NInput v-model:value="model.roleName" :placeholder="$t('page.manage.role.form.roleName')" />
+        <NFormItemGi span="24 s:12 m:6" label="关键字" path="roleName" class="pr-24px">
+          <NInput v-model:value="model.keyword" placeholder="角色名称|描述" />
         </NFormItemGi>
         <!--
  <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.role.roleCode')" path="roleCode" class="pr-24px">
           <NInput v-model:value="model.roleCode" :placeholder="$t('page.manage.role.form.roleCode')" />
-        </NFormItemGi> 
+        </NFormItemGi>
 -->
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.role.roleStatus')" path="status" class="pr-24px">
           <NSelect

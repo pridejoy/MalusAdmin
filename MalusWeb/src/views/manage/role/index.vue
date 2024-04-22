@@ -1,14 +1,25 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { getSysRolePage } from '@/service/api';
+import { delSysRole, getSysRolePage } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import { enableStatusRecord } from '@/constants/business';
+// import { enableStatusRecord } from '@/constants/business';
 import RoleOperateDrawer from './modules/role-operate-drawer.vue';
 import RoleSearch from './modules/role-search.vue';
-
 const appStore = useAppStore();
+
+// 按钮的状态
+// const enableStatus: any = [
+//   {
+//     key: 1,
+//     name: '启用'
+//   },
+//   {
+//     key: 0,
+//     name: '禁用'
+//   }
+// ];
 
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getSysRolePage,
@@ -51,11 +62,24 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (row.status === null) {
           return null;
         }
+        // const tagMap: any = {
+        //   1: 'success',
+        //   0: 'warning'
+        // };
+        // const label = $t(enableStatusRecord[row.status]);
+        // return <NTag type={tagMap[row.status]}>{label}</NTag>;
+
         const tagMap: any = {
           1: 'success',
           0: 'warning'
         };
-        const label = $t(enableStatusRecord[row.status]);
+
+        const entityType: any = {
+          '1': 'page.manage.common.status.enable',
+          '0': 'page.manage.common.status.disable'
+        };
+        const label = $t(entityType[row.status]);
+
         return <NTag type={tagMap[row.status]}>{label}</NTag>;
       }
     },
@@ -106,9 +130,13 @@ async function handleBatchDelete() {
 
 function handleDelete(id: number) {
   // request
-  console.log(id);
+  delSysRole(id).then(res => {
+    if (res.data) {
+      window.$message?.success('删除成功');
+    }
+  });
 
-  onDeleted();
+  // onDeleted();
 }
 
 function edit(id: number) {

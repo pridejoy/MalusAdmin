@@ -1,7 +1,10 @@
 using System;
+using MalusAdmin.Common;
+using MalusAdmin.Common.Model;
 using SqlSugar;
 
-namespace MalusAdmin.Entity {
+namespace MalusAdmin.Entity
+{
 	/// <summary>
 	/// t_sys_user:数据库映射类
 	/// 
@@ -9,7 +12,7 @@ namespace MalusAdmin.Entity {
 	[Serializable]
 	[SugarTable("t_sys_user")]
 	public class TSysUser : ModelBase
-	{
+    {
         /// <summary>
         ///主键
         /// </summary>

@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 using SqlSugar;
 
-namespace MalusAdmin.Entity
+namespace MalusAdmin.Common.Model
 {
+    /// <summary>
+    /// 实体的基类
+    /// </summary>
     public class ModelBase
     {
-
 
         /// <summary>
         ///系统字段-创建人
@@ -56,4 +58,5 @@ namespace MalusAdmin.Entity
         [SugarColumn(ColumnName = "SysIsDelete", DefaultValue = "0")]
         public Boolean SysIsDelete { get; set; }
     }
+
 }

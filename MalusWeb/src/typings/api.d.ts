@@ -13,6 +13,8 @@ declare namespace Api {
       pageSize: number;
       /** total count */
       totalRows: number;
+      /** current page keyword */
+      keyword: string;
     }
 
     /** common params of paginating query list data */
@@ -90,7 +92,7 @@ declare namespace Api {
    * backend api module: "systemManage"
    */
   namespace SystemManage {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'pageNo' | 'pageSize'>;
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'keyword' | 'pageNo' | 'pageSize'>;
 
     /** role */
     type Role = Common.CommonRecord<{

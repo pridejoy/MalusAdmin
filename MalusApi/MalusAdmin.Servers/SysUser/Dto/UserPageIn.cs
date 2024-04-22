@@ -31,10 +31,10 @@ namespace MalusAdmin.Servers.SysUser.Dto
         public Int32 RoleId { get; set; }
 
         /// <summary>
-        ///状态(10正常，00冻结)
+        ///状态(1正常，0冻结)
         ///默认值:10
         /// </summary> 
-        public String Status { get; set; }
+        public int? Status { get; set; }
 
         /// <summary>
         ///头像
