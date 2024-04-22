@@ -3,10 +3,9 @@ import { computed, reactive, watch } from 'vue';
 import { useBoolean } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
-import { enableStatusOptions } from '@/constants/business';
+import { updateSysRole } from '@/service/api';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
-
 defineOptions({
   name: 'RoleOperateDrawer'
 });
@@ -17,6 +16,17 @@ interface Props {
   /** the edit row data */
   rowData?: Api.SystemManage.Role | null;
 }
+
+const enableStatus: any = [
+  {
+    key: 1,
+    name: '启用'
+  },
+  {
+    key: 0,
+    name: '禁用'
+  }
+];
 
 const props = defineProps<Props>();
 
@@ -64,10 +74,11 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 };
 
 const roleId = computed(() => props.rowData?.id || -1);
-console.log('roleId', roleId);
+
 const isEdit = computed(() => props.operateType === 'edit');
 
 function handleUpdateModelWhenEdit() {
+  console.log('接收传递过来的参数', props);
   if (props.operateType === 'add') {
     Object.assign(model, createDefaultModel());
     return;
@@ -75,7 +86,7 @@ function handleUpdateModelWhenEdit() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
-    console.log('当前接收的数据', model);
+    // console.log('当前接收的数据', model);
   }
 }
 
@@ -86,9 +97,15 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   // request
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
-  emit('submitted');
+  // console.log('提交表单', model);
+  updateSysRole(model).then(res => {
+    // console.log('请求成功', res);
+    if (res.data) {
+      window.$message?.success($t('common.updateSuccess'));
+      closeDrawer();
+      emit('submitted');
+    }
+  });
 }
 
 watch(visible, () => {
@@ -113,7 +130,7 @@ watch(visible, () => {
 -->
         <NFormItem :label="$t('page.manage.role.roleStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio v-for="item in enableStatus" :key="item.key" :value="item.key" :label="item.name" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.role.roleDesc')" path="roleDesc">

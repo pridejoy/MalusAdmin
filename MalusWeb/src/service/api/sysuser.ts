@@ -8,3 +8,12 @@ export function getSysUserPage(params?: Api.SystemManage.UserSearchParams) {
     params
   });
 }
+
+// 修改用户
+export function updateSysUser(data?: any) {
+  return request<boolean>({
+    url: '/SysUser/Update',
+    method: 'post',
+    data
+  });
+}

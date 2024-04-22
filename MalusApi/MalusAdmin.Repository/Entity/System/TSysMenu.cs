@@ -11,7 +11,13 @@ namespace MalusAdmin.Entity
 	[SugarTable("t_sys_menu")]
 	public class TSysMenu:ModelBase
     {
-         
+
+        /// <summary>
+        ///主键
+        /// </summary>
+        [SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
+        public Int32 Id { get; set; }
+
         /// <summary>
         /// Desc:父级菜单ID
         /// Default:

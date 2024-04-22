@@ -10,11 +10,11 @@ namespace MalusAdmin.WebApi.Controllers
     /// <summary>
     /// 按钮权限服务
     /// </summary>
-    public class SysRolePermissionComtroller: ApiControllerBase
+    public class SysRolePermissionController: ApiControllerBase
     {
         private readonly SysRolePermissionService _service;
 
-        public SysRolePermissionComtroller(SysRolePermissionService service)
+        public SysRolePermissionController(SysRolePermissionService service)
         {
            _service = service;
         }

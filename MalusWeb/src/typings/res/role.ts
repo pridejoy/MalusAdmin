@@ -1,5 +1,5 @@
 
-class SysRoleList {
+type SysRoleList {
   id:number,
   name:string
 }

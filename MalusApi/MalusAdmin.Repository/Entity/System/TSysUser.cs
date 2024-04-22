@@ -8,69 +8,18 @@ namespace MalusAdmin.Entity {
 	/// </summary>
 	[Serializable]
 	[SugarTable("t_sys_user")]
-	public class TSysUser {
+	public class TSysUser : ModelBase
+	{
+        /// <summary>
+        ///主键
+        /// </summary>
+        [SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
+        public Int32 Id { get; set; }
 
-		/// <summary>
-		///主键
-		/// </summary>
-		[SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
-		public Int32 Id { get; set; }
-
-		/// <summary>
-		///系统字段-创建人
-		/// </summary>
-		[SugarColumn(ColumnName = "SysCreateUser")]
-		public Int32 SysCreateUser { get; set; }
-
-		/// <summary>
-		///系统字段-创建时间
-		///默认值:CURRENT_TIMESTAMP
-		/// </summary>
-		[SugarColumn(ColumnName = "SysCreateTime", IsOnlyIgnoreInsert = true)]
-		public DateTime SysCreateTime { get; set; }
-
-		/// <summary>
-		///系统字段-修改人
-		/// </summary>
-		[SugarColumn(ColumnName = "SysUpdateUser")]
-		public Int32 SysUpdateUser { get; set; }
-
-		/// <summary>
-		///系统字段-修改时间
-		///默认值:CURRENT_TIMESTAMP
-		/// </summary>
-		[SugarColumn(ColumnName = "SysUpdateTime", IsOnlyIgnoreInsert = true)]
-		public DateTime SysUpdateTime { get; set; }
-
-		/// <summary>
-		///系统字段-删除人
-		/// </summary>
-		[SugarColumn(ColumnName = "SysDeleteUser")]
-		public Int32 SysDeleteUser { get; set; }
-
-		/// <summary>
-		///系统字段-删除时间
-		/// </summary>
-		[SugarColumn(ColumnName = "SysDeleteTime", IsOnlyIgnoreInsert = true)]
-		public DateTime SysDeleteTime { get; set; }
-
-		/// <summary>
-		///系统字段-删除标记
-		///默认值:0
-		/// </summary>
-		[SugarColumn(ColumnName = "SysIsDelete", DefaultValue = "0")]
-		public Boolean SysIsDelete { get; set; }
-
-		/// <summary>
-		///部门ID
-		/// </summary>
-		[SugarColumn(ColumnName = "DeptId")]
-		public int DeptId { get; set; }
-
-		/// <summary>
-		///登录账号
-		/// </summary>
-		[SugarColumn(ColumnName = "Account")]
+        /// <summary>
+        ///登录账号
+        /// </summary>
+        [SugarColumn(ColumnName = "Account")]
 		public String Account { get; set; }
 
 		/// <summary>
@@ -85,11 +34,11 @@ namespace MalusAdmin.Entity {
 		[SugarColumn(ColumnName = "PassWord")]
 		public String PassWord { get; set; }
 
-		/// <summary>
-		///角色ID
-		/// </summary>
-		[SugarColumn(ColumnName = "RoleId")]
-		public int RoleId { get; set; }
+        /// <summary>
+        ///角色ID
+        /// </summary> 
+        [SugarColumn(ColumnDescription = "角色IDs", IsJson = true)]
+        public List<int> UserRolesId { get; set; }
 
 		/// <summary>
 		///状态(10正常，00冻结)

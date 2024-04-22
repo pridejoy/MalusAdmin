@@ -9,11 +9,7 @@ namespace MalusAdmin.Entity
 {
     public class ModelBase
     {
-        /// <summary>
-		///主键
-		/// </summary>
-		[SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
-        public Int32 Id { get; set; }
+
 
         /// <summary>
         ///系统字段-创建人

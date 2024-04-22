@@ -7,7 +7,7 @@ using SqlSugar;
 
 namespace MalusAdmin.Servers.SysUser.Dto
 {
-    public class UserPageIn:PageParamBase
+    public class UserPageIn : PageParamBase
     {
 
         /// <summary>

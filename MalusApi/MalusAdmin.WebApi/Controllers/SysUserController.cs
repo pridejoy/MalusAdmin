@@ -35,7 +35,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns> 
         [HttpPost]
         [Permission("用户信息添加")]
-        public async Task<JsonR> Add(UserAddIn input)
+        public async Task<JsonR> Add(UserAddAndUpIn input)
         {
             return ResultCode.Success.JsonR(await _sysUserService.Add(input));
         }
@@ -60,7 +60,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns> 
         [HttpPost]
         [Permission("用户信息更新")]
-        public async Task<JsonR> Update(UserEditIn input)
+        public async Task<JsonR> Update(UserAddAndUpIn input)
         {
             return ResultCode.Success.JsonR(await _sysUserService.Update(input));
         }

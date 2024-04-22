@@ -9,6 +9,15 @@ export function getSysRolePage(params?: Api.SystemManage.RoleSearchParams) {
   });
 }
 
+// 修改角色
+export function updateSysRole(data?: any) {
+  return request<boolean>({
+    url: '/SysRole/Update',
+    method: 'post',
+    data
+  });
+}
+
 /** 角色列表 * */
 
 export function getRolesList() {

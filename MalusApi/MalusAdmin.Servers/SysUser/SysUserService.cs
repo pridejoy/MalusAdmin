@@ -58,8 +58,7 @@ namespace MalusAdmin.Servers
             {
                 UserId = user.Id,
                 UserAccount = user.Account,
-                UserDept = user.DeptId,
-                UserRole = user.RoleId,
+                UserRolesId = user.UserRolesId,
             };
 
             _TokenService.RemoveCheckToken(tokenData.UserId);
@@ -143,7 +142,7 @@ namespace MalusAdmin.Servers
         /// 添加用户
         /// </summary>
         /// <returns></returns> 
-        public async Task<bool> Add(UserAddIn input)
+        public async Task<bool> Add(UserAddAndUpIn input)
         {
             var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
             if(isExist) ResultCode.Fail.JsonR("已存在当前账号");
@@ -172,7 +171,7 @@ namespace MalusAdmin.Servers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<bool> Update(UserEditIn input)
+        public async Task<bool> Update(UserAddAndUpIn input)
         {
             var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
             if (entity == null) ResultCode.Fail.JsonR("为找到当前账号"); 

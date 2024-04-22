@@ -73,7 +73,7 @@ namespace MalusAdmin.Servers
         /// <returns></returns>
         public async Task<bool> Delete(int id)
         {
-            var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == id);
+            var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id== id);
             if (entity == null) ResultCode.Fail.JsonR("未找到当前菜单");
             entity.SysIsDelete = true;
             return await _sysMenuRep.UpdateAsync(entity) > 0;

@@ -98,6 +98,7 @@ declare namespace Api {
       name: string;
       /** role description */
       desc: string;
+      roleId: number[];
     }>;
 
     /** role search params */
@@ -130,7 +131,7 @@ declare namespace Api {
       /** user email */
       email: string;
       /** user role code collection */
-      // roleId: string[];
+      roleId: number[];
     }>;
 
     /** user search params */

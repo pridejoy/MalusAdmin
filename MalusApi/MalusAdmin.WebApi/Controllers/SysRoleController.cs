@@ -68,7 +68,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// 角色列表
         /// </summary>
         /// <returns></returns> 
-        [HttpPost] 
+        [HttpGet] 
         public async Task<JsonR> List()
         {
             return ResultCode.Success.JsonR(await _sysRoleService.List());

@@ -7,8 +7,12 @@ using SqlSugar;
 
 namespace MalusAdmin.Servers.SysUser.Dto
 {
-    public class UserAddIn
-    { 
+    public class UserAddAndUpIn
+    {
+        /// <summary>
+        /// 用户主键
+        /// </summary>
+        public int? Id { get; set; }
         /// <summary>
 		///登录账号
 		/// </summary> 
@@ -24,10 +28,11 @@ namespace MalusAdmin.Servers.SysUser.Dto
         /// </summary> 
         public String PassWord { get; set; }
 
+ 
         /// <summary>
         ///角色ID
         /// </summary> 
-        public Int32 RoleId { get; set; }
+        public List<int> UserRolesId { get; set; }
 
         /// <summary>
         ///状态(10正常，00冻结)

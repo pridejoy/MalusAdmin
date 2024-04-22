@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { getRolesList } from '@/service/api';
+import { getRolesList, updateSysUser } from '@/service/api';
 import { $t } from '@/locales';
-import { enableStatusOptions } from '@/constants/business';
-
 defineOptions({
   name: 'UserOperateDrawer'
 });
@@ -21,6 +19,17 @@ const props = defineProps<Props>();
 interface Emits {
   (e: 'submitted'): void;
 }
+
+const enableStatus: any = [
+  {
+    key: 1,
+    name: '启用'
+  },
+  {
+    key: 0,
+    name: '禁用'
+  }
+];
 
 const emit = defineEmits<Emits>();
 
@@ -49,7 +58,7 @@ function createDefaultModel(): Model {
     name: '',
     tel: '',
     email: '',
-    userRoles: [],
+    userRolesId: [],
     status: null
   };
 }
@@ -66,26 +75,19 @@ const roleOptions = ref<CommonType.Option<string>[]>([]);
 
 async function getRoleOptions() {
   const { error, data } = await getRolesList();
-   
+  console.log(data);
   if (!error) {
     const options = data.map(item => ({
-      label: item.roleName,
-      value: item.roleCode
+      label: item.name,
+      value: item.id
     }));
 
-    // the mock data does not have the roleCode, so fill it
-    // if the real request, remove the following code
-    const userRoleOptions = model.userRoles.map(item => ({
-      label: item,
-      value: item
-    }));
-    // end
-
-    roleOptions.value = [...userRoleOptions, ...options];
+    roleOptions.value = [...options];
   }
 }
 
 function handleUpdateModelWhenEdit() {
+  console.log('接收传递过来的参数', props);
   if (props.operateType === 'add') {
     Object.assign(model, createDefaultModel());
     return;
@@ -102,10 +104,20 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
+  if (props.operateType === 'add') {
+  }
+  if (props.operateType === 'edit' && props.rowData) {
+    updateSysUser(model).then(res => {
+      // console.log('修改返回的状态', res);
+      if (res.data) {
+        window.$message?.success($t('common.updateSuccess'));
+        closeDrawer();
+        emit('submitted');
+      }
+    });
+  }
   // request
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
-  emit('submitted');
+  console.log('提交的model', model);
 }
 
 watch(visible, () => {
@@ -135,12 +147,12 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio v-for="item in enableStatus" :key="item.key" :value="item.key" :label="item.name" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.user.userRole')" path="roles">
           <NSelect
-            v-model:value="model.userRoles"
+            v-model:value="model.userRolesId"
             multiple
             :options="roleOptions"
             :placeholder="$t('page.manage.user.form.userRole')"
