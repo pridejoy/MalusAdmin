@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
+import { computed, shallowRef, watch } from 'vue';
 import { $t } from '@/locales';
 import { addUserButtonPermiss, getRoleButen, getSysRoleAllPermission } from '@/service/api';
+
 defineOptions({
   name: 'ButtonAuthModal'
 });
@@ -29,41 +30,39 @@ async function getAllButtons() {
   // request
   getSysRoleAllPermission().then(res => {
     tree.value = res.data;
+    console.log('全部的按钮权限', tree.value);
   });
 }
 
 // 用户勾选的值
 const checks = shallowRef<string[]>([]);
 
-async function getChecks() {
+async function getuseButtons() {
   getRoleButen({ RoleId: props.roleId }).then(res => {
     checks.value = res.data !== null ? res.data.map(x => x.userPermiss) : [];
-
     console.log('用户勾选的值', checks.value);
   });
 }
 
 function handleSubmit() {
-  console.log(checks.value, props.roleId);
   addUserButtonPermiss({ roleId: props.roleId, permissionId: checks.value }).then(res => {
     if (res.data) {
-      window.$message?.success('添加成功');
+      window.$message?.success('修改成功');
+      closeModal();
     }
   });
-  // request
-  // 修改当前已经勾选的id
-  window.$message?.success?.($t('common.modifySuccess'));
-
-  closeModal();
 }
 
 function init() {
   getAllButtons();
-  getChecks();
+  getuseButtons();
 }
 
-// init
-init();
+watch(visible, val => {
+  if (val) {
+    init();
+  }
+});
 </script>
 
 <template>

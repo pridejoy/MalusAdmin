@@ -9,18 +9,6 @@ import RoleOperateDrawer from './modules/role-operate-drawer.vue';
 import RoleSearch from './modules/role-search.vue';
 const appStore = useAppStore();
 
-// 按钮的状态
-// const enableStatus: any = [
-//   {
-//     key: 1,
-//     name: '启用'
-//   },
-//   {
-//     key: 0,
-//     name: '禁用'
-//   }
-// ];
-
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getSysRolePage,
   apiParams: {
@@ -116,8 +104,8 @@ const {
   handleAdd,
   handleEdit,
   checkedRowKeys,
-  onBatchDeleted,
-  onDeleted
+  onBatchDeleted
+  // onDeleted,
   // closeDrawer
 } = useTableOperate(data, getData);
 
