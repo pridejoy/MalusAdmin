@@ -47,7 +47,7 @@ namespace MalusAdmin.WebApi.Controllers
             return ResultCode.Success.JsonR(await _service.Update(input));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Permission("菜单删除")]
         public async Task<JsonR> Delete(int id)
         {

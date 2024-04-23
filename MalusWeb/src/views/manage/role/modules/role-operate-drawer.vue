@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
 import { useBoolean } from '@sa/hooks';
-import { add } from 'lodash-es';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { addSysRole, updateSysRole } from '@/service/api';
+import { enableType } from '@/constants/enumtype';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
 defineOptions({
@@ -17,17 +17,6 @@ interface Props {
   /** the edit row data */
   rowData?: Api.SystemManage.Role | null;
 }
-
-const enableStatus: any = [
-  {
-    key: 1,
-    name: '启用'
-  },
-  {
-    key: 0,
-    name: '禁用'
-  }
-];
 
 const props = defineProps<Props>();
 
@@ -147,7 +136,7 @@ watch(visible, () => {
 -->
         <NFormItem :label="$t('page.manage.role.roleStatus')" path="status">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatus" :key="item.key" :value="item.key" :label="item.name" />
+            <NRadio v-for="item in enableType" :key="item.key" :value="item.key" :label="item.name" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.role.roleDesc')" path="roleDesc">

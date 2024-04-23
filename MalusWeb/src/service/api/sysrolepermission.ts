@@ -2,7 +2,7 @@ import { request } from '../request';
 
 /** get role list */
 export function getSysRoleAllPermission(params?: any) {
-  return request<ResRolePermission>({
+  return request<ResRolePermission[]>({
     url: '/SysRolePermission/GetAllButen',
     method: 'get',
     params
@@ -11,7 +11,7 @@ export function getSysRoleAllPermission(params?: any) {
 
 // 获取用户的权限按钮
 export function getRoleButen(params?: any) {
-  return request<string[]>({
+  return request<any>({
     url: '/SysRolePermission/GetRoleButen',
     method: 'get',
     params

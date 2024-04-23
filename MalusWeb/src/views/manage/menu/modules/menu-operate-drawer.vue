@@ -1,12 +1,16 @@
 <script setup lang="tsx">
 import { computed, reactive, watch } from 'vue';
 import type { SelectOption } from 'naive-ui';
-import { key } from 'localforage';
+// import { key } from 'localforage';
+// import { i } from 'vite/dist/node/types.d-aGj9QkWt';
+// import { update } from 'lodash-es';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
-import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
+// import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
+import { IconType, MenuType } from '@/constants/enumtype';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { getLocalIcons } from '@/utils/icon';
+import { addMenu, updateMenu } from '@/service/api';
 import { getLayoutAndPage, transformLayoutAndPageToComponent } from './shared';
 
 defineOptions({
@@ -118,7 +122,7 @@ const localIconOptions = localIcons.map<SelectOption>(item => ({
 
 const showLayout = computed(() => model.parentId === 0);
 
-const showPage = computed(() => model.menuType == 2);
+const showPage = computed(() => model.menuType === 2);
 
 const pageOptions = computed(() => {
   const allPages = [...props.allPages];
@@ -177,13 +181,27 @@ async function handleSubmit() {
 
   model.component = transformLayoutAndPageToComponent(model.layout, model.page);
   // 提交事件
-  if (props.operateType === 'add') {
-    console.log('tijiao', model);
+
+  if (props.operateType === 'add' || props.operateType === 'addChild') {
+    addMenu(model).then(res => {
+      if (res.data) {
+        window.$message?.success('添加成功');
+        closeDrawer();
+        emit('submitted');
+      }
+    });
+  }
+
+  if (props.operateType === 'edit') {
+    updateMenu(model).then(res => {
+      if (res.data) {
+        window.$message?.success($t('common.updateSuccess'));
+        closeDrawer();
+        emit('submitted');
+      }
+    });
   }
   // request
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
-  emit('submitted');
 }
 
 watch(visible, () => {
@@ -200,7 +218,7 @@ watch(visible, () => {
       <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="80">
         <NFormItem :label="$t('page.manage.menu.menuType')" path="menuType">
           <NRadioGroup v-model:value="model.menuType" :disabled="disabledMenuType">
-            <NRadio v-for="item in menuTypeOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio v-for="item in MenuType" :key="item.key" :value="item.key" :label="item.name" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.menuName')" path="menuName">
@@ -208,7 +226,7 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.iconTypeTitle')" path="iconType">
           <NRadioGroup v-model:value="model.iconType">
-            <NRadio v-for="item in menuIconTypeOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio v-for="item in IconType" :key="item.key" :value="item.key" :label="item.name" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.icon')" path="icon">

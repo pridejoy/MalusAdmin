@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { getMenuTreeList } from '@/service/api';
+import { deleteMenu, getMenuTreeList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -196,8 +196,12 @@ async function handleBatchDelete() {
 function handleDelete(id: number) {
   // request
   console.log(id);
-
-  onDeleted();
+  deleteMenu({ id }).then(res => {
+    if (res.data) {
+      window.$message?.success('删除成功');
+      onDeleted();
+    }
+  });
 }
 
 /** the edit menu data or the parent menu data when adding a child menu */
@@ -220,16 +224,17 @@ function handleAddChildMenu(item: Api.SystemManage.Menu) {
 
 const allPages = ref<string[]>([]);
 
-const allMenus = ref<Api.SystemManage.MenuList[]>([]);
-async function getAllPages() {
-  await getMenuTreeList().then(res => {
-    console.log('菜单的数据', res);
-    // allMenus.value = res ? res.data : [];
-  });
-}
+// const allMenus = ref<Api.SystemManage.MenuList[]>([]);
+
+// async function getAllPages() {
+//   await getMenuTreeList().then(res => {
+//     console.log('菜单的数据', res);
+//     // allMenus.value = res ? res.data : [];
+//   });
+// }
 
 function init() {
-  getAllPages();
+  // getAllPages();
 }
 
 // init
