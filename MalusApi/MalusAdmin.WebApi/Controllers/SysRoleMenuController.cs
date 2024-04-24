@@ -26,7 +26,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns> 
         [HttpGet]
         [Permission("角色菜单查询")]
-        public async Task<JsonR> PageList([FromQuery] int RoleId)
+        public async Task<JsonR> Get([FromQuery] int RoleId)
         {
             return ResultCode.Success.JsonR(await _service.RoleUserMenu(RoleId));
         }

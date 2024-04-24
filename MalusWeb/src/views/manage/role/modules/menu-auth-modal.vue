@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef, watch } from 'vue';
 import { $t } from '@/locales';
-import { fetchGetAllPages, fetchGetMenuTree } from '@/service/api';
+import { fetchGetAllPages, getMenuTreeList, getRoleUserMenu, setRoleUserMenu } from '@/service/api';
 
 defineOptions({
   name: 'MenuAuthModal'
@@ -57,37 +57,45 @@ const pageSelectOptions = computed(() => {
   return opts;
 });
 
-const tree = shallowRef<Api.SystemManage.MenuTree[]>([]);
+const tree = shallowRef<Api.SystemManage.Menu[]>([]);
 
 async function getTree() {
-  const { error, data } = await fetchGetMenuTree();
-
-  if (!error) {
-    tree.value = data;
-  }
+  await getMenuTreeList().then(res => {
+    if (res.data?.records) {
+      tree.value = res.data.records;
+    }
+  });
+  console.log('tree', tree);
 }
 
 const checks = shallowRef<number[]>([]);
 
 async function getChecks() {
-  console.log(props.roleId);
   // request
-  checks.value = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  await getRoleUserMenu({ roleId: props.roleId }).then(res => {
+    if (res.data) {
+      checks.value = res.data;
+      // console.log('checks', checks.value, res);
+    }
+  });
 }
 
 function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
+  setRoleUserMenu({ roleId: props.roleId, menuId: checks.value }).then(res => {
+    if (res.data) {
+      window.$message?.success?.($t('common.modifySuccess'));
 
-  window.$message?.success?.($t('common.modifySuccess'));
-
-  closeModal();
+      closeModal();
+      // console.log('checks', checks.value, res);
+    }
+  });
 }
 
 function init() {
-  getHome();
-  getPages();
   getTree();
+  // getPages();
   getChecks();
 }
 
@@ -100,14 +108,17 @@ watch(visible, val => {
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
-    <div class="flex-y-center gap-16px pb-12px">
+    <!--
+ <div class="flex-y-center gap-16px pb-12px">
       <div>{{ $t('page.manage.menu.home') }}</div>
       <NSelect :value="home" :options="pageSelectOptions" size="small" class="w-160px" @update:value="updateHome" />
     </div>
+-->
     <NTree
       v-model:checked-keys="checks"
       :data="tree"
       key-field="id"
+      label-field="menuName"
       checkable
       expand-on-click
       virtual-scroll
