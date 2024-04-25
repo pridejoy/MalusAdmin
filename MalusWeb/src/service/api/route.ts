@@ -6,8 +6,11 @@ export function fetchGetConstantRoutes() {
 }
 
 /** get user routes */
-export function fetchGetUserRoutes() {
-  return request<Api.Route.UserRoute>({ url: '' });
+export function getUserRoutes() {
+  return request<Api.Route.MenuRoute[]>({
+    url: '/SysLogin/GetUserMenu',
+    method: 'get'
+  });
 }
 
 /**

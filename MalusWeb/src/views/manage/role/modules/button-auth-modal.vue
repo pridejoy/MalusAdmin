@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue';
+import { computed, ref, shallowRef, watch } from 'vue';
 import { $t } from '@/locales';
 import { addUserButtonPermiss, getRoleButen, getSysRoleAllPermission } from '@/service/api';
 
@@ -30,7 +30,6 @@ async function getAllButtons() {
   // request
   getSysRoleAllPermission().then(res => {
     tree.value = res.data;
-    console.log('全部的按钮权限', tree.value);
   });
 }
 
@@ -40,7 +39,7 @@ const checks = shallowRef<string[]>([]);
 async function getuseButtons() {
   getRoleButen({ RoleId: props.roleId }).then(res => {
     checks.value = res.data !== null ? res.data.map(x => x.userPermiss) : [];
-    console.log('用户勾选的值', checks.value);
+    // console.log('用户勾选的值', checks.value);
   });
 }
 
@@ -58,6 +57,17 @@ function init() {
   getuseButtons();
 }
 
+// 是否全选
+const checkallactive = ref<boolean>(false);
+const checkallactivehandle = (value: boolean) => {
+  checkallactive.value = value;
+  if (value) {
+    checks.value = tree.value.map(item => item.permissionId);
+  } else {
+    checks.value = [];
+  }
+};
+
 watch(visible, val => {
   if (val) {
     init();
@@ -67,6 +77,10 @@ watch(visible, val => {
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
+    <div class="flex-y-center gap-16px pb-12px">
+      <div>全选/全不选</div>
+      <NSwitch v-model:value="checkallactive" @update:value="checkallactivehandle" />
+    </div>
     <NTree
       v-model:checked-keys="checks"
       :data="tree"

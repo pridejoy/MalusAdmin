@@ -74,7 +74,7 @@ namespace MalusAdmin.Entity
         /// Default:0
         /// Nullable:True
         /// </summary>           
-        public int? Sort { get; set; }
+        public int Sort { get; set; }
 
         /// <summary>
         /// Desc:页面组件

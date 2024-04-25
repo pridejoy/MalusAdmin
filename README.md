@@ -34,10 +34,8 @@
 - **账户**
   >  账号：admin   
   密码：1Q2W3E
-  
 - **演示**
-  <!-- > [maluts.hunji.xyz](https://maluts.hunji.xyz) -->
-  暂不提供
+   >   [maluts.hunji.xyz](https://maluts.hunji.xyz) 
 - **文档**
   > [www.dotnetshare.com](https://www.dotnetshare.com/) 
 
@@ -46,9 +44,21 @@
 
 <table>
     <tr>
-        <td><img src="https://gitee.com/MalusAdmin/images/raw/master/1.png" alt=""/></td>
-        <td><img src="https://gitee.com/MalusAdmin/images/raw/master/2.png" alt=""/></td>
+        <td><img src="./doc/images/malus1.png" alt=""/></td>
+        <td><img src="./doc/images/malus2.png" alt=""/></td>
+        <td><img src="./doc/images/malus3.png" alt=""/></td>
     </tr>
+    <tr>
+        <td><img src="./doc/images/malus4.png" alt=""/></td>
+        <td><img src="./doc/images/malus5.png" alt=""/></td>
+        <td><img src="./doc/images/malus6.png" alt=""/></td>
+    </tr>
+    <tr>
+        <td><img src="./doc/images/malus7.png" alt=""/></td>
+        <td><img src="./doc/images/malus8.png" alt=""/></td>
+        <td><img src="./doc/images/malus9.png" alt=""/></td>
+    </tr>
+
 </table>
 
 

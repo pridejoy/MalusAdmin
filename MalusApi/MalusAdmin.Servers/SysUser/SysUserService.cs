@@ -9,6 +9,7 @@ using MalusAdmin.Common;
 using MalusAdmin.Encryption;
 using MalusAdmin.Entity;
 using MalusAdmin.Request;
+using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser.Dto;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using NetTaste;
 using SqlSugar;
 using StackExchange.Redis;
+using static Dm.net.buffer.ByteArrayBuffer;
 
 namespace MalusAdmin.Servers
 {
@@ -25,12 +27,19 @@ namespace MalusAdmin.Servers
         private readonly SqlSugarRepository<TSysUser> _sysUserRep;  // 仓储
         private readonly ITokenService _TokenService;
         private readonly HttpContext _HttpContext;
+        private readonly SysRoleMenuService _sysRoleMenuService;
+        private readonly SysMenuService _sysMenuService;
 
-        public SysUserService(SqlSugarRepository<TSysUser> sysUserRep, ITokenService tokenService, IHttpContextAccessor httpContext)
-        { 
+        public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
+            ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
+            SysMenuService sysMenuService,
+            IHttpContextAccessor httpContext)
+        {
             _sysUserRep = sysUserRep;
             _TokenService = tokenService;
             _HttpContext = httpContext.HttpContext;
+            _sysRoleMenuService = sysRoleMenuService;
+            _sysMenuService = sysMenuService;
         }
 
         /// <summary>
@@ -81,32 +90,7 @@ namespace MalusAdmin.Servers
 
             return new SysUserLoginOut() { Id=user.Id,Name=user.Name,Token=UserToken };
         }
-
          
-        /// <summary>
-        /// 获取登录用户的路由信息
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<bool> GetUserRoute()
-        {
-            return true;
-        }
-
-
-        /// <summary>
-        /// 获取登录用户的按钮信息
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<bool> GetUserBtns()
-        {
-
-            return true;
-        }
-
         /// <summary>
         /// 获取用户的信息
         /// </summary>
@@ -178,6 +162,44 @@ namespace MalusAdmin.Servers
 
             var sysUser = input.Adapt<TSysUser>();
             return await _sysUserRep.AsUpdateable(sysUser).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync()>0;
+        }
+
+
+        /// <summary>
+        /// 获取登录用户的菜单权限
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<UserMenuOut>> GetUserMenu( )
+        { 
+            //获取所有的菜单权限
+            var tree =await _sysMenuService.MenuTreeList();
+            //获取当前用户的菜单权限
+            var menuid = await _sysRoleMenuService.RoleUserMenu(1);
+
+            var res =new List<UserMenuOut>();
+            foreach (var item in tree.Records)
+            {
+                res.Add(ConvertMenu(item));
+            }
+
+            return res;
+        }
+
+        private UserMenuOut ConvertMenu(TSysMenu menu)
+        {
+            return new UserMenuOut
+            {
+                Name = menu.RouteName,
+                Path = menu.RoutePath,
+                Component = menu.Component,
+                Meta = new Meta
+                { 
+                    Title = menu.MenuName,
+                    Icon = menu.Icon,
+                    Sort=menu.Sort, 
+                },
+                Children = menu.children?.Select(ConvertMenu).ToList()
+            };
         }
     }
 }

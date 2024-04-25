@@ -47,7 +47,7 @@ namespace MalusAdmin.Servers
                 PageSize = 999,
                 TotalPage = 1,
                 TotalRows = sysmenulist.Count,
-                Records = sysmenulist
+                Records = sysmenulist.OrderBy(x=>x.Sort)
             };
         }
 

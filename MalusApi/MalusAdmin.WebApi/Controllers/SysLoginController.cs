@@ -37,5 +37,17 @@ namespace MalusAdmin.WebApi.Controllers
         {
             return ResultCode.Success.JsonR(await _sysUserService.GetUserInfo());
         }
+
+
+        /// <summary>
+        /// 获取登录用户的路由
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<JsonR> GetUserMenu()
+        {
+            return ResultCode.Success.JsonR(await _sysUserService.GetUserMenu());
+        }
     }
 }

@@ -6,25 +6,15 @@ import { setupStore } from './store';
 import { setupRouter } from './router';
 import { setupI18n } from './locales';
 import App from './App.vue';
-import { getSysRolePage } from './service/api';
+// import { getSysRolePage } from './service/api';
 
-getSysRolePage()
-  .then(res => {
-    console.log(res);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
-// axios({
-//   url: 'https://localhost:7154/api/Home/Index',
-//   method: 'get',
-//   headers: {
-//     token: 'a1f3af2394af4bcaa16f08d91190db45'
-//   }
-// }).then(res => {
-//   console.log(res);
-// });
+// getSysRolePage()
+//   .then(res => {
+//     console.log(res);
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
 
 async function setupApp() {
   setupLoading();
