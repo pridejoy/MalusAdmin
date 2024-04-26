@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MalusAdmin.Servers.SysUser.Dto
 {
-    public class UserMenuOut
+    public class UserMenu
     {
         /// <summary>
         /// 名字
@@ -28,7 +28,7 @@ namespace MalusAdmin.Servers.SysUser.Dto
         /// </summary>
         public Meta Meta { get; set; }
 
-        public List<UserMenuOut> Children { get; set; }
+        public List<UserMenu> Children { get; set; }
     }
 
     /// <summary>
@@ -42,5 +42,14 @@ namespace MalusAdmin.Servers.SysUser.Dto
 
         public int Order { get; set; }
 
+    }
+
+
+    public class UserMenuOut 
+    {
+
+        public string Home { get; set; }
+
+        public List<UserMenu> Routes { get; set; }
     }
 }

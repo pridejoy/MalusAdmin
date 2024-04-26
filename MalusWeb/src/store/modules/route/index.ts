@@ -224,16 +224,14 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** Init dynamic auth route */
   async function initDynamicAuthRoute() {
-    const { data } = await getUserRoutes();
-    const { authRoutes: staticAuthRoutes } = createStaticRoutes();
-    // console.log('获取动态的路由信息', data);
-    console.log('获取动态的路由信息2', staticAuthRoutes);
-
-    addAuthRoutes(staticAuthRoutes);
-
-    addAuthRoutes(data);
-    // // debugger;
-    const home = 'home';
+    const data = await getUserRoutes();
+    console.log('获取动态的路由信息', data);
+    addAuthRoutes(data.data?.routes);
+    const home = data.data?.home;
+    // const { authRoutes: staticAuthRoutes } = createStaticRoutes();
+    // // console.log('获取动态的路由信息2', staticAuthRoutes);
+    // addAuthRoutes(staticAuthRoutes);
+    // const home = 'home';
 
     handleAuthRoutes();
 

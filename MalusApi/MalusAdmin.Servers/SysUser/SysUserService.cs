@@ -169,37 +169,40 @@ namespace MalusAdmin.Servers
         /// 获取登录用户的菜单权限
         /// </summary>
         /// <returns></returns>
-        public async Task<List<UserMenuOut>> GetUserMenu( )
+        public async Task<UserMenuOut> GetUserMenu( )
         {
+            var Out=new UserMenuOut();
             //获取所有的菜单权限
             var tree = await _sysMenuService.MenuTreeList();
             ////获取当前用户的菜单权限
             var menuid = await _sysRoleMenuService.RoleUserMenu(1);
 
-            var res =new List<UserMenuOut>();
-            //foreach (var item in tree.Records)
-            //{
-            //    res.Add(ConvertMenu(item));
-            //}
-            res.Add(new UserMenuOut()
+            var res =new List<UserMenu>();
+            foreach (var item in tree.Records)
             {
-                Component = "layout.base$view.about",
-                Name = "about",
-                Path = "/about",
-                Meta = new Meta()
-                {
-                    Icon = "icon",
-                    Title = "about",
-                    Order = 1,
-                }
+                res.Add(ConvertMenu(item));
+            }
+            //res.Add(new UserMenu()
+            //{
+            //    Component = "layout.base$view.home",
+            //    Name = "home",
+            //    Path = "/home",
+            //    Meta = new Meta()
+            //    {
+            //        Icon = "mdi:monitor-dashboard",
+            //        Title = "首页",
+            //        Order = 1,
+            //    }
 
-            });
-            return res;
+            //});
+            Out.Home = res.FirstOrDefault().Name;
+            Out.Routes = res;
+            return Out;
         }
 
-        private UserMenuOut ConvertMenu(TSysMenu menu)
+        private UserMenu ConvertMenu(TSysMenu menu)
         {
-            return new UserMenuOut
+            return new UserMenu
             {
                 Name = menu.RouteName,
                 Path = menu.RoutePath,

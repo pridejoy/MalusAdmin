@@ -7,7 +7,7 @@ export function fetchGetConstantRoutes() {
 
 /** get user routes */
 export function getUserRoutes() {
-  return request<Api.Route.MenuRoute[]>({
+  return request<Api.Route.UserRoute>({
     url: '/SysLogin/GetUserMenu',
     method: 'get'
   });
