@@ -40,7 +40,7 @@ namespace MalusAdmin.Servers.SysUser.Dto
 
         public string Icon { get; set; }
 
-        public int Sort { get; set; }
+        public int Order { get; set; }
 
     }
 }

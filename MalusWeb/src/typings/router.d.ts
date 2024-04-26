@@ -31,7 +31,7 @@ declare module 'vue-router' {
     /**
      * Iconify icon
      *
-     * It can be used in the menu or breadcrumb
+     * 不需要登录，路由在前端定义
      */
     icon?: string;
     /**

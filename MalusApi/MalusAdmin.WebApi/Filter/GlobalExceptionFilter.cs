@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using MalusAdmin.Common;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace MalusAdmin.WebApi.Filter
 {
@@ -20,14 +21,14 @@ namespace MalusAdmin.WebApi.Filter
             ////日志记录
             _logger.LogError(context.Exception, context.Exception.Message);
             context.ExceptionHandled = true;
-            context.Result = new InternalServerErrorObjectResult(rspResult);
+            context.Result =new ResObjectResult(rspResult);
         }
 
-        public class InternalServerErrorObjectResult : ObjectResult
+        public class ResObjectResult : ObjectResult
         {
-            public InternalServerErrorObjectResult(object value) : base(value)
+            public ResObjectResult(object value) : base(value)
             {
-                StatusCode = StatusCodes.Status500InternalServerError;
+                StatusCode = StatusCodes.Status200OK;
             }
         }
     }

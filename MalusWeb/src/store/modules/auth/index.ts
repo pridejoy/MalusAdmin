@@ -1,3 +1,4 @@
+import { log } from 'node:console';
 import { computed, reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useLoading } from '@sa/hooks';
@@ -54,27 +55,29 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    */
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
-    const res = await reqLogin(userName, password);
-    if (res.code === 1) {
-      const pass = await loginByToken(res.body.token);
-      if (pass) {
-        await routeStore.initAuthRoute();
+    await reqLogin(userName, password).then(async res => {
+      // console.log(res, 'res');
+      if (res.data) {
+        const pass = await loginByToken(res.data.token);
+        if (pass) {
+          await routeStore.initAuthRoute();
 
-        if (redirect) {
-          await redirectFromLogin();
-        }
+          if (redirect) {
+            await redirectFromLogin();
+          }
 
-        if (routeStore.isInitAuthRoute) {
-          window.$notification?.success({
-            title: $t('page.login.common.loginSuccess'),
-            content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
-            duration: 4500
-          });
+          if (routeStore.isInitAuthRoute) {
+            window.$notification?.success({
+              title: $t('page.login.common.loginSuccess'),
+              content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
+              duration: 4500
+            });
+          }
         }
+      } else {
+        resetStore();
       }
-    } else {
-      resetStore();
-    }
+    });
 
     endLoading();
   }
@@ -86,7 +89,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
     const userInfores = await getTokenUserInfo();
 
-    if (userInfores.code === 1) {
+    if (userInfores.data) {
       // 2. store user info
       localStg.set('userInfo', userInfores);
 

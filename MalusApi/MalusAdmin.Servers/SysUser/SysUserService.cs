@@ -170,18 +170,30 @@ namespace MalusAdmin.Servers
         /// </summary>
         /// <returns></returns>
         public async Task<List<UserMenuOut>> GetUserMenu( )
-        { 
+        {
             //获取所有的菜单权限
-            var tree =await _sysMenuService.MenuTreeList();
-            //获取当前用户的菜单权限
+            var tree = await _sysMenuService.MenuTreeList();
+            ////获取当前用户的菜单权限
             var menuid = await _sysRoleMenuService.RoleUserMenu(1);
 
             var res =new List<UserMenuOut>();
-            foreach (var item in tree.Records)
+            //foreach (var item in tree.Records)
+            //{
+            //    res.Add(ConvertMenu(item));
+            //}
+            res.Add(new UserMenuOut()
             {
-                res.Add(ConvertMenu(item));
-            }
+                Component = "layout.base$view.about",
+                Name = "about",
+                Path = "/about",
+                Meta = new Meta()
+                {
+                    Icon = "icon",
+                    Title = "about",
+                    Order = 1,
+                }
 
+            });
             return res;
         }
 
@@ -196,7 +208,7 @@ namespace MalusAdmin.Servers
                 { 
                     Title = menu.MenuName,
                     Icon = menu.Icon,
-                    Sort=menu.Sort, 
+                    Order = menu.Sort, 
                 },
                 Children = menu.children?.Select(ConvertMenu).ToList()
             };

@@ -61,6 +61,14 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
         return null;
       }
 
+      //
+      // const errorCodes: string[] = [];
+      // console.log('response.data.code', response.data.code);
+      // if (errorCodes.includes(response.data.code)) {
+      //   window.$message?.error?.(message);
+      //   return null;
+      // }
+
       // 当后端响应代码在modalLogoutCodes中时，意味着用户将会通过显示一个模态框来被登出。
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
       if (modalLogoutCodes.includes(response.data.code)) {
@@ -106,20 +114,14 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     },
     onError(error) {
       // 当请求失败时，您可以显示错误消息
-      console.log('当请求失败', error);
+
       let message = error.message;
-      let backendErrorCode = '';
+      let backendErrorCode = '0';
 
       // 获取后端错误消息和代码
       if (error.code === BACKEND_ERROR_CODE) {
-        message = error.response?.data?.message || message;
+        message = error.response?.data?.body as string;
         backendErrorCode = error.response?.data?.code || '';
-      }
-
-      // 错误消息显示在模态中
-      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
-      if (modalLogoutCodes.includes(backendErrorCode)) {
-        return;
       }
 
       // 当令牌过期时，刷新令牌并重试请求，因此无需显示错误消息
