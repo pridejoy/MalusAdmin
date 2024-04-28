@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /MalusWeb/dist
+/MalusWeb/.env.prod
+MalusApi/MalusAdmin.Common/Components/Sqlsugar/SqlsugarSetup.cs 

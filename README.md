@@ -18,6 +18,8 @@
 
 基于NET Core  | NET7 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的后台管理框架,提供快速开发解决方案。 
 
+Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马卢斯】相近，也可称作为马卢斯。
+
 ## 特性
 
 
@@ -56,6 +58,7 @@
     <tr>
         <td><img src="./doc/images/malus7.png" alt=""/></td>
         <td><img src="./doc/images/malus8.png" alt=""/></td> 
+        <td><img src="./doc/images/malus9.png" alt=""/></td> 
     </tr>
 
 </table>

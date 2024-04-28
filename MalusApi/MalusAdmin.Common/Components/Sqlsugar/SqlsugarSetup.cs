@@ -13,10 +13,10 @@ namespace MalusAdmin.Common
         public static void AddSqlsugarSetup(this IServiceCollection services)
         {
             //注释这行，我是从本地文件读取的，下一行解除注释
-            //var ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
+            var ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
 
             //数据库链接,修改配置里面的SqlServerConnection的字符串
-            var ConnectionString= AppSettings.SqlServerConnection; 
+            //var ConnectionString= AppSettings.SqlServerConnection; 
 
             var configConnection = new ConnectionConfig
             {
@@ -92,7 +92,7 @@ namespace MalusAdmin.Common
                     {
 
                     }
-                    throw new Exception("演示环境，禁止操作");
+                    //throw new Exception("演示环境，禁止操作");
 
                 };
                 //查询事件 
