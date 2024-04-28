@@ -35,7 +35,7 @@
   >  账号：admin   
   密码：1Q2W3E
 - **演示**
-   >   [maluts.hunji.xyz](https://maluts.hunji.xyz) 
+   >   [malus.dotnetshare.com](https://malus.dotnetshare.com/) 
 - **文档**
   > [www.dotnetshare.com](https://www.dotnetshare.com/) 
 
@@ -55,8 +55,7 @@
     </tr>
     <tr>
         <td><img src="./doc/images/malus7.png" alt=""/></td>
-        <td><img src="./doc/images/malus8.png" alt=""/></td>
-        <td><img src="./doc/images/malus9.png" alt=""/></td>
+        <td><img src="./doc/images/malus8.png" alt=""/></td> 
     </tr>
 
 </table>
