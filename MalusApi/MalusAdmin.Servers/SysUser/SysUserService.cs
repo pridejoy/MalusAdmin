@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MalusAdmin.Common;
+using MalusAdmin.Common.Components;
 using MalusAdmin.Encryption;
 using MalusAdmin.Entity;
 using MalusAdmin.Request;
 using MalusAdmin.Servers.SysRoleMenu;
+using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -21,23 +23,22 @@ using static Dm.net.buffer.ByteArrayBuffer;
 
 namespace MalusAdmin.Servers
 {
-    public class SysUserService
-    {
-        private readonly ISqlSugarClient _db;
+    public class SysUserService: BaseService,ISysUserService
+    {  
         private readonly SqlSugarRepository<TSysUser> _sysUserRep;  // 仓储
         private readonly ITokenService _TokenService;
-        private readonly HttpContext _HttpContext;
+        private readonly IHttpContextAccessor _HttpContext;
         private readonly SysRoleMenuService _sysRoleMenuService;
         private readonly SysMenuService _sysMenuService;
 
         public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
             ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
             SysMenuService sysMenuService,
-            IHttpContextAccessor httpContext)
+            IHttpContextAccessor httpContext):base(tokenService, httpContext)
         {
             _sysUserRep = sysUserRep;
             _TokenService = tokenService;
-            _HttpContext = httpContext.HttpContext;
+            _HttpContext = httpContext;
             _sysRoleMenuService = sysRoleMenuService;
             _sysMenuService = sysMenuService;
         }
@@ -49,7 +50,8 @@ namespace MalusAdmin.Servers
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
-        {  
+        {
+            
             var user =await _sysUserRep
                 .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
 
@@ -71,21 +73,20 @@ namespace MalusAdmin.Servers
             };
 
             _TokenService.RemoveCheckToken(tokenData.UserId);
-            string UserToken = _TokenService.GenerateToken(_HttpContext, tokenData);
+            string UserToken = _TokenService.GenerateToken(_HttpContext.HttpContext, tokenData);
 
             #region 添加登录日志
-            //TSysLoginLog sysLoginLog = new TSysLoginLog();
-            //sysLoginLog.UserId = user.Id;
-            //sysLoginLog.DeptId = user.DeptId;
-            //sysLoginLog.IP = RequestInfoUtil.GetIp(_HttpContext);
-            //sysLoginLog.IPInfo = RequestInfoUtil.GetIpInfo(sysLoginLog.IP).ToString();
-            //sysLoginLog.UAStr = RequestInfoUtil.GetUserAgent(_HttpContext);
-            //var UAInfo = RequestInfoUtil.GetUserAgentInfo(sysLoginLog.UAStr);
-            //sysLoginLog.Browser = UAInfo.Browser;
-            //sysLoginLog.OS = UAInfo.OS;
-            //sysLoginLog.Device = UAInfo.Device;
+            TSysLoginLog sysLoginLog = new TSysLoginLog();
+            sysLoginLog.UserId = user.Id;
+            sysLoginLog.IP = RequestInfoUtil.GetIp(_HttpContext.HttpContext);
+            sysLoginLog.IPInfo = RequestInfoUtil.GetIpInfo(sysLoginLog.IP).ToString();
+            sysLoginLog.UAStr = RequestInfoUtil.GetUserAgent(_HttpContext.HttpContext);
+            var UAInfo = RequestInfoUtil.GetUserAgentInfo(sysLoginLog.UAStr);
+            sysLoginLog.Browser = UAInfo.Browser;
+            sysLoginLog.OS = UAInfo.OS;
+            sysLoginLog.Device = UAInfo.Device;
 
-            //await _db.Insertable(sysLoginLog).ExecuteCommandAsync();
+            await _sysUserRep.Context.Insertable(sysLoginLog).ExecuteCommandAsync();
             #endregion
 
             return new SysUserLoginOut() { Id=user.Id,Name=user.Name,Token=UserToken };
@@ -98,12 +99,15 @@ namespace MalusAdmin.Servers
        
         public async Task<GetUserInfoOut> GetUserInfo()
         {
-
-            return new GetUserInfoOut() { 
-                userId=0,
-                userName= "Soybean",
-                roles =new List<string> { "R_SUPER" },
-                buttons=new List<string> { "B_CODE1", "B_CODE2", "B_CODE3" }
+           
+            var user = await _sysUserRep
+           .Where(t => t.Id == TokenDataInfo.UserId).FirstAsync();
+            return new GetUserInfoOut() 
+            { 
+                userId= user.Id,
+                userName= user.Name,
+                roles =new List<string> { "" },
+                buttons=new List<string> { "" }
             };
         }
 
@@ -175,7 +179,7 @@ namespace MalusAdmin.Servers
             //获取所有的菜单权限
             var tree = await _sysMenuService.MenuTreeList();
             ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(1);
+            var menuid = await _sysRoleMenuService.RoleUserMenu(TokenDataInfo.UserId);
 
             var res =new List<UserMenu>();
             foreach (var item in tree.Records)

@@ -18,6 +18,7 @@ namespace MalusAdmin.Common
         static string tokenTag = "Token";
         static int expiresTime = 60;
         static string checkKey = "CheckToken_";
+
         private string GetToken(HttpContext httpContext)
         {
             if (httpContext == null) throw new SystemException("参数错误");

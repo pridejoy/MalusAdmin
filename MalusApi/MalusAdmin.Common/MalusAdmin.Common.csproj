@@ -1,11 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+ 
 
+  <ItemGroup>
+    <Content Include="ip2region.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
 	<ItemGroup>
 		<PackageReference Include="Mapster" Version="7.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
@@ -24,11 +31,5 @@
 		<PackageReference Include="StackExchange.Redis" Version="2.7.17" />
 		<PackageReference Include="IPTools.China" Version="1.6.0" />
 
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="Helper\Request\ip2region.db">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 </Project>

@@ -65,7 +65,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
           if (redirect) {
             await redirectFromLogin();
           }
-          // console.log('userInfo', userInfo);
+          console.log('userInfo', userInfo.userName);
           if (routeStore.isInitAuthRoute) {
             window.$notification?.success({
               title: $t('page.login.common.loginSuccess'),
@@ -96,7 +96,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
       // 3. update store
       // token.value = loginToken;
       // console.log('更新用户信息', userInfo);
-      Object.assign(userInfo, userInfores);
+      Object.assign(userInfo, userInfores.data);
 
       return true;
     }

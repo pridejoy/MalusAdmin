@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: 'SoybeanAdmin'
+    title: 'MalusAdmin'
   },
   common: {
     action: 'Action',

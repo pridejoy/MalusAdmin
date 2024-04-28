@@ -12,6 +12,7 @@ namespace MalusAdmin.Common
     public static class App
     {
         public static IConfiguration Configuration { get; set; }
+
         public static IServiceProvider Instance { get; set; }
 
         /// <summary>

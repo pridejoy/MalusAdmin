@@ -1,4 +1,5 @@
 using MalusAdmin.Common.Components.Token;
+using MalusAdmin.Servers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -59,9 +60,13 @@ namespace MalusAdmin.WebApi
             builder.Services.AddAuthorizationSetup();
             // 替换默认 PermissionChecker
             //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-             
+
             //Token
+            //提供了访问当前HTTP上下文（HttpContext）的方法
+            builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddSingleton<ITokenService, GuidTokenService>(); 
+            builder.Services.AddSingleton<IBaseService, BaseService>(); 
 
             // 添加跨域支持
             builder.Services.AddCorsSetup();

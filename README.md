@@ -1,8 +1,12 @@
 
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">MalusAdmin</h1>
-<h4 align="center">基于 Vue3/TypeScript/NaiveUI 和 NET7 & Sqlsugar  开发的后台管理框架。</h4>
+<h4 align="center">基于 Vue3/TypeScript/NaiveUI 和 NET7 & Sqlsugar  开发的后台管理框架。采用最原生最简洁的方式来实现,
+前端清新优雅高颜值，后端 结构清晰，优雅易懂，功能强大</h4>
 
 <p align="center">
+       <a style="margin-right: 5px">
+       <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license">
+    </a>
     <a style="margin-right: 5px">
        <img src="https://img.shields.io/badge/MalusAdmin-v1.0.1-brightgreen" alt="MalusAdmin">
     </a>
@@ -16,9 +20,15 @@
 
 ## 简介
 
-基于NET Core  | NET7 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的后台管理框架,提供快速开发解决方案。 
+基于NET Core  | NET7/8 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的前后端分离式权限管理系统,采用最原生最简洁的方式来实现,
+前端清新优雅高颜值，后端 结构清晰，优雅易懂，功能强大,提供快速开发的解决方案。 
 
 Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马卢斯】相近，也可称作为马卢斯。
+
+ 
+> [!NOTE] 如果您觉得  `MalusAdmin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
+
+简介
 
 ## 特性
 
@@ -30,6 +40,7 @@ Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马
 前端：基于 [Soybean Admin](https://gitee.com/honghuangdc/soybean-admin) 做适配，主技术栈：Vue3、**NaiveUI 版本**
 
 
+·
 
 ## 预览
 
@@ -64,6 +75,7 @@ Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马
 </table>
 
 
+ 
 
  ## 交流
 
