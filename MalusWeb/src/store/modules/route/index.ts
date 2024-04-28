@@ -204,30 +204,11 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     tabStore.initHomeTab();
   }
 
-  /** 初始化静态身份验证路由 */
-  async function initStaticAuthRoute() {
-    const { authRoutes: staticAuthRoutes } = createStaticRoutes();
-    console.log('获取静态的路由信息', authRoutes.value);
-    // debugger;
-    if (authStore.isStaticSuper) {
-      addAuthRoutes(staticAuthRoutes);
-    } else {
-      const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles);
-
-      addAuthRoutes(filteredAuthRoutes);
-    }
-
-    handleAuthRoutes();
-
-    setIsInitAuthRoute(true);
-  }
-
   /** Init dynamic auth route */
   async function initDynamicAuthRoute() {
     const data = await getUserRoutes();
-    console.log('获取动态的路由信息', data);
-    addAuthRoutes(data.data?.routes);
-    const home = data.data?.home;
+    addAuthRoutes(data.data?.routes ?? []);
+    const home = data.data?.home || 'home';
     // const { authRoutes: staticAuthRoutes } = createStaticRoutes();
     // // console.log('获取动态的路由信息2', staticAuthRoutes);
     // addAuthRoutes(staticAuthRoutes);

@@ -44,6 +44,8 @@ public static class AppSettings
     /// </summary>
     public static string[] AllowCors => Configuration.GetSection("AllowCors").Get<string[]>();
 
+
+    public static string SqlServerConnection => Configuration["SqlServerConnection"];
     /// <summary>
     /// Jwt 配置
     /// </summary>

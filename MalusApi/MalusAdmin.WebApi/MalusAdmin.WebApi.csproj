@@ -18,4 +18,10 @@
     <ProjectReference Include="..\MalusAdmin.Servers\MalusAdmin.Servers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="pm2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

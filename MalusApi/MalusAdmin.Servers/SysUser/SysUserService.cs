@@ -195,11 +195,29 @@ namespace MalusAdmin.Servers
             //    }
 
             //});
+            //res.Add(new UserMenu()
+            //{
+            //    Component = "layout.base$view.about",
+            //    Name = "about",
+            //    Path = "/about",
+            //    Meta = new Meta()
+            //    {
+            //        Icon = "fluent:book-information-24-regular",
+            //        Title = "about",
+            //        Order = 1,
+            //    }
+
+            //});
             Out.Home = res.FirstOrDefault().Name;
             Out.Routes = res;
             return Out;
         }
 
+        /// <summary>
+        /// 私有方法，转化前端路由
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns></returns>
         private UserMenu ConvertMenu(TSysMenu menu)
         {
             return new UserMenu

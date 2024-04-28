@@ -1,25 +1,22 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Reflection;
+using MalusAdmin.Common.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using SqlSugar;
 using StackExchange.Redis;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using MalusAdmin.Common.Model;
 
 namespace MalusAdmin.Common
 {
     public static class SqlsugarSetup
     {
         public static void AddSqlsugarSetup(this IServiceCollection services)
-        { 
+        {
             //注释这行，我是从本地文件读取的，下一行解除注释
-            var ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
-             
+            //var ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
+
             //数据库链接,修改配置里面的SqlServerConnection的字符串
-            //var ConnectionString= AppSettings.GetValue("SqlServerConnection"); 
+            var ConnectionString= AppSettings.SqlServerConnection; 
 
             var configConnection = new ConnectionConfig
             {
@@ -32,7 +29,7 @@ namespace MalusAdmin.Common
             // 文档地址：https://www.donet5.com/Home/Doc?typeId=1204
             Action<SqlSugarClient> sqlclient = db =>
             {
-                
+
                 // 打印SQL语句
                 db.Aop.OnLogExecuting = (sql, parameters) =>
                 {
@@ -45,7 +42,7 @@ namespace MalusAdmin.Common
                         Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("【" + DateTime.Now + "——执行SQL】\r\n" + UtilMethods.GetSqlString(db.CurrentConnectionConfig.DbType, sql, parameters) + "\r\n");
                     Console.ForegroundColor = originColor;
-                   
+
                 };
                 //数据处理：增、删 和 改
                 db.Aop.DataExecuting = (oldValue, entityInfo) =>
@@ -95,11 +92,12 @@ namespace MalusAdmin.Common
                     {
 
                     }
+                    throw new Exception("演示环境，禁止操作");
 
                 };
                 //查询事件 
                 db.Aop.DataExecuted = (value, entity) =>
-                { 
+                {
 
                 };
 
@@ -110,7 +108,7 @@ namespace MalusAdmin.Common
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     var pars = db.Utilities.SerializeObject(((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
                     Console.ForegroundColor = originColor;
-                    Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars +" \r\n");
+                    Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars + " \r\n");
                 };
 
                 //监控所有超过1秒的Sql 
@@ -136,7 +134,7 @@ namespace MalusAdmin.Common
                 // 配置加删除全局过滤器
                 foreach (var entityType in types)
                 {
-                    if (!entityType.GetProperty("SysIsDelete").IsEmpty() )
+                    if (!entityType.GetProperty("SysIsDelete").IsEmpty())
                     { //判断实体类中包含IsDeleted属性
                       //构建动态Lambda
                         var lambda = DynamicExpressionParser.ParseLambda(new[] { Expression.Parameter(entityType, "it") }, typeof(bool), $"{nameof(ModelBase.SysIsDelete)} ==  @0", false);
@@ -146,9 +144,9 @@ namespace MalusAdmin.Common
                         }); //将Lambda传入过滤器
                     }
                 }
-                    
+
             };
-              
+
             //SqlSugarScope线程是安全的
             SqlSugarScope sqlSugar = new SqlSugarScope(configConnection, sqlclient);
 
@@ -159,8 +157,8 @@ namespace MalusAdmin.Common
             services.AddScoped(typeof(SqlSugarRepository<>));
         }
 
-        public static List<Type>  GetSugarTableTypes()
-{
+        public static List<Type> GetSugarTableTypes()
+        {
             var assemblies = AssemblyHelper.GetAssemblies("MalusAdmin.Repository"); ;
 
             var types = new List<Type>();
