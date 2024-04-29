@@ -151,20 +151,20 @@ namespace MalusAdmin.Common.Helper
                 {
                     MemoryInfo.FreeRam = Math.Round(MemoryInfo.Free / 1024, 2) + "GB";
                     MemoryInfo.UsedRam = Math.Round(MemoryInfo.Used / 1024, 2) + "GB";
-                    MemoryInfo.TotalRAM = Math.Round(MemoryInfo.Total / 1024, 2) + "GB";
-                    MemoryInfo.RAMRate = Math.Ceiling(100 * MemoryInfo.Used / MemoryInfo.Total).ToString() + "%";
+                    MemoryInfo.TotalRAM = Math.Round(MemoryInfo.Total / 1024, 2) ;
+                    MemoryInfo.RAMRate = Math.Ceiling(100 * MemoryInfo.Used / MemoryInfo.Total);
                     if (IsUnix)
                     {
                         string output = ShellUtil.Bash("top -b -n1 | grep \"Cpu(s)\" | awk '{print $2 + $4}'");
-                        MemoryInfo.CPURate = Math.Ceiling(Convert.ToDouble(output.Trim())) + "%";
+                        MemoryInfo.CPURate = Math.Ceiling(Convert.ToDouble(output.Trim())) ;
                     }
                     else
                     {
                         string output = ShellUtil.Cmd("wmic", "cpu get LoadPercentage");
-                        MemoryInfo.CPURate = Math.Ceiling(Convert.ToDouble(output.Replace("LoadPercentage", string.Empty).Trim())) + "%";
+                        MemoryInfo.CPURate = Math.Ceiling(Convert.ToDouble(output.Replace("LoadPercentage", string.Empty).Trim())) ;
 
                     }
-                    MemoryInfo.AppRAMRate = Math.Round((double)Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024 / MemoryInfo.Total, 2) + "%";
+                    MemoryInfo.AppRAMRate = Math.Round((double)Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024 / MemoryInfo.Total, 2) ;
                 }
                 catch { }
                 return MemoryInfo;
@@ -304,15 +304,15 @@ namespace MalusAdmin.Common.Helper
         /// <summary>
         /// CPU使用率%
         /// </summary>
-        public string CPURate { get; set; }
+        public double CPURate { get; set; }
         /// <summary>
         /// 总内存 GB
         /// </summary>
-        public string TotalRAM { get; set; }
+        public double TotalRAM { get; set; }
         /// <summary>
         /// 内存使用率 %
         /// </summary>
-        public string RAMRate { get; set; }
+        public double RAMRate { get; set; }
         /// <summary>
         /// 空闲内存
         /// </summary>
@@ -321,7 +321,7 @@ namespace MalusAdmin.Common.Helper
         /// <summary>
         /// APP内存使用率
         /// </summary>
-        public string AppRAMRate { get; set; }
+        public double AppRAMRate { get; set; }
     }
 
     /// <summary>
@@ -330,20 +330,38 @@ namespace MalusAdmin.Common.Helper
     public class DiskInfo
     {
         /// <summary>
-        /// 磁盘名
+        /// 磁盘的名称。
         /// </summary>
         public string DiskName { get; set; }
-        public string TypeName { get; set; }
-        public long TotalFree { get; set; }
-        public long TotalSize { get; set; }
+
         /// <summary>
-        /// 已使用
+        /// 磁盘的类型。
+        /// </summary>
+        public string TypeName { get; set; }
+
+        /// <summary>
+        /// 磁盘的剩余空间总量（字节）。
+        /// </summary>
+        public long TotalFree { get; set; }
+
+        /// <summary>
+        /// 磁盘的总大小（字节）。
+        /// </summary>
+        public long TotalSize { get; set; }
+
+        /// <summary>
+        /// 磁盘已使用的空间量（字节）。
         /// </summary>
         public long Used { get; set; }
+
         /// <summary>
-        /// 可使用
+        /// 磁盘可使用的剩余空间（字节）。
         /// </summary>
         public long AvailableFreeSpace { get; set; }
+
+        /// <summary>
+        /// 磁盘剩余空间的百分比。
+        /// </summary>
         public decimal AvailablePercent { get; set; }
     }
 }

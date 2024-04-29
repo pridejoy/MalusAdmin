@@ -6,3 +6,4 @@ export * from './sysrole';
 export * from './sysrolepermission';
 export * from './sysmenu';
 export * from './sysrolemenu';
+export * from './sysdata';

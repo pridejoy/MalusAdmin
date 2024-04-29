@@ -45,6 +45,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
+        [ResponseCache(Duration = 50)] // 缓存5秒
         public async Task<JsonR> GetUserMenu()
         {
             return ResultCode.Success.JsonR(await _sysUserService.GetUserMenu());

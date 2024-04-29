@@ -20,15 +20,15 @@
 
 ## 简介
 
+Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马卢斯】相近，也可称作为马卢斯。
+
 基于NET Core  | NET7/8 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的前后端分离式权限管理系统,采用最原生最简洁的方式来实现,
 前端清新优雅高颜值，后端 结构清晰，优雅易懂，功能强大,提供快速开发的解决方案。 
 
-Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马卢斯】相近，也可称作为马卢斯。
+ > [!NOTE] 如果您觉得  `MalusAdmin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
 
- 
-> [!NOTE] 如果您觉得  `MalusAdmin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
 
-简介
+
 
 ## 特性
 
@@ -40,40 +40,69 @@ Malus是海棠的意思，故名思意海棠管理后台系统，读音与【马
 前端：基于 [Soybean Admin](https://gitee.com/honghuangdc/soybean-admin) 做适配，主技术栈：Vue3、**NaiveUI 版本**
 
 
-·
+极简的项目依赖，简洁清爽的目录结构，代码注释方便上手
+
+![目录结构](doc/images/20240429112515.png)
+
+![项目依赖](doc/images/20240429132404.png)
+
 
 ## 预览
 
-- **账户**
-  >  账号：admin   
-  密码：1Q2W3E
-- **演示**
-   >   [malus.dotnetshare.com](https://malus.dotnetshare.com/) 
-- **文档**
-  > [www.dotnetshare.com](https://www.dotnetshare.com/) 
+MalusAdmin 提供了以下演示和文档资源：
 
+- 账户信息：账号 `admin`，密码 `1Q2W3E`
+- 在线演示系统：[Malus 管理系统](https://malus.dotnetshare.com/)
+- 后端文档：[DotNet分享](https://www.dotnetshare.com/)
+- 前端文档：[前端文档](https://docs.soybeanjs.cn/zh/)
+- Naive UI 文档：[Naive UI 文档](https://www.naiveui.com/zh-CN/os-theme/docs/installation)
 
 ## 演示
 
 <table>
     <tr>
         <td><img src="./doc/images/malus1.png" alt=""/></td>
-        <td><img src="./doc/images/malus2.png" alt=""/></td>
+        <td><img src="./doc/images/malus2.png" alt=""/></td> 
+    </tr>
+    <tr>
         <td><img src="./doc/images/malus3.png" alt=""/></td>
+        <td><img src="./doc/images/malus4.png" alt=""/></td> 
     </tr>
     <tr>
-        <td><img src="./doc/images/malus4.png" alt=""/></td>
         <td><img src="./doc/images/malus5.png" alt=""/></td>
-        <td><img src="./doc/images/malus6.png" alt=""/></td>
+        <td><img src="./doc/images/malus6.png" alt=""/></td>  
     </tr>
-    <tr>
+      <tr>
         <td><img src="./doc/images/malus7.png" alt=""/></td>
-        <td><img src="./doc/images/malus8.png" alt=""/></td> 
-        <td><img src="./doc/images/malus9.png" alt=""/></td> 
+        <td><img src="./doc/images/malus8.png" alt=""/></td>  
+    </tr>
+      <tr>
+        <td><img src="./doc/images/malus9.png" alt=""/></td>
+        <td><img src="./doc/images/malus10.png" alt=""/></td>  
     </tr>
 
 </table>
 
+## 手机演示
+
+完美的直接手机端运行，一套代码三端俱全。
+
+<table>
+    <tr>
+        <td><img src="./doc/images/443e64138bacb6deb3fcf27ca163c9a.jpg" alt=""/></td>
+        <td><img src="./doc/images/95084fd62cc92f610b95f4831e4743a.jpg" alt=""/></td> 
+    </tr>
+    <tr>
+        <td><img src="./doc/images/b66f7dfe10870656878a573e2c8931f.jpg" alt=""/></td>
+        <td><img src="./doc/images/1abaa087f16b5a3d074cfbd373161ac.jpg" alt=""/></td> 
+    </tr>
+    <tr>
+          <td><img src="./doc/images/957e9f5757f1691e21286eefcfc2922.jpg" alt=""/></td> 
+        <td><img src="./doc/images/9e47ef5edb4f352ed31b80212820301.jpg" alt=""/></td>  
+    </tr>
+   
+
+</table>
 
  
 

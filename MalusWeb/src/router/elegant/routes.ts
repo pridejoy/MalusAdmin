@@ -271,6 +271,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'system',
+    path: '/system',
+    component: 'layout.base$view.system',
+    meta: {
+      title: 'system',
+      i18nKey: 'route.system'
+    }
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

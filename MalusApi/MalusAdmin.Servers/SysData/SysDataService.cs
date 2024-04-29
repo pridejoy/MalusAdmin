@@ -29,6 +29,7 @@ namespace MalusAdmin.Servers
                 UseRam = ServerInfoUtil.UseRam,
                 StartTime = ServerInfoUtil.StartTime,
                 RunTime = ServerInfoUtil.RunTime,
+
                 DiskInfo = ServerInfoUtil.DiskInfo,
                 MemoryInfo = ServerInfoUtil.MemoryInfo
             };

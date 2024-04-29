@@ -70,6 +70,10 @@ namespace MalusAdmin.WebApi
 
             // 添加跨域支持
             builder.Services.AddCorsSetup();
+
+            //响应缓存中间件
+            builder.Services.AddResponseCaching();
+
             // 添加EndpointsApiExplorer
             builder.Services.AddEndpointsApiExplorer(); 
 
@@ -105,10 +109,12 @@ namespace MalusAdmin.WebApi
 
                 });
             }
-             
+
             //Token验证
             //app.UseMiddleware<CheckToken>();
-             
+
+            app.UseResponseCaching();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

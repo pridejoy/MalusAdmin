@@ -22,7 +22,8 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<JsonR> Login()
+        [ResponseCache(Duration = 50)] // 缓存5秒
+        public async Task<JsonR> GetSystemInfo()
         {
             return ResultCode.Success.JsonR(await _Service.GetServerInfo());
         }
