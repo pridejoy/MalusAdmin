@@ -10,6 +10,10 @@ namespace MalusAdmin.Common
     public interface ITokenService
     {
         /// <summary>
+        /// 获取当前登录的用户信息
+        /// </summary>
+        public TokenData TokenDataInfo { get; }
+        /// <summary>
         /// 生成并保存token
         /// </summary>
         /// <param name="httpContext"></param>
@@ -56,5 +60,9 @@ namespace MalusAdmin.Common
         /// </summary>
         /// <param name="userId"></param>
         void RemoveCheckToken(int userId);
+
+
+
+        
     }
 }

@@ -18,7 +18,7 @@ namespace MalusAdmin.Servers
         /// <summary>
         ///密码
         /// </summary>
-        /// <example>123456</example>
+        /// <example>1q2w3e</example>
         public String? PassWord { get; set; }
     }
 }

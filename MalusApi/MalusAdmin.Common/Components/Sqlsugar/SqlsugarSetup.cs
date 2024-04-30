@@ -12,12 +12,15 @@ namespace MalusAdmin.Common
     {
         public static void AddSqlsugarSetup(this IServiceCollection services)
         {
-            //注释这行，我是从本地文件读取的，下一行解除注释
-            //var ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
-
             //数据库链接,修改配置里面的SqlServerConnection的字符串
-            var ConnectionString = AppSettings.SqlServerConnection;
+            var ConnectionString = AppSettings.SqlServerConnection; 
 
+            //if (!AppSettings.IsDemo)
+            { 
+                //注释这行，我是从本地文件读取的，下一行解除注释
+                ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
+            }
+                
             var configConnection = new ConnectionConfig
             {
                 DbType = SqlSugar.DbType.SqlServer,
@@ -70,7 +73,7 @@ namespace MalusAdmin.Common
                                 TokenData token = tokenService.ParseToken(httpContext);
                                 if (token != null)
                                 {
-                                    entityInfo.SetValue(token.UserDept);
+                                    //entityInfo.SetValue(token.UserDept);
                                 }
                             }
                         }
@@ -91,8 +94,7 @@ namespace MalusAdmin.Common
                     catch
                     {
 
-                    }
-                    //throw new Exception("演示环境，禁止操作");
+                    } 
 
                 };
                 //查询事件 

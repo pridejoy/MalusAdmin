@@ -24,12 +24,6 @@ namespace MalusAdmin.WebApi.Filter
             context.Result =new ResObjectResult(rspResult);
         }
 
-        public class ResObjectResult : ObjectResult
-        {
-            public ResObjectResult(object value) : base(value)
-            {
-                StatusCode = StatusCodes.Status200OK;
-            }
-        }
+ 
     }
 }

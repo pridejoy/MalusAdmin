@@ -11,6 +11,7 @@ namespace MalusAdmin.WebApi.Controllers
     /// <summary>
     /// 角色菜单服务
     /// </summary>
+    
     public class SysRoleMenuController : ApiControllerBase
     {
         private readonly SysRoleMenuService _service;
@@ -37,6 +38,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns> 
         [HttpPost]
         [Permission("角色菜单更新")]
+        [ReadOnly]
         public async Task<JsonR> Set(UpdateRoleUserMenuIn input)
         {
             return ResultCode.Success.JsonR(await _service.SetRoleUserMenu(input));

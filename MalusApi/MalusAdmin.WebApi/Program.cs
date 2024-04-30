@@ -65,8 +65,7 @@ namespace MalusAdmin.WebApi
             //提供了访问当前HTTP上下文（HttpContext）的方法
             builder.Services.AddHttpContextAccessor();
 
-            builder.Services.AddSingleton<ITokenService, GuidTokenService>(); 
-            builder.Services.AddSingleton<IBaseService, BaseService>(); 
+            builder.Services.AddSingleton<ITokenService, GuidTokenService>();  
 
             // 添加跨域支持
             builder.Services.AddCorsSetup();

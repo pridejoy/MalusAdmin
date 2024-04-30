@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Dm;
 using Mapster.Utils;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MalusAdmin.Common
 {
@@ -76,8 +78,7 @@ namespace MalusAdmin.Common
     }
     #endregion
     public static class Tools
-    { 
-        #region //根据枚举返回对应的状态码
+    {  
         /// <summary>
         /// 根据枚举返回对应的状态码
         /// </summary>
@@ -93,10 +94,16 @@ namespace MalusAdmin.Common
                 message = string.IsNullOrEmpty(message) ? EnumHelper.GetDescription(Code) : message,
                 body = obj
             };
-        } 
-        #endregion
+        }  
     }
 
 
+    public  class ResObjectResult : ObjectResult
+    {
+        public ResObjectResult(object value) : base(value)
+        {
+            StatusCode = StatusCodes.Status200OK;
+        }
+    }
 
 }

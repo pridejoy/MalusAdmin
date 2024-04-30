@@ -48,6 +48,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Permission("设置角色按钮")]
+        [ReadOnly]
         public async Task<JsonR> AddUserButtonPermiss(UpdateRoleButtonIn Input)
         {
             return ResultCode.Success.JsonR(await _service.AddUserButtonPermiss(Input));

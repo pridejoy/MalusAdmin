@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using SqlSugar.Extensions;
 
 namespace MalusAdmin.Common;
 public static class AppSettings
@@ -44,6 +45,10 @@ public static class AppSettings
     /// </summary>
     public static string[] AllowCors => Configuration.GetSection("AllowCors").Get<string[]>();
 
+    /// <summary>
+    /// 是否演示环境
+    /// </summary>
+    public static bool IsDemo => Configuration["IsDemo"].ObjToBool();
 
     public static string SqlServerConnection => Configuration["SqlServerConnection"];
     /// <summary>

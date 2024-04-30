@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import pkg from '~/package.json';
+import dotnetjson from '~/dotnetneget.json';
 
 const appStore = useAppStore();
 
@@ -21,6 +22,9 @@ interface PkgVersionInfo {
 }
 
 const { name, version, dependencies, devDependencies } = pkg;
+const { packages} = dotnetjson;
+
+console.log("packages",packages);
 
 function transformVersionData(tuple: [string, string]): PkgVersionInfo {
   const [$name, $version] = tuple;
@@ -45,62 +49,41 @@ const latestBuildTime = BUILD_TIME;
     <NCard :title="$t('page.about.title')" :bordered="false" size="small" segmented class="card-wrapper">
       <!-- <NDivider /> -->
       <NH3 style="text-align: center">MalusAdmin</NH3>
-      <NTabs type="segment" animated>
-        <NTabPane name="chap0" tab="简介">
-          MalusAdmin 是基于NET Core | NET7 & Sqlsugar | Vue3 | vite4 | TypeScript | NaiveUI
-          开发的后台管理框架,提供快速开发解决方案。
-          <p>
-            文档地址:
-            <a class="text-primary" target="_blank" rel="noopener noreferrer" href="https://www.dotnetshare.com/">
-              https://www.dotnetshare.com/
-            </a>
-          </p>
-          <p>
+      <P>
+        Malus是海棠的意思，顾名思义，海棠后台管理系统，读音与【马卢斯】相近，也可称作为马卢斯后台管理系统。
+        <br /> 基于NET Core
+        | NET7/8 & Sqlsugar | Vue3 | vite4 | TypeScript | NaiveUI
+        开发的前后端分离式权限管理系统,采用最原生最简洁的方式来实现, 前端清新优雅高颜值，后端
+        结构清晰，优雅易懂，功能强大,提供快速开发的解决方案。
+      </P>
+      <P>后端：基于 .NET7 和 sqlsugar ，集成常用组件，从0到1搭建。</P>
+      <P>前端：基于 Soybean Admin 做适配，主技术栈：Vue3、NaiveUI 版本</P>
+      <br />
+      <p>极简的项目依赖，简洁清爽的目录结构，代码注释方便上手</p>
+      <br />
+      <p>
             公众号:[Net分享] 一个会持续分享编程干货和好玩的知识库。欢迎大家关注！！！
             <br />
             <NQrCode value="http://weixin.qq.com/r/qzj377TEKulVrfCM9225" />
-          </p>
-          <p>
-            开源地址:
-            <a
-              class="text-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://gitee.com/Pridejoy/MalusAdmin"
-            >
-              https://gitee.com/Pridejoy/MalusAdmin
-            </a>
-          </p>
-        </NTabPane>
-        <NTabPane name="chap1" tab="文档地址">
-          <a class="text-primary" target="_blank" rel="noopener noreferrer" href="https://www.dotnetshare.com/">
-            https://www.dotnetshare.com/
-          </a>
-        </NTabPane>
-        <NTabPane name="chap2" tab="公众号">
-          一个会持续分享编程干货和好玩的知识库。欢迎大家关注！！！
-          <br />
-          <NQrCode value="http://weixin.qq.com/r/qzj377TEKulVrfCM9225" />
-        </NTabPane>
-        <NTabPane name="chap3" tab="开源地址">
-          <a
-            class="text-primary"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://gitee.com/Pridejoy/MalusAdmin"
-          >
-            https://gitee.com/Pridejoy/MalusAdmin
-          </a>
-        </NTabPane>
-        <NTabPane name="chap4" tab="Soybean Admin">
-          <p>
-            Soybean Admin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite5, TypeScript, Pinia
-            和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于
-            ApiFox 的在线Mock数据方案。Soybean Admin
-            为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。
-          </p>
-        </NTabPane>
-      </NTabs>
+      </p>
+      <p>
+        <ul>
+          <li>
+          开源地址： <a href="https://gitee.com/Pridejoy/MalusAdmin" class="text-primary"  target="_blank" rel="noopener noreferrer">https://gitee.com/Pridejoy/MalusAdmin</a>
+        </li>
+        <li>
+          后端文档： <a href="https://www.dotnetshare.com/" class="text-primary"  target="_blank" rel="noopener noreferrer">https://www.dotnetshare.com/</a>
+        </li>
+        <li>
+          前端文档：
+          <a href="https://docs.soybeanjs.cn/zh/" class="text-primary" target="_blank" rel="noopener noreferrer">https://docs.soybeanjs.cn</a>
+        </li>
+        <li >
+          Naive UI 文档：
+          <a href="https://www.naiveui.com/zh-CN/os-theme/components/button" class="text-primary"   target="_blank" rel="noopener noreferrer">https://www.naiveui.com</a>
+        </li>
+      </ul></p>
+
     </NCard>
     <NCard :title="$t('page.about.projectInfo.title')" :bordered="false" size="small" segmented class="card-wrapper">
       <NDescriptions label-placement="left" bordered size="small" :column="column">
@@ -111,17 +94,26 @@ const latestBuildTime = BUILD_TIME;
           <NTag type="primary">{{ latestBuildTime }}</NTag>
         </NDescriptionsItem>
         <NDescriptionsItem :label="$t('page.about.projectInfo.githubLink')">
-          <a class="text-primary" :href="pkg.homepage" target="_blank" rel="noopener noreferrer">
-            {{ $t('page.about.projectInfo.githubLink') }}
+          <a class="text-primary" href="https://github.com/pridejoy/MalusAdmin" target="_blank" rel="noopener noreferrer">
+            https://github.com/pridejoy/MalusAdmin
           </a>
         </NDescriptionsItem>
-        <NDescriptionsItem :label="$t('page.about.projectInfo.previewLink')">
-          <a class="text-primary" :href="pkg.website" target="_blank" rel="noopener noreferrer">
-            {{ $t('page.about.projectInfo.previewLink') }}
+        <NDescriptionsItem label="Gitee">
+          <a class="text-primary" href="https://gitee.com/Pridejoy/MalusAdmin" target="_blank" rel="noopener noreferrer">
+            https://gitee.com/Pridejoy/MalusAdmin
           </a>
         </NDescriptionsItem>
       </NDescriptions>
     </NCard>
+
+    <NCard title="后端依赖" :bordered="false" size="small" segmented class="card-wrapper">
+      <NDescriptions label-placement="left" bordered size="small" :column="column">
+        <NDescriptionsItem v-for="item in packages" :key="item.name" :label="item.name">
+          {{ item.version }}
+        </NDescriptionsItem>
+      </NDescriptions>
+    </NCard>
+
     <NCard :title="$t('page.about.prdDep')" :bordered="false" size="small" segmented class="card-wrapper">
       <NDescriptions label-placement="left" bordered size="small" :column="column">
         <NDescriptionsItem v-for="item in pkgJson.dependencies" :key="item.name" :label="item.name">

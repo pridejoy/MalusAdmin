@@ -10,14 +10,21 @@ namespace MalusAdmin.Common
 {
     public class GuidTokenService : ITokenService
     {
-        readonly ICacheService _cacheService;
-        public GuidTokenService(ICacheService cacheService)
+        readonly ICacheService _cacheService; 
+        readonly IHttpContextAccessor _HttpContext;
+    
+        public GuidTokenService(ICacheService cacheService,IHttpContextAccessor httpContext)
         {
             _cacheService = cacheService;
+            _HttpContext = httpContext;
         }
+
+
         static string tokenTag = "Token";
         static int expiresTime = 60;
         static string checkKey = "CheckToken_";
+
+        public TokenData TokenDataInfo => ParseToken(_HttpContext.HttpContext) ?? new TokenData();
 
         private string GetToken(HttpContext httpContext)
         {

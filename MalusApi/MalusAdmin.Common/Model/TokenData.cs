@@ -9,8 +9,11 @@ namespace MalusAdmin.Common
     public class TokenData
     {
         public int UserId { get; set; }
-        public string UserAccount { get; set; }
-        public int UserDept { get; set; }
+
+        public string UserName { get; set; }
+
+        public string UserAccount { get; set; } 
+
         public List<int> UserRolesId { get; set; }
         public DateTime? DateTime { get; set; }
     }

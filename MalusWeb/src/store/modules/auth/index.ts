@@ -95,7 +95,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
       // 3. update store
       // token.value = loginToken;
-      // console.log('更新用户信息', userInfo);
+      console.log('更新用户信息', userInfores.data);
       Object.assign(userInfo, userInfores.data);
 
       return true;

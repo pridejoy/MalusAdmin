@@ -11,16 +11,16 @@
        <img src="https://img.shields.io/badge/MalusAdmin-v1.0.1-brightgreen" alt="MalusAdmin">
     </a>
     <a style="margin-right: 5px">
-       <img src="https://gitee.com/Pridejoy/wallpaper.net/badge/star.svg?theme=dark" alt="MalusAdmin">
+       <img src="https://gitee.com/Pridejoy/MalusAdmin/badge/star.svg?theme=dark" alt="MalusAdmin">
     </a>
     <a style="margin-right: 5px">
-       <img src="https://gitee.com/Pridejoy/wallpaper.net/badge/fork.svg?theme=dark" alt="MalusAdmin">
+       <img src="https://gitee.com/Pridejoy/MalusAdmin/badge/fork.svg?theme=dark" alt="MalusAdmin">
     </a>
 </p>
 
 ## 简介
 
-Malus是海棠的意思，故名思意，海棠后台管理系统，读音与【马卢斯】相近，也可称作为马卢斯后台管理系统。
+Malus是海棠的意思，顾名思义，海棠后台管理系统，读音与【马卢斯】相近，也可称作为马卢斯后台管理系统。
 
 基于NET Core  | NET7/8 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的前后端分离式权限管理系统,采用最原生最简洁的方式来实现,
 前端清新优雅高颜值，后端 结构清晰，优雅易懂，功能强大,提供快速开发的解决方案。 

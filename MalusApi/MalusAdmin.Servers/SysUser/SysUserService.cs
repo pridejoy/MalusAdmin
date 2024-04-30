@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using MalusAdmin.Common;
 using MalusAdmin.Common.Components;
 using MalusAdmin.Encryption;
-using MalusAdmin.Entity;
-using MalusAdmin.Request;
+using MalusAdmin.Entity; 
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
@@ -17,13 +16,11 @@ using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetTaste;
-using SqlSugar;
-using StackExchange.Redis;
-using static Dm.net.buffer.ByteArrayBuffer;
+using SqlSugar; 
 
 namespace MalusAdmin.Servers
 {
-    public class SysUserService: BaseService,ISysUserService
+    public class SysUserService: ISysUserService
     {  
         private readonly SqlSugarRepository<TSysUser> _sysUserRep;  // 仓储
         private readonly ITokenService _TokenService;
@@ -34,7 +31,7 @@ namespace MalusAdmin.Servers
         public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
             ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
             SysMenuService sysMenuService,
-            IHttpContextAccessor httpContext):base(tokenService, httpContext)
+            IHttpContextAccessor httpContext)
         {
             _sysUserRep = sysUserRep;
             _TokenService = tokenService;
@@ -74,20 +71,7 @@ namespace MalusAdmin.Servers
 
             _TokenService.RemoveCheckToken(tokenData.UserId);
             string UserToken = _TokenService.GenerateToken(_HttpContext.HttpContext, tokenData);
-
-            #region 添加登录日志
-            TSysLoginLog sysLoginLog = new TSysLoginLog();
-            sysLoginLog.UserId = user.Id;
-            sysLoginLog.IP = RequestInfoUtil.GetIp(_HttpContext.HttpContext);
-            sysLoginLog.IPInfo = RequestInfoUtil.GetIpInfo(sysLoginLog.IP).ToString();
-            sysLoginLog.UAStr = RequestInfoUtil.GetUserAgent(_HttpContext.HttpContext);
-            var UAInfo = RequestInfoUtil.GetUserAgentInfo(sysLoginLog.UAStr);
-            sysLoginLog.Browser = UAInfo.Browser;
-            sysLoginLog.OS = UAInfo.OS;
-            sysLoginLog.Device = UAInfo.Device;
-
-            await _sysUserRep.Context.Insertable(sysLoginLog).ExecuteCommandAsync();
-            #endregion
+             
 
             return new SysUserLoginOut() { Id=user.Id,Name=user.Name,Token=UserToken };
         }
@@ -101,13 +85,13 @@ namespace MalusAdmin.Servers
         {
            
             var user = await _sysUserRep
-           .Where(t => t.Id == TokenDataInfo.UserId).FirstAsync();
+           .Where(t => t.Id == _TokenService.TokenDataInfo.UserId).FirstAsync();
             return new GetUserInfoOut() 
             { 
                 userId= user.Id,
                 userName= user.Name,
-                roles =new List<string> { "" },
-                buttons=new List<string> { "" }
+                roles =new List<string> {  },
+                buttons=new List<string> {  }
             };
         }
 
@@ -121,6 +105,7 @@ namespace MalusAdmin.Servers
         {
             var dictTypes = await _sysUserRep.AsQueryable() 
                  .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord), u => u.Name.Contains(input.KeyWord.Trim()))
+                 .WhereIF(input.Status!=null, u => u.Status==input.Status)
                  //.Select<UserPageOut>()
                  .ToPagedListAsync(input.PageNo, input.PageSize);
             return dictTypes.PagedResult();
@@ -173,47 +158,24 @@ namespace MalusAdmin.Servers
         /// 获取登录用户的菜单权限
         /// </summary>
         /// <returns></returns>
-        public async Task<UserMenuOut> GetUserMenu( )
+        public async Task<UserMenuOut> GetUserMenu()
         {
             var Out=new UserMenuOut();
             //获取所有的菜单权限
             var tree = await _sysMenuService.MenuTreeList();
             ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(TokenDataInfo.UserId);
+            var menuid = await _sysRoleMenuService.RoleUserMenu(_TokenService.TokenDataInfo.UserId);
+
+            
 
             var res =new List<UserMenu>();
-            foreach (var item in tree.Records)
+            foreach (var item in tree.Records.Where(x=> menuid.Contains(x.Id)))
             {
                 res.Add(ConvertMenu(item));
             }
-            //res.Add(new UserMenu()
-            //{
-            //    Component = "layout.base$view.home",
-            //    Name = "home",
-            //    Path = "/home",
-            //    Meta = new Meta()
-            //    {
-            //        Icon = "mdi:monitor-dashboard",
-            //        Title = "首页",
-            //        Order = 1,
-            //    }
-
-            //});
-            //res.Add(new UserMenu()
-            //{
-            //    Component = "layout.base$view.about",
-            //    Name = "about",
-            //    Path = "/about",
-            //    Meta = new Meta()
-            //    {
-            //        Icon = "fluent:book-information-24-regular",
-            //        Title = "about",
-            //        Order = 1,
-            //    }
-
-            //});
             Out.Home = res.FirstOrDefault().Name;
             Out.Routes = res;
+
             return Out;
         }
 
