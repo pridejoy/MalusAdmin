@@ -13,3 +13,6 @@ dist
 dist-ssr
 coverage
 *.local
+
+# Ignore all node_modules folders inside the packages directory
+/packages/**/*.node_modules/
