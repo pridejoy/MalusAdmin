@@ -15,6 +15,7 @@ namespace MalusAdmin.Common
         public string UserAccount { get; set; } 
 
         public List<int> UserRolesId { get; set; }
+
         public DateTime? DateTime { get; set; }
     }
 }

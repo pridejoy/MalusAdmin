@@ -14,10 +14,11 @@ namespace Models
     /// 操作日志表
     /// </summary>
     [SplitTable(SplitType.Month)]
-    [SugarTable("sys_log_wx_op_{year}{month}{day}")]
-    [Description("微信操作日志表")]
-    public class SysLogVis
+    [SugarTable("sys_log_op_{year}{month}{day}")]
+    [Description("操作日志表")]
+    public class TSysLogVis
     {
+
         /// <summary>
         /// 主键Id
         /// </summary>

@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { $t } from '@/locales';
 import { useRouterPush } from '@/hooks/common/router';
-
+import { useAuthStore } from '@/store/modules/auth';
 defineOptions({ name: 'ExceptionBase' });
 
 type ExceptionType = '403' | '404' | '500';
@@ -19,10 +19,12 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const authStore = useAuthStore();
 
 const { routerPushByKey } = useRouterPush();
 
 function exception() {
+  authStore.resetStore();
   routerPushByKey('login');
 }
 

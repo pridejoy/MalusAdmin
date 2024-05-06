@@ -104,6 +104,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'function_oplog',
+        path: '/function/oplog',
+        component: 'view.function_oplog',
+        meta: {
+          title: 'function_oplog',
+          i18nKey: 'route.function_oplog'
+        }
+      },
+      {
         name: 'function_request',
         path: '/function/request',
         component: 'view.function_request',

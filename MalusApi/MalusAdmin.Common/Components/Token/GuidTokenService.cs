@@ -11,6 +11,7 @@ namespace MalusAdmin.Common
     public class GuidTokenService : ITokenService
     {
         readonly ICacheService _cacheService; 
+
         readonly IHttpContextAccessor _HttpContext;
     
         public GuidTokenService(ICacheService cacheService,IHttpContextAccessor httpContext)
@@ -24,12 +25,16 @@ namespace MalusAdmin.Common
         static int expiresTime = 60;
         static string checkKey = "CheckToken_";
 
-        public TokenData TokenDataInfo => ParseToken(_HttpContext.HttpContext) ?? new TokenData();
+        public TokenData TokenDataInfo => ParseToken(_HttpContext.HttpContext);
 
         private string GetToken(HttpContext httpContext)
         {
             if (httpContext == null) throw new SystemException("参数错误");
-            return httpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ","");
+            if (httpContext.Request.Headers.ContainsKey(tokenTag))
+            {
+                return httpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ", "");
+            }
+            return "";
         }
 
         public bool CheckToken(HttpContext httpContext)
@@ -66,6 +71,7 @@ namespace MalusAdmin.Common
         public TokenData ParseToken(HttpContext httpContext)
         {
             string token = GetToken(httpContext);
+            if (string.IsNullOrEmpty(token)) return new TokenData(); 
             return _cacheService.Get<TokenData>(token);
         }
         public string RefreshToken(HttpContext httpContext)

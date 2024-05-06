@@ -52,7 +52,7 @@ namespace MalusAdmin.Servers
             var user =await _sysUserRep
                 .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
 
-            if (user.PassWord != Md5Util.Encrypt(input.PassWord) )
+            if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper())
             {  
               throw new Exception("密码输入错误");
             }
@@ -166,7 +166,11 @@ namespace MalusAdmin.Servers
             ////获取当前用户的菜单权限
             var menuid = await _sysRoleMenuService.RoleUserMenu(_TokenService.TokenDataInfo.UserId);
 
-            
+            //当用户为1的时候，设置为超级管理官
+            if (_TokenService.TokenDataInfo.UserId==1)
+            {
+                menuid = tree.Records.Select(x => x.Id).ToList();
+            }
 
             var res =new List<UserMenu>();
             foreach (var item in tree.Records.Where(x=> menuid.Contains(x.Id)))

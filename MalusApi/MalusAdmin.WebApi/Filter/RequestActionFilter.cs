@@ -74,49 +74,55 @@ namespace MalusAdmin.WebApi.Filter
                 : null;
 
 
-            var entity = new SysLogVis()
+            try
             {
-                //Name = _tokenService.TokenDataInfo.UserId.ToString(),
-                //Account = _tokenService.TokenDataInfo?.UserAccount,
-                Success = true,
-                Ip = httpContext.GetRequestIPv4(),
-                Location = httpRequest.GetRequestUrlAddress(),
-                Browser = clientInfo?.UA.Family + clientInfo?.UA.Major,
-                Os = clientInfo?.OS.Family + clientInfo?.OS.Major,
-                Url = httpRequest.Path,
-                ClassName = context.Controller.ToString(),
-                MethodName = actionDescriptor?.ActionName,
-                ReqMethod = httpRequest.Method,
-                Param = context.ActionArguments.Count < 1 ? "" : context.ActionArguments.ToJson(),
-                // Result = JSON.Serialize(actionContext.Result), // 序列化异常，比如验证码
-                ElapsedTime = sw.ElapsedMilliseconds,
-                OpTime = DateTime.Now,
-            };
+                var entity = new TSysLogVis()
+                {
+                    Name = _tokenService.TokenDataInfo.UserId.ToString(),
+                    Account = _tokenService.TokenDataInfo?.UserAccount,
+                    Success = true,
+                    Ip = httpContext.GetRequestIPv4(),
+                    Location = httpRequest.GetRequestUrlAddress(),
+                    Browser = clientInfo?.UA.Family + clientInfo?.UA.Major,
+                    Os = clientInfo?.OS.Family + clientInfo?.OS.Major,
+                    Url = httpRequest.Path,
+                    ClassName = context.Controller.ToString(),
+                    MethodName = actionDescriptor?.ActionName,
+                    ReqMethod = httpRequest.Method,
+                    Param = context.ActionArguments.Count < 1 ? "" : context.ActionArguments.ToJson(),
+                    // Result = JSON.Serialize(actionContext.Result), // 序列化异常，比如验证码
+                    ElapsedTime = sw.ElapsedMilliseconds,
+                    OpTime = DateTime.Now,
+                };
 
-            // 检查是否有异常发生
-            if (actionContext.Exception != null)
-            { 
-                // 设置错误信息
-                entity.Result = actionContext.Exception.Message;
-            }
-            else
-            {
-                // 检查 ActionResult 类型
-                var result = actionContext.Result as IActionResult;
-
-                if (result != null && result.GetType() != typeof(FileStreamResult))
-                { 
-                    entity.Result = actionContext.Result.ToJson(); // 序列化异常，比如验证码
+                // 检查是否有异常发生
+                if (actionContext.Exception != null)
+                {
+                    // 设置错误信息
+                    entity.Result = actionContext.Exception.Message;
                 }
+                else
+                {
+                    // 检查 ActionResult 类型
+                    var result = actionContext.Result as IActionResult;
+
+                    if (result != null && result.GetType() != typeof(FileStreamResult))
+                    {
+                        entity.Result = actionContext.Result.ToJson(); // 序列化异常，比如验证码
+                    }
+                }
+
+                Console.WriteLine($"处理 {DateTime.Now} : {JsonConvert.SerializeObject(entity)}");
+
+                _db.CodeFirst.SplitTables().InitTables<TSysLogVis>();
+                var returnid = _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
             }
+            catch (Exception)
+            {
 
-            Console.WriteLine($"处理 {DateTime.Now} : {JsonConvert.SerializeObject(entity)}");
-
-            _db.CodeFirst.SplitTables().InitTables<SysLogVis>();
-            var returnid = _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId(); 
-          
-
-            //
+                
+            }
+           
             //发送到队列或者直接添加到数据库
             //await _eventPublisher.PublishAsync(new ChannelEventSource("Create:OpLog", ));
         }
