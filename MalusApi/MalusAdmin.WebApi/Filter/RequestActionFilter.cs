@@ -78,8 +78,8 @@ namespace MalusAdmin.WebApi.Filter
             {
                 var entity = new TSysLogVis()
                 {
-                    Name = _tokenService.TokenDataInfo.UserId.ToString(),
-                    Account = _tokenService.TokenDataInfo?.UserAccount,
+                    Name = _tokenService.TokenDataInfo?.UserId.ToString()??"",
+                    Account = _tokenService.TokenDataInfo?.UserAccount ?? "",
                     Success = true,
                     Ip = httpContext.GetRequestIPv4(),
                     Location = httpRequest.GetRequestUrlAddress(),

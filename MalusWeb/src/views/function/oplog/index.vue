@@ -1,23 +1,17 @@
 <script setup lang="tsx">
 import { NButton } from 'naive-ui';
+import { onMounted, ref } from 'vue';
 import { getSyslogPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
-import { useTable, useTableOperate } from '@/hooks/common/table';
+import { useTable } from '@/hooks/common/table';
 
 const appStore = useAppStore();
-
-const { columns, data, getData, loading, mobilePagination } = useTable({
+const { data, columns, loading, pagination, mobilePagination } = useTable({
   apiFn: getSyslogPage,
   apiParams: {
     pageNo: 1,
-    pageSize: 10,
-    // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
-    // the value can not be undefined, otherwise the property in Form will not be reactive
-    status: null
-    // nickName: null,
-    // userPhone: null,
-    // userEmail: null
+    pageSize: 10
   },
   columns: () => [
     {
@@ -103,36 +97,32 @@ const { columns, data, getData, loading, mobilePagination } = useTable({
   ]
 });
 
-const {
-  // drawerVisible,
-  // operateType,
-  // editingData,
-  // handleAdd,
-  handleEdit,
-  checkedRowKeys
-  // onBatchDeleted
-  // onDeleted
-  // closeDrawer
-} = useTableOperate(data, getData);
-
-function edit(id: number) {
-  handleEdit(id);
-}
+onMounted(async () => {
+  try {
+    console.log('res');
+  } catch (error) {
+    console.error('Failed to fetch system data:', error);
+    // 可以在这里添加更多的错误处理逻辑
+  }
+});
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard title="日志列表" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
-        <NButton size="small" @click="refresh">
+        <!--
+ <NButton size="small" @click="refresh">
           <template #icon>
             <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
           </template>
           刷新
         </NButton>
+-->
       </template>
+
       <NDataTable
-        v-model:checked-row-keys="checkedRowKeys"
+        :columns="columns"
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"

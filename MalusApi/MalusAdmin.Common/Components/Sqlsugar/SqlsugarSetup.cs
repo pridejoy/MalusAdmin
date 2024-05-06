@@ -17,7 +17,7 @@ namespace MalusAdmin.Common
 
             //if (!AppSettings.IsDemo)
             { 
-                //注释这行，我是从本地文件读取的，下一行解除注释
+                //注释这行，我是从本地文件读取的
                 ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
             }
                 
