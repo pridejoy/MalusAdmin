@@ -42,7 +42,7 @@ namespace MalusAdmin.WebApi
                         {
                             using (IServiceScope serviceScope = _serviceScopeFactory.CreateScope())
                             {
-                                ITokenService tokenService = serviceScope.ServiceProvider.GetService<ITokenService>();
+                                ITokenService tokenService = App.GetService<ITokenService>();
                                 if (!tokenService.CheckToken(context))
                                 {
                                     context.Response.StatusCode = 401;

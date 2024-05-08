@@ -30,7 +30,7 @@ const { data, columns, loading, pagination, mobilePagination } = useTable({
       key: 'url',
       title: '请求地址',
       align: 'center',
-      minWidth: 100,
+      minWidth: 200,
       ellipsis: {
         tooltip: true
       }
@@ -59,15 +59,7 @@ const { data, columns, loading, pagination, mobilePagination } = useTable({
       align: 'center',
       minWidth: 30
     },
-    {
-      key: 'result',
-      title: '响应',
-      align: 'center',
-      minWidth: 100,
-      ellipsis: {
-        tooltip: true
-      }
-    },
+
     {
       key: 'opTime',
       title: '请求时间',

@@ -33,6 +33,7 @@ namespace MalusAdmin.Servers
             var dictTypes = await _rep.Context.Queryable<TSysLogVis>()
                  .SplitTable(tabs => tabs.Take(1))
                  .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord), u => u.Name.Contains(input.KeyWord.Trim()) )
+                 .OrderByDescending(u => u.OpTime)
                  //.WhereIF(input.Status != null, u => u.Status == input.Status)
                  //.Select<UserPageOut>()
                  .ToPagedListAsync(input.PageNo, input.PageSize);

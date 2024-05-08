@@ -110,7 +110,7 @@ namespace MalusAdmin.WebApi
             }
 
             //Token—È÷§
-            //app.UseMiddleware<CheckToken>();
+            app.UseMiddleware<CheckToken>();
 
             app.UseResponseCaching();
 

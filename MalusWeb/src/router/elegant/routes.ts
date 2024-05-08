@@ -131,6 +131,14 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'function_system',
+        path: '/function/system',
+        component: 'view.function_system',
+        meta: {
+          title: 'function_system',
+        }
+      },
+      {
         name: 'function_tab',
         path: '/function/tab',
         component: 'view.function_tab',
@@ -278,15 +286,6 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       }
     ]
-  },
-  {
-    name: 'system',
-    path: '/system',
-    component: 'layout.base$view.system',
-    meta: {
-      title: 'system',
-      i18nKey: 'route.system'
-    }
   },
   {
     name: 'user-center',

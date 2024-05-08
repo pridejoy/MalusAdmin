@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MalusAdmin.WebApi.Controllers
 {
+    /// <summary>
+    /// 禁用日志记录
+    /// </summary>
+    [DisabledRequestRecord]
     public class SysLogController : ApiControllerBase
     {
         private readonly SysOpLogService _server;

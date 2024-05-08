@@ -27,6 +27,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   function_oplog: () => import("@/views/function/oplog/index.vue"),
   function_request: () => import("@/views/function/request/index.vue"),
   "function_super-page": () => import("@/views/function/super-page/index.vue"),
+  function_system: () => import("@/views/function/system/index.vue"),
   function_tab: () => import("@/views/function/tab/index.vue"),
   "function_toggle-auth": () => import("@/views/function/toggle-auth/index.vue"),
   home: () => import("@/views/home/index.vue"),
@@ -36,6 +37,5 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   manage_user: () => import("@/views/manage/user/index.vue"),
   "multi-menu_first_child": () => import("@/views/multi-menu/first_child/index.vue"),
   "multi-menu_second_child_home": () => import("@/views/multi-menu/second_child_home/index.vue"),
-  system: () => import("@/views/system/index.vue"),
   "user-center": () => import("@/views/user-center/index.vue"),
 };
