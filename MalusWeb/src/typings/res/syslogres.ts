@@ -1,4 +1,11 @@
 interface sysLogPageRes {
+  pageNo: number;
+  pageSize: number;
+  totalPage: number;
+  totalRows: number;
+  records: sysLogPageRecord[];
+}
+interface sysLogPageRecord {
   id: string;
   name: string;
   success: boolean;

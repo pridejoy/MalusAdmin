@@ -1,5 +1,6 @@
-using MalusAdmin.Common.Components.Token;
+ 
 using MalusAdmin.Servers;
+using MalusAdmin.Servers.SysUserButtonPermiss;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -65,7 +66,8 @@ namespace MalusAdmin.WebApi
             //提供了访问当前HTTP上下文（HttpContext）的方法
             builder.Services.AddHttpContextAccessor();
 
-            builder.Services.AddSingleton<ITokenService, GuidTokenService>();  
+            builder.Services.AddSingleton<ITokenService, TokenService>();
+            builder.Services.AddScoped<MalusAdmin.Servers.SysRolePermission.ISysRolePermission, SysRolePermissionService>();
 
             // 添加跨域支持
             builder.Services.AddCorsSetup();
@@ -109,8 +111,7 @@ namespace MalusAdmin.WebApi
                 });
             }
 
-            //Token验证
-            app.UseMiddleware<CheckToken>();
+           
 
             app.UseResponseCaching();
 
@@ -119,6 +120,9 @@ namespace MalusAdmin.WebApi
             app.UseRouting();
             // UseCors 必须在 UseRouting 之后，UseResponseCaching、UseAuthorization 之前
             app.UseCors();
+
+            //Token验证
+            app.UseMiddleware<CheckToken>();
 
             // 使用身份验证
             app.UseAuthentication();

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MalusAdmin.Common;
 using MalusAdmin.Common.Components;
+using MalusAdmin.Common.Components.Token;
 using MalusAdmin.Encryption;
 using MalusAdmin.Entity; 
 using MalusAdmin.Servers.SysRoleMenu;
@@ -85,7 +86,7 @@ namespace MalusAdmin.Servers
         {
            
             var user = await _sysUserRep
-           .Where(t => t.Id == _TokenService.TokenDataInfo.UserId).FirstAsync();
+           .Where(t => t.Id == TokenInfo.User.UserId).FirstAsync();
             return new GetUserInfoOut() 
             { 
                 userId= user.Id,
@@ -164,10 +165,10 @@ namespace MalusAdmin.Servers
             //获取所有的菜单权限
             var tree = await _sysMenuService.MenuTreeList();
             ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(_TokenService.TokenDataInfo.UserId);
+            var menuid = await _sysRoleMenuService.RoleUserMenu(TokenInfo.User.UserId);
 
             //当用户为1的时候，设置为超级管理官
-            if (_TokenService.TokenDataInfo.UserId==1)
+            if (TokenInfo.User.UserId==1)
             {
                 menuid = tree.Records.Select(x => x.Id).ToList();
             }
@@ -177,7 +178,7 @@ namespace MalusAdmin.Servers
             {
                 res.Add(ConvertMenu(item));
             }
-            Out.Home = res.FirstOrDefault().Name;
+            Out.Home = res.FirstOrDefault()?.Name;
             Out.Routes = res;
 
             return Out;

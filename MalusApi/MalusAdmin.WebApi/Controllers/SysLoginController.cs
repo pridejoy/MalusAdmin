@@ -31,8 +31,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// 获取登录用户的信息
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpGet] 
         public async Task<JsonR> GetUserInfo()
         {
             return ResultCode.Success.JsonR(await _sysUserService.GetUserInfo());
@@ -43,8 +42,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// 获取登录用户的路由
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpGet] 
         [ResponseCache(Duration = 50)] // 缓存5秒
         public async Task<JsonR> GetUserMenu()
         {

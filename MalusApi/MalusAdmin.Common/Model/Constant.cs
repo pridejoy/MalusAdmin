@@ -16,6 +16,8 @@ namespace MalusAdmin.Common
         {
             public static string AllButtonPermiss = "AllButtonPermiss";
 
+            public static string RoleButtonPermiss = "RoleButtonPermiss:";
+
         }
     }
  }

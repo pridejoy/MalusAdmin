@@ -7,6 +7,7 @@ using Models;
 using SqlSugar;
 using Microsoft.AspNetCore.Http;
 using MalusAdmin.Servers;
+using MalusAdmin.Common.Components.Token;
 
 namespace MalusAdmin.WebApi.Filter
 {
@@ -78,8 +79,8 @@ namespace MalusAdmin.WebApi.Filter
             {
                 var entity = new TSysLogVis()
                 {
-                    Name = _tokenService.TokenDataInfo?.UserId.ToString()??"",
-                    Account = _tokenService.TokenDataInfo?.UserAccount ?? "",
+                    Name = TokenInfo.User?.UserId.ToString()??"",
+                    Account = TokenInfo.User?.UserAccount ?? "",
                     Success = true,
                     Ip = httpContext.GetRequestIPv4(),
                     Location = httpRequest.GetRequestUrlAddress(),

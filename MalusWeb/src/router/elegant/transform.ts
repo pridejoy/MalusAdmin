@@ -160,6 +160,7 @@ const routeMap: RouteMap = {
   "function_oplog": "/function/oplog",
   "function_request": "/function/request",
   "function_super-page": "/function/super-page",
+  "function_system": "/function/system",
   "function_tab": "/function/tab",
   "function_toggle-auth": "/function/toggle-auth",
   "home": "/home",
@@ -175,7 +176,6 @@ const routeMap: RouteMap = {
   "multi-menu_second": "/multi-menu/second",
   "multi-menu_second_child": "/multi-menu/second/child",
   "multi-menu_second_child_home": "/multi-menu/second/child/home",
-  "system": "/system",
   "user-center": "/user-center"
 };
 

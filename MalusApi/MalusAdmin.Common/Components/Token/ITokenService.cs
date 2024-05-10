@@ -12,7 +12,8 @@ namespace MalusAdmin.Common
         /// <summary>
         /// 获取当前登录的用户信息
         /// </summary>
-        public TokenData TokenDataInfo { get;  } 
+     
+
         /// <summary>
         /// 生成并保存token
         /// </summary>

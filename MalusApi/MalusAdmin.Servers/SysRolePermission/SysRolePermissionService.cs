@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MalusAdmin.Common;
+using MalusAdmin.Common.Components.Token;
 using MalusAdmin.Entity;
+using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysRolePermission.Dto;
 using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +18,7 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
     /// <summary>
     /// 用户按钮权限
     /// </summary>
-    public class SysRolePermissionService
+    public class SysRolePermissionService: ISysRolePermission
     { 
         private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep;  // 仓储
         private readonly ITokenService _TokenService;
@@ -106,12 +108,20 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
             return await _sysuserpermissionRep.InsertAsync(list)>0; 
         }
 
-        /// 获取用户按钮权限
+        /// 获取当前角色按钮权限
         /// </summary>
         /// <returns></returns>
         public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
         {
-            return await _sysuserpermissionRep.Where(x=>x.RoleId == RoleId).ToListAsync() ;
+            var cacheButtonPermiss = _cacheService.Get<List<TSysRolePermission>>(Constant.Cache.RoleButtonPermiss+RoleId);
+            if (cacheButtonPermiss == null)
+            {
+              var roleButtonPermiss=   await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();
+                //进行缓存
+                _cacheService.Add(Constant.Cache.RoleButtonPermiss + RoleId, roleButtonPermiss, TimeSpan.FromMinutes(5));
+                return roleButtonPermiss;
+            }
+            return cacheButtonPermiss;
         }
 
 
@@ -119,9 +129,14 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         /// 是否有访问当前接口的权限
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> HavePermission()
+        public async Task<bool> HavePermission(string RouthPath)
         {
-            return true;
+            // 获取当前用户-角色 的接口权限   
+            var UserRolePer =new List<TSysRolePermission>();
+            TokenInfo.User.UserRolesId.ForEach(async x => { 
+                UserRolePer.AddRange(await GetRoleButtonPermiss(x));
+            });
+            return UserRolePer.Any(x => x.UserPermiss == RouthPath); 
         }
     }
 }

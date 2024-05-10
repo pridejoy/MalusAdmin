@@ -96,5 +96,7 @@ namespace MalusAdmin.Servers
                 .Select<RoleListOut>().ToListAsync(); 
             return list; 
         }
+
+     
     }
 }

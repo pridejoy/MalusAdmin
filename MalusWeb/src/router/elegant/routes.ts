@@ -136,6 +136,7 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.function_system',
         meta: {
           title: 'function_system',
+          i18nKey: 'route.function_system'
         }
       },
       {
