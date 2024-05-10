@@ -20,18 +20,15 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
     /// </summary>
     public class SysRolePermissionService: ISysRolePermission
     { 
-        private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep;  // 仓储
-        private readonly ITokenService _TokenService;
+        private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep;  // 仓储 
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
         private readonly ICacheService _cacheService;
 
         public SysRolePermissionService(SqlSugarRepository<TSysRolePermission> sysuserpermissionRep,
-            ICacheService cacheService,
-            ITokenService tokenService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
+            ICacheService cacheService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
             _cacheService= cacheService;
-            _sysuserpermissionRep = sysuserpermissionRep;
-            _TokenService = tokenService;
+            _sysuserpermissionRep = sysuserpermissionRep; 
             _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         } 
         

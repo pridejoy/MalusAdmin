@@ -1,25 +1,31 @@
 ﻿using System.Text;
 using MalusAdmin.Common.Components.Token;
 using MalusAdmin.Entity;
+using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysUserButtonPermiss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure; 
 using Microsoft.AspNetCore.Routing.Patterns;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace MalusAdmin.WebApi
 {
     public class CheckToken
     {
+        readonly IServiceScopeFactory _serviceScopeFactory;
         readonly RequestDelegate _next;
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
 
-        public CheckToken(RequestDelegate next, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
+        public CheckToken(RequestDelegate next,
+            IServiceScopeFactory serviceScopeFactory,
+            IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
             _next = next; 
             _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -36,63 +42,54 @@ namespace MalusAdmin.WebApi
             if (hasAllowAnonymous)
             {
                 // 动作允许匿名访问 
-                await _next(context);
+             
             }
             else
             {
-                // 动作不允许匿名访问,，权限校验
-                ITokenService tokenService = App.GetService<ITokenService>();
-             
-                // 进行身份校验
-                if (!tokenService.CheckToken(context))
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    context.Response.StatusCode = 401;
-                    context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-                    var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
-                    await context.Response.WriteAsync(rspResult.ToJson());
-                    return;
-                }
-                else
-                {
-                    tokenService.RefreshToken(context);
-                }
-
-
-                var User = tokenService.ParseToken(context);
-                if (User.UserId>0)
-                {
-                    //更新静态的用户信息
-                    TokenInfo.User= User;    
-                    //超管直接跳过校验
-                    if (User.UserId==1)
+                    // 动作不允许匿名访问,，权限校验
+                    var tokenService = App.GetService<ITokenService>();
+                    
+                    // 进行身份校验
+                    if (!tokenService.CheckToken(context))
                     {
-                        await _next(context);
+                        context.Response.StatusCode = 401;
+                        context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                        var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
+                        await context.Response.WriteAsync(rspResult.ToJson());
                         return;
                     }
-                }
+                    else
+                    {
+                        tokenService.RefreshToken(context);
+                    }
+                     
+                    var User = tokenService.ParseToken(context);
+                    //更新静态的用户信息
+                    TokenInfo.User = User; 
+                    
+                    // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
+                    if ((endpoint is RouteEndpoint routeEndpoint) && User.UserId != 1)
+                    {
+                        // 获取路由模式
+                        var routePattern = routeEndpoint.RoutePattern.RawText.Replace('/', ':');
 
-                // 权限校验
-                //if (endpoint is RouteEndpoint routeEndpoint)
-                //{
-                //    // 获取路由模式
-                //    var routePattern = routeEndpoint.RoutePattern.RawText.Replace('/',':');
+                        var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
 
-                //    //权限检查
-                //    var rolePermiss = App.GetService<MalusAdmin.Servers.SysRolePermission.ISysRolePermission>();
-                //    if (await rolePermiss.HavePermission(routePattern))
-                //    {
-                //        context.Response.StatusCode = 200;
-                //        context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-                //        var rspResult = ResultCode.Fail.JsonR("暂无权限");
-                //        await context.Response.WriteAsync(rspResult.ToJson());
-                //        return;
-                //    }
-                //}
-
-               
-               
-            } 
-           
+                        // 权限检查  
+                        if (await rolePermissService.HavePermission(routePattern))
+                        {
+                            context.Response.StatusCode = 200;
+                            context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                            var rspResult = ResultCode.Fail.JsonR("暂无权限");
+                            await context.Response.WriteAsync(rspResult.ToJson());
+                            return;
+                        }
+                    } 
+                } 
+            }
+            await _next(context);
         } 
     }
 }
