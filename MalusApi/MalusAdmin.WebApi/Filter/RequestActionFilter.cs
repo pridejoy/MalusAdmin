@@ -118,7 +118,7 @@ namespace MalusAdmin.WebApi.Filter
                 _db.CodeFirst.SplitTables().InitTables<TSysLogVis>();
                 var returnid = _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 

@@ -289,6 +289,142 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'plugin',
+    path: '/plugin',
+    component: 'layout.base',
+    meta: {
+      title: '插件示例',
+      i18nKey: 'route.plugin',
+      order: 7,
+      icon: 'clarity:plugin-line'
+    },
+    children: [
+      {
+        name: 'plugin_barcode',
+        path: '/plugin/barcode',
+        component: 'view.plugin_barcode',
+        meta: {
+          title: 'plugin_barcode',
+          i18nKey: 'route.plugin_barcode',
+          icon: 'ic:round-barcode',
+          constant: true
+        }
+      },
+      {
+        name: 'plugin_charts',
+        path: '/plugin/charts',
+        meta: {
+          title: 'plugin_charts',
+          i18nKey: 'route.plugin_charts',
+          icon: 'mdi:chart-areaspline'
+        },
+        children: [
+          {
+            name: 'plugin_charts_echarts',
+            path: '/plugin/charts/echarts',
+            component: 'view.plugin_charts_echarts',
+            meta: {
+              title: 'plugin_charts_echarts',
+              i18nKey: 'route.plugin_charts_echarts',
+              icon: 'simple-icons:apacheecharts'
+            }
+          }
+        ]
+      },
+      {
+        name: 'plugin_copy',
+        path: '/plugin/copy',
+        component: 'view.plugin_copy',
+        meta: {
+          title: 'plugin_copy',
+          i18nKey: 'route.plugin_copy',
+          icon: 'mdi:clipboard-outline'
+        }
+      },
+      {
+        name: 'plugin_editor',
+        path: '/plugin/editor',
+        meta: {
+          title: 'plugin_editor',
+          i18nKey: 'route.plugin_editor',
+          icon: 'icon-park-outline:editor'
+        },
+        children: [
+          {
+            name: 'plugin_editor_markdown',
+            path: '/plugin/editor/markdown',
+            component: 'view.plugin_editor_markdown',
+            meta: {
+              title: 'plugin_editor_markdown',
+              i18nKey: 'route.plugin_editor_markdown',
+              icon: 'ri:markdown-line'
+            }
+          },
+          {
+            name: 'plugin_editor_quill',
+            path: '/plugin/editor/quill',
+            component: 'view.plugin_editor_quill',
+            meta: {
+              title: 'plugin_editor_quill',
+              i18nKey: 'route.plugin_editor_quill',
+              icon: 'mdi:file-document-edit-outline'
+            }
+          }
+        ]
+      },
+      {
+        name: 'plugin_icon',
+        path: '/plugin/icon',
+        component: 'view.plugin_icon',
+        meta: {
+          title: 'plugin_icon',
+          i18nKey: 'route.plugin_icon',
+          localIcon: 'custom-icon'
+        }
+      },
+      {
+        name: 'plugin_map',
+        path: '/plugin/map',
+        component: 'view.plugin_map',
+        meta: {
+          title: 'plugin_map',
+          i18nKey: 'route.plugin_map',
+          icon: 'mdi:map'
+        }
+      },
+      {
+        name: 'plugin_print',
+        path: '/plugin/print',
+        component: 'view.plugin_print',
+        meta: {
+          title: 'plugin_print',
+          i18nKey: 'route.plugin_print',
+          icon: 'mdi:printer'
+        }
+      },
+      {
+        name: 'plugin_swiper',
+        path: '/plugin/swiper',
+        component: 'view.plugin_swiper',
+        meta: {
+          title: 'plugin_swiper',
+          i18nKey: 'route.plugin_swiper',
+          icon: 'simple-icons:swiper'
+        }
+      },
+      {
+        name: 'plugin_video',
+        path: '/plugin/video',
+        component: 'view.plugin_video',
+        meta: {
+          title: 'plugin_video',
+          i18nKey: 'route.plugin_video',
+          icon: 'mdi:video'
+        }
+      }
+    ]
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

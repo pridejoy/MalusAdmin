@@ -23,7 +23,9 @@ declare module 'vue' {
     IconIcRoundPlus: typeof import('~icons/ic/round-plus')['default']
     IconIcRoundRefresh: typeof import('~icons/ic/round-refresh')['default']
     IconIcRoundSearch: typeof import('~icons/ic/round-search')['default']
+    IconLocalActivity: typeof import('~icons/local/activity')['default']
     IconLocalBanner: typeof import('~icons/local/banner')['default']
+    IconLocalCast: typeof import('~icons/local/cast')['default']
     IconLocalLogo: typeof import('~icons/local/logo')['default']
     IconMdiArrowDownThin: typeof import('~icons/mdi/arrow-down-thin')['default']
     IconMdiArrowUpThin: typeof import('~icons/mdi/arrow-up-thin')['default']
@@ -38,7 +40,6 @@ declare module 'vue' {
     NBreadcrumb: typeof import('naive-ui')['NBreadcrumb']
     NBreadcrumbItem: typeof import('naive-ui')['NBreadcrumbItem']
     NButton: typeof import('naive-ui')['NButton']
-    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
     NCard: typeof import('naive-ui')['NCard']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NColorPicker: typeof import('naive-ui')['NColorPicker']
@@ -97,5 +98,6 @@ declare module 'vue' {
     TableHeaderOperation: typeof import('./../components/advanced/table-header-operation.vue')['default']
     ThemeSchemaSwitch: typeof import('./../components/common/theme-schema-switch.vue')['default']
     WaveBg: typeof import('./../components/custom/wave-bg.vue')['default']
+    WebSiteLink: typeof import('./../components/custom/web-site-link.vue')['default']
   }
 }

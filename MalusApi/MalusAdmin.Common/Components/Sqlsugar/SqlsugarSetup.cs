@@ -15,7 +15,7 @@ namespace MalusAdmin.Common
             //数据库链接,修改配置里面的SqlServerConnection的字符串
             var ConnectionString = AppSettings.SqlServerConnection; 
 
-            //if (!AppSettings.IsDemo)
+            if (!AppSettings.IsDemo)
             { 
                 //注释这行，我是从本地文件读取的
                 ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");

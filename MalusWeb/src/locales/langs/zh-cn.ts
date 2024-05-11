@@ -11,6 +11,7 @@ const local: App.I18n.Schema = {
     cancel: '取消',
     close: '关闭',
     check: '勾选',
+    expandColumn: '展开列',
     columnSetting: '列设置',
     config: '配置',
     confirm: '确认',
@@ -57,6 +58,7 @@ const local: App.I18n.Schema = {
       dark: '暗黑模式',
       auto: '跟随系统'
     },
+    grayscale: '灰度模式',
     layoutMode: {
       title: '布局模式',
       vertical: '左侧菜单模式',
@@ -64,6 +66,8 @@ const local: App.I18n.Schema = {
       horizontal: '顶部菜单模式',
       'horizontal-mix': '顶部菜单混合模式'
     },
+    recommendColor: '应用推荐算法的颜色',
+    recommendColorDesc: '推荐颜色的算法参照',
     themeColor: {
       title: '主题颜色',
       primary: '主色',
@@ -137,7 +141,16 @@ const local: App.I18n.Schema = {
     403: '无权限',
     404: '页面不存在',
     500: '服务器错误',
+    'iframe-page': '外链页面',
     home: '首页',
+    document: '文档',
+    document_project: '项目文档',
+    'document_project-link': '项目文档(外链)',
+    document_vue: 'Vue文档',
+    document_vite: 'Vite文档',
+    document_unocss: 'UnoCSS文档',
+    document_naive: 'Naive UI文档',
+    document_antd: 'Ant Design Vue文档',
     'user-center': '个人中心',
     about: '关于',
     function: '系统功能',
@@ -164,7 +177,20 @@ const local: App.I18n.Schema = {
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    plugin: '插件示例',
+    plugin_copy: '剪贴板',
+    plugin_charts: '图表',
+    plugin_charts_echarts: 'ECharts',
+    plugin_editor: '编辑器',
+    plugin_editor_quill: '富文本编辑器',
+    plugin_editor_markdown: 'MD 编辑器',
+    plugin_icon: '图标',
+    plugin_map: '地图',
+    plugin_print: '打印',
+    plugin_swiper: 'Swiper',
+    plugin_video: '视频',
+    plugin_barcode: '条形码'
   },
   page: {
     login: {
@@ -215,7 +241,7 @@ const local: App.I18n.Schema = {
     },
     about: {
       title: '关于',
-      introduction: `Soybean Admin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite5, TypeScript, Pinia 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。Soybean Admin 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。`,
+      introduction: `SoybeanAdmin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite5, TypeScript, Pinia 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。SoybeanAdmin 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。`,
       projectInfo: {
         title: '项目信息',
         version: '版本',
@@ -284,6 +310,12 @@ const local: App.I18n.Schema = {
         superAdminVisible: '超级管理员可见',
         adminVisible: '管理员可见',
         adminOrUserVisible: '管理员和用户可见'
+      },
+      request: {
+        repeatedErrorOccurOnce: '重复请求错误只出现一次',
+        repeatedError: '重复请求错误',
+        repeatedErrorMsg1: '自定义请求错误 1',
+        repeatedErrorMsg2: '自定义请求错误 2'
       }
     },
     manage: {
@@ -344,7 +376,7 @@ const local: App.I18n.Schema = {
         menuName: '菜单名称',
         routeName: '路由名称',
         routePath: '路由路径',
-        routeParams: '路由参数',
+        pathParam: '路径参数',
         layout: '布局',
         page: '页面组件',
         i18nKey: '国际化key',
@@ -352,12 +384,14 @@ const local: App.I18n.Schema = {
         localIcon: '本地图标',
         iconTypeTitle: '图标类型',
         order: '排序',
+        constant: '常量路由',
         keepAlive: '缓存路由',
         href: '外链',
         hideInMenu: '隐藏菜单',
         activeMenu: '高亮的菜单',
         multiTab: '支持多页签',
         fixedIndexInTab: '固定在页签中的序号',
+        query: '路由参数',
         button: '按钮',
         buttonCode: '按钮编码',
         buttonDesc: '按钮描述',
@@ -368,6 +402,7 @@ const local: App.I18n.Schema = {
           menuName: '请输入菜单名称',
           routeName: '请输入路由名称',
           routePath: '请输入路由路径',
+          pathParam: '请输入路径参数',
           page: '请选择页面组件',
           layout: '请选择布局组件',
           i18nKey: '请输入国际化key',
@@ -377,10 +412,12 @@ const local: App.I18n.Schema = {
           keepAlive: '请选择是否缓存路由',
           href: '请输入外链',
           hideInMenu: '请选择是否隐藏菜单',
-          activeMenu: '请输入高亮的菜单的路由名称',
+          activeMenu: '请选择高亮的菜单的路由名称',
           multiTab: '请选择是否支持多标签',
           fixedInTab: '请选择是否固定在页签中',
           fixedIndexInTab: '请输入固定在页签中的序号',
+          queryKey: '请输入路由参数Key',
+          queryValue: '请输入路由参数Value',
           button: '请选择是否按钮',
           buttonCode: '请输入按钮编码',
           buttonDesc: '请输入按钮描述',
@@ -445,6 +482,9 @@ const local: App.I18n.Schema = {
     expand: '展开菜单',
     pin: '固定',
     unpin: '取消固定'
+  },
+  datatable: {
+    itemCount: '共 {total} 条'
   }
 };
 

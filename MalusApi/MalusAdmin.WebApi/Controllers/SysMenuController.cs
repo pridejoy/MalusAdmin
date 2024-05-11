@@ -32,6 +32,7 @@ namespace MalusAdmin.WebApi.Controllers
         }
 
 
+        [ReadOnly]
         [HttpPost]
         [Permission("菜单新增")]
         public async Task<JsonR> Add(MenuAddandUpIn input)
@@ -42,13 +43,15 @@ namespace MalusAdmin.WebApi.Controllers
 
         [HttpPost]
         [Permission("菜单更新")]
+        [ReadOnly]
         public async Task<JsonR> Update(MenuAddandUpIn input)
         {
             return ResultCode.Success.JsonR(await _service.Update(input));
         }
 
+        [ReadOnly]
         [HttpGet]
-        [Permission("菜单删除")]
+        [Permission("菜单删除")] 
         public async Task<JsonR> Delete(int id)
         {
             return ResultCode.Success.JsonR(await _service.Delete(id));

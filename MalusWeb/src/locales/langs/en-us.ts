@@ -11,6 +11,7 @@ const local: App.I18n.Schema = {
     cancel: 'Cancel',
     close: 'Close',
     check: 'Check',
+    expandColumn: 'Expand Column',
     columnSetting: 'Column Setting',
     config: 'Config',
     confirm: 'Confirm',
@@ -57,6 +58,7 @@ const local: App.I18n.Schema = {
       dark: 'Dark',
       auto: 'Follow System'
     },
+    grayscale: 'Grayscale',
     layoutMode: {
       title: 'Layout Mode',
       vertical: 'Vertical Menu Mode',
@@ -64,6 +66,8 @@ const local: App.I18n.Schema = {
       'vertical-mix': 'Vertical Mix Menu Mode',
       'horizontal-mix': 'Horizontal Mix menu Mode'
     },
+    recommendColor: 'Apply Recommended Color Algorithm',
+    recommendColorDesc: 'The recommended color algorithm refers to',
     themeColor: {
       title: 'Theme Color',
       primary: 'Primary',
@@ -137,7 +141,16 @@ const local: App.I18n.Schema = {
     403: 'No Permission',
     404: 'Page Not Found',
     500: 'Server Error',
+    'iframe-page': 'Iframe',
     home: 'Home',
+    document: 'Document',
+    document_project: 'Project Document',
+    'document_project-link': 'Project Document(External Link)',
+    document_vue: 'Vue Document',
+    document_vite: 'Vite Document',
+    document_unocss: 'UnoCSS Document',
+    document_naive: 'Naive UI Document',
+    document_antd: 'Ant Design Vue Document',
     'user-center': 'User Center',
     about: 'About',
     function: 'System Function',
@@ -164,7 +177,20 @@ const local: App.I18n.Schema = {
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    plugin: 'Plugin',
+    plugin_copy: 'Copy',
+    plugin_charts: 'Charts',
+    plugin_charts_echarts: 'ECharts',
+    plugin_editor: 'Editor',
+    plugin_editor_quill: 'Quill',
+    plugin_editor_markdown: 'Markdown',
+    plugin_icon: 'Icon',
+    plugin_map: 'Map',
+    plugin_print: 'Print',
+    plugin_swiper: 'Swiper',
+    plugin_video: 'Video',
+    plugin_barcode: 'Barcode'
   },
   page: {
     login: {
@@ -215,7 +241,7 @@ const local: App.I18n.Schema = {
     },
     about: {
       title: 'About',
-      introduction: `Soybean Admin is an elegant and powerful admin template, based on the latest front-end technology stack, including Vue3, Vite5, TypeScript, Pinia and UnoCSS. It has built-in rich theme configuration and components, strict code specifications, and an automated file routing system. In addition, it also uses the online mock data solution based on ApiFox. Soybean Admin provides you with a one-stop admin solution, no additional configuration, and out of the box. It is also a best practice for learning cutting-edge technologies quickly.`,
+      introduction: `SoybeanAdmin is an elegant and powerful admin template, based on the latest front-end technology stack, including Vue3, Vite5, TypeScript, Pinia and UnoCSS. It has built-in rich theme configuration and components, strict code specifications, and an automated file routing system. In addition, it also uses the online mock data solution based on ApiFox. SoybeanAdmin provides you with a one-stop admin solution, no additional configuration, and out of the box. It is also a best practice for learning cutting-edge technologies quickly.`,
       projectInfo: {
         title: 'Project Info',
         version: 'Version',
@@ -284,6 +310,12 @@ const local: App.I18n.Schema = {
         superAdminVisible: 'Super Admin Visible',
         adminVisible: 'Admin Visible',
         adminOrUserVisible: 'Admin and User Visible'
+      },
+      request: {
+        repeatedErrorOccurOnce: 'Repeated Request Error Occurs Once',
+        repeatedError: 'Repeated Request Error',
+        repeatedErrorMsg1: 'Custom Request Error 1',
+        repeatedErrorMsg2: 'Custom Request Error 2'
       }
     },
     manage: {
@@ -344,7 +376,7 @@ const local: App.I18n.Schema = {
         menuName: 'Menu Name',
         routeName: 'Route Name',
         routePath: 'Route Path',
-        routeParams: 'Route Params',
+        pathParam: 'Path Param',
         layout: 'Layout Component',
         page: 'Page Component',
         i18nKey: 'I18n Key',
@@ -352,12 +384,14 @@ const local: App.I18n.Schema = {
         localIcon: 'Local Icon',
         iconTypeTitle: 'Icon Type',
         order: 'Order',
+        constant: 'Constant',
         keepAlive: 'Keep Alive',
         href: 'Href',
         hideInMenu: 'Hide In Menu',
         activeMenu: 'Active Menu',
         multiTab: 'Multi Tab',
         fixedIndexInTab: 'Fixed Index In Tab',
+        query: 'Query Params',
         button: 'Button',
         buttonCode: 'Button Code',
         buttonDesc: 'Button Desc',
@@ -368,6 +402,7 @@ const local: App.I18n.Schema = {
           menuName: 'Please enter menu name',
           routeName: 'Please enter route name',
           routePath: 'Please enter route path',
+          pathParam: 'Please enter path param',
           page: 'Please select page component',
           layout: 'Please select layout component',
           i18nKey: 'Please enter i18n key',
@@ -377,10 +412,12 @@ const local: App.I18n.Schema = {
           keepAlive: 'Please select whether to cache route',
           href: 'Please enter href',
           hideInMenu: 'Please select whether to hide menu',
-          activeMenu: 'Please enter the route name of the highlighted menu',
+          activeMenu: 'Please select route name of the highlighted menu',
           multiTab: 'Please select whether to support multiple tabs',
           fixedInTab: 'Please select whether to fix in the tab',
           fixedIndexInTab: 'Please enter the index fixed in the tab',
+          queryKey: 'Please enter route parameter Key',
+          queryValue: 'Please enter route parameter Value',
           button: 'Please select whether it is a button',
           buttonCode: 'Please enter button code',
           buttonDesc: 'Please enter button description',
@@ -445,6 +482,9 @@ const local: App.I18n.Schema = {
     expand: 'Expand Menu',
     pin: 'Pin',
     unpin: 'Unpin'
+  },
+  datatable: {
+    itemCount: 'Total {total} items'
   }
 };
 
