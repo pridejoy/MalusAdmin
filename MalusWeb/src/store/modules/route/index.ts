@@ -209,9 +209,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     const data = await getUserRoutes();
     addAuthRoutes(data.data?.routes ?? []);
     const home = data.data?.home || 'home';
-    const { authRoutes: staticAuthRoutes } = createStaticRoutes();
+    // const { authRoutes: staticAuthRoutes } = createStaticRoutes();
     // // console.log('获取动态的路由信息2', staticAuthRoutes);
-    addAuthRoutes(staticAuthRoutes);
+    // addAuthRoutes(staticAuthRoutes);
     // const home = 'home';
 
     handleAuthRoutes();

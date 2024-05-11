@@ -5,7 +5,7 @@ function printTable() {
   printJS({
     printable: [
       { name: 'soybean', wechat: 'honghuangdc', remark: '欢迎来技术交流' },
-      { name: 'soybean', wechat: 'honghuangdc', remark: '欢迎来技术交流' }
+      { name: 'soybean', wechat: 'Handsome_mar', remark: '欢迎来技术交流' }
     ],
     properties: ['name', 'wechat', 'remark'],
     type: 'json'
@@ -13,10 +13,7 @@ function printTable() {
 }
 function printImage() {
   printJS({
-    printable: [
-      'https://i.loli.net/2021/11/24/1J6REWXiHomU2kM.jpg',
-      'https://i.loli.net/2021/11/24/1J6REWXiHomU2kM.jpg'
-    ],
+    printable: ['https://www.dotnetshare.com/images/netfenxiang.png'],
     type: 'image',
     header: 'Multiple Images',
     imageStyle: 'width:100%;'

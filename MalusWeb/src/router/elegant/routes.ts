@@ -379,7 +379,7 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'plugin_icon',
           i18nKey: 'route.plugin_icon',
-          localIcon: 'custom-icon'
+          localIcon: 'simple-icons:swiper'
         }
       },
       {
