@@ -1,8 +1,8 @@
 import type { GlobalThemeOverrides } from 'naive-ui';
-import { getColorByColorPaletteNumber, getColorPalette } from '@sa/color-palette';
-import { addColorAlpha, getRgbOfColor } from '@sa/utils';
+import { addColorAlpha, getColorPalette, getPaletteColorByNumber, getRgb } from '@sa/color';
 import { overrideThemeSettings, themeSettings } from '@/theme/settings';
 import { themeVars } from '@/theme/vars';
+import { toggleHtmlClass } from '@/utils/common';
 import { localStg } from '@/utils/storage';
 
 const DARK_CLASS = 'dark';
@@ -33,9 +33,10 @@ export function initThemeSettings() {
  * Create theme token
  *
  * @param colors Theme colors
+ * @param [recommended=false] Use recommended color. Default is `false`
  */
-export function createThemeToken(colors: App.Theme.ThemeColor) {
-  const paletteColors = createThemePaletteColors(colors);
+export function createThemeToken(colors: App.Theme.ThemeColor, recommended = false) {
+  const paletteColors = createThemePaletteColors(colors, recommended);
 
   const themeTokens: App.Theme.ThemeToken = {
     colors: {
@@ -75,18 +76,19 @@ export function createThemeToken(colors: App.Theme.ThemeColor) {
  * Create theme palette colors
  *
  * @param colors Theme colors
+ * @param [recommended=false] Use recommended color. Default is `false`
  */
-function createThemePaletteColors(colors: App.Theme.ThemeColor) {
+function createThemePaletteColors(colors: App.Theme.ThemeColor, recommended = false) {
   const colorKeys = Object.keys(colors) as App.Theme.ThemeColorKey[];
   const colorPaletteVar = {} as App.Theme.ThemePaletteColor;
 
   colorKeys.forEach(key => {
-    const { palettes, main } = getColorPalette(colors[key], key);
+    const colorMap = getColorPalette(colors[key], recommended);
 
-    colorPaletteVar[key] = main.hexcode;
+    colorPaletteVar[key] = colorMap.get(500)!;
 
-    palettes.forEach(item => {
-      colorPaletteVar[`${key}-${item.number}`] = item.hexcode;
+    colorMap.forEach((hex, number) => {
+      colorPaletteVar[`${key}-${number}`] = hex;
     });
   });
 
@@ -116,7 +118,7 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
 
       if (key === 'colors') {
         cssVarsKey = removeRgbPrefix(cssVarsKey);
-        const { r, g, b } = getRgbOfColor(cssValue);
+        const { r, g, b } = getRgb(cssValue);
         cssValue = `${r} ${g} ${b}`;
       }
 
@@ -150,7 +152,11 @@ export function addThemeVarsToHtml(tokens: App.Theme.BaseToken, darkTokens: App.
     }
   `;
 
-  const style = document.createElement('style');
+  const styleId = 'theme-vars';
+
+  const style = document.querySelector(`#${styleId}`) || document.createElement('style');
+
+  style.id = styleId;
 
   style.textContent = css + darkCss;
 
@@ -163,18 +169,29 @@ export function addThemeVarsToHtml(tokens: App.Theme.BaseToken, darkTokens: App.
  * @param darkMode Is dark mode
  */
 export function toggleCssDarkMode(darkMode = false) {
-  function addDarkClass() {
-    document.documentElement.classList.add(DARK_CLASS);
-  }
-
-  function removeDarkClass() {
-    document.documentElement.classList.remove(DARK_CLASS);
-  }
+  const { add, remove } = toggleHtmlClass(DARK_CLASS);
 
   if (darkMode) {
-    addDarkClass();
+    add();
   } else {
-    removeDarkClass();
+    remove();
+  }
+}
+
+/**
+ * Toggle grayscale mode
+ *
+ * @param grayscaleMode Is grayscale mode
+ */
+export function toggleGrayscaleMode(grayscaleMode = false) {
+  const GRAYSCALE_CLASS = 'grayscale';
+
+  const { add, remove } = toggleHtmlClass(GRAYSCALE_CLASS);
+
+  if (grayscaleMode) {
+    add();
+  } else {
+    remove();
   }
 }
 
@@ -190,13 +207,14 @@ interface NaiveColorAction {
  * Get naive theme colors
  *
  * @param colors Theme colors
+ * @param [recommended=false] Use recommended color. Default is `false`
  */
-function getNaiveThemeColors(colors: App.Theme.ThemeColor) {
+function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) {
   const colorActions: NaiveColorAction[] = [
     { scene: '', handler: color => color },
     { scene: 'Suppl', handler: color => color },
-    { scene: 'Hover', handler: color => getColorByColorPaletteNumber(color, 500) },
-    { scene: 'Pressed', handler: color => getColorByColorPaletteNumber(color, 700) },
+    { scene: 'Hover', handler: color => getPaletteColorByNumber(color, 500, recommended) },
+    { scene: 'Pressed', handler: color => getPaletteColorByNumber(color, 700, recommended) },
     { scene: 'Active', handler: color => addColorAlpha(color, 0.1) }
   ];
 
@@ -219,17 +237,21 @@ function getNaiveThemeColors(colors: App.Theme.ThemeColor) {
  * Get naive theme
  *
  * @param colors Theme colors
+ * @param [recommended=false] Use recommended color. Default is `false`
  */
-export function getNaiveTheme(colors: App.Theme.ThemeColor) {
+export function getNaiveTheme(colors: App.Theme.ThemeColor, recommended = false) {
   const { primary: colorLoading } = colors;
 
   const theme: GlobalThemeOverrides = {
     common: {
-      ...getNaiveThemeColors(colors),
+      ...getNaiveThemeColors(colors, recommended),
       borderRadius: '6px'
     },
     LoadingBar: {
       colorLoading
+    },
+    Tag: {
+      borderRadius: '6px'
     }
   };
 
