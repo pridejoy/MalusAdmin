@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { getSysUserPage } from '@/service/api';
+import { deleteSysUser, getSysUserPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { enableStatusRecord } from '@/constants/business';
@@ -123,9 +123,13 @@ async function handleBatchDelete() {
 
 function handleDelete(id: number) {
   // request
-  console.log(id);
-
-  onDeleted();
+  // console.log(id);
+  deleteSysUser(id).then(res => {
+    if (res.data) {
+      window.$message?.success('删除成功');
+      getData();
+    }
+  });
 }
 
 function edit(id: number) {

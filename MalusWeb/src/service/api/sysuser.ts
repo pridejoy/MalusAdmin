@@ -17,3 +17,12 @@ export function updateSysUser(data?: any) {
     data
   });
 }
+
+
+// 删除用户
+export function deleteSysUser(userid?: int) {
+  return request<boolean>({
+    url: `/SysUser/Delete/${userid}`,
+    method: 'post'
+  });
+}

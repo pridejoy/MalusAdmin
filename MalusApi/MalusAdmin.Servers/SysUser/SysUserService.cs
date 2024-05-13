@@ -165,7 +165,7 @@ namespace MalusAdmin.Servers
             //获取所有的菜单权限
             var tree = await _sysMenuService.MenuTreeList();
             ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(TokenInfo.User.UserId);
+            var menuid = await _sysRoleMenuService.RoleUserMenu(TokenInfo.User.UserRolesId);
 
             //当用户为1的时候，设置为超级管理官
             if (TokenInfo.User.UserId==1)

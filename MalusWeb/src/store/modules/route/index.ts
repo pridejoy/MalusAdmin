@@ -13,7 +13,6 @@ import { useAppStore } from '../app';
 import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
 import {
-  filterAuthRoutesByRoles,
   getBreadcrumbsByRoute,
   getCacheRouteNames,
   getGlobalMenusByAuthRoutes,
@@ -63,6 +62,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *   此函数首先将已存在的认证路由映射到一个 Map 中，然后将待添加的路由也添加到这个 Map 中， 最后将 Map 中的值转换回数组，更新认证路由列表。
    */
   function addAuthRoutes(routes: ElegantConstRoute[]) {
+    console.log('authRoutes.value', authRoutes.value);
+    console.log('routes', routes);
     // 创建一个映射，用于存储认证路由的名称和路由对象
     const authRoutesMap = new Map(authRoutes.value.map(route => [route.name, route]));
 
@@ -161,59 +162,47 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     resetVueRoutes();
 
-    // after reset store, need to re-init constant route
+    // 重置存储后，需要重新初始化常量路由
     await initConstantRoute();
   }
 
-  /** Reset vue routes */
+  /** 重置vue路由 */
   function resetVueRoutes() {
     removeRouteFns.forEach(fn => fn());
     removeRouteFns.length = 0;
   }
 
-  /** init constant route */
+  /** 初始化常量路由 */
   async function initConstantRoute() {
     if (isInitConstantRoute.value) return;
 
-    if (authRouteMode.value === 'static') {
-      const { constantRoutes } = createStaticRoutes();
-
-      addAuthRoutes(constantRoutes);
-    } else {
-      const { data, error } = await fetchGetConstantRoutes();
-
-      if (!error) {
-        addAuthRoutes(data);
-      }
-    }
+    // 先获取静态路由
+    const { constantRoutes } = createStaticRoutes();
+    addAuthRoutes(constantRoutes);
+    console.log('先获取静态路由', constantRoutes);
 
     handleAuthRoutes();
 
     setIsInitConstantRoute(true);
   }
 
-  /** Init auth route */
+  /** 初始化身份验证路由 */
   async function initAuthRoute() {
-    // if (authRouteMode.value === 'static') {
-    //   await initStaticAuthRoute();
-    // } else {
-    //   await initDynamicAuthRoute();
-    // }
-    // await initStaticAuthRoute();
     await initDynamicAuthRoute();
     tabStore.initHomeTab();
   }
 
-  /** Init dynamic auth route */
+  /** 初始化动态身份验证路由 */
   async function initDynamicAuthRoute() {
     const data = await getUserRoutes();
+    console.log('获取动态的路由信息', data.data?.routes);
     addAuthRoutes(data.data?.routes ?? []);
     const home = data.data?.home || 'home';
     // const { authRoutes: staticAuthRoutes } = createStaticRoutes();
-    // // console.log('获取动态的路由信息2', staticAuthRoutes);
+    // //
     // addAuthRoutes(staticAuthRoutes);
     // const home = 'home';
-
+    // debugger;
     handleAuthRoutes();
 
     setRouteHome(home);
@@ -225,6 +214,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** 处理身份验证路由 */
   function handleAuthRoutes() {
+    console.log('authRoutes.value', authRoutes.value);
     const sortRoutes = sortRoutesByOrder(authRoutes.value);
 
     const vueRoutes = getAuthVueRoutes(sortRoutes);
@@ -334,7 +324,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     initConstantRoute,
     isInitConstantRoute,
     initAuthRoute,
-    isInitAuthRoute,
+    isInitAuthRoute, // 是不是初始化过权限路由
     setIsInitAuthRoute,
     getIsAuthRouteExist,
     getSelectedMenuKeyPath,

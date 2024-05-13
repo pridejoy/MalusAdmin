@@ -129,6 +129,7 @@ function handleDelete(id: number) {
 
 function edit(id: number) {
   handleEdit(id);
+  getData();
 }
 </script>
 

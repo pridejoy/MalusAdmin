@@ -65,7 +65,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
           if (redirect) {
             await redirectFromLogin();
           }
-          console.log('userInfo', userInfo.userName);
           if (routeStore.isInitAuthRoute) {
             window.$notification?.success({
               title: $t('page.login.common.loginSuccess'),

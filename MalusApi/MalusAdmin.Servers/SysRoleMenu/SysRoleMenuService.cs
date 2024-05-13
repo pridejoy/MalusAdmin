@@ -32,9 +32,9 @@ namespace MalusAdmin.Servers.SysRoleMenu
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<List<int>> RoleUserMenu(int RoleId)
+        public async Task<List<int>> RoleUserMenu(List<int> RoleId)
         {
-            var Res = await _sysRoleMenuRep.Where(x => x.RoleId==RoleId)
+            var Res = await _sysRoleMenuRep.Where(x => RoleId.Contains(x.RoleId))
                 .Select(x=>x.MenuId)
                 .ToListAsync();  
             return Res;

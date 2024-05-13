@@ -29,7 +29,7 @@ namespace MalusAdmin.WebApi.Controllers
         [Permission("角色菜单查询")]
         public async Task<JsonR> Get([FromQuery] int RoleId)
         {
-            return ResultCode.Success.JsonR(await _service.RoleUserMenu(RoleId));
+            return ResultCode.Success.JsonR(await _service.RoleUserMenu(new List<int>() { RoleId }));
         }
 
         /// <summary>

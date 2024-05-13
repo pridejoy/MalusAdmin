@@ -43,6 +43,7 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
       return response.data.code == import.meta.env.VITE_SERVICE_SUCCESS_CODE;
     },
     async onBackendFail(response, instance) {
+      console.log('接口响应错误', response, instance);
       const authStore = useAuthStore();
 
       function handleLogout() {

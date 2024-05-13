@@ -33,41 +33,41 @@ export function createRouteGuard(router: Router) {
     const isLogin = Boolean(localStg.get('token'));
     const needLogin = !to.meta.constant;
     const routeRoles = to.meta.roles || [];
-    console.log(authStore.userInfo);
+    // console.log(authStore.userInfo);
     // const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role));
     const hasRole = true;
     const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole;
 
     const routeSwitches: CommonType.StrategicPattern[] = [
-      // if it is login route when logged in, then switch to the root page
+      // 如果登录时是登录路由，则切换到根页面
       {
         condition: isLogin && to.name === loginRoute,
         callback: () => {
           next({ name: rootRoute });
         }
       },
-      // if is is constant route, then it is allowed to access directly
+      // 如果is是常量路由，则允许它直接访问
       {
         condition: !needLogin,
         callback: () => {
           handleRouteSwitch(to, from, next);
         }
       },
-      // if the route need login but the user is not logged in, then switch to the login page
+      // 如果路由需要登录，但用户未登录，则切换到登录页面
       {
         condition: !isLogin && needLogin,
         callback: () => {
           next({ name: loginRoute, query: { redirect: to.fullPath } });
         }
       },
-      // if the user is logged in and has authorization, then it is allowed to access
+      // 如果用户已登录并具有授权，则允许其访问
       {
         condition: isLogin && needLogin && hasAuth,
         callback: () => {
           handleRouteSwitch(to, from, next);
         }
       },
-      // if the user is logged in but does not have authorization, then switch to the 403 page
+      // 如果用户已登录但没有授权，则切换到403页
       {
         condition: isLogin && needLogin && !hasAuth,
         callback: () => {
@@ -143,9 +143,9 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     return null;
   }
 
-  // if the auth route is not initialized, then initialize the auth route
+  // 如果身份验证路由未初始化，则初始化身份验证路由
   const isLogin = Boolean(localStg.get('token'));
-  // initialize the auth route requires the user to be logged in, if not, redirect to the login page
+  // 初始化身份验证路由需要用户登录，如果没有，则重定向到登录页面
   if (!isLogin) {
     const loginRoute: RouteKey = 'login';
     const redirect = to.fullPath;
@@ -160,7 +160,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     return location;
   }
 
-  // initialize the auth route
+  // 初始化身份验证路由
   await routeStore.initAuthRoute();
 
   // the route is captured by the "not-found" route because the auth route is not initialized
