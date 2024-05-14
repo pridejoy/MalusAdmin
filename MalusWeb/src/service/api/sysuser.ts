@@ -18,9 +18,17 @@ export function updateSysUser(data?: any) {
   });
 }
 
+// 删除用户
+export function addSysUser(data: any) {
+  return request<boolean>({
+    url: `/SysUser/Add`,
+    method: 'post',
+    data
+  });
+}
 
 // 删除用户
-export function deleteSysUser(userid?: int) {
+export function deleteSysUser(userid?: number) {
   return request<boolean>({
     url: `/SysUser/Delete/${userid}`,
     method: 'post'

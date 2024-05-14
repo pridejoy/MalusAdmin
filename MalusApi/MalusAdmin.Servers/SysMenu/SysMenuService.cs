@@ -40,7 +40,7 @@ namespace MalusAdmin.Servers
         public async Task<PageList<TSysMenu>> MenuTreeList()
         {
             var sysmenulist = await _sysMenuRep.Context.Queryable<TSysMenu>()
-                .ToTreeAsync(x => x.children, x => x.ParentId, 0);
+                .ToTreeAsync(x => x.Children, x => x.ParentId, 0);
             return new PageList<TSysMenu>
             {
                 PageNo = 1,

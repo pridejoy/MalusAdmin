@@ -114,8 +114,7 @@ namespace MalusAdmin.WebApi.Filter
                 }
 
                 Console.WriteLine($"处理 {DateTime.Now} : {JsonConvert.SerializeObject(entity)}");
-
-                _db.CodeFirst.SplitTables().InitTables<TSysLogVis>();
+                 
                 var returnid = _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
             }
             catch (Exception e)

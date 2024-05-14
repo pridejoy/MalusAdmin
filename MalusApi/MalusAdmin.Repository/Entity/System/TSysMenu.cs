@@ -123,6 +123,6 @@ namespace MalusAdmin.Entity
         /// 子菜单
         /// </summary>
         [SqlSugar.SugarColumn(IsIgnore = true)]
-        public List<TSysMenu> children { get; set; }
+        public List<TSysMenu> Children { get; set; }
     }
 }

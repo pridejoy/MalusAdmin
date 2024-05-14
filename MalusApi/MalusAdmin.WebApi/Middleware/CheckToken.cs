@@ -35,9 +35,9 @@ namespace MalusAdmin.WebApi
 
             if (endpoint is null) await _next(context);
             // 检查Endpoint的元数据中是否包含AllowAnonymous特性
-            var hasAllowAnonymous = endpoint.Metadata
+            var hasAllowAnonymous = endpoint?.Metadata
                 .OfType<IAllowAnonymous>()
-                .Any();
+                .Any()??false;
 
             if (hasAllowAnonymous)
             {

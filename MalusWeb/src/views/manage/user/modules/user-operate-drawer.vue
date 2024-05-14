@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { getRolesList, updateSysUser } from '@/service/api';
+import { addSysUser, getRolesList, updateSysUser } from '@/service/api';
 import { $t } from '@/locales';
 defineOptions({
   name: 'UserOperateDrawer'
@@ -48,7 +48,7 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<Api.SystemManage.User, 'account' | 'name' | 'tel' | 'email' | 'userRoles' | 'status'>;
+type Model = Pick<Api.SystemManage.User, 'account' | 'name' | 'tel' | 'email' | 'userRolesId' | 'status'>;
 
 const model: Model = reactive(createDefaultModel());
 
@@ -56,6 +56,7 @@ function createDefaultModel(): Model {
   return {
     account: '',
     name: '',
+    password: '123456',
     tel: '',
     email: '',
     userRolesId: [],
@@ -75,7 +76,6 @@ const roleOptions = ref<CommonType.Option<string>[]>([]);
 
 async function getRoleOptions() {
   const { error, data } = await getRolesList();
-  console.log(data);
   if (!error) {
     const options = data.map(item => ({
       label: item.name,
@@ -87,9 +87,10 @@ async function getRoleOptions() {
 }
 
 function handleUpdateModelWhenEdit() {
-  console.log('接收传递过来的参数', props);
+  // console.log('接收传递过来的参数', props);
   if (props.operateType === 'add') {
     Object.assign(model, createDefaultModel());
+
     return;
   }
 
@@ -104,8 +105,20 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
+  // request
   if (props.operateType === 'add') {
+    // console.log('当前接收的数据', model);
+    // console.log('提交表单', model);
+    addSysUser(model).then(res => {
+      // console.log('请求成功', res);
+      if (res.data) {
+        window.$message?.success('添加成功');
+        closeDrawer();
+        emit('submitted');
+      }
+    });
   }
+
   if (props.operateType === 'edit' && props.rowData) {
     updateSysUser(model).then(res => {
       // console.log('修改返回的状态', res);

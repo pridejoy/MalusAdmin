@@ -1,5 +1,6 @@
  
 using MalusAdmin.Servers;
+using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysUserButtonPermiss;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -67,7 +68,7 @@ namespace MalusAdmin.WebApi
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddSingleton<ITokenService, TokenService>();
-            builder.Services.AddScoped<MalusAdmin.Servers.SysRolePermission.ISysRolePermission, SysRolePermissionService>();
+            builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
 
             // ÃÌº”øÁ”Ú÷ß≥÷
             builder.Services.AddCorsSetup();

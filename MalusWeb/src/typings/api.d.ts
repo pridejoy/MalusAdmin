@@ -130,10 +130,12 @@ declare namespace Api {
       name: string;
       /** user phone */
       tel: string;
+
+      password: string;
       /** user email */
       email: string;
       /** user role code collection */
-      roleId: number[];
+      userRolesId: number[];
     }>;
 
     /** user search params */

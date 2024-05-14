@@ -162,19 +162,23 @@ namespace MalusAdmin.Servers
         public async Task<UserMenuOut> GetUserMenu()
         {
             var Out=new UserMenuOut();
-            //获取所有的菜单权限
-            var tree = await _sysMenuService.MenuTreeList();
+
             ////获取当前用户的菜单权限
             var menuid = await _sysRoleMenuService.RoleUserMenu(TokenInfo.User.UserRolesId);
+             
+            //获取所有的菜单权限
+            var menutree =  _sysUserRep.Context.Queryable<TSysMenu>()
+                .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x=>(object)x).ToArray());
 
             //当用户为1的时候，设置为超级管理官
-            if (TokenInfo.User.UserId==1)
+            if (TokenInfo.User.UserId == 1)
             {
-                menuid = tree.Records.Select(x => x.Id).ToList();
+                menutree = _sysUserRep.Context.Queryable<TSysMenu>()
+                .ToTree(x => x.Children, x => x.ParentId, 0);
             }
-
             var res =new List<UserMenu>();
-            foreach (var item in tree.Records.Where(x=> menuid.Contains(x.Id)))
+            //var usermenus = GetMenusByIds(menutree, menuid);
+            foreach (var item in menutree)
             {
                 res.Add(ConvertMenu(item));
             }
@@ -202,8 +206,43 @@ namespace MalusAdmin.Servers
                     Icon = menu.Icon,
                     Order = menu.Sort, 
                 },
-                Children = menu.children?.Select(ConvertMenu).ToList()
+                Children = menu.Children?.Select(ConvertMenu).ToList()
             };
+        }
+
+        /// <summary>
+        /// 私有方法.获取当前角色的路由
+        /// </summary>
+        /// <param name="menutree"></param>
+        /// <param name="menuid"></param>
+        /// <returns></returns>
+        private IEnumerable<TSysMenu> GetMenusByIds(List<TSysMenu> menutree, List<int> menuid)
+        {
+            var userMenus = new List<TSysMenu>(); // 存储用户有权限的菜单
+
+            // 定义递归方法
+            void RecurseTree(List<TSysMenu> tree, List<int> ids)
+            {
+                foreach (var node in tree)
+                {
+                    // 如果当前节点的id在用户权限列表中，则添加到结果
+                    if (ids.Contains(node.Id))
+                    {
+                        userMenus.Add(node);
+                    }
+
+                    // 如果有子节点，则递归调用
+                    if (node.Children != null && node.Children.Any())
+                    {
+                        RecurseTree(node.Children, ids);
+                    }
+                }
+            }
+
+            // 调用递归方法
+            RecurseTree(menutree, menuid);
+
+            return userMenus;
         }
     }
 }
