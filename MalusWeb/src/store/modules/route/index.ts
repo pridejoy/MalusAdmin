@@ -63,7 +63,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *   此函数首先将已存在的认证路由映射到一个 Map 中，然后将待添加的路由也添加到这个 Map 中， 最后将 Map 中的值转换回数组，更新认证路由列表。
    */
   function addAuthRoutes(routes: ElegantConstRoute[]) {
-    console.log('authRoutes.value', authRoutes.value);
+    // console.log('authRoutes.value', authRoutes.value);
     // 创建一个映射，用于存储认证路由的名称和路由对象
     const authRoutesMap = new Map();
 

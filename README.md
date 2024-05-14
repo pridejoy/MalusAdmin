@@ -52,7 +52,8 @@ Malus是海棠的意思，顾名思义，海棠后台管理系统，读音与【
 
 MalusAdmin 提供了以下演示和文档资源：
 
-- 账户信息：账号 `admin`，密码 `1q2w3e`
+- 账户信息：（超管） 账号 `admin`，密码 `1q2w3e`
+- 账户信息：账号 `pridejoy`，密码 `123456`
 - 在线演示系统：[https://malus.dotnetshare.com](https://malus.dotnetshare.com/)
 - 后端文档：[https://www.dotnetshare.com](https://www.dotnetshare.com/)
 - 前端文档：[https://docs.soybeanjs.cn](https://docs.soybeanjs.cn/zh/)
