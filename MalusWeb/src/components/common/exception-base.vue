@@ -19,14 +19,14 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const authStore = useAuthStore();
+// const authStore = useAuthStore();
 
 const { routerPushByKey } = useRouterPush();
 
-function exception() {
-  authStore.resetStore();
-  routerPushByKey('login');
-}
+// function exception() {
+//   authStore.resetStore();
+//   routerPushByKey('login');
+// }
 
 const iconMap: Record<ExceptionType, string> = {
   '403': 'no-permission',
@@ -42,7 +42,7 @@ const icon = computed(() => iconMap[props.type]);
     <div class="flex text-400px text-primary">
       <SvgIcon :local-icon="icon" />
     </div>
-    <NButton type="primary" @click="exception()">{{ $t('common.backToHome') }}</NButton>
+    <NButton type="primary" @click="routerPushByKey('root')">{{ $t('common.backToHome') }}</NButton>
   </div>
 </template>
 

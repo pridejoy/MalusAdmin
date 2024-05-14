@@ -1,4 +1,3 @@
-import { log } from 'node:console';
 import { computed, reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useLoading } from '@sa/hooks';
@@ -19,12 +18,11 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
 
-  console.log('userInfo', userInfo);
   /** 是静态路由中的超级角色 */
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
-    return true;
+    return false;
     return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
   });
 
@@ -61,7 +59,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         const pass = await loginByToken(res.data.token);
         if (pass) {
           await routeStore.initAuthRoute();
-
           if (redirect) {
             await redirectFromLogin();
           }

@@ -60,14 +60,12 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param currentRoute Current route
    */
   function initTabStore(currentRoute: App.Global.TabRoute) {
-    const storageTabs = localStg.get('globalTabs');
-
-    if (themeStore.tab.cache && storageTabs) {
-      const extractedTabs = extractTabsByAllRoutes(router, storageTabs);
-      tabs.value = updateTabsByI18nKey(extractedTabs);
-    }
-
-    addTab(currentRoute);
+    // const storageTabs = localStg.get('globalTabs');
+    // if (themeStore.tab.cache && storageTabs) {
+    //   const extractedTabs = extractTabsByAllRoutes(router, storageTabs);
+    //   tabs.value = updateTabsByI18nKey(extractedTabs);
+    // }
+    // addTab(currentRoute);
   }
 
   /**

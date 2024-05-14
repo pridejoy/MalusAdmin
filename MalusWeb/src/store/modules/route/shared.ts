@@ -82,6 +82,7 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
       menus.push(menu);
     }
   });
+  console.log('通过身份验证路由获取全局菜单menus', menus);
 
   return menus;
 }
@@ -148,7 +149,7 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
   const cacheNames: LastLevelRouteKey[] = [];
 
   routes.forEach(route => {
-    // only get last two level route, which has component
+    // 只获取具有组件的最后两级路由
     route.children?.forEach(child => {
       if (child.component && child.meta?.keepAlive) {
         cacheNames.push(child.name as LastLevelRouteKey);
