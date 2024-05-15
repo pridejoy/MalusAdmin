@@ -111,7 +111,7 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
         {
             var cacheButtonPermiss = _cacheService.Get<List<TSysRolePermission>>(Constant.Cache.RoleButtonPermiss+RoleId);
-            if (cacheButtonPermiss == null)
+            if (cacheButtonPermiss.Count==0)
             {
               var roleButtonPermiss=   await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();
                 //进行缓存
@@ -130,7 +130,8 @@ namespace MalusAdmin.Servers.SysUserButtonPermiss
         {
             // 获取当前用户-角色 的接口权限   
             var UserRolePer =new List<TSysRolePermission>();
-            TokenInfo.User.UserRolesId.ForEach(async x => { 
+            TokenInfo.User.UserRolesId.ForEach(
+                async x => { 
                 UserRolePer.AddRange(await GetRoleButtonPermiss(x));
             });
             return UserRolePer.Any(x => x.UserPermiss == RouthPath); 

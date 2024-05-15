@@ -77,15 +77,22 @@ namespace MalusAdmin.WebApi
 
                         var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
 
-                        // 权限检查  
-                        if (await rolePermissService.HavePermission(routePattern))
+                        var hapermissableAllowAnonymous = endpoint?.Metadata
+                            .OfType<PermissionAttribute>()
+                            .Any()??true ;
+                        if (hapermissableAllowAnonymous)
                         {
-                            context.Response.StatusCode = 200;
-                            context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-                            var rspResult = ResultCode.Fail.JsonR("暂无权限");
-                            await context.Response.WriteAsync(rspResult.ToJson());
-                            return;
+                            // 权限检查  
+                            if (!await rolePermissService.HavePermission(routePattern))
+                            {
+                                context.Response.StatusCode = 200;
+                                context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                                var rspResult = ResultCode.Fail.JsonR("暂无权限");
+                                await context.Response.WriteAsync(rspResult.ToJson());
+                                return;
+                            }
                         }
+                    
                     } 
                 } 
             }
