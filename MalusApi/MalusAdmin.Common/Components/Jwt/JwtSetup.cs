@@ -52,9 +52,7 @@ namespace MalusAdmin.Common
             {
                 OnChallenge = async context =>
                 {
-                    // refresh token
-
-                    // 
+                    // refresh token 
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     context.Response.ContentType = "application/json";
                     await context.Response.WriteAsync("401");

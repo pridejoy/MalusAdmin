@@ -22,7 +22,7 @@ namespace MalusAdmin.Common
 
 
         static string tokenTag = "Token";
-        static int expiresTime = 60;
+        static int expiresTime = 1;
         static string checkKey = "CheckToken_";
 
         //public TokenData TokenDataInfo => ;

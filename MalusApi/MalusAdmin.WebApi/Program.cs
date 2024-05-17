@@ -59,13 +59,10 @@ namespace MalusAdmin.WebApi
             // 添加jwt认证
             //builder.Services.AddJwtSetup();
             // 添加自定义授权
-            builder.Services.AddAuthorizationSetup();
+            //builder.Services.AddAuthorizationSetup();
             // 替换默认 PermissionChecker
             //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-
-            //Token
-            //提供了访问当前HTTP上下文（HttpContext）的方法
-            builder.Services.AddHttpContextAccessor();
+             
 
             builder.Services.AddSingleton<ITokenService, TokenService>();
             builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
@@ -125,7 +122,7 @@ namespace MalusAdmin.WebApi
             //Token验证
             app.UseMiddleware<CheckToken>();
 
-            // 使用身份验证
+            // 启用身份验证中间件
             app.UseAuthentication();
 
             // 然后是授权中间件
