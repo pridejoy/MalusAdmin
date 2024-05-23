@@ -74,5 +74,10 @@ namespace MalusAdmin.Entity
 		[SugarColumn(ColumnName = "Remark")]
 		public String Remark { get; set; }
 
+		/// <summary>
+		/// 是否是超级管理员
+		/// </summary>
+		public bool IsSuperAdmin { get; set; }
+
     }
 }

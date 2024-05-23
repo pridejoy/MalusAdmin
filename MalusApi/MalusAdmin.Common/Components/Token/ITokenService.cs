@@ -50,11 +50,7 @@ namespace MalusAdmin.Common
         /// <returns></returns>
         string RefreshToken(HttpContext httpContext);
 
-        /// <summary>
-        /// 添加需要验证的Token
-        /// </summary>
-        /// <param name="userId"></param>
-        void AddCheckToken(int userId);
+        void  AddCheckToken(string token, TokenData tokeninfo);
 
         /// <summary>
         /// 删除需要验证的Token
@@ -63,7 +59,8 @@ namespace MalusAdmin.Common
         void RemoveCheckToken(int userId);
 
 
+        TokenData ParseTokenByCaChe(string token);
 
-        
+
     }
 }

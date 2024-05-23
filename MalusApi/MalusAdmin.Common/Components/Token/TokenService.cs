@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MalusAdmin.Common.Components.Token;
 using Microsoft.AspNetCore.Http;
 using SqlSugar;
 
@@ -22,12 +23,21 @@ namespace MalusAdmin.Common
 
 
         static string tokenTag = "Token";
-        static int expiresTime = 1;
-        static string checkKey = "CheckToken_";
+
+        /// <summary>
+        /// 30分钟内无操作
+        /// </summary>
+        static int expiresTime = 30; 
 
         //public TokenData TokenDataInfo => ;
 
-         
+        
+        /// <summary>
+        /// 获取heard的token
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
+        /// <exception cref="SystemException"></exception>
         private string GetToken(HttpContext httpContext)
         {
             if (httpContext == null) throw new SystemException("参数错误");
@@ -38,6 +48,11 @@ namespace MalusAdmin.Common
             return "";
         }
 
+        /// <summary>
+        /// 检查登录的Token
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public bool CheckToken(HttpContext httpContext)
         {
             string token = GetToken(httpContext);
@@ -45,22 +60,27 @@ namespace MalusAdmin.Common
             {
                 return false;
             }
-            TokenData tokenData = _cacheService.Get<TokenData>(token);
+
+            TokenData tokenData = ParseTokenByCaChe(token);
             if (tokenData == null)
             {
                 return false;
-            }
-            if (_cacheService.Exists(checkKey + tokenData.UserId))
-            {
-                return false;
-            }
+            } 
+            //此处可增加逻辑，限制单个账号只允许登录一个
+       
             return true;
         }
 
+        /// <summary>
+        /// 生成一个toekn，并缓存
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <param name="tokenData"></param>
+        /// <returns></returns>
         public string GenerateToken(HttpContext httpContext, TokenData tokenData)
         {
             string token = Guid.NewGuid().ToString("N");
-            _cacheService.Add(token, tokenData, new TimeSpan(0, expiresTime, 0)); 
+            AddCheckToken(token,tokenData); 
             return token;
         }
 
@@ -74,27 +94,55 @@ namespace MalusAdmin.Common
         {
             string token = GetToken(httpContext);
             if (string.IsNullOrEmpty(token)) return new TokenData(); 
-            return _cacheService.Get<TokenData>(token);
+            return ParseTokenByCaChe(token);
         }
 
-
+        /// <summary>
+        /// 刷新Token 
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public string RefreshToken(HttpContext httpContext)
         {
             string token = GetToken(httpContext);
             TokenData tokenData = ParseToken(httpContext);
             if (tokenData != null)
             {
-                _cacheService.Add(token, tokenData, new TimeSpan(0, expiresTime, 0));
+                tokenData.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
+                _cacheService.Add(Constant.Cache.UserToken + token, tokenData, new TimeSpan(1, 0, 0));
             }
             return token;
         }
-        public void AddCheckToken(int userId)
+
+        /// <summary>
+        /// 添加登录的缓存
+        /// </summary>
+        /// <param name="userId"></param>
+        public void AddCheckToken(string token,TokenData tokeninfo)
         {
-            _cacheService.Add(checkKey + userId, 0, new TimeSpan(0, expiresTime * 2, 0));
+            tokeninfo.LoginTime = DateTime.Now;
+            tokeninfo.ExpireTime= DateTime.Now.AddMinutes(expiresTime);
+            _cacheService.Add(Constant.Cache.UserToken  + token,  tokeninfo, new TimeSpan(1, 0, 0));
         }
+
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        /// <param name="userId"></param>
         public void RemoveCheckToken(int userId)
         {
-            _cacheService.Remove(checkKey + userId);
+            _cacheService.Remove(Constant.Cache.UserToken  + userId);
         }
+
+        /// <summary>
+        /// 通过缓存解析Token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public TokenData ParseTokenByCaChe(string token)
+        {
+            return _cacheService.Get<TokenData>(Constant.Cache.UserToken + token) ?? new TokenData(); ;
+        }
+
     }
 }

@@ -14,6 +14,8 @@ namespace MalusAdmin.Common
         //缓存常量
         public static class Cache
         {
+            public static string UserToken = "UserToken:";
+
             public static string AllButtonPermiss = "AllButtonPermiss";
 
             public static string RoleButtonPermiss = "RoleButtonPermiss:";

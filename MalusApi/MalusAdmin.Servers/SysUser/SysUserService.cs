@@ -13,6 +13,7 @@ using MalusAdmin.Entity;
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
+using MalusAdmin.Servers.SysUserButtonPermiss;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +29,10 @@ namespace MalusAdmin.Servers
         private readonly IHttpContextAccessor _HttpContext;
         private readonly SysRoleMenuService _sysRoleMenuService;
         private readonly SysMenuService _sysMenuService;
-
+        private readonly SysRolePermissionService _sysRolePermissionService;
         public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
             ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
-            SysMenuService sysMenuService,
+            SysMenuService sysMenuService, SysRolePermissionService sysRolePermissionService,
             IHttpContextAccessor httpContext)
         {
             _sysUserRep = sysUserRep;
@@ -39,6 +40,7 @@ namespace MalusAdmin.Servers
             _HttpContext = httpContext;
             _sysRoleMenuService = sysRoleMenuService;
             _sysMenuService = sysMenuService;
+            _sysRolePermissionService= sysRolePermissionService;
         }
 
         /// <summary>
@@ -62,12 +64,25 @@ namespace MalusAdmin.Servers
                 throw new Exception("该账户已被冻结"); 
             }
 
+            var UserRolePer = new List<TSysRolePermission>();
+            user.UserRolesId.ForEach(async x => {
+                UserRolePer.AddRange(await _sysRolePermissionService.GetRoleButtonPermiss(x));
+            });
+            var button = UserRolePer.DistinctBy(x => x.UserPermiss).Select(x => x.UserPermiss).ToList();
+
+            if (user.IsSuperAdmin)
+            {
+                button = _sysRolePermissionService.GetAllButen().Result.Select(x => x.PermissionId).ToList();
+            }
 
             TokenData tokenData = new TokenData
             {
                 UserId = user.Id,
+                UserName=user.Name,
                 UserAccount = user.Account,
                 UserRolesId = user.UserRolesId,
+                IsSuperAdmin=user.IsSuperAdmin,
+                UserPermiss=button
             };
 
             _TokenService.RemoveCheckToken(tokenData.UserId);
@@ -83,16 +98,13 @@ namespace MalusAdmin.Servers
         /// <returns></returns>
        
         public async Task<GetUserInfoOut> GetUserInfo()
-        {
-           
-            var user = await _sysUserRep
-           .Where(t => t.Id == TokenInfo.User.UserId).FirstAsync();
+        { 
             return new GetUserInfoOut() 
             { 
-                userId= user.Id,
-                userName= user.Name,
-                roles =new List<string> {  },
-                buttons=new List<string> {  }
+                userId= TokenInfo.User.UserId,
+                userName = TokenInfo.User.UserName,
+                roles = TokenInfo.User.UserRolesId.Select(x=>x.ToString()).ToList(),
+                buttons= TokenInfo.User.UserPermiss
             };
         }
 

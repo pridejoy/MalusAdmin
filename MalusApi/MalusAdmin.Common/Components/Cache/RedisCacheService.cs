@@ -14,7 +14,13 @@ namespace MalusAdmin.Common.Components.Cache
         readonly IDatabase _database;
         public RedisCacheService()
         {
-            ConnectionMultiplexer redisConn = ConnectionMultiplexer.Connect(AppSettings.Redis.ConnectionString);
+            var redisconfig = AppSettings.Redis.ConnectionString;
+            if (!AppSettings.IsDemo)
+            {
+                //注释这行，我是从本地文件读取的
+                redisconfig = File.ReadAllText("D:\\redisconfig.txt");
+            }
+            ConnectionMultiplexer redisConn = ConnectionMultiplexer.Connect(redisconfig);
             _database = redisConn.GetDatabase();
         }
         public bool Add(string key, object value)

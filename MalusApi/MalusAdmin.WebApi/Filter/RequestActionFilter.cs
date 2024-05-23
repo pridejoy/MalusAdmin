@@ -67,8 +67,7 @@ namespace MalusAdmin.WebApi.Filter
                 return;
             }
 
-            //判断是否请求成功（没有异常就是请求成功）
-            var isRequestSucceed = actionContext.Exception == null;
+            //判断是否请求成功（没有异常就是请求成功） 
             var headers = httpRequest.Headers;
             var clientInfo = headers.ContainsKey("User-Agent")
                 ? Parser.GetDefault().Parse(headers["User-Agent"])
@@ -107,7 +106,7 @@ namespace MalusAdmin.WebApi.Filter
                     // 检查 ActionResult 类型
                     var result = actionContext.Result as IActionResult;
 
-                    if (result != null && result.GetType() != typeof(FileStreamResult))
+                    if (result.GetType() != typeof(FileStreamResult))
                     {
                         entity.Result = actionContext.Result.ToJson(); // 序列化异常，比如验证码
                     }

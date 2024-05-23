@@ -54,11 +54,7 @@ namespace MalusAdmin.WebApi
                     // 进行身份校验
                     if (!tokenService.CheckToken(context))
                     {
-                        context.Response.StatusCode = 401;
-                        context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-                        var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
-                        await context.Response.WriteAsync(rspResult.ToJson());
-                        return;
+                       await Res401Async(context);
                     }
                     else
                     {
@@ -66,14 +62,16 @@ namespace MalusAdmin.WebApi
                     }
                      
                     var User = tokenService.ParseToken(context);
+                    if (User==null) await Res401Async(context);
+                    if (User.ExpireTime <DateTime.Now) await Res401Async(context); 
                     //更新静态的用户信息
                     TokenInfo.User = User; 
                     
                     // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
-                    if ((endpoint is RouteEndpoint routeEndpoint) && User.UserId != 1)
+                    if ((endpoint is RouteEndpoint routeEndpoint) && !User.IsSuperAdmin)
                     {
                         // 获取路由模式
-                        var routePattern = routeEndpoint.RoutePattern.RawText.Replace('/', ':');
+                        var routePattern = routeEndpoint.RoutePattern.RawText?.Replace('/', ':');
 
                         var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
 
@@ -97,6 +95,20 @@ namespace MalusAdmin.WebApi
                 } 
             }
             await _next(context);
-        } 
+        }
+
+        /// <summary>
+        /// 登录后返回401
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task Res401Async(HttpContext context) 
+        { 
+            context.Response.StatusCode = 401;
+            context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
+            await context.Response.WriteAsync(rspResult.ToJson());
+            return; 
+        }
     }
 }

@@ -59,7 +59,7 @@ namespace MalusAdmin.Common
                 {
                     Scheme = "Bearer",
                     BearerFormat = "Token",
-                    Description = "在下面输入框输入Token,不用输入Bearer[空格] ",
+                    Description = "在下面输入框输入GuidToken,不用输入",
                     Name = "Token",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http
