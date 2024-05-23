@@ -55,24 +55,20 @@ async function handleToggleAccount(account: Account) {
 
 <template>
   <NSpace vertical :size="16">
-    <NCard :title="$t('route.function_toggle-auth')" :bordered="false" size="small" segmented class="card-wrapper">
+    <NCard title="权限校验" :bordered="false" size="small" segmented class="card-wrapper">
       <NDescriptions bordered :column="1">
         <NDescriptionsItem :label="$t('page.manage.user.userRole')">
           <NSpace>
             <NTag v-for="role in authStore.userInfo.roles" :key="role">{{ role }}</NTag>
           </NSpace>
         </NDescriptionsItem>
-        <NDescriptionsItem ions-item :label="$t('page.function.toggleAuth.toggleAccount')">
+        <NDescriptionsItem ions-item label="使用方法">
           <NSpace>
-            <NButton
-              v-for="account in accounts"
-              :key="account.key"
-              :loading="loading && loginAccount === account.key"
-              :disabled="loading && loginAccount !== account.key"
-              @click="handleToggleAccount(account)"
-            >
-              {{ account.label }}
-            </NButton>
+            <p>import { useAuth } from '@/hooks/business/auth';</p>
+            <br />
+            <p>const { hasAuth } = useAuth();</p>
+            <br />
+            <p>v-if="hasAuth('api:SysMenu:Add')"</p>
           </NSpace>
         </NDescriptionsItem>
       </NDescriptions>
@@ -85,11 +81,9 @@ async function handleToggleAccount(account: Account) {
       class="card-wrapper"
     >
       <NSpace>
-        <NButton v-if="hasAuth('B_CODE1')">{{ $t('page.function.toggleAuth.superAdminVisible') }}</NButton>
-        <NButton v-if="hasAuth('B_CODE2')">{{ $t('page.function.toggleAuth.adminVisible') }}</NButton>
-        <NButton v-if="hasAuth('B_CODE3')">
-          {{ $t('page.function.toggleAuth.adminOrUserVisible') }}
-        </NButton>
+        <NButton v-if="hasAuth('api:SysMenu:Add')">拥有 api:SysMenu:Add 权限可见</NButton>
+
+        <NButton v-if="hasAuth('api:SysMenu:Ad')">拥有api:SysMenu:Ad 权限可见</NButton>
       </NSpace>
     </NCard>
   </NSpace>

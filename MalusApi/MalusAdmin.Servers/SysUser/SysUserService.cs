@@ -54,7 +54,8 @@ namespace MalusAdmin.Servers
             
             var user =await _sysUserRep
                 .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
-
+            if (user==null) throw new Exception("未找到用户");
+   
             if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper())
             {  
               throw new Exception("密码输入错误");
