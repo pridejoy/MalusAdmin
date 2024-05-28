@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useFullscreen } from '@vueuse/core';
+import { useNotification } from 'naive-ui';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
+import { signalR } from '@/plugins/signalR';
 import HorizontalMenu from '../global-menu/base-menu.vue';
 import GlobalLogo from '../global-logo/index.vue';
 import GlobalBreadcrumb from '../global-breadcrumb/index.vue';
@@ -11,7 +13,6 @@ import GlobalSearch from '../global-search/index.vue';
 import { useMixMenuContext } from '../../context';
 import ThemeButton from './components/theme-button.vue';
 import UserAvatar from './components/user-avatar.vue';
-
 defineOptions({
   name: 'GlobalHeader'
 });
@@ -26,7 +27,7 @@ interface Props {
 }
 
 defineProps<Props>();
-
+const notification = useNotification();
 const appStore = useAppStore();
 const themeStore = useThemeStore();
 const routeStore = useRouteStore();
@@ -43,6 +44,19 @@ const headerMenus = computed(() => {
   }
 
   return [];
+});
+const receiveNotice = (msg: any) => {
+  console.log(msg);
+  notification.info({
+    content: '提示',
+    meta: msg,
+    duration: 2500,
+    keepAliveOnHover: true
+  });
+};
+onMounted(async () => {
+  console.log('开始');
+  signalR.on('messageReceived', receiveNotice);
 });
 </script>
 

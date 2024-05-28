@@ -62,6 +62,13 @@ const latestBuildTime = BUILD_TIME;
       <p>极简的项目依赖，简洁清爽的目录结构，代码注释方便上手</p>
       <br />
       <p>
+        <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license">
+        <img src="https://img.shields.io/badge/MalusAdmin-v1.0.1-brightgreen" alt="MalusAdmin">
+        <img src="https://gitee.com/Pridejoy/MalusAdmin/badge/star.svg?theme=dark" alt="MalusAdmin">
+        <img src="https://gitee.com/Pridejoy/MalusAdmin/badge/fork.svg?theme=dark" alt="MalusAdmin">
+       </p>
+      <br />
+      <p>
             公众号:[Net分享] 一个会持续分享编程干货和好玩的知识库。欢迎大家关注！！！
             <br />
             <NQrCode value="http://weixin.qq.com/r/qzj377TEKulVrfCM9225" />

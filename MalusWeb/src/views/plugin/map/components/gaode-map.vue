@@ -14,7 +14,7 @@ async function renderMap() {
   if (!domRef.value) return;
   const map = new AMap.Map(domRef.value, {
     zoom: 11,
-    center: [114.05834626586915, 22.546789983033168],
+    center: [121.46917, 31.224361],
     viewMode: '3D'
   });
   map.getCenter();

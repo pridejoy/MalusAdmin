@@ -170,6 +170,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** 重置vue路由 */
   function resetVueRoutes() {
+    console.log('重置vue路由');
     removeRouteFns.forEach(fn => fn());
     removeRouteFns.length = 0;
   }
@@ -246,7 +247,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     const home = data.data?.home || 'home';
 
     handleConstantAndAuthRoutes();
-
+    console.log('3. 设置主页', home);
     setRouteHome(home);
 
     handleUpdateRootRouteRedirect(home);
@@ -257,13 +258,13 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /** 处理常量和身份验证路由 */
   function handleConstantAndAuthRoutes() {
     const allRoutes = [...constantRoutes.value, ...authRoutes.value];
-    console.log('该用户的路由信息', allRoutes);
+
     const sortRoutes = sortRoutesByOrder(allRoutes);
 
     const vueRoutes = getAuthVueRoutes(sortRoutes);
 
     resetVueRoutes();
-
+    console.log('该用户的路由信息+将路由添加到vue路由器', vueRoutes);
     addRoutesToVueRouter(vueRoutes);
 
     getGlobalMenus(sortRoutes);
@@ -293,7 +294,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * Update root route redirect when auth route mode is dynamic
+   * 当身份验证路由模式为动态时更新根路由重定向
    *
    * @param redirectKey Redirect route key
    */

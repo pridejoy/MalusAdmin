@@ -11,7 +11,5 @@ global using Newtonsoft.Json.Serialization;
 global using Swashbuckle.AspNetCore.Swagger;
 global using Swashbuckle.AspNetCore.SwaggerUI;
 
-
-
 global using MalusAdmin.Common;
 global using MalusAdmin.WebApi.Filter;

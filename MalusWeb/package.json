@@ -49,6 +49,7 @@
     "@antv/g2": "5.1.19",
     "@better-scroll/core": "2.5.1",
     "@iconify/vue": "4.1.2",
+    "@microsoft/signalr": "^8.0.0",
     "@sa/axios": "workspace:*",
     "@sa/color": "workspace:*",
     "@sa/hooks": "workspace:*",

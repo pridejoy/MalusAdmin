@@ -82,13 +82,14 @@ export function useRouterPush(inSetup = true) {
 
   /** Redirect from login */
   async function redirectFromLogin() {
-    const redirect = route.value.query?.redirect as string;
+    // const redirect = route.value.query?.redirect as string;
 
-    if (redirect) {
-      routerPush(redirect);
-    } else {
-      toHome();
-    }
+    // if (redirect) {
+    //   routerPush(redirect);
+    // } else {
+    //   toHome();
+    // }
+    toHome();
   }
 
   return {

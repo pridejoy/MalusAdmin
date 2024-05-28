@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MalusAdmin.Common\MalusAdmin.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entity\Business\" />
+  </ItemGroup>
+
 </Project>

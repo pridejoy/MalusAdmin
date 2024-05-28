@@ -86,7 +86,7 @@ namespace MalusAdmin.Servers
                 UserPermiss=button
             };
 
-            _TokenService.RemoveCheckToken(tokenData.UserId);
+            //_TokenService.RemoveCheckToken(tokenData.UserId);
             string UserToken = _TokenService.GenerateToken(_HttpContext.HttpContext, tokenData);
              
 
@@ -181,10 +181,10 @@ namespace MalusAdmin.Servers
              
             //获取所有的菜单权限
             var menutree =  _sysUserRep.Context.Queryable<TSysMenu>()
-                .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x=>(object)x).ToArray());
+                .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x=>(object)x).ToArray()) ;
 
-            //当用户为1的时候，设置为超级管理官
-            if (TokenInfo.User.UserId == 1)
+            //超级管理官
+            if (TokenInfo.User.IsSuperAdmin)
             {
                 menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                 .ToTree(x => x.Children, x => x.ParentId, 0);

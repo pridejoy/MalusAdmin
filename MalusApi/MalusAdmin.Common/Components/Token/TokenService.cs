@@ -122,7 +122,11 @@ namespace MalusAdmin.Common
         {
             tokeninfo.LoginTime = DateTime.Now;
             tokeninfo.ExpireTime= DateTime.Now.AddMinutes(expiresTime);
-            _cacheService.Add(Constant.Cache.UserToken  + token,  tokeninfo, new TimeSpan(1, 0, 0));
+            if (tokeninfo.UserId>0)
+            {
+                _cacheService.Add(Constant.Cache.UserToken + token, tokeninfo, new TimeSpan(1, 0, 0));
+            }
+            
         }
 
         /// <summary>

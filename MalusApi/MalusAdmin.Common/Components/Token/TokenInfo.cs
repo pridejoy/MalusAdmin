@@ -11,6 +11,9 @@ namespace MalusAdmin.Common.Components.Token
     /// </summary>
     public static class TokenInfo
     {
-        public static TokenData?  User { get; set; } = new TokenData();
+        /// <summary>
+        /// 当前
+        /// </summary>
+        public static TokenData  User { get; set; } = new TokenData();
     }
 }

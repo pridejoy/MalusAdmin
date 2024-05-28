@@ -14,7 +14,7 @@ async function renderMap() {
   if (!domRef.value) return;
   // eslint-disable-next-line no-new
   new TMap.Map(domRef.value, {
-    center: new TMap.LatLng(39.98412, 116.307484),
+    center: new TMap.LatLng(121.46917, 31.224361),
     zoom: 11,
     viewMode: '3D'
   });

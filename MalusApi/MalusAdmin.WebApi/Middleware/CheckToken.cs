@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http;
+using System.Text;
 using MalusAdmin.Common.Components.Token;
 using MalusAdmin.Entity;
 using MalusAdmin.Servers.SysRolePermission;
@@ -33,24 +34,35 @@ namespace MalusAdmin.WebApi
             // 获取当前请求的Endpoint
             var endpoint = context.GetEndpoint();
 
-            if (endpoint is null) await _next(context);
+            if (endpoint is null) 
+            { 
+                await _next(context);
+                return; 
+            };
             // 检查Endpoint的元数据中是否包含AllowAnonymous特性
-            var hasAllowAnonymous = endpoint?.Metadata
+            var hasAllowAnonymous = endpoint.Metadata
                 .OfType<IAllowAnonymous>()
-                .Any()??false;
+                .Any(); 
 
+            var tokenService = App.GetService<ITokenService>();
             if (hasAllowAnonymous)
             {
                 // 动作允许匿名访问 
-             
+                await _next(context);
+                return;
+            }
+            var hasHub = endpoint.DisplayName.Contains("hub");
+
+            if (hasHub)
+            {
+                var token = context.Request.Query["token"];
+                var User = tokenService.ParseTokenByCaChe(token);
+                if (User.UserId <=0) await Res401Async(context);
             }
             else
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
-                {
-                    // 动作不允许匿名访问,，权限校验
-                    var tokenService = App.GetService<ITokenService>();
-                    
+                {  
                     // 进行身份校验
                     if (!tokenService.CheckToken(context))
                     {

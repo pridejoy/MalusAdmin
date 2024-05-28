@@ -15,7 +15,7 @@ async function renderMap() {
   await load(true);
   if (!domRef.value) return;
   const map = new BMap.Map(domRef.value);
-  const point = new BMap.Point(114.05834626586915, 22.546789983033168);
+  const point = new BMap.Point(121.46917, 31.224361);
   map.centerAndZoom(point, 15);
   map.enableScrollWheelZoom();
 }
