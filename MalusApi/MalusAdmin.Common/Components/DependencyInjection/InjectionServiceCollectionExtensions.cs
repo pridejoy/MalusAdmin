@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class InjectionServiceCollectionExtensions
 {
     /// <summary>
-    /// 自动注册程序集内以 Service 结尾的服务
+    ///     自动注册程序集内以 Service 结尾的服务
     /// </summary>
     /// <param name="services"></param>
     /// <param name="dllNames"></param>
@@ -21,8 +16,8 @@ public static class InjectionServiceCollectionExtensions
 
         // 获取程序集内名称以 Service 结尾的 class
         var serviceTypes = assemblies.SelectMany(a => a.GetTypes())
-                                     .Where(t => t.Name.EndsWith("Service") && t.IsClass && !t.IsAbstract)
-                                     .Distinct();
+            .Where(t => t.Name.EndsWith("Service") && t.IsClass && !t.IsAbstract)
+            .Distinct();
 
         // 遍历，将服务默认注册为瞬态服务（生命周期：Transient）
         foreach (var serviceType in serviceTypes)
@@ -33,9 +28,7 @@ public static class InjectionServiceCollectionExtensions
             // 注册所有实现的实例（!Problem：子类也会实现父类的接口，可能导致父类对接口的实现被覆盖）
             var serviceInterfaces = serviceType.GetInterfaces();
             foreach (var serviceInterface in serviceInterfaces)
-            {
                 RegistrationType(services, serviceInterface, serviceType);
-            }
         }
 
         return services;
@@ -50,10 +43,7 @@ public static class InjectionServiceCollectionExtensions
             var autoInjection = serviceType.GetCustomAttribute<AutoInjectionAttribute>();
             if (autoInjection != null)
             {
-                if (!autoInjection.AutoRegister)
-                {
-                    return;
-                }
+                if (!autoInjection.AutoRegister) return;
                 lifecyleType = autoInjection.Lifecycle;
             }
 

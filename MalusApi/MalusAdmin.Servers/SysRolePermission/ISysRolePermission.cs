@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MalusAdmin.Servers.SysRolePermission;
 
-namespace MalusAdmin.Servers.SysRolePermission
+public interface ISysRolePermission
 {
-    public  interface  ISysRolePermission
-    {
-        Task<bool> HavePermission(string RouthPath);
-    }
+    Task<bool> HavePermission(string RouthPath);
 }

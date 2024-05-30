@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MalusAdmin.Servers.WeatherForecast;
 
-namespace MalusAdmin.Servers.WeatherForecast
+public interface IWeatherForecastService
 {
-    public interface IWeatherForecastService
-    {
-       Task<IEnumerable<WeatherForecast>> Get();
+    Task<IEnumerable<WeatherForecast>> Get();
 
-        Task CreatClass(string str);
-    }
+    Task CreatClass(string str);
+
+    Task CreatTable();
 }

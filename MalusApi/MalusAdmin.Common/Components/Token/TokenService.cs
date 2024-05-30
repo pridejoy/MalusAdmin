@@ -1,152 +1,135 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MalusAdmin.Common.Components.Token;
-using Microsoft.AspNetCore.Http;
-using SqlSugar;
+﻿namespace MalusAdmin.Common;
 
-namespace MalusAdmin.Common
+public class TokenService : ITokenService
 {
-    public class TokenService : ITokenService
+    private readonly ICacheService _cacheService;
+
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+    /// <summary>
+    ///     30分钟内无操作
+    /// </summary>
+    private readonly int expiresTime = 30;
+
+    /// <summary>
+    ///     请求头的前缀
+    /// </summary>
+    private readonly string tokenTag = "Token";
+
+    public TokenService(ICacheService cacheService, IHttpContextAccessor httpContextAccessor)
     {
-        readonly ICacheService _cacheService; 
+        _cacheService = cacheService;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        readonly IHttpContextAccessor _HttpContext;
-    
-        public TokenService(ICacheService cacheService,IHttpContextAccessor httpContext)
+    /// <summary>
+    ///     检查登录的Token
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    public bool CheckToken(HttpContext httpContext)
+    {
+        var token = GetToken(httpContext);
+        if (string.IsNullOrWhiteSpace(token)) return false;
+
+        _ = ParseTokenByCaChe(token);
+
+        //此处可增加逻辑，限制单个账号只允许登录一个
+
+        return true;
+    }
+
+    /// <summary>
+    ///     生成一个token，并缓存
+    /// </summary>
+    /// <param name="tokenData"></param>
+    /// <returns></returns>
+    public string GenerateToken(TokenData tokenData)
+    {
+        var token = Guid.NewGuid().ToString("N");
+        AddCheckToken(token, tokenData);
+        return token;
+    }
+
+    public void RemoveToken(HttpContext httpContext)
+    {
+        var token = GetToken(httpContext);
+        _cacheService.Remove(token);
+    }
+
+    public TokenData ParseToken(HttpContext httpContext)
+    {
+        var token = GetToken(httpContext);
+        if (string.IsNullOrEmpty(token)) return new TokenData();
+        return ParseTokenByCaChe(token);
+    }
+
+    /// <summary>
+    ///     刷新Token
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    public string RefreshToken(HttpContext httpContext)
+    {
+        var token = GetToken(httpContext);
+        var tokenData = ParseToken(httpContext);
+        if (tokenData != null)
         {
-            _cacheService = cacheService;
-            _HttpContext = httpContext;
+            tokenData.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
+            _cacheService.Set(Constant.Cache.UserToken + token, tokenData, 60 * 60);
         }
 
+        return token;
+    }
 
-        static string tokenTag = "Token";
+    /// <summary>
+    ///     添加登录的缓存
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="tokeninfo"></param>
+    public void AddCheckToken(string token, TokenData tokeninfo)
+    {
+        tokeninfo.LoginTime = DateTime.Now;
+        tokeninfo.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
+        if (tokeninfo.UserId > 0) _cacheService.Set(Constant.Cache.UserToken + token, tokeninfo, 60 * 60);
+    }
 
-        /// <summary>
-        /// 30分钟内无操作
-        /// </summary>
-        static int expiresTime = 30; 
+    /// <summary>
+    ///     移除缓存
+    /// </summary>
+    /// <param name="userId"></param>
+    public void RemoveCheckToken(int userId)
+    {
+        _cacheService.Remove(Constant.Cache.UserToken + userId);
+    }
 
-        //public TokenData TokenDataInfo => ;
+    /// <summary>
+    ///     通过缓存解析Token
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public TokenData ParseTokenByCaChe(string token)
+    {
+        var userinfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
+        if (userinfo == null) throw new Exception("解析用户信息失败");
+        return userinfo;
+    }
 
-        
-        /// <summary>
-        /// 获取heard的token
-        /// </summary>
-        /// <param name="httpContext"></param>
-        /// <returns></returns>
-        /// <exception cref="SystemException"></exception>
-        private string GetToken(HttpContext httpContext)
-        {
-            if (httpContext == null) throw new SystemException("参数错误");
-            if (httpContext.Request.Headers.ContainsKey(tokenTag))
-            {
-                return httpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ", "");
-            }
-            return "";
-        }
+    //public TokenData TokenDataInfo => ;
 
-        /// <summary>
-        /// 检查登录的Token
-        /// </summary>
-        /// <param name="httpContext"></param>
-        /// <returns></returns>
-        public bool CheckToken(HttpContext httpContext)
-        {
-            string token = GetToken(httpContext);
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                return false;
-            }
 
-            TokenData tokenData = ParseTokenByCaChe(token);
-            if (tokenData == null)
-            {
-                return false;
-            } 
-            //此处可增加逻辑，限制单个账号只允许登录一个
-       
-            return true;
-        }
-
-        /// <summary>
-        /// 生成一个toekn，并缓存
-        /// </summary>
-        /// <param name="httpContext"></param>
-        /// <param name="tokenData"></param>
-        /// <returns></returns>
-        public string GenerateToken(HttpContext httpContext, TokenData tokenData)
-        {
-            string token = Guid.NewGuid().ToString("N");
-            AddCheckToken(token,tokenData); 
-            return token;
-        }
-
-        public void RemoveToken(HttpContext httpContext)
-        {
-            string token = GetToken(httpContext);
-            _cacheService.Remove(token);
-        }
-
-        public TokenData ParseToken(HttpContext httpContext)
-        {
-            string token = GetToken(httpContext);
-            if (string.IsNullOrEmpty(token)) return new TokenData(); 
-            return ParseTokenByCaChe(token);
-        }
-
-        /// <summary>
-        /// 刷新Token 
-        /// </summary>
-        /// <param name="httpContext"></param>
-        /// <returns></returns>
-        public string RefreshToken(HttpContext httpContext)
-        {
-            string token = GetToken(httpContext);
-            TokenData tokenData = ParseToken(httpContext);
-            if (tokenData != null)
-            {
-                tokenData.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
-                _cacheService.Add(Constant.Cache.UserToken + token, tokenData, new TimeSpan(1, 0, 0));
-            }
-            return token;
-        }
-
-        /// <summary>
-        /// 添加登录的缓存
-        /// </summary>
-        /// <param name="userId"></param>
-        public void AddCheckToken(string token,TokenData tokeninfo)
-        {
-            tokeninfo.LoginTime = DateTime.Now;
-            tokeninfo.ExpireTime= DateTime.Now.AddMinutes(expiresTime);
-            if (tokeninfo.UserId>0)
-            {
-                _cacheService.Add(Constant.Cache.UserToken + token, tokeninfo, new TimeSpan(1, 0, 0));
-            }
-            
-        }
-
-        /// <summary>
-        /// 移除缓存
-        /// </summary>
-        /// <param name="userId"></param>
-        public void RemoveCheckToken(int userId)
-        {
-            _cacheService.Remove(Constant.Cache.UserToken  + userId);
-        }
-
-        /// <summary>
-        /// 通过缓存解析Token
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public TokenData ParseTokenByCaChe(string token)
-        {
-            return _cacheService.Get<TokenData>(Constant.Cache.UserToken + token) ?? new TokenData(); ;
-        }
-
+    /// <summary>
+    ///     获取heard的token
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    /// <exception cref="SystemException"></exception>
+    private string GetToken(HttpContext httpContext)
+    {
+        if (httpContext == null) throw new SystemException("参数错误");
+        if (httpContext.Request.Headers.ContainsKey(tokenTag))
+            return httpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ", "");
+        return "";
     }
 }

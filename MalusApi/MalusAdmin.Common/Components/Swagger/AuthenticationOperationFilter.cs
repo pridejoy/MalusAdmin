@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 public class AuthenticationOperationFilter : IOperationFilter
 {
     /// <summary>
-    /// Swagger UI 的配置代码。具体来说，它获取当前正在执行的 API 方法的所有自定义属性，
-    /// 然后检查其中是否有任何 "AuthorizeAttribute" 属性。
+    ///     Swagger UI 的配置代码。具体来说，它获取当前正在执行的 API 方法的所有自定义属性，
+    ///     然后检查其中是否有任何 "AuthorizeAttribute" 属性。
     /// </summary>
     /// <param name="operation"></param>
     /// <param name="context"></param>
@@ -21,9 +16,7 @@ public class AuthenticationOperationFilter : IOperationFilter
         var declaringTypeAttributes = context.MethodInfo.DeclaringType?.GetCustomAttributes(true);
 
         if (declaringTypeAttributes != null)
-        {
             actionAttributes = actionAttributes.Concat(declaringTypeAttributes).ToArray();
-        }
 
         var authorizeAttributes = actionAttributes.OfType<AuthorizeAttribute>();
 
@@ -38,9 +31,9 @@ public class AuthenticationOperationFilter : IOperationFilter
             };
             operation.Security = new List<OpenApiSecurityRequirement>
             {
-                new OpenApiSecurityRequirement()
+                new()
                 {
-                    [ bearerScheme ] = Array.Empty<string>()
+                    [bearerScheme] = Array.Empty<string>()
                 }
             };
         }

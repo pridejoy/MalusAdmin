@@ -10,15 +10,13 @@ public class SimpleAuthorizationHandler : AuthorizationHandler<SimpleAuthorizati
     }
 
     /// <summary>
-    /// 处理满足简单授权需求的授权逻辑。
+    ///     处理满足简单授权需求的授权逻辑。
     /// </summary>
     /// <param name="context">授权上下文。</param>
     /// <param name="requirement">授权需求。</param>
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, SimpleAuthorizationRequirement requirement)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
+        SimpleAuthorizationRequirement requirement)
     {
-        if (await _checker.IsGrantedAsync(context.User, requirement.Name))
-        {
-            context.Succeed(requirement);
-        }
+        if (await _checker.IsGrantedAsync(context.User, requirement.Name)) context.Succeed(requirement);
     }
 }

@@ -3,11 +3,11 @@ using SqlSugar;
 namespace MalusAdmin.Entity;
 
 /// <summary>
-///     t_sys_dic_data:数据库映射类
+///     t_sys_webapi_log:数据库映射类
 /// </summary>
 [Serializable]
-[SugarTable("t_sys_dict_data")]
-public class TSysDictData
+[SugarTable("t_sys_webapi_log")]
+public class TSysWebApiLog
 {
 	/// <summary>
 	///     主键
@@ -61,46 +61,50 @@ public class TSysDictData
     public bool SysIsDelete { get; set; }
 
 	/// <summary>
-	///     类型ID
+	///     部门ID
 	/// </summary>
-	[SugarColumn(ColumnName = "TypeId")]
-    public int TypeId { get; set; }
+	[SugarColumn(ColumnName = "DeptId")]
+    public int DeptId { get; set; }
 
 	/// <summary>
-	///     字典名称
+	///     用户ID
 	/// </summary>
-	[SugarColumn(ColumnName = "Name")]
-    public string Name { get; set; }
+	[SugarColumn(ColumnName = "UserId")]
+    public int UserId { get; set; }
 
 	/// <summary>
-	///     字典值1
+	///     IP
 	/// </summary>
-	[SugarColumn(ColumnName = "Value1")]
-    public string Value1 { get; set; }
+	[SugarColumn(ColumnName = "IP")]
+    public string IP { get; set; }
 
 	/// <summary>
-	///     字典值2
+	///     路由
 	/// </summary>
-	[SugarColumn(ColumnName = "Value2")]
-    public string Value2 { get; set; }
+	[SugarColumn(ColumnName = "Path")]
+    public string Path { get; set; }
 
 	/// <summary>
-	///     字典值3
+	///     传入参数
 	/// </summary>
-	[SugarColumn(ColumnName = "Value3")]
-    public string Value3 { get; set; }
+	[SugarColumn(ColumnName = "Input")]
+    public string Input { get; set; }
 
 	/// <summary>
-	///     是否启用
-	///     默认值:1
+	///     传入时间
 	/// </summary>
-	[SugarColumn(ColumnName = "Status", DefaultValue = "1")]
-    public bool Status { get; set; }
+	[SugarColumn(ColumnName = "InTime")]
+    public string InTime { get; set; }
 
 	/// <summary>
-	///     顺序
-	///     默认值:0
+	///     传出参数
 	/// </summary>
-	[SugarColumn(ColumnName = "Sort", DefaultValue = "0")]
-    public int Sort { get; set; }
+	[SugarColumn(ColumnName = "Output")]
+    public string Output { get; set; }
+
+	/// <summary>
+	///     传出时间
+	/// </summary>
+	[SugarColumn(ColumnName = "OutTime")]
+    public string OutTime { get; set; }
 }

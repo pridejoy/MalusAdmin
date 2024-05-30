@@ -2,10 +2,10 @@
 
 public class SimpleAuthorizationRequirement : IAuthorizationRequirement
 {
-    public string Name { get; set; }
-
     public SimpleAuthorizationRequirement(string name)
     {
         Name = name;
     }
+
+    public string Name { get; set; }
 }

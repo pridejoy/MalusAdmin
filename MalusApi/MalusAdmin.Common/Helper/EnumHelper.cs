@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 public static class EnumHelper
 {
-
     /// <summary>
-    /// 获取枚举类型的所有值和它们的描述
+    ///     获取枚举类型的所有值和它们的描述
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
@@ -24,19 +17,17 @@ public static class EnumHelper
                 typeof(DescriptionAttribute), false);
             descriptions[value] = attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
+
         return descriptions;
     }
 
     public static string GetDescription(Enum value)
     {
-        if (value == null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
+        if (value == null) throw new ArgumentNullException(nameof(value));
 
-        FieldInfo fieldInfo = value.GetType().GetField(value.ToString());
+        var fieldInfo = value.GetType().GetField(value.ToString());
 
-        DescriptionAttribute attribute = Attribute.GetCustomAttribute(fieldInfo, typeof(DescriptionAttribute)) as DescriptionAttribute;
+        var attribute = Attribute.GetCustomAttribute(fieldInfo, typeof(DescriptionAttribute)) as DescriptionAttribute;
 
         return attribute == null ? value.ToString() : attribute.Description;
     }

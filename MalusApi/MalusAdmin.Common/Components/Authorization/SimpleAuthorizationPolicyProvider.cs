@@ -5,10 +5,11 @@ public class SimpleAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvi
 {
     public SimpleAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
         : base(options)
-    { }
+    {
+    }
 
     /// <summary>
-    /// 异步获取默认授权策略。
+    ///     异步获取默认授权策略。
     /// </summary>
     /// <returns>默认授权策略。</returns>
     public new Task<AuthorizationPolicy> GetDefaultPolicyAsync()
@@ -20,17 +21,14 @@ public class SimpleAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvi
     }
 
     /// <summary>
-    /// 根据策略名称异步获取授权策略。
+    ///     根据策略名称异步获取授权策略。
     /// </summary>
     /// <param name="policyName">策略名称。</param>
     /// <returns>授权策略，如果未找到则返回 null。</returns>
     public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
         var policy = await base.GetPolicyAsync(policyName);
-        if (policy != null)
-        {
-            return policy;
-        }
+        if (policy != null) return policy;
 
         if (!string.IsNullOrEmpty(policyName))
         {

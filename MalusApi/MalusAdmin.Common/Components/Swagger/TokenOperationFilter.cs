@@ -1,59 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks; 
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace MalusAdmin.Common
+namespace MalusAdmin.Common;
+
+public class TokenOperationFilter : IOperationFilter
 {
-    public class TokenOperationFilter : IOperationFilter
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        var authorizeAttributes = context.MethodInfo.DeclaringType.GetCustomAttributes(true)
+            .Union(context.MethodInfo.GetCustomAttributes(true))
+            .OfType<AuthorizeAttribute>();
+
+        if (authorizeAttributes.Any())
         {
-            var authorizeAttributes = context.MethodInfo.DeclaringType.GetCustomAttributes(true)
-                .Union(context.MethodInfo.GetCustomAttributes(true))
-                .OfType<AuthorizeAttribute>();
+            operation.Parameters ??= new List<OpenApiParameter>();
 
-            if (authorizeAttributes.Any())
+            operation.Parameters.Add(new OpenApiParameter
             {
-                operation.Parameters ??= new List<OpenApiParameter>();
-
-                operation.Parameters.Add(new OpenApiParameter
+                Name = "Token",
+                In = ParameterLocation.Header,
+                Description = "Access Token",
+                Required = true, // 根据你的需求设定是否为必需
+                Schema = new OpenApiSchema
                 {
-                    Name = "Token",
-                    In = ParameterLocation.Header,
-                    Description = "Access Token",
-                    Required = true, // 根据你的需求设定是否为必需
-                    Schema = new OpenApiSchema
-                    {
-                        Type = "string"
-                    }
-                });
+                    Type = "string"
+                }
+            });
 
-                //var bearerScheme = new OpenApiSecurityScheme
-                //{
-                //    Scheme = "Bearer",
-                //    Reference = new OpenApiReference
-                //    {
-                        
-                //        Type = ReferenceType.Header,
-                //        Id = "Token"
-                //    }
-                //};
+            //var bearerScheme = new OpenApiSecurityScheme
+            //{
+            //    Scheme = "Bearer",
+            //    Reference = new OpenApiReference
+            //    {
 
-                //operation.Security = new List<OpenApiSecurityRequirement>
-                //{
-                //    new OpenApiSecurityRequirement()
-                //    {
-                //        [ bearerScheme ] = Array.Empty<string>()
-                //    }
-                //};
-            }
+            //        Type = ReferenceType.Header,
+            //        Id = "Token"
+            //    }
+            //};
 
-
+            //operation.Security = new List<OpenApiSecurityRequirement>
+            //{
+            //    new OpenApiSecurityRequirement()
+            //    {
+            //        [ bearerScheme ] = Array.Empty<string>()
+            //    }
+            //};
         }
     }
 }

@@ -56,7 +56,7 @@ const receiveNotice = (msg: any) => {
 };
 onMounted(async () => {
   console.log('开始');
-  signalR.on('messageReceived', receiveNotice);
+  signalR.on('PublicNotice', receiveNotice);
 });
 </script>
 
