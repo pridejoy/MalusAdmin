@@ -6,6 +6,8 @@ import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { signalR } from '@/plugins/signalR';
+import { useRouterPush } from '@/hooks/common/router';
+import { useAuthStore } from '@/store/modules/auth';
 import HorizontalMenu from '../global-menu/base-menu.vue';
 import GlobalLogo from '../global-logo/index.vue';
 import GlobalBreadcrumb from '../global-breadcrumb/index.vue';
@@ -13,6 +15,7 @@ import GlobalSearch from '../global-search/index.vue';
 import { useMixMenuContext } from '../../context';
 import ThemeButton from './components/theme-button.vue';
 import UserAvatar from './components/user-avatar.vue';
+const { routerPushByKey } = useRouterPush();
 defineOptions({
   name: 'GlobalHeader'
 });
@@ -29,6 +32,7 @@ interface Props {
 defineProps<Props>();
 const notification = useNotification();
 const appStore = useAppStore();
+const authStore = useAuthStore();
 const themeStore = useThemeStore();
 const routeStore = useRouteStore();
 const { isFullscreen, toggle } = useFullscreen();
@@ -54,9 +58,21 @@ const receiveNotice = (msg: any) => {
     keepAliveOnHover: true
   });
 };
+const ForceOffline = (msg: any) => {
+  console.log(msg);
+  notification.info({
+    content: '提示:您被强制下线',
+    meta: msg,
+    duration: 2500,
+    keepAliveOnHover: true
+  });
+  authStore.resetStore();
+  routerPushByKey('login');
+};
 onMounted(async () => {
   console.log('开始');
   signalR.on('PublicNotice', receiveNotice);
+  signalR.on('ForceOffline', ForceOffline);
 });
 </script>
 

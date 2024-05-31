@@ -8,3 +8,4 @@ export * from './sysmenu';
 export * from './sysrolemenu';
 export * from './sysdata';
 export * from './syslog';
+export * from './online-user';

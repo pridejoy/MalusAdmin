@@ -23,15 +23,22 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
+        function ForceOffline(msg){
+            console.log("收到消息",msg);
+        }
+        
         // 定义一个客户端类来处理与Hub的通信
         var connection = new signalR.HubConnectionBuilder()
-            .withUrl("/hub?token=32c48288fe844df3bece897ee67e093b") // 将"/yourHubUrl"替换为你的SignalR Hub的URL
+            .withUrl("/hub?token=9b1bce5610314678ab22008a86d26e09") // 将"/yourHubUrl"替换为你的SignalR Hub的URL
             .configureLogging(signalR.LogLevel.Information) // 可以设置日志级别
             .build();
 
         // 处理连接打开事件 
+        //定义一个方法，共后端调用
         connection.on("ReceiveMessage", messageReceived);
-
+        
+        connection.on("ForceOffline", ForceOffline);
+        
         // 连接到Hub
         connection.start().catch(function (err) {
             console.error(err.toString());
@@ -57,6 +64,7 @@
         function sendMessage() {
             var user = document.getElementById('userInput').value;
             var message = document.getElementById('messageInput').value;
+            // 调用后端的方法
             connection.invoke("SendMessage", user, message).catch(function (err) {
                 return console.error(err.toString());
             });

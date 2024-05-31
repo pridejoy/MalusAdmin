@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Microsoft SQL Server (JetBrains)" uuid="de1f571e-e9e7-4696-b720-862e57b61cdc">
+      <driver-ref>sqlserver.jb</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
+      <jdbc-url>Data Source=42.192.86.8;Initial Catalog=MalusAdmin;User ID=sa;Password=Vtu0NJ1qVtu0NJ1q;Integrated Security=False;Column Encryption Setting=Enabled</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

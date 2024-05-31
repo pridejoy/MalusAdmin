@@ -104,6 +104,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'function_online-user',
+        path: '/function/online-user',
+        component: 'view.function_online-user',
+        meta: {
+          title: 'function_online-user',
+          i18nKey: 'route.function_online-user'
+        }
+      },
+      {
         name: 'function_oplog',
         path: '/function/oplog',
         component: 'view.function_oplog',

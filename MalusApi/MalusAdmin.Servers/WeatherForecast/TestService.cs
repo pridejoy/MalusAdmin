@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Servers.Hub;
+﻿using MalusAdmin.Repository.Entity;
+using MalusAdmin.Servers.Hub;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
@@ -14,11 +15,12 @@ public class TestService
     private readonly ISqlSugarClient _db;
     private readonly IHttpContextAccessor _httpContext;
     private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
-
+    private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
     public TestService(ISqlSugarClient db, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,
-        IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext)
+        IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext,SqlSugarRepository<TSysOnlineUser> rep)
 
     {
+        _rep = rep;
         _db = db;
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         _onlineUserHubContext = onlineUserHubContext;
@@ -77,5 +79,23 @@ public class TestService
         var a = _onlineUserHubContext.Clients;
 
         return "";
+    }
+    
+    public async Task<bool> InsterTable()
+    {
+        var onlineUser = new TSysOnlineUser
+        {
+            ConnectionId = "1",
+            UserId = 0,
+            UserName ="",
+            RealName = "",
+            Time = DateTime.Now,
+            Ip = "",
+            Browser = "123",
+            Os = "123"
+        };
+        await _rep.InsertAsync(onlineUser);
+
+        return true;
     }
 }

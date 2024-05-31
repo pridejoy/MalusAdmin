@@ -7,18 +7,20 @@ namespace MalusAdmin.Servers.Hub;
 
 public class OnlineUserHub : Hub<IOnlineUserHub>
 {
-    private readonly ICacheService _cacheService;
+    private readonly ICacheService _cacheService; 
     private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
     private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
 
-    public OnlineUserHub(ICacheService cacheService, IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext)
+    public OnlineUserHub(ICacheService cacheService, IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext,
+        SqlSugarRepository<TSysOnlineUser> rep)
     {
+        _rep = rep;
         _cacheService = cacheService;
         _onlineUserHubContext = onlineUserHubContext;
     }
 
     /// <summary>
-    ///     当用户连接
+    /// 当用户连接
     /// </summary>
     /// <returns></returns>
     public override async Task OnConnectedAsync()
@@ -43,16 +45,17 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
             Ip = httpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(),
             Browser = client.UA.Family + client.UA.Major,
             Os = client.OS.Family + client.OS.Major
-        };
+        }; 
+        
         await _rep.InsertAsync(onlineUser);
-
+        
         _cacheService.Set(Constant.Cache.OnlineUser + Context.ConnectionId, onlineUser, 60 * 60);
 
         await _onlineUserHubContext.Clients.All.PublicNotice($"{user.UserName},上线了");
     }
 
     /// <summary>
-    ///     用户断开连接
+    /// 用户断开连接
     /// </summary>
     /// <returns></returns>
     public override async Task OnDisconnectedAsync(Exception? exception)
@@ -66,7 +69,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     }
 
     /// <summary>
-    ///     定义一个方法供客户端调用
+    /// 定义一个方法供客户端调用
     /// </summary>
     /// <param name="username"></param>
     /// <param name="message"></param>
@@ -80,12 +83,12 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     }
 
     /// <summary>
-    ///     强制下线
+    /// 强制下线
     /// </summary>
     /// <param name="connectionId"></param>
     /// <returns></returns>
     public async Task ForceOffline(string connectionId)
     {
-        await Clients.Client(connectionId).ForceOffline("强制下线");
+        await _onlineUserHubContext.Clients.Client(connectionId).ForceOffline("强制下线"); 
     }
 }

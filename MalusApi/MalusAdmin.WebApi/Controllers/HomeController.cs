@@ -91,4 +91,10 @@ public class HomeController : ApiControllerBase
     {
         return ResultCode.Success.JsonR(_testService.GetOnlineUser());
     }
+    
+    [HttpGet]
+    public  JsonR InsterTable()
+    {
+        return ResultCode.Success.JsonR( _testService.InsterTable().Result);
+    }
 }
