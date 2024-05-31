@@ -1,0 +1,1 @@
+﻿namespace MalusAdmin.Servers.SysMenu;
