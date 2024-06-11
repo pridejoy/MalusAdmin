@@ -14,9 +14,17 @@ public static class CacheSetup
     {
         // 根据情况，启用 Redis 或 DistributedMemoryCache
         if (AppSettings.Redis.Enabled)
+        {
             services.AddSingleton<ICacheService, RedisCacheService>();
+        }
         else
+        {
+            // 注册 IMemoryCache 服务
+            services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheService>();
+        }
+           
+      
         //更多的缓存实现方式 
         return services;
     }
