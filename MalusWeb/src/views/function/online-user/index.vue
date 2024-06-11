@@ -19,26 +19,7 @@ const activate = (row: sysLogPageRecord) => {
   activedata.value = row;
 };
 
-const forceuser = (row: sysLogPageRecord) => {
-  ForceOffline({ connectionId: row.connectionId }).then(res => {
-    // console.log('请求成功', res);
-    if (res.data) {
-      window.$message?.success('成功');
-    }
-  });
-};
-
-const sendmsg = () => {
-  SendMsgToOne({
-    connectionId: activedata.value?.connectionId,
-    msg: msg.value
-  }).then(res => {
-    if (res.data) {
-      window.$message?.success('发送成功');
-    }
-  });
-};
-const { data, columns, loading, pagination, mobilePagination } = useTable({
+const { data, columns, loading, mobilePagination, resetSearchParams } = useTable({
   apiFn: getOnlineUser,
   apiParams: {
     pageNo: 1,
@@ -100,6 +81,25 @@ const { data, columns, loading, pagination, mobilePagination } = useTable({
   ]
 });
 
+const sendmsg = () => {
+  SendMsgToOne({
+    connectionId: activedata.value?.connectionId,
+    msg: msg.value
+  }).then(res => {
+    if (res.data) {
+      window.$message?.success('发送成功');
+    }
+  });
+};
+
+const forceuser = (row: sysLogPageRecord) => {
+  ForceOffline({ connectionId: row.connectionId }).then(res => {
+    // console.log('请求成功', res);
+    if (res.data) {
+      resetSearchParams();
+    }
+  });
+};
 onMounted(async () => {
   try {
     // console.log('res');
