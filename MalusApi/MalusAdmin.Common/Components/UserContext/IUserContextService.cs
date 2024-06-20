@@ -8,8 +8,8 @@ public interface IUserContextService
 {
 
     /// <summary>
-    ///   获取当前用户的token信息
+    ///   获取当前用户的TokenData信息
     /// </summary>
     /// <returns></returns>
-    TokenData GetUserToken();
+    TokenData GetUserTokenData();
 }

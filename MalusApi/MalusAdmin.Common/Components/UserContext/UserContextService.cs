@@ -18,7 +18,7 @@ public class UserContextService : IUserContextService
         _tokenService = tokenService;
     }
 
-    public TokenData GetUserToken()
+    public TokenData GetUserTokenData()
     {
         var tokenData = _tokenService.ParseToken(_httpContextAccessor.HttpContext);
         return tokenData;
