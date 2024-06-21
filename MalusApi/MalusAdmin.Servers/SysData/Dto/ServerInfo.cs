@@ -3,7 +3,7 @@
 namespace MalusAdmin.Servers.SysData.Dto;
 
 /// <summary>
-///     服务器信息类
+/// 服务器信息类
 /// </summary>
 public class ServerInfo
 {

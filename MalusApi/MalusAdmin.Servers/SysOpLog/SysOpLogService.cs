@@ -15,7 +15,7 @@ public class SysOpLogService
 
 
     /// <summary>
-    ///     日志列表分页
+    /// 日志列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

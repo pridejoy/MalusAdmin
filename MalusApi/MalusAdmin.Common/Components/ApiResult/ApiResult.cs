@@ -3,7 +3,7 @@
 namespace MalusAdmin.Common;
 
 /// <summary>
-///     定义具体的返回状态码
+/// 定义具体的返回状态码
 /// </summary>
 public enum ResultCode
 {
@@ -15,7 +15,7 @@ public enum ResultCode
 #region 接口返回的Json对象
 
 /// <summary>
-///     JsonR 接口返回的Json对象
+/// JsonR 接口返回的Json对象
 /// </summary>
 [Serializable]
 public class JsonR
@@ -28,17 +28,17 @@ public class JsonR
     }
 
     /// <summary>
-    ///     返回码
+    /// 返回码
     /// </summary>
     public int code { get; set; }
 
     /// <summary>
-    ///     返回说明
+    /// 返回说明
     /// </summary>
     public string message { get; set; }
 
     /// <summary>
-    ///     返回数据体 可为空
+    /// 返回数据体 可为空
     /// </summary>
     public object body { get; set; }
 }
@@ -58,17 +58,17 @@ public class JsonR<T>
     }
 
     /// <summary>
-    ///     返回码
+    /// 返回码
     /// </summary>
     public int code { get; set; }
 
     /// <summary>
-    ///     返回说明
+    /// 返回说明
     /// </summary>
     public string message { get; set; }
 
     /// <summary>
-    ///     返回数据体 可为空
+    /// 返回数据体 可为空
     /// </summary>
     public T body { get; set; }
 }
@@ -78,7 +78,7 @@ public class JsonR<T>
 public static class Tools
 {
     /// <summary>
-    ///     根据枚举返回对应的状态码
+    /// 根据枚举返回对应的状态码
     /// </summary>
     /// <param name="Code"></param>
     /// <param name="obj"></param>

@@ -3,12 +3,12 @@
 public class RoleListOut
 {
     /// <summary>
-    ///     id
+    /// id
     /// </summary>
     public int Id { get; set; }
 
     /// <summary>
-    ///     角色名称
+    /// 角色名称
     /// </summary>
     public string Name { get; set; }
 }

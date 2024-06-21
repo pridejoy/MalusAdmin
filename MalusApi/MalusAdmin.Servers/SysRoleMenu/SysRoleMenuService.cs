@@ -4,7 +4,7 @@ using Models;
 namespace MalusAdmin.Servers.SysRoleMenu;
 
 /// <summary>
-///     角色菜单服务
+/// 角色菜单服务
 /// </summary>
 public class SysRoleMenuService
 {
@@ -20,7 +20,7 @@ public class SysRoleMenuService
 
 
     /// <summary>
-    ///     角色菜单获取
+    /// 角色菜单获取
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -33,7 +33,7 @@ public class SysRoleMenuService
     }
 
     /// <summary>
-    ///     角色菜单设置
+    /// 角色菜单设置
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

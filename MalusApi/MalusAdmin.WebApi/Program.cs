@@ -1,6 +1,7 @@
 using MalusAdmin.Servers.Hub;
 using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysUserButtonPermiss;
+using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace MalusAdmin.WebApi;

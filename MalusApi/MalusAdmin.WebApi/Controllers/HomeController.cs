@@ -3,7 +3,7 @@
 namespace MalusAdmin.WebApi.Controllers;
 
 /// <summary>
-///     测试服务
+/// 测试服务
 /// </summary>
 [AllowAnonymous]
 public class HomeController : ApiControllerBase
@@ -21,7 +21,7 @@ public class HomeController : ApiControllerBase
     }
 
     /// <summary>
-    ///     统一返回
+    /// 统一返回
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -31,7 +31,7 @@ public class HomeController : ApiControllerBase
     }
 
     /// <summary>
-    ///     查询天气情况
+    /// 查询天气情况
     /// </summary>
     /// <returns></returns>
     [HttpPost]
@@ -42,7 +42,7 @@ public class HomeController : ApiControllerBase
 
 
     /// <summary>
-    ///     生成实体测试
+    /// 生成实体测试
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -52,7 +52,7 @@ public class HomeController : ApiControllerBase
     }
 
     /// <summary>
-    ///     快速生成表
+    /// 快速生成表
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -62,7 +62,7 @@ public class HomeController : ApiControllerBase
     }
 
     /// <summary>
-    ///     获取所有路由信息
+    /// 获取所有路由信息
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -73,7 +73,7 @@ public class HomeController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取远程请求的ip
+    /// 获取远程请求的ip
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -83,7 +83,7 @@ public class HomeController : ApiControllerBase
     }
 
     /// <summary>
-    ///     获取远程请求的ip
+    /// 获取远程请求的ip
     /// </summary>
     /// <returns></returns>
     [HttpGet]

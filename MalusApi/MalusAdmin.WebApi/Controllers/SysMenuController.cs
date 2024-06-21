@@ -4,7 +4,7 @@ using MalusAdmin.Servers.SysMenu;
 namespace MalusAdmin.WebApi.Controllers;
 
 /// <summary>
-///     菜单服务
+/// 菜单服务
 /// </summary>
 public class SysMenuController : ApiControllerBase
 {
@@ -17,7 +17,7 @@ public class SysMenuController : ApiControllerBase
 
 
     /// <summary>
-    ///     分页查询
+    /// 分页查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]

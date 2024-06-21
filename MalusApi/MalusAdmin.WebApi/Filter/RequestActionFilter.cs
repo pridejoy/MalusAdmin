@@ -9,7 +9,7 @@ using UAParser;
 namespace MalusAdmin.WebApi.Filter;
 
 /// <summary>
-///     禁用请求记录过滤器
+/// 禁用请求记录过滤器
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DisabledRequestRecordAttribute : Attribute
@@ -17,7 +17,7 @@ public class DisabledRequestRecordAttribute : Attribute
 }
 
 /// <summary>
-///     请求日志拦截
+/// 请求日志拦截
 /// </summary>
 public class RequestActionFilter : IAsyncActionFilter
 {

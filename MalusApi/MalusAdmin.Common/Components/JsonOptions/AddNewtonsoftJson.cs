@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 public static class JsonCollectionExtensions
 {
     /// <summary>
-    ///     添加默认 Json 序列化/反序列化 配置
+    /// 添加默认 Json 序列化/反序列化 配置
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

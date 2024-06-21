@@ -5,8 +5,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 public class AuthenticationOperationFilter : IOperationFilter
 {
     /// <summary>
-    ///     Swagger UI 的配置代码。具体来说，它获取当前正在执行的 API 方法的所有自定义属性，
-    ///     然后检查其中是否有任何 "AuthorizeAttribute" 属性。
+    /// Swagger UI 的配置代码。具体来说，它获取当前正在执行的 API 方法的所有自定义属性，
+    /// 然后检查其中是否有任何 "AuthorizeAttribute" 属性。
     /// </summary>
     /// <param name="operation"></param>
     /// <param name="context"></param>

@@ -8,12 +8,12 @@ public class TokenService : ITokenService
 
 
     /// <summary>
-    ///     30分钟内无操作
+    /// 30分钟内无操作
     /// </summary>
     private readonly int expiresTime = 30;
 
     /// <summary>
-    ///     请求头的前缀
+    /// 请求头的前缀
     /// </summary>
     private readonly string tokenTag = "Token";
 
@@ -24,7 +24,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     检查登录的Token
+    /// 检查登录的Token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
@@ -42,7 +42,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     生成一个token，并缓存
+    /// 生成一个token，并缓存
     /// </summary>
     /// <param name="tokenData"></param>
     /// <returns></returns>
@@ -67,7 +67,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     刷新Token
+    /// 刷新Token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
@@ -85,7 +85,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     添加登录的缓存
+    /// 添加登录的缓存
     /// </summary>
     /// <param name="token"></param>
     /// <param name="tokeninfo"></param>
@@ -97,7 +97,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     移除缓存
+    /// 移除缓存
     /// </summary>
     /// <param name="userId"></param>
     public void RemoveCheckToken(int userId)
@@ -106,7 +106,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     通过缓存解析Token
+    /// 通过缓存解析Token
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
@@ -121,7 +121,7 @@ public class TokenService : ITokenService
 
 
     /// <summary>
-    ///     获取heard的token
+    /// 获取heard的token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>

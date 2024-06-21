@@ -8,7 +8,7 @@ using ICacheService = MalusAdmin.Common.ICacheService;
 namespace MalusAdmin.Servers.SysUserButtonPermiss;
 
 /// <summary>
-///     用户按钮权限
+/// 用户按钮权限
 /// </summary>
 public class SysRolePermissionService : ISysRolePermission
 {
@@ -29,7 +29,7 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    ///     是否有访问当前接口的权限
+    /// 是否有访问当前接口的权限
     /// </summary>
     /// <returns></returns>
     public async Task<bool> HavePermission(string RouthPath)
@@ -43,7 +43,7 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    ///     获取接口所有的路由信息
+    /// 获取接口所有的路由信息
     /// </summary>
     /// <param name="values"></param>
     /// <returns></returns>
@@ -92,7 +92,7 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    ///     删除用户所有的权限信息
+    /// 删除用户所有的权限信息
     /// </summary>
     /// <returns></returns>
     public async Task<bool> DeleteUserButtonPermiss(int RoleId)
@@ -101,7 +101,7 @@ public class SysRolePermissionService : ISysRolePermission
     }
 
     /// <summary>
-    ///     为用户添加按钮权限
+    /// 为用户添加按钮权限
     /// </summary>
     /// <returns></returns>
     public async Task<bool> AddUserButtonPermiss(UpdateRoleButtonIn Input)

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 public static class InjectionServiceCollectionExtensions
 {
     /// <summary>
-    ///     自动注册程序集内以 Service 结尾的服务
+    /// 自动注册程序集内以 Service 结尾的服务
     /// </summary>
     /// <param name="services"></param>
     /// <param name="dllNames"></param>

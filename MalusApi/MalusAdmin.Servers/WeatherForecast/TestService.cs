@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace MalusAdmin.Servers.WeatherForecast;
 
 /// <summary>
-///     测试服务
+/// 测试服务
 /// </summary>
 public class TestService
 {
@@ -27,7 +27,7 @@ public class TestService
     }
 
     /// <summary>
-    ///     获取接口所有的路由信息
+    /// 获取接口所有的路由信息
     /// </summary>
     /// <returns></returns>
     public async Task<dynamic> GetAllButton()

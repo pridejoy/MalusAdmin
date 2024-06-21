@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyModel;
 public static class AssemblyHelper
 {
     /// <summary>
-    ///     获取项目程序集（排除系统程序集、NuGet包）
+    /// 获取项目程序集（排除系统程序集、NuGet包）
     /// </summary>
     /// <returns></returns>
     public static IList<Assembly> GetAssemblies()
@@ -25,9 +25,9 @@ public static class AssemblyHelper
     }
 
     /// <summary>
-    ///     将程序集加载到 AssemblyLoadContext.Default 中，并且获取这个程序集。
-    ///     （这个方法，主要是为了解决程序集没有被加载的情况）.
-    ///     Load the assemblies into AssemblyLoadContext.Default, and get it.
+    /// 将程序集加载到 AssemblyLoadContext.Default 中，并且获取这个程序集。
+    /// （这个方法，主要是为了解决程序集没有被加载的情况）.
+    /// Load the assemblies into AssemblyLoadContext.Default, and get it.
     /// </summary>
     /// <param name="dllNames">程序集的名称，如：Test 或 Test.dll </param>
     /// <returns></returns>
@@ -59,9 +59,9 @@ public static class AssemblyHelper
     }
 
     /// <summary>
-    ///     将程序集加载到 AssemblyLoadContext.Default 中，并且获取这个程序集。
-    ///     （这个方法，主要是为了解决程序集没有被加载的情况）.
-    ///     Load the assemblies into AssemblyLoadContext.Default, and get it.
+    /// 将程序集加载到 AssemblyLoadContext.Default 中，并且获取这个程序集。
+    /// （这个方法，主要是为了解决程序集没有被加载的情况）.
+    /// Load the assemblies into AssemblyLoadContext.Default, and get it.
     /// </summary>
     /// <param name="dllNames">程序集的名称，如：Test 或 Test.dll </param>
     /// <returns></returns>
@@ -71,7 +71,7 @@ public static class AssemblyHelper
     }
 
     /// <summary>
-    ///     获取所有特性的接口
+    /// 获取所有特性的接口
     /// </summary>
     /// <returns></returns>
     public static List<string> GetAllowAnonymousEndpoints()
