@@ -67,7 +67,11 @@ public class CheckToken
                 if (User == null) await Res401Async(context);
                 if (User.ExpireTime < DateTime.Now) await Res401Async(context);
                 //更新静态的用户信息
-                TokenInfo.User = User;
+                // 将用户信息存储在HttpContext中
+                context.Items["User"] = User;
+
+                //使用的时候 var user = HttpContext.Items["User"] as TokenData;
+                //var user = context.Items["User"] as TokenData;
 
                 // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
                 if (endpoint is RouteEndpoint routeEndpoint && !User.IsSuperAdmin)
