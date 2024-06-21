@@ -68,9 +68,8 @@ public class CheckToken
                 tokenService.RefreshToken(context);
 
                 var User = tokenService.ParseToken(context);
-                if (User == null) await Res401Async(context);
-                if (User.ExpireTime < DateTime.Now) await Res401Async(context);
-                //更新静态的用户信息
+                //if (User == null) await Res401Async(context);
+                //if (User.ExpireTime < DateTime.Now) await Res401Async(context)//移动到了CheckToken方法;
                 // 将用户信息存储在HttpContext中
                 context.Items["User"] = User;
 
