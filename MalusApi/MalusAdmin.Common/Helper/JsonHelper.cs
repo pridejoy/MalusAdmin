@@ -3,7 +3,7 @@
 public static class JsonHelper
 {
     /// <summary>
-    ///     字符串序列化对象
+    /// 字符串序列化对象
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="obj"></param>
@@ -14,7 +14,7 @@ public static class JsonHelper
     }
 
     /// <summary>
-    ///     对象转Json
+    /// 对象转Json
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>

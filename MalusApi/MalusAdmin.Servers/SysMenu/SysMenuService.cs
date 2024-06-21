@@ -5,7 +5,7 @@ using Mapster;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-///     菜单服务
+/// 菜单服务
 /// </summary>
 public class SysMenuService
 {
@@ -21,7 +21,7 @@ public class SysMenuService
 
 
     /// <summary>
-    ///     菜单树状查询
+    /// 菜单树状查询
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -41,7 +41,7 @@ public class SysMenuService
 
 
     /// <summary>
-    ///     添加
+    /// 添加
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(MenuAddandUpIn input)
@@ -54,7 +54,7 @@ public class SysMenuService
 
 
     /// <summary>
-    ///     删除
+    /// 删除
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -67,7 +67,7 @@ public class SysMenuService
     }
 
     /// <summary>
-    ///     更新菜单
+    /// 更新菜单
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -81,7 +81,7 @@ public class SysMenuService
     }
 
     /// <summary>
-    ///     用户菜单
+    /// 用户菜单
     /// </summary>
     /// <returns></returns>
     public async Task<List<RoleListOut>> GetUserMenu()
@@ -93,7 +93,7 @@ public class SysMenuService
 
 
     /// <summary>
-    ///     全部菜单
+    /// 全部菜单
     /// </summary>
     /// <returns></returns>
     public async Task<List<RoleListOut>> GetAllMenu()

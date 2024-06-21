@@ -30,7 +30,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    ///     用户登录
+    /// 用户登录
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -72,7 +72,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    ///     获取用户的信息
+    /// 获取用户的信息
     /// </summary>
     /// <returns></returns>
     public async Task<GetUserInfoOut> GetUserInfo()
@@ -88,7 +88,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    ///     用户列表分页
+    /// 用户列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -103,7 +103,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    ///     添加用户
+    /// 添加用户
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(UserAddAndUpIn input)
@@ -117,7 +117,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    ///     删除用户
+    /// 删除用户
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -130,7 +130,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    ///     更新用户
+    /// 更新用户
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -145,7 +145,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    ///     获取登录用户的菜单权限
+    /// 获取登录用户的菜单权限
     /// </summary>
     /// <returns></returns>
     public async Task<UserMenuOut> GetUserMenu()
@@ -173,7 +173,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    ///     私有方法，转化前端路由
+    /// 私有方法，转化前端路由
     /// </summary>
     /// <param name="menu"></param>
     /// <returns></returns>
@@ -195,7 +195,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    ///     私有方法.获取当前角色的路由
+    /// 私有方法.获取当前角色的路由
     /// </summary>
     /// <param name="menutree"></param>
     /// <param name="menuid"></param>

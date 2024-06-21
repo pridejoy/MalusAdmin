@@ -4,7 +4,7 @@ using MalusAdmin.Servers.SysRoleMenu.Dto;
 namespace MalusAdmin.WebApi.Controllers;
 
 /// <summary>
-///     角色菜单服务
+/// 角色菜单服务
 /// </summary>
 public class SysRoleMenuController : ApiControllerBase
 {
@@ -16,7 +16,7 @@ public class SysRoleMenuController : ApiControllerBase
     }
 
     /// <summary>
-    ///     角色菜单查询
+    /// 角色菜单查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -27,7 +27,7 @@ public class SysRoleMenuController : ApiControllerBase
     }
 
     /// <summary>
-    ///     添加用户
+    /// 添加用户
     /// </summary>
     /// <returns></returns>
     [HttpPost]

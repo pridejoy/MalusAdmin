@@ -4,7 +4,7 @@ using MalusAdmin.Servers.SysUserButtonPermiss;
 namespace MalusAdmin.WebApi.Controllers;
 
 /// <summary>
-///     按钮权限服务
+/// 按钮权限服务
 /// </summary>
 public class SysRolePermissionController : ApiControllerBase
 {
@@ -17,7 +17,7 @@ public class SysRolePermissionController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取所有按钮列表
+    /// 获取所有按钮列表
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -28,7 +28,7 @@ public class SysRolePermissionController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取角色按钮
+    /// 获取角色按钮
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -39,7 +39,7 @@ public class SysRolePermissionController : ApiControllerBase
     }
 
     /// <summary>
-    ///     设置角色按钮
+    /// 设置角色按钮
     /// </summary>
     /// <returns></returns>
     [HttpPost]

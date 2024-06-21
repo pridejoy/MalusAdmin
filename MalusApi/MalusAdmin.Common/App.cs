@@ -13,8 +13,8 @@ public static class App
     public static IHostEnvironment Environment => Instance.GetRequiredService<IHostEnvironment>();
 
     /// <summary>
-    ///     获取服务
-    ///     最好只获取单例注入的服务
+    /// 获取服务
+    /// 最好只获取单例注入的服务
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

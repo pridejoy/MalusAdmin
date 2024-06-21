@@ -3,17 +3,17 @@
 public class UserMenu
 {
     /// <summary>
-    ///     名字
+    /// 名字
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    ///     路由路径
+    /// 路由路径
     /// </summary>
     public string Path { get; set; }
 
     /// <summary>
-    ///     组件
+    /// 组件
     /// </summary>
     public string Component { get; set; }
 

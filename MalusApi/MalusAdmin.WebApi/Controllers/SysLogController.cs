@@ -5,7 +5,7 @@ using MalusAdmin.WebApi.Filter;
 namespace MalusAdmin.WebApi.Controllers;
 
 /// <summary>
-///     禁用日志记录
+/// 禁用日志记录
 /// </summary>
 [DisabledRequestRecord]
 public class SysLogController : ApiControllerBase
@@ -19,7 +19,7 @@ public class SysLogController : ApiControllerBase
 
 
     /// <summary>
-    ///     日志分页
+    /// 日志分页
     /// </summary>
     /// <returns></returns>
     [HttpGet]

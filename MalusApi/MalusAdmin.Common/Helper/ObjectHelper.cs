@@ -3,7 +3,7 @@
 public static class ObjectHelper
 {
     /// <summary>
-    ///     检查 Object 是否为 NULL
+    /// 检查 Object 是否为 NULL
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
