@@ -66,7 +66,7 @@ public class Program
 
 
         builder.Services.AddSingleton<ITokenService, TokenService>();
-        builder.Services.AddScoped<IUserContextService, UserContextService>();
+        builder.Services.AddTransient<IUserContextService, UserContextService>();
         builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
 
         // ÃÌº”øÁ”Ú÷ß≥÷

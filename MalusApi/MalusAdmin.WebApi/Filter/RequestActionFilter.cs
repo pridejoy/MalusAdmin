@@ -24,13 +24,15 @@ public class RequestActionFilter : IAsyncActionFilter
     private readonly ISqlSugarClient _db;
 
     private readonly ITokenService _tokenService;
+    private readonly IUserContextService _userContext;
     //private readonly IEventPublisher _publisher;
     //private readonly ICurrentUserService _currentUser; 
 
-    public RequestActionFilter(ISqlSugarClient sqldb, ITokenService tokenService)
+    public RequestActionFilter(ISqlSugarClient sqldb, ITokenService tokenService, IUserContextService userContextService)
     {
         _db = sqldb;
         _tokenService = tokenService;
+        _userContext = userContextService;
     }
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -72,8 +74,8 @@ public class RequestActionFilter : IAsyncActionFilter
 
         var entity = new TSysLogVis
         {
-            Name = TokenInfo.User?.UserId.ToString() ?? "",
-            Account = TokenInfo.User?.UserAccount ?? "",
+            Name = _userContext.TokenData?.UserId.ToString() ?? "",
+            Account = _userContext.TokenData?.UserAccount ?? "",
             Success = true,
             Ip = httpContext.GetRequestIPv4(),
             Location = httpRequest.GetRequestUrlAddress(),

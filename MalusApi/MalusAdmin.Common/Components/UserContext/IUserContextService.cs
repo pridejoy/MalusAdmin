@@ -6,10 +6,10 @@ namespace MalusAdmin.Common;
 /// </summary>
 public interface IUserContextService
 {
-
     /// <summary>
-    ///   获取当前用户的TokenData信息
+    ///   当前用户的TokenData信息
     /// </summary>
     /// <returns></returns>
-    TokenData GetUserTokenData();
+    TokenData TokenData { get; }
+
 }
