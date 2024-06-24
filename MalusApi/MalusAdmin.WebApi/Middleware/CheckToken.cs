@@ -59,14 +59,17 @@ public class CheckToken
             {
                 // 进行身份校验
                 if (!tokenService.CheckToken(context))
+                {
                     await Res401Async(context);
-                else
-                    tokenService.RefreshToken(context);
+                    return;
+                }
+
+                //刷新用户的token过期时间
+                tokenService.RefreshToken(context);
 
                 var User = tokenService.ParseToken(context);
-                if (User == null) await Res401Async(context);
-                if (User.ExpireTime < DateTime.Now) await Res401Async(context);
-                //更新静态的用户信息
+                //if (User == null) await Res401Async(context);
+                //if (User.ExpireTime < DateTime.Now) await Res401Async(context)//移动到了CheckToken方法;
                 // 将用户信息存储在HttpContext中
                 context.Items["User"] = User;
 
@@ -110,7 +113,7 @@ public class CheckToken
     {
         context.Response.StatusCode = 401;
         context.Response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-        var rspResult = ResultCode.Fail.JsonR("登录已过期，请重新登录");
+        var rspResult = ResultCode.Fail.JsonR("提供的令牌无效或已过期");
         await context.Response.WriteAsync(rspResult.ToJson());
     }
 }

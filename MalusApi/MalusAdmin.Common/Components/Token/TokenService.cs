@@ -33,7 +33,8 @@ public class TokenService : ITokenService
         var token = GetToken(httpContext);
         if (string.IsNullOrWhiteSpace(token)) return false;
 
-        _ = ParseTokenByCaChe(token);
+        var tokenData = ParseTokenByCaChe(token);
+        if(tokenData == null || tokenData.ExpireTime < DateTime.Now) return false;
 
         //此处可增加逻辑，限制单个账号只允许登录一个
 
@@ -112,7 +113,7 @@ public class TokenService : ITokenService
     public TokenData ParseTokenByCaChe(string token)
     {
         var userinfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
-        if (userinfo == null) throw new Exception("解析用户信息失败");
+        //if (userinfo == null) throw new Exception("解析用户信息失败");
         return userinfo;
     }
 

@@ -8,6 +8,7 @@ namespace MalusAdmin.Common;
 /// </summary>
 public class UserContextService : IUserContextService
 {
+    public TokenData TokenData { get;}
 
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITokenService _tokenService;
@@ -16,12 +17,7 @@ public class UserContextService : IUserContextService
     {
         _httpContextAccessor = httpContextAccessor;
         _tokenService = tokenService;
+        TokenData =  _tokenService.ParseToken(_httpContextAccessor.HttpContext);
     }
-
-    public TokenData GetUserTokenData()
-    {
-        var tokenData = _tokenService.ParseToken(_httpContextAccessor.HttpContext);
-        return tokenData;
-    }
-
 }
+
