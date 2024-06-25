@@ -61,53 +61,32 @@ MalusAdmin 提供了以下演示和文档资源：
 - SqlSugar 文档：[https://www.donet5.com](https://www.donet5.com/Home/Doc?typeId=1215)
 
 ## 演示
-
-<table>
-    <tr>
-        <td><img src="./doc/images/malus1.png" alt=""/></td>
-        <td><img src="./doc/images/malus2.png" alt=""/></td> 
-    </tr>
-    <tr>
-        <td><img src="./doc/images/malus3.png" alt=""/></td>
-        <td><img src="./doc/images/malus4.png" alt=""/></td> 
-    </tr>
-    <tr>
-        <td><img src="./doc/images/malus5.png" alt=""/></td>
-        <td><img src="./doc/images/malus6.png" alt=""/></td>  
-    </tr>
-      <tr>
-        <td><img src="./doc/images/malus7.png" alt=""/></td>
-        <td><img src="./doc/images/malus8.png" alt=""/></td>  
-    </tr>
-      <tr>
-        <td><img src="./doc/images/malus9.png" alt=""/></td>
-        <td><img src="./doc/images/malus10.png" alt=""/></td>  
-    </tr>
-
-</table>
-
-## 手机演示
-
 直接手机端上完美的运行，一套代码三端俱全。
 
-<table>
-    <tr>
-        <td><img src="./doc/images/443e64138bacb6deb3fcf27ca163c9a.jpg" alt=""/></td>
-        <td><img src="./doc/images/95084fd62cc92f610b95f4831e4743a.jpg" alt=""/></td> 
-    </tr>
-    <tr>
-        <td><img src="./doc/images/b66f7dfe10870656878a573e2c8931f.jpg" alt=""/></td>
-        <td><img src="./doc/images/1abaa087f16b5a3d074cfbd373161ac.jpg" alt=""/></td> 
-    </tr>
-    <tr>
-          <td><img src="./doc/images/957e9f5757f1691e21286eefcfc2922.jpg" alt=""/></td> 
-        <td><img src="./doc/images/9e47ef5edb4f352ed31b80212820301.jpg" alt=""/></td>  
-    </tr>
-   
+![](./doc/images/malus9.png)
 
-</table>
-
+| ![Home](./doc/images/malus1.png) | ![Home-2](./doc/images/malus2.png) |
+|--------------------------------|--------------------------------|
+| ![Home](./doc/images/malus3.png) | ![Home-2](./doc/images/malus4.png) | 
+| ![Home](./doc/images/malus5.png) | ![Home-2](./doc/images/malus6.png) | 
+| ![Home](./doc/images/malus7.png) | ![Home-2](./doc/images/malus8.png) | 
+| ![Home](./doc/images/malus10.png) | ![Home-2](./doc/images/malus2.png) | 
+| ![Home](./doc/images/443e64138bacb6deb3fcf27ca163c9a.jpg) | ![Home-2](./doc/images/95084fd62cc92f610b95f4831e4743a.jpg) | 
+| ![Home](./doc/images/b66f7dfe10870656878a573e2c8931f.jpg) | ![Home-2](./doc/images/1abaa087f16b5a3d074cfbd373161ac.jpg) |
+| ![Home](./doc/images/957e9f5757f1691e21286eefcfc2922.jpg) | ![Home-2](./doc/images/9e47ef5edb4f352ed31b80212820301.jpg) |
  
+ 
+## Contributors
+
+Thanks for all their contributions!
+
+<a href="https://github.com/Pridejoy/MalusAdmin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Pridejoy/MalusAdmin" alt="contributors" />
+</a>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Pridejoy/MalusAdmin&type=Date)](https://star-history.com/#Pridejoy/MalusAdmin&Date)
 
  ## 交流
 
@@ -118,8 +97,13 @@ MalusAdmin 提供了以下演示和文档资源：
 ## 开源
 
 **源于开源，回归开源**
-
+* 感谢SqlSugar 开源的[SqlSugar](https://www.donet5.com/Home/Doc) 
 * 感谢Soybean Admin开源的[Soybean Admin](https://gitee.com/honghuangdc/soybean-admin) 
 * 感谢SqlSugar开源的[SqlSugar](https://www.donet5.com/Home/Doc?typeId=1215) 
 * 感谢Naive UI 开源的[Naive UI](https://www.naiveui.com/zh-CN/os-theme)
 * 感谢 柒愿 开源的[QiAdmin](https://gitee.com/zero202101/QiAdmin)
+ 
+
+## License
+
+[MIT](LICENSE)
