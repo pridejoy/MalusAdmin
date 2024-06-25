@@ -15,13 +15,16 @@ public class SysRolePermissionService : ISysRolePermission
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly ICacheService _cacheService;
     private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep; // 仓储 
+    private readonly IUserContextService _userContext;//
 
     public SysRolePermissionService(SqlSugarRepository<TSysRolePermission> sysuserpermissionRep,
-        ICacheService cacheService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
+        ICacheService cacheService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,
+        IUserContextService userContextService)
     {
         _cacheService = cacheService;
         _sysuserpermissionRep = sysuserpermissionRep;
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
+        _userContext = userContextService;
     }
 
 
@@ -33,7 +36,7 @@ public class SysRolePermissionService : ISysRolePermission
     {
         // 获取当前用户-角色 的接口权限   
         var UserRolePer = new List<TSysRolePermission>();
-        TokenInfo.User.UserRolesId.ForEach(
+        _userContext.TokenData.UserRolesId.ForEach(
             async x => { UserRolePer.AddRange(await GetRoleButtonPermiss(x)); });
         return UserRolePer.Any(x => x.UserPermiss == RouthPath);
     }

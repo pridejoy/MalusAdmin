@@ -15,11 +15,12 @@ public class SysUserService : ISysUserService
     private readonly SysRolePermissionService _sysRolePermissionService;
     private readonly SqlSugarRepository<TSysUser> _sysUserRep; // 仓储
     private readonly ITokenService _TokenService;
+    private readonly IUserContextService _userContext;
 
     public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
         ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
         SysMenuService sysMenuService, SysRolePermissionService sysRolePermissionService,
-        IHttpContextAccessor httpContext)
+        IHttpContextAccessor httpContext , IUserContextService userContextService)
     {
         _sysUserRep = sysUserRep;
         _TokenService = tokenService;
@@ -27,6 +28,7 @@ public class SysUserService : ISysUserService
         _sysRoleMenuService = sysRoleMenuService;
         _sysMenuService = sysMenuService;
         _sysRolePermissionService = sysRolePermissionService;
+        _userContext = userContextService;
     }
 
     /// <summary>
@@ -79,10 +81,10 @@ public class SysUserService : ISysUserService
     {
         return new GetUserInfoOut
         {
-            userId = TokenInfo.User.UserId,
-            userName = TokenInfo.User.UserName,
-            roles = TokenInfo.User.UserRolesId.Select(x => x.ToString()).ToList(),
-            buttons = TokenInfo.User.UserPermiss
+            userId = _userContext.TokenData.UserId,
+            userName = _userContext.TokenData.UserName,
+            roles = _userContext.TokenData.UserRolesId.Select(x => x.ToString()).ToList(),
+            buttons = _userContext.TokenData.UserPermiss
         };
     }
 
@@ -124,7 +126,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Delete(int userId)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
-        if (entity == null) ResultCode.Fail.JsonR("为找到当前账号");
+        if (entity == null) ResultCode.Fail.JsonR("未找到当前账号");
         entity.SysIsDelete = true;
         return await _sysUserRep.UpdateAsync(entity) > 0;
     }
@@ -137,7 +139,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Update(UserAddAndUpIn input)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) ResultCode.Fail.JsonR("为找到当前账号");
+        if (entity == null) ResultCode.Fail.JsonR("未找到当前账号");
 
         var sysUser = input.Adapt<TSysUser>();
         return await _sysUserRep.AsUpdateable(sysUser).IgnoreColumns(true).ExecuteCommandAsync() > 0;
@@ -153,14 +155,14 @@ public class SysUserService : ISysUserService
         var Out = new UserMenuOut();
 
         ////获取当前用户的菜单权限
-        var menuid = await _sysRoleMenuService.RoleUserMenu(TokenInfo.User.UserRolesId);
+        var menuid = await _sysRoleMenuService.RoleUserMenu(_userContext.TokenData.UserRolesId);
 
         //获取所有的菜单权限
         var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
             .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
 
         //超级管理官
-        if (TokenInfo.User.IsSuperAdmin)
+        if (_userContext.TokenData.IsSuperAdmin)
             menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                 .ToTree(x => x.Children, x => x.ParentId, 0);
         var res = new List<UserMenu>();
