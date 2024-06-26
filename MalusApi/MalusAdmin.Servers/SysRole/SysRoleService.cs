@@ -43,7 +43,7 @@ public class SysRoleService
     public async Task<bool> Add(RoleAddandUpIn input)
     {
         var isExist = await _sysRoleRep.Where(x => x.Name == input.Name).AnyAsync();
-        if (isExist) ResultCode.Fail.JsonR("已存在当前角色");
+        if (isExist) throw new Exception("已存在当前角色");
         var entity = input.Adapt<TSysRole>();
         return await _sysRoleRep.InsertReturnIdentityAsync(entity) > 0;
     }
@@ -57,7 +57,7 @@ public class SysRoleService
     public async Task<bool> Delete(int id)
     {
         var entity = await _sysRoleRep.FirstOrDefaultAsync(u => u.Id == id);
-        if (entity == null) ResultCode.Fail.JsonR("为找到当前角色");
+        if (entity == null) throw new Exception("未找到当前角色");
         entity.SysIsDelete = true;
         return await _sysRoleRep.UpdateAsync(entity) > 0;
     }
@@ -70,7 +70,7 @@ public class SysRoleService
     public async Task<bool> Update(RoleAddandUpIn input)
     {
         var entity = await _sysRoleRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) ResultCode.Fail.JsonR("为找到当前账号");
+        if (entity == null) throw new Exception("未找到当前账号");
 
         var sysRole = input.Adapt<TSysRole>();
         return await _sysRoleRep.AsUpdateable(sysRole).IgnoreColumns(true).ExecuteCommandAsync() > 0;

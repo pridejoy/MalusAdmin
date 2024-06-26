@@ -47,6 +47,6 @@ public class SysRolePermissionController : ApiControllerBase
     [ReadOnly]
     public async Task<JsonR> AddUserButtonPermiss(UpdateRoleButtonIn Input)
     {
-        return ResultCode.Success.JsonR(await _service.AddUserButtonPermiss(Input));
+        return ResultCode.Success.JsonR(await _service.AddRoleButtonPermiss(Input));
     }
 }

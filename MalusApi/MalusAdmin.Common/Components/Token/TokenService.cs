@@ -53,10 +53,14 @@ public class TokenService : ITokenService
         return token;
     }
 
+    /// <summary>
+    /// 移除当前登录用户的Token缓存
+    /// </summary>
+    /// <param name="httpContext"></param>
     public void RemoveToken(HttpContext httpContext)
     {
         var token = GetToken(httpContext);
-        _cacheService.Remove(token);
+        RemoveCheckToken(Constant.Cache.UserToken + token);
     }
 
     public TokenData ParseToken(HttpContext httpContext)
@@ -100,9 +104,9 @@ public class TokenService : ITokenService
     /// 移除缓存
     /// </summary>
     /// <param name="userId"></param>
-    public void RemoveCheckToken(int userId)
+    public void RemoveCheckToken(string token)
     {
-        _cacheService.Remove(Constant.Cache.UserToken + userId);
+        _cacheService.Remove(Constant.Cache.UserToken + token);
     }
 
     /// <summary>

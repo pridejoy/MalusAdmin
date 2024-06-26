@@ -111,7 +111,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Add(UserAddAndUpIn input)
     {
         var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
-        if (isExist) ResultCode.Fail.JsonR("已存在当前账号");
+        if (isExist) throw new Exception("已存在当前账号");
         var entity = input.Adapt<TSysUser>();
         entity.PassWord = Md5Util.Encrypt(input.PassWord);
         return await _sysUserRep.InsertReturnIdentityAsync(entity) > 0;
@@ -121,13 +121,16 @@ public class SysUserService : ISysUserService
     /// <summary>
     /// 删除用户
     /// </summary>
-    /// <param name="input"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> Delete(int userId)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
-        if (entity == null) ResultCode.Fail.JsonR("未找到当前账号");
+        if (entity == null) throw new Exception("未找到当前账号");
         entity.SysIsDelete = true;
+        //Todo 删除用户缓存
+        
         return await _sysUserRep.UpdateAsync(entity) > 0;
     }
 
@@ -139,7 +142,8 @@ public class SysUserService : ISysUserService
     public async Task<bool> Update(UserAddAndUpIn input)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) ResultCode.Fail.JsonR("未找到当前账号");
+        if (entity == null) throw new Exception("未找到当前账号");
+        //Todo 更新用户缓存
 
         var sysUser = input.Adapt<TSysUser>();
         return await _sysUserRep.AsUpdateable(sysUser).IgnoreColumns(true).ExecuteCommandAsync() > 0;
