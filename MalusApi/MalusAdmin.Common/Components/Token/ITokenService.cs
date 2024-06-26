@@ -10,7 +10,7 @@ public interface ITokenService
     bool CheckToken(HttpContext httpContext);
 
     /// <summary>
-    /// 删除保存的token
+    /// 移除当前登录用户的Token缓存
     /// </summary>
     /// <param name="httpContext"></param>
     void RemoveToken(HttpContext httpContext);
@@ -50,8 +50,13 @@ public interface ITokenService
     /// 删除需要验证的Token
     /// </summary>
     /// <param name="userId"></param>
-    void RemoveCheckToken(int userId);
+    void RemoveCheckToken(string token);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
 
     TokenData ParseTokenByCaChe(string token);
 }

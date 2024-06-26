@@ -92,21 +92,23 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    /// 删除用户所有的权限信息
+    /// 删除角色的所有的权限信息
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> DeleteUserButtonPermiss(int RoleId)
+    public async Task<bool> DeleteRoleButtonPermiss(int RoleId)
     {
-        return await _sysuserpermissionRep.DeleteAsync(x => x.RoleId == RoleId) > 0;
+        await _sysuserpermissionRep.DeleteAsync(x => x.RoleId == RoleId);
+        await _cacheService.RemoveAsync(Constant.Cache.RoleButtonPermiss + RoleId);
+        return true;
     }
 
     /// <summary>
-    /// 为用户添加按钮权限
+    /// 为角色添加按钮权限
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> AddUserButtonPermiss(UpdateRoleButtonIn Input)
+    public async Task<bool> AddRoleButtonPermiss(UpdateRoleButtonIn Input)
     {
-        await DeleteUserButtonPermiss(Input.RoleId);
+        await DeleteRoleButtonPermiss(Input.RoleId);
         var list = new List<TSysRolePermission>();
         Input.PermissionId.ForEach(x =>
         {
@@ -115,8 +117,10 @@ public class SysRolePermissionService : ISysRolePermission
         return await _sysuserpermissionRep.InsertAsync(list) > 0;
     }
 
+    /// <summary>
     /// 获取当前角色按钮权限
     /// </summary>
+    /// <param name="RoleId"></param>
     /// <returns></returns>
     public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
     {
