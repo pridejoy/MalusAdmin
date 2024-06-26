@@ -1,11 +1,12 @@
 ﻿using MalusAdmin.Servers;
 using Microsoft.AspNetCore.Authorization;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 登录服务
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysLoginController : ApiControllerBase
 {
     private readonly SysUserService _sysUserService;

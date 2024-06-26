@@ -1,11 +1,12 @@
 ﻿using MalusAdmin.Servers;
 using MalusAdmin.Servers.SysMenu;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 菜单服务
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysMenuController : ApiControllerBase
 {
     private readonly SysMenuService _service;

@@ -1,11 +1,12 @@
 ﻿using MalusAdmin.Servers;
 using MalusAdmin.Servers.SysUser.Dto;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 用户服务
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysUserController : ApiControllerBase
 {
     private readonly SysUserService _sysUserService;

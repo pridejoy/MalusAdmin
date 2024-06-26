@@ -1,11 +1,12 @@
 ﻿using MalusAdmin.Servers;
 using Microsoft.AspNetCore.Authorization;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 基础服务
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysDataController : ApiControllerBase
 {
     private readonly SysDataService _dataService;

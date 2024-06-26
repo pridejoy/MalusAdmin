@@ -2,12 +2,13 @@
 using MalusAdmin.Servers.SysOpLog.Dto;
 using MalusAdmin.WebApi.Filter;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 禁用日志记录
 /// </summary>
 [DisabledRequestRecord]
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysLogController : ApiControllerBase
 {
     private readonly SysOpLogService _server;

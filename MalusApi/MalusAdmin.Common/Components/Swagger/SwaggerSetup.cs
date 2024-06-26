@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MalusAdmin.Common.Components.Swagger;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -14,12 +16,6 @@ public static class SwaggerSetup
         {
             var basePath = AppContext.BaseDirectory;
 
-            options.SwaggerDoc("v1",
-                new OpenApiInfo
-                {
-                    Title = "在线接口文档",
-                    Version = "v1"
-                });
 
             // 获取根目录下，所有 xml 完整路径（注：并不会获取二级目录下的文件）
             var directoryInfo = new DirectoryInfo(basePath);
@@ -64,6 +60,9 @@ public static class SwaggerSetup
 
         // 注册 Swagger 并添加默认配置
         services.AddSwaggerGen(defaultSetupAction);
+
+        //文档分组
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfigureOptions>();
 
         // 如果有自定义配置
         //if (setupAction != null) services.Configure(setupAction);

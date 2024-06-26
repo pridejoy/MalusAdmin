@@ -3,6 +3,8 @@ using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysUserButtonPermiss;
 using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using SqlSugar;
 
 namespace MalusAdmin.WebApi;
 
@@ -102,9 +104,18 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                // 获取 IApiDescriptionGroupCollectionProvider 服务
+                var provider = App.GetService<IApiDescriptionGroupCollectionProvider>();
+
+                // 遍历所有API描述组
+                foreach (var descriptionGroup in provider.ApiDescriptionGroups.Items)
+                {
+                    // 为每个分组指定Swagger文档和标题
+                    c.SwaggerEndpoint($"/swagger/{descriptionGroup.GroupName}/swagger.json", descriptionGroup.GroupName);
+                }
                 //指定Swagger JSON文件的终结点，用于加载和显示API文档。
-                //需要提供JSON文件的URL和一个可识别的名称
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                // 为默认分组设置端点
+                c.SwaggerEndpoint("/swagger/vdefault/swagger.json", "Default API");
                 //指定swagger文档的启动目录 。默认为swagger
                 //可以通过设置为空字符串来让Swagger UI直接在根路径下进行访问
                 //c.RoutePrefix = string.Empty;

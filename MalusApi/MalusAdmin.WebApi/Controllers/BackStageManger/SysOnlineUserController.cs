@@ -1,10 +1,11 @@
 using MalusAdmin.Servers.SysOnlineUser;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 在线用户
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysOnlineUserController: ApiControllerBase
 {
     private readonly SysOnlineUserService _service;

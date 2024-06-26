@@ -1,11 +1,12 @@
 ﻿using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysRoleMenu.Dto;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 角色菜单服务
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysRoleMenuController : ApiControllerBase
 {
     private readonly SysRoleMenuService _service;

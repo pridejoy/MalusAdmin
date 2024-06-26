@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 测试服务
 /// </summary>
 [AllowAnonymous]
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class HomeController : ApiControllerBase
 {
     private readonly IHttpContextAccessor _httpContextAccessor;

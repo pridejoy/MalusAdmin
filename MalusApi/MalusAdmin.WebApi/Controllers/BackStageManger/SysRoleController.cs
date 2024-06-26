@@ -2,11 +2,12 @@
 using MalusAdmin.Servers.SysRole;
 using MalusAdmin.Servers.SysUser.Dto;
 
-namespace MalusAdmin.WebApi.Controllers;
+namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
 /// 角色服务
 /// </summary>
+[ApiExplorerSettings(GroupName = "后台管理")]
 public class SysRoleController : ApiControllerBase
 {
     private readonly SysRoleService _sysRoleService;
