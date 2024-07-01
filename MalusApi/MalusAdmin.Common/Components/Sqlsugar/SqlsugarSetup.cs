@@ -52,17 +52,13 @@ public static class SqlsugarSetup
                     {
                         if (entityInfo.PropertyName == "SysCreateUser")
                         {
-                            var tokenService = App.GetService<ITokenService>();
-                            var httpContext = App.GetService<IHttpContextAccessor>().HttpContext;
-                            var token = tokenService.ParseToken(httpContext);
-                            if (token != null) entityInfo.SetValue(token.UserId);
+                            var user = App.GetService<IUserContextService>();
+                            if (user != null) entityInfo.SetValue(user.TokenData.UserId);
                         }
                         else if (entityInfo.PropertyName == "DeptId" && entityInfo.EntityName != "TSysUser")
                         {
-                            var tokenService = App.GetService<ITokenService>();
-                            var httpContext = App.GetService<IHttpContextAccessor>().HttpContext;
-                            var token = tokenService.ParseToken(httpContext);
-                            if (token != null)
+                            var user = App.GetService<IUserContextService>();
+                            if (user != null)
                             {
                                 //entityInfo.SetValue(token.UserDept);
                             }
@@ -72,10 +68,8 @@ public static class SqlsugarSetup
                     {
                         if (entityInfo.PropertyName == "SysUpdateUser")
                         {
-                            var tokenService = App.GetService<ITokenService>();
-                            var httpContext = App.GetService<HttpContext>();
-                            var token = tokenService.ParseToken(httpContext);
-                            if (token != null) entityInfo.SetValue(token.UserId);
+                            var user = App.GetService<IUserContextService>();
+                            if (user != null) entityInfo.SetValue(user.TokenData.UserId);
                         }
                     }
                 }
