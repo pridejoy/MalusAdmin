@@ -15,7 +15,7 @@ public class ModelBase
     /// 系统字段-创建时间
     /// 默认值:CURRENT_TIMESTAMP
     /// </summary>
-    [SugarColumn(ColumnName = "SysCreateTime", IsOnlyIgnoreInsert = true)]
+    [SugarColumn(ColumnName = "SysCreateTime", InsertServerTime = true, IsOnlyIgnoreInsert = true)]
     public DateTime SysCreateTime { get; set; }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class ModelBase
     /// 系统字段-修改时间
     /// 默认值:CURRENT_TIMESTAMP
     /// </summary>
-    [SugarColumn(ColumnName = "SysUpdateTime", IsOnlyIgnoreInsert = true)]
+    [SugarColumn(ColumnName = "SysUpdateTime", UpdateServerTime = true, IsOnlyIgnoreInsert = true)]
     public DateTime SysUpdateTime { get; set; }
 
     /// <summary>
