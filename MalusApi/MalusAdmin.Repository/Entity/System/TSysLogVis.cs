@@ -33,7 +33,7 @@ public class TSysLogVis
     /// <summary>
     ///具体消息
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(5000)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = "nvarchar(max)", IsNullable = true)]
     public string Message { get; set; }
 
     /// <summary>
@@ -95,13 +95,13 @@ public class TSysLogVis
     /// <summary>
     ///请求参数
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(5000)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = "nvarchar(max)", IsNullable = true)]
     public string Param { get; set; }
 
     /// <summary>
     ///返回结果
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(5000)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = "nvarchar(max)", IsNullable = true)]
     public string Result { get; set; }
 
     /// <summary>
