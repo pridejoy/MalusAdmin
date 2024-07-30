@@ -26,7 +26,10 @@ public class SysRoleMenuService
     /// <returns></returns>
     public async Task<List<int>> RoleUserMenu(List<int> RoleId)
     {
+        var  HideorDisableMenusId=await _sysRoleMenuRep.Context.Queryable<TSysMenu>()
+            .Where(x=>x.HideInMenu==true||x.Status==2).Select(x=>x.Id).ToListAsync();
         var Res = await _sysRoleMenuRep.Where(x => RoleId.Contains(x.RoleId))
+            .Where(x=> !HideorDisableMenusId.Contains(x.MenuId))
             .Select(x => x.MenuId)
             .ToListAsync();
         return Res;

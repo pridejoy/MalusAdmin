@@ -204,6 +204,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     addConstantRoutes(staticRoute.constantRoutes);
     handleConstantAndAuthRoutes();
     setIsInitConstantRoute(true);
+    initAuthRoute();
     // 先获取静态路由
     // const { constantRoutes } = createStaticRoutes();
     // addAuthRoutes(constantRoutes);
