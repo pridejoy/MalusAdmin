@@ -22,9 +22,9 @@ public class SysLoginController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async Task<JsonR> Login(SysUserLoginIn input)
+    public async Task<dynamic> Login(SysUserLoginIn input)
     {
-        return ResultCode.Success.JsonR(await _sysUserService.Login(input));
+        return await _sysUserService.Login(input);
     }
 
 
@@ -33,9 +33,9 @@ public class SysLoginController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<JsonR> GetUserInfo()
+    public async Task<dynamic> GetUserInfo()
     {
-        return ResultCode.Success.JsonR(await _sysUserService.GetUserInfo());
+        return await _sysUserService.GetUserInfo();
     }
 
 
@@ -45,8 +45,8 @@ public class SysLoginController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     //[ResponseCache(Duration = 50)] // 缓存5秒
-    public async Task<JsonR> GetUserMenu()
+    public async Task<dynamic> GetUserMenu()
     {
-        return ResultCode.Success.JsonR(await _sysUserService.GetUserMenu());
+        return await _sysUserService.GetUserMenu();
     }
 }

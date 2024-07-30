@@ -26,9 +26,9 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public JsonR Index()
+    public string Index()
     {
-        return ResultCode.Success.JsonR("string");
+        return "string";
     }
 
     /// <summary>
@@ -36,9 +36,9 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost]
-    public async Task<JsonR> WeatherForecastGet()
+    public async Task<dynamic> WeatherForecastGet()
     {
-        return ResultCode.Success.JsonR(await _weatherForecastService.Get());
+        return await _weatherForecastService.Get();
     }
 
 
@@ -47,9 +47,9 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public JsonR CreatClass(string str)
+    public Task CreatClass(string str)
     {
-        return ResultCode.Success.JsonR(_weatherForecastService.CreatClass(str));
+        return  _weatherForecastService.CreatClass(str);
     }
 
     /// <summary>
@@ -57,9 +57,9 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public JsonR CreatTable()
+    public Task CreatTable()
     {
-        return ResultCode.Success.JsonR(_weatherForecastService.CreatTable());
+        return _weatherForecastService.CreatTable();
     }
 
     /// <summary>
@@ -67,9 +67,9 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public JsonR GetAllButton()
+    public async Task<dynamic> GetAllButton()
     {
-        return ResultCode.Success.JsonR(_testService.GetAllButton());
+        return await _testService.GetAllButton();
     }
 
 
@@ -78,9 +78,9 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public JsonR RemoveIp()
+    public string RemoveIp()
     {
-        return ResultCode.Success.JsonR(_httpContextAccessor.HttpContext?.GetRequestIPv4() ?? "暂无");
+        return _httpContextAccessor.HttpContext?.GetRequestIPv4() ;
     }
 
     /// <summary>
@@ -88,14 +88,10 @@ public class HomeController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public JsonR qwe()
+    public async Task<dynamic> qwe()
     {
-        return ResultCode.Success.JsonR(_testService.GetOnlineUser());
+        return await _testService.GetOnlineUser();
     }
     
-    [HttpGet]
-    public  JsonR InsterTable()
-    {
-        return ResultCode.Success.JsonR( _testService.InsterTable().Result);
-    }
+ 
 }

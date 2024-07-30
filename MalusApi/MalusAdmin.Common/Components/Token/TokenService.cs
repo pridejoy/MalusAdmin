@@ -117,7 +117,7 @@ public class TokenService : ITokenService
     public TokenData ParseTokenByCaChe(string token)
     {
         var userinfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
-        //if (userinfo == null) throw new Exception("解析用户信息失败");
+        //if (userinfo == null)  throw ResultHelper.Exception207Bad("解析用户信息失败");
         return userinfo;
     }
 

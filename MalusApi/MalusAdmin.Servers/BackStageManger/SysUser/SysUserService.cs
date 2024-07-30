@@ -41,10 +41,10 @@ public class SysUserService : ISysUserService
     {
         var user = await _sysUserRep
             .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
-        if (user == null) throw new Exception("未找到用户");
+        if (user == null)  throw ResultHelper.Exception207Bad("未找到用户");
 
-        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper()) throw new Exception("密码输入错误");
-        if (user.Status != 1) throw new Exception("该账户已被冻结");
+        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper())  throw ResultHelper.Exception207Bad("密码输入错误");
+        if (user.Status != 1)  throw ResultHelper.Exception207Bad("该账户已被冻结");
 
         var UserRolePer = new List<TSysRolePermission>();
         user.UserRolesId.ForEach(x =>
@@ -111,7 +111,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Add(UserAddAndUpIn input)
     {
         var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
-        if (isExist) throw new Exception("已存在当前账号");
+        if (isExist)  throw ResultHelper.Exception207Bad("已存在当前账号");
         var entity = input.Adapt<TSysUser>();
         entity.PassWord = Md5Util.Encrypt(input.PassWord);
         return await _sysUserRep.InsertReturnIdentityAsync(entity) > 0;
@@ -127,7 +127,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Delete(int userId)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
-        if (entity == null) throw new Exception("未找到当前账号");
+        if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前账号");
         entity.SysIsDelete = true;
         //Todo 删除用户缓存
         
@@ -142,7 +142,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Update(UserAddAndUpIn input)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) throw new Exception("未找到当前账号");
+        if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前账号");
         //Todo 更新用户缓存
 
         var sysUser = input.Adapt<TSysUser>();

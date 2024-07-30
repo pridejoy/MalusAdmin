@@ -19,7 +19,7 @@ public class DisabledRequestRecordAttribute : Attribute
 /// <summary>
 /// 请求日志拦截
 /// </summary>
-public class RequestActionFilter : IAsyncActionFilter
+public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
 {
     private readonly ISqlSugarClient _db;
 
@@ -34,6 +34,9 @@ public class RequestActionFilter : IAsyncActionFilter
         _tokenService = tokenService;
         _userContext = userContextService;
     }
+
+    internal const int FilterOrder = -8000;
+    public int Order => FilterOrder;
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {

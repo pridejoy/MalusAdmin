@@ -24,8 +24,8 @@ public class SysLogController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<JsonR> PageList([FromQuery] SysLogPageIn input)
+    public async Task<dynamic> PageList([FromQuery] SysLogPageIn input)
     {
-        return ResultCode.Success.JsonR(await _server.PageList(input));
+        return await _server.PageList(input);
     }
 }

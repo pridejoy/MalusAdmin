@@ -23,34 +23,34 @@ public class SysMenuController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("菜单树状列表")]
-    public async Task<JsonR> MenuTreeList()
+    public async Task<dynamic> MenuTreeList()
     {
-        return ResultCode.Success.JsonR(await _service.MenuTreeList());
+        return await _service.MenuTreeList();
     }
 
 
     [ReadOnly]
     [HttpPost]
     [Permission("菜单新增")]
-    public async Task<JsonR> Add(MenuAddandUpIn input)
+    public async Task<bool> Add(MenuAddandUpIn input)
     {
-        return ResultCode.Success.JsonR(await _service.Add(input));
+        return await _service.Add(input);
     }
 
 
     [HttpPost]
     [Permission("菜单更新")]
     [ReadOnly]
-    public async Task<JsonR> Update(MenuAddandUpIn input)
+    public async Task<bool> Update(MenuAddandUpIn input)
     {
-        return ResultCode.Success.JsonR(await _service.Update(input));
+        return await _service.Update(input);
     }
 
     [ReadOnly]
     [HttpGet]
     [Permission("菜单删除")]
-    public async Task<JsonR> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        return ResultCode.Success.JsonR(await _service.Delete(id));
+        return await _service.Delete(id);
     }
 }

@@ -22,9 +22,9 @@ public class SysRoleMenuController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("角色菜单查询")]
-    public async Task<JsonR> Get([FromQuery] int RoleId)
+    public async Task<dynamic> Get([FromQuery] int RoleId)
     {
-        return ResultCode.Success.JsonR(await _service.RoleUserMenu(new List<int> { RoleId }));
+        return await _service.RoleUserMenu(new List<int> { RoleId });
     }
 
     /// <summary>
@@ -34,8 +34,8 @@ public class SysRoleMenuController : ApiControllerBase
     [HttpPost]
     [Permission("角色菜单更新")]
     [ReadOnly]
-    public async Task<JsonR> Set(UpdateRoleUserMenuIn input)
+    public async Task<bool> Set(UpdateRoleUserMenuIn input)
     {
-        return ResultCode.Success.JsonR(await _service.SetRoleUserMenu(input));
+        return await _service.SetRoleUserMenu(input);
     }
 }

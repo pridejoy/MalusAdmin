@@ -22,9 +22,9 @@ public class SysUserController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("用户信息分页查询")]
-    public async Task<JsonR> PageList([FromQuery] UserPageIn input)
+    public async Task<dynamic> PageList([FromQuery] UserPageIn input)
     {
-        return ResultCode.Success.JsonR(await _sysUserService.PageList(input));
+        return await _sysUserService.PageList(input);
     }
 
 
@@ -34,9 +34,9 @@ public class SysUserController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [Permission("用户信息添加")]
-    public async Task<JsonR> Add(UserAddAndUpIn input)
+    public async Task<bool> Add(UserAddAndUpIn input)
     {
-        return ResultCode.Success.JsonR(await _sysUserService.Add(input));
+        return await _sysUserService.Add(input);
     }
 
 
@@ -46,9 +46,9 @@ public class SysUserController : ApiControllerBase
     /// <returns></returns>
     [HttpPost("{id}")]
     [Permission("用户信息删除")]
-    public async Task<JsonR> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        return ResultCode.Success.JsonR(await _sysUserService.Delete(id));
+        return await _sysUserService.Delete(id);
     }
 
 
@@ -58,8 +58,8 @@ public class SysUserController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [Permission("用户信息更新")]
-    public async Task<JsonR> Update(UserAddAndUpIn input)
+    public async Task<bool> Update(UserAddAndUpIn input)
     {
-        return ResultCode.Success.JsonR(await _sysUserService.Update(input));
+        return await _sysUserService.Update(input);
     }
 }

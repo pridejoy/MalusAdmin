@@ -25,7 +25,7 @@ public static class AppSettings
     /// <exception cref="ArgumentNullException"></exception>
     public static void AddConfigSteup(IConfiguration? configuration)
     {
-        if (_configuration != null) throw new Exception($"{nameof(Configuration)}不可修改！");
+        if (_configuration != null)  throw ResultHelper.Exception207Bad($"{nameof(Configuration)}不可修改！");
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     }
 

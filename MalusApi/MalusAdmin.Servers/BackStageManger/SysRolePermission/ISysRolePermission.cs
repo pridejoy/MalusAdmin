@@ -1,4 +1,4 @@
-﻿namespace MalusAdmin.Servers.SysRolePermission;
+﻿namespace MalusAdmin.Servers;
 
 public interface ISysRolePermission
 {

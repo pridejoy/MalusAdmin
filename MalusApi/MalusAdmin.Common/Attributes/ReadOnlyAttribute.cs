@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MalusAdmin.Common;
 
@@ -11,11 +12,9 @@ public class ReadOnlyAttribute : ActionFilterAttribute
     {
         if (AppSettings.IsDemo)
         {
-            context.HttpContext.Response.StatusCode = 200;
-            var rspResult = ResultCode.Fail.JsonR("演示环境,禁止操作");
-            context.Result = new ResObjectResult(rspResult);
-
-            base.OnActionExecuting(context);
+            throw ResultHelper.Exception200OK("演示环境,禁止操作"); 
         }
+        base.OnActionExecuting(context);
+
     }
 }

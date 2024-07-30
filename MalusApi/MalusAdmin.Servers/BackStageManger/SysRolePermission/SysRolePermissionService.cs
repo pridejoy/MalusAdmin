@@ -5,7 +5,7 @@ using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using ICacheService = MalusAdmin.Common.ICacheService;
 
-namespace MalusAdmin.Servers.SysUserButtonPermiss;
+namespace MalusAdmin.Servers;
 
 /// <summary>
 /// 用户按钮权限

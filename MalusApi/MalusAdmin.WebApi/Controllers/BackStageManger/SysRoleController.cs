@@ -23,9 +23,9 @@ public class SysRoleController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("角色查询分页")]
-    public async Task<JsonR> PageList([FromQuery] UserPageIn input)
+    public async Task<dynamic> PageList([FromQuery] UserPageIn input)
     {
-        return ResultCode.Success.JsonR(await _sysRoleService.PageList(input));
+        return await _sysRoleService.PageList(input);
     }
 
     /// <summary>
@@ -34,9 +34,9 @@ public class SysRoleController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [Permission("角色添加")]
-    public async Task<JsonR> Add(RoleAddandUpIn input)
+    public async Task<bool> Add(RoleAddandUpIn input)
     {
-        return ResultCode.Success.JsonR(await _sysRoleService.Add(input));
+        return await _sysRoleService.Add(input);
     }
 
 
@@ -46,9 +46,9 @@ public class SysRoleController : ApiControllerBase
     /// <returns></returns>
     [HttpPost("{id}")]
     [Permission("角色删除")]
-    public async Task<JsonR> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        return ResultCode.Success.JsonR(await _sysRoleService.Delete(id));
+        return await _sysRoleService.Delete(id);
     }
 
 
@@ -58,9 +58,9 @@ public class SysRoleController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [Permission("角色更新")]
-    public async Task<JsonR> Update(RoleAddandUpIn input)
+    public async Task<bool> Update(RoleAddandUpIn input)
     {
-        return ResultCode.Success.JsonR(await _sysRoleService.Update(input));
+        return await _sysRoleService.Update(input);
     }
 
 
@@ -69,8 +69,8 @@ public class SysRoleController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<JsonR> List()
+    public async Task<dynamic> List()
     {
-        return ResultCode.Success.JsonR(await _sysRoleService.List());
+        return await _sysRoleService.List();
     }
 }

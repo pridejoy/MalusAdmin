@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Servers.SysRolePermission.Dto;
+﻿using MalusAdmin.Servers;
+using MalusAdmin.Servers.SysRolePermission.Dto;
 using MalusAdmin.Servers.SysUserButtonPermiss;
 
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
@@ -22,9 +23,9 @@ public class SysRolePermissionController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<JsonR> GetAllButen()
+    public async Task<dynamic> GetAllButen()
     {
-        return ResultCode.Success.JsonR(await _service.GetAllButen());
+        return await _service.GetAllButen();
     }
 
 
@@ -34,9 +35,9 @@ public class SysRolePermissionController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("获取角色按钮")]
-    public async Task<JsonR> GetRoleButen(int RoleId)
+    public async Task<dynamic> GetRoleButen(int RoleId)
     {
-        return ResultCode.Success.JsonR(await _service.GetRoleButtonPermiss(RoleId));
+        return await _service.GetRoleButtonPermiss(RoleId);
     }
 
     /// <summary>
@@ -46,8 +47,8 @@ public class SysRolePermissionController : ApiControllerBase
     [HttpPost]
     [Permission("设置角色按钮")]
     [ReadOnly]
-    public async Task<JsonR> AddUserButtonPermiss(UpdateRoleButtonIn Input)
+    public async Task<bool> AddUserButtonPermiss(UpdateRoleButtonIn Input)
     {
-        return ResultCode.Success.JsonR(await _service.AddRoleButtonPermiss(Input));
+        return await _service.AddRoleButtonPermiss(Input);
     }
 }

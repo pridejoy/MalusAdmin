@@ -10,8 +10,7 @@ public static class CorsServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCorsSetup(this IServiceCollection services,
-        Action<CorsOptions>? setupAction = null)
+    public static IServiceCollection AddCorsSetup(this IServiceCollection services, Action<CorsOptions>? setupAction = null)
     {
         //教程
         //https://www.dotnetshare.com/guid/cors.html

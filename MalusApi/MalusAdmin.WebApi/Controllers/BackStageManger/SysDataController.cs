@@ -24,8 +24,8 @@ public class SysDataController : ApiControllerBase
     [HttpGet]
     [AllowAnonymous]
     [ResponseCache(Duration = 50)] // 缓存5秒
-    public async Task<JsonR> GetSystemInfo()
+    public async Task<dynamic> GetSystemInfo()
     {
-        return ResultCode.Success.JsonR(await _dataService.GetServerInfo());
+        return await _dataService.GetServerInfo();
     }
 }

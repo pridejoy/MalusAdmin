@@ -47,7 +47,7 @@ public class SysMenuService
     public async Task<bool> Add(MenuAddandUpIn input)
     {
         var isExist = await _sysMenuRep.Where(x => x.MenuType == input.MenuType).AnyAsync();
-        if (isExist) ResultCode.Fail.JsonR("已存在当前角色");
+        if (isExist) throw ResultHelper.Exception207Bad("已存在当前角色");
         var entity = input.Adapt<TSysMenu>();
         return await _sysMenuRep.InsertReturnIdentityAsync(entity) > 0;
     }
@@ -61,7 +61,7 @@ public class SysMenuService
     public async Task<bool> Delete(int id)
     {
         var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == id);
-        if (entity == null) ResultCode.Fail.JsonR("未找到当前菜单");
+        if (entity == null) throw ResultHelper.Exception200OK("未找到当前菜单");
         entity.SysIsDelete = true;
         return await _sysMenuRep.UpdateAsync(entity) > 0;
     }
@@ -74,7 +74,7 @@ public class SysMenuService
     public async Task<bool> Update(MenuAddandUpIn input)
     {
         var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) ResultCode.Fail.JsonR("为找到当前账号");
+        if (entity == null) throw ResultHelper.Exception200OK("未找到当前账号");
 
         var sysRole = input.Adapt<TSysMenu>();
         return await _sysMenuRep.AsUpdateable(sysRole).IgnoreColumns(true).ExecuteCommandAsync() > 0;

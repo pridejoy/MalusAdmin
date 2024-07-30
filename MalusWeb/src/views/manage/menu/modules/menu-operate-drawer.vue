@@ -151,9 +151,9 @@ const layoutOptions: CommonType.Option[] = [
 ];
 
 function handleUpdateModel() {
+  console.log('props.rowData', props.rowData);
   if (props.operateType === 'add') {
     Object.assign(model, createDefaultModel());
-    console.log('model', model);
     return;
   }
 
@@ -167,8 +167,12 @@ function handleUpdateModel() {
     const { component, ...rest } = props.rowData;
 
     const { layout, page } = getLayoutAndPage(component);
-
+    // if (props.rowData.hideInMenu) {
+    //   model.hideInMenu = 1;
+    // } else {model.hideInMenu = 1;
+    // }
     Object.assign(model, rest, { layout, page });
+    console.log('Update提交的model', model);
   }
 }
 
@@ -193,6 +197,7 @@ async function handleSubmit() {
   }
 
   if (props.operateType === 'edit') {
+    console.log('model.hideInMenu：', model.hideInMenu);
     updateMenu(model).then(res => {
       if (res.data) {
         window.$message?.success($t('common.updateSuccess'));
@@ -268,7 +273,7 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.manage.menu.hideInMenu')" path="hideInMenu">
           <NRadioGroup v-model:value="model.hideInMenu">
-            <NRadio value :label="$t('common.yesOrNo.yes')" />
+            <NRadio :value="true" :label="$t('common.yesOrNo.yes')" />
             <NRadio :value="false" :label="$t('common.yesOrNo.no')" />
           </NRadioGroup>
         </NFormItem>

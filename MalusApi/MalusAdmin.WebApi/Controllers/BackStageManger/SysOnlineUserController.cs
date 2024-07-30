@@ -21,9 +21,9 @@ public class SysOnlineUserController: ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("在线用户分页")]
-    public async Task<JsonR> PageList([FromQuery] OnlineUserPageInput input)
+    public async Task<dynamic> PageList([FromQuery] OnlineUserPageInput input)
     {
-        return ResultCode.Success.JsonR(await _service.PageList(input));
+        return await _service.PageList(input);
     }
     
     
@@ -33,9 +33,9 @@ public class SysOnlineUserController: ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [Permission("强制用户下线")]
-    public async Task<JsonR> ForceOffline([FromQuery] string connectionId)
+    public async Task<bool> ForceOffline([FromQuery] string connectionId)
     {
-        return ResultCode.Success.JsonR(await _service.ForceOffline(connectionId));
+        return await _service.ForceOffline(connectionId);
     }
     
     /// <summary>
@@ -44,8 +44,8 @@ public class SysOnlineUserController: ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [Permission("给指定用户发送消息")]
-    public async Task<JsonR> SendMsgToOne([FromBody] SendMsgOneInput input )
+    public async Task<bool> SendMsgToOne([FromBody] SendMsgOneInput input )
     {
-        return ResultCode.Success.JsonR(await _service.SendMsgToOne(input));
+        return await _service.SendMsgToOne(input);
     }
 }

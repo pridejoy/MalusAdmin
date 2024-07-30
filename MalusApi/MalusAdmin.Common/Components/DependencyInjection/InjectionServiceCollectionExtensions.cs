@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MalusAdmin.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class InjectionServiceCollectionExtensions
@@ -30,11 +31,22 @@ public static class InjectionServiceCollectionExtensions
             foreach (var serviceInterface in serviceInterfaces)
                 RegistrationType(services, serviceInterface, serviceType);
         }
-
+        RegistrationSome(services);
         return services;
 
-        // AddAutoServices() 内部静态函数
-        static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
+        //注册项目所需的
+        static void RegistrationSome(IServiceCollection services)
+        {
+
+            services.AddSingleton<ITokenService, TokenService>();
+            services.AddTransient<IUserContextService, UserContextService>();
+            //services.AddScoped<ISysRolePermission, SysRolePermissionService>();
+            //services.AddTransient(TestTwoSevices);
+        }
+
+
+            // 实现自定义注册
+            static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
         {
             // 设置默认生命周期为 Transient
             var lifecyleType = ServiceLifetime.Transient;
@@ -46,7 +58,7 @@ public static class InjectionServiceCollectionExtensions
                 if (!autoInjection.AutoRegister) return;
                 lifecyleType = autoInjection.Lifecycle;
             }
-
+            Console.WriteLine("注册方式："+lifecyleType.ToString() +"名称："+ serviceType.Name, "实例：" + implementationType.Name);
             // 注册服务
             switch (lifecyleType)
             {

@@ -30,7 +30,7 @@ public class Program
         builder.Services.AddControllers(options =>
             {
                 // 全局异常过滤
-                options.Filters.Add<GlobalExceptionFilter>();
+                //options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 options.Filters.Add<RequestActionFilter>();
             })
@@ -39,7 +39,8 @@ public class Program
             {
                 // 禁用默认模型验证过滤器
                 options.SuppressModelStateInvalidFilter = true;
-            });
+            })
+            .AddApiResult<CustomApiResultProvider>();
 
 
         // 配置Json选项
@@ -49,10 +50,7 @@ public class Program
         builder.Services.AddSqlsugarSetup();
 
         // 添加swagger文档
-        builder.Services.AddSwaggerSetup();
-
-        // 添加基础服务
-        //builder.Services.AddBaseServicesSetup();
+        builder.Services.AddSwaggerSetup(); 
 
         // 自动添加服务层
         builder.Services.AddAutoServices("MalusAdmin.Servers");
@@ -66,12 +64,7 @@ public class Program
         builder.Services.AddAuthorizationSetup();
         // 替换默认 PermissionChecker
         //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-
-
-        builder.Services.AddSingleton<ITokenService, TokenService>();
-        builder.Services.AddTransient<IUserContextService, UserContextService>();
-        builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
-
+         
         // 添加跨域支持
         builder.Services.AddCorsSetup();
 

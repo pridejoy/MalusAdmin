@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
+using MalusAdmin.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyModel;
 
@@ -44,7 +45,7 @@ public static class AssemblyHelper
             var dllFileName = dllName.ToLower().EndsWith(".dll") ? dllName : dllName + ".dll";
             var dllFileFullName = Path.Combine(basePath, dllFileName);
 
-            if (!File.Exists(dllFileFullName)) throw new Exception($"{dllFileName}不存在！");
+            if (!File.Exists(dllFileFullName))  throw new Exception ($"{dllFileName}不存在！");
 
             dllFileFullNames.Add(dllFileFullName);
         }

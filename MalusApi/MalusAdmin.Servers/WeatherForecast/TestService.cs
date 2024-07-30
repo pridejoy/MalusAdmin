@@ -80,22 +80,10 @@ public class TestService
 
         return "";
     }
-    
-    public async Task<bool> InsterTable()
-    {
-        var onlineUser = new TSysOnlineUser
-        {
-            ConnectionId = "1",
-            UserId = 0,
-            UserName ="",
-            RealName = "",
-            Time = DateTime.Now,
-            Ip = "",
-            Browser = "123",
-            Os = "123"
-        };
-        await _rep.InsertAsync(onlineUser);
 
-        return true;
+    public async Task<bool> GetFriendlyException()
+    {
+        throw new Exception("error");
+        throw ResultHelper.Exception207Bad("演示环境,禁止操作");
     }
 }
