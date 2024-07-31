@@ -2,7 +2,9 @@
 using MalusAdmin.Servers;
 using MalusAdmin.Servers.SysRolePermission;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MalusAdmin.WebApi;
 
@@ -31,8 +33,7 @@ public class CheckToken
             await _next(context);
             return;
         }
-
-        ;
+         
         // 检查Endpoint的元数据中是否包含AllowAnonymous特性
         var hasAllowAnonymous = endpoint.Metadata
             .OfType<IAllowAnonymous>()
@@ -46,25 +47,36 @@ public class CheckToken
             return;
         }
 
+        var token = context.Request.Query["token"]; 
         var hasHub = endpoint.DisplayName.Contains("hub");
 
         if (hasHub)
-        {
-            var token = context.Request.Query["token"];
-            var User = tokenService.ParseTokenByCaChe(token);
-            if (User is null||User.UserId<=0) await Res401Async(context);
+        { 
+            var user = tokenService.ParseTokenByCaChe(token);
+            if (user == null || user.UserId <= 0)
+            {
+                await ReturnUnauthorizedResult(context);
+                return;
+            }
         }
         else
         {
             using(var scope = _serviceScopeFactory.CreateScope())
             {
                 // 进行身份校验
-                if (!tokenService.CheckToken(context)) await Res401Async(context); 
+                if (!tokenService.CheckToken(context)) 
+                {
+                    await ReturnUnauthorizedResult(context);
+                    return;
+                } 
                 //刷新用户的token过期时间
-                tokenService.RefreshToken(context);
-
+                tokenService.RefreshToken(context); 
                 var User = tokenService.ParseToken(context);
-                if (User is null) await Res401Async(context);
+                if (User is null)
+                {
+                    await ReturnUnauthorizedResult(context);
+                    return;
+                }
                 // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
                 if (endpoint is RouteEndpoint routeEndpoint && !User.IsSuperAdmin)
                 {
@@ -83,6 +95,7 @@ public class CheckToken
                         if (!await rolePermissService.HavePermission(routePattern))
                         {
                             await Res403Async(context);
+                            return;
                         } 
                     }
 
@@ -98,9 +111,17 @@ public class CheckToken
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public async Task Res401Async(HttpContext context)
+    public async Task ReturnUnauthorizedResult(HttpContext context)
     {
-        throw ResultHelper.Exception401Unauthorized("提供的令牌无效或已过期,请重新登录"); 
+        var apiResult = new ApiResult(StatusCodes.Status401Unauthorized, "提供的令牌无效或已过期，请重新登录", "");
+        // 设置HTTP状态码
+        context.Response.StatusCode =401; 
+        // 设置响应的Content-Type为application/json
+        context.Response.ContentType = "application/json"; 
+        // 使用System.Text.Json序列化对象为JSON字符串
+        var json = System.Text.Json.JsonSerializer.Serialize(apiResult); 
+        // 写入JSON字符串到响应体
+        await context.Response.WriteAsync(json);
     }
 
     /// <summary>
@@ -110,6 +131,6 @@ public class CheckToken
     /// <returns></returns>
     public async Task Res403Async(HttpContext context)
     {
-        throw ResultHelper.Exception403Forbidden();
+        var res= ResultHelper.Exception403Forbidden();
     }
 }

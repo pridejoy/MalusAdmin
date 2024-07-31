@@ -30,7 +30,7 @@ public class Program
         builder.Services.AddControllers(options =>
             {
                 // 全局异常过滤
-                //options.Filters.Add<GlobalExceptionFilter>();
+                options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 options.Filters.Add<RequestActionFilter>();
             })

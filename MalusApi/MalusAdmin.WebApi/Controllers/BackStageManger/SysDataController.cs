@@ -7,6 +7,7 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 /// 基础服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
+[ResponseCache(Duration = 500)] 
 public class SysDataController : ApiControllerBase
 {
     private readonly SysDataService _dataService;
@@ -22,10 +23,21 @@ public class SysDataController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [AllowAnonymous]
-    [ResponseCache(Duration = 50)] // 缓存5秒
+    [AllowAnonymous] 
     public async Task<dynamic> GetSystemInfo()
     {
         return await _dataService.GetServerInfo();
+    }
+
+
+    /// <summary>
+    /// 获取当前使用的nuget包
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [AllowAnonymous] 
+    public async Task<dynamic> GetNuGetPackages()
+    {
+        return await _dataService.GetNuGetPackages();
     }
 }

@@ -5,7 +5,7 @@ using MalusAdmin.WebApi.Filter;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-/// 禁用日志记录
+/// 日志服务
 /// </summary>
 [DisabledRequestRecord]
 [ApiExplorerSettings(GroupName = "后台管理")]

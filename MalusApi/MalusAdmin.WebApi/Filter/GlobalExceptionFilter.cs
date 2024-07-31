@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MalusAdmin.WebApi.Filter;
 
@@ -14,10 +15,14 @@ public class GlobalExceptionFilter : IExceptionFilter
     public void OnException(ExceptionContext context)
     {
         ////异常返回结果包装
-        //var rspResult = ResultCode.Fail.JsonR(context.Exception.Message);
+        var ApiResult = new ApiResult(StatusCodes.Status207MultiStatus, context.Exception.Message, "");
         //////日志记录
-        //_logger.LogError(context.Exception, context.Exception.Message);
+        _logger.LogError(context.Exception, context.Exception.Message);
         //context.ExceptionHandled = true;
-        //context.Result = new ResObjectResult(rspResult);
+        context.Result = new ObjectResult(ApiResult)
+        {
+            StatusCode = 200
+        };
+        context.ExceptionHandled = true;
     }
 }
