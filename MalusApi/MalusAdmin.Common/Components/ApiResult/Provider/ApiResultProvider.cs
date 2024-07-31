@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MalusAdmin.Common;
 
-    public class ApiResultProvider : IApiResultProvider
+public class ApiResultProvider : IApiResultProvider
 {
     public virtual IActionResult ProcessActionResult(IActionResult actionResult)
     {
@@ -21,8 +21,7 @@ namespace MalusAdmin.Common;
 
             // 其他情况，包装成 API 统一返回结果
             int statusCode = objectResult.StatusCode ?? StatusCodes.Status200OK;
-            string message = ApiResultHelper.GetMessage(statusCode);
-            bool isSuccess = ApiResultHelper.GetSuccess(statusCode);
+            string message = ApiResultHelper.GetMessage(statusCode); 
             var apiResult = ApiResultHelper.Result(statusCode, message, objectResult.Value);
             var newResult = new ObjectResult(apiResult);
             return newResult;

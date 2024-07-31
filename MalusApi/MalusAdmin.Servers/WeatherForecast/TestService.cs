@@ -83,7 +83,7 @@ public class TestService
 
     public async Task<bool> GetFriendlyException()
     {
-        throw new Exception("error");
-        throw ResultHelper.Exception207Bad("演示环境,禁止操作");
+        throw new Exception("error12312");
+        throw ResultHelper.Exception207Bad("sdasd,asdasd");
     }
 }

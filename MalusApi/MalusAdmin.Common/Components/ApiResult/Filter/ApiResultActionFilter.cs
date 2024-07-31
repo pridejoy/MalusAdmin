@@ -9,12 +9,9 @@ namespace MalusAdmin.Common;
  
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public class ApiResultActionFilter : Attribute, IAsyncActionFilter, IOrderedFilter
+public class ApiResultActionFilter : ResultFilterAttribute
 { 
     private readonly IApiResultProvider _resultProvider;
-     
-    internal const int FilterOrder = -6000;
-    public int Order { get; set; } = FilterOrder;
 
     public ApiResultActionFilter(IApiResultProvider resultProvider)
     {

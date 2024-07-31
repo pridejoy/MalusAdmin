@@ -35,7 +35,9 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
         _userContext = userContextService;
     }
 
-    internal const int FilterOrder = -8000;
+    //筛选器按属性的升序排序 Order 执行 ,具有较低数值 Order 的同步筛选器将在具有较高值的
+    //Order筛选器的 after 方法之后执行
+    internal const int FilterOrder = -1000;
     public int Order => FilterOrder;
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -43,77 +45,61 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
         var isSkipRecord = false;
         var httpContext = context.HttpContext;
         var httpRequest = httpContext.Request;
+        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
+
+        if (actionDescriptor == null || actionDescriptor.EndpointMetadata.OfType<DisabledRequestRecordAttribute>().Any())
+        {
+            await next();
+            return;
+        }
 
         var sw = new Stopwatch();
         sw.Start();
         var actionContext = await next();
         sw.Stop();
 
-        var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-
-
-        // 判断是否需要跳过
-        //if (!AppSettings.RecordRequest.IsEnabled) isSkipRecord = true;
-        if (actionDescriptor == null) isSkipRecord = true;
-        //if (AppSettings.RecordRequest.IsSkipGetMethod && request.Method.ToUpper() == "GET") isSkipRecord = true;
-
-        foreach (var metadata in actionDescriptor!.EndpointMetadata)
-            if (metadata is DisabledRequestRecordAttribute)
-                isSkipRecord = true;
-
-        // 进入管道的下一个过滤器，并跳过剩下动作
-        if (isSkipRecord)
-        {
-            await next();
-            return;
-        }
-
-        //判断是否请求成功（没有异常就是请求成功） 
+        // 获取请求头信息
         var headers = httpRequest.Headers;
         var clientInfo = headers.ContainsKey("User-Agent")
             ? Parser.GetDefault().Parse(headers["User-Agent"])
             : null;
 
+        var userId = _userContext.TokenData?.UserId.ToString() ?? "";
+        var userAccount = _userContext.TokenData?.UserAccount ?? "";
+        var requestIp = httpContext.GetRequestIPv4();
+        var requestUrl = httpRequest.Path;
+        var requestMethod = httpRequest.Method;
+        var actionName = actionDescriptor.ActionName;
+        var controllerName = context.Controller.ToString();
+        var userAgent = clientInfo?.UA.Family + clientInfo?.UA.Major;
+        var userOs = clientInfo?.OS.Family + clientInfo?.OS.Major;
+        var requestParams = context.ActionArguments.Count < 1 ? "" : context.ActionArguments.ToJson();
+        var elapsedMilliseconds = sw.ElapsedMilliseconds;
+        var operationTime = DateTime.Now;
 
         var entity = new TSysLogVis
         {
-            Name = _userContext.TokenData?.UserId.ToString() ?? "",
-            Account = _userContext.TokenData?.UserAccount ?? "",
-            Success = true,
-            Ip = httpContext.GetRequestIPv4(),
+            Name = userId,
+            Account = userAccount,
+            Success = actionContext.Exception == null,
+            Ip = requestIp,
             Location = httpRequest.GetRequestUrlAddress(),
-            Browser = clientInfo?.UA.Family + clientInfo?.UA.Major,
-            Os = clientInfo?.OS.Family + clientInfo?.OS.Major,
-            Url = httpRequest.Path,
-            ClassName = context.Controller.ToString(),
-            MethodName = actionDescriptor?.ActionName,
-            ReqMethod = httpRequest.Method,
-            Param = context.ActionArguments.Count < 1 ? "" : context.ActionArguments.ToJson(),
-            // Result = JSON.Serialize(actionContext.Result), // 序列化异常，比如验证码
-            ElapsedTime = sw.ElapsedMilliseconds,
-            OpTime = DateTime.Now
+            Browser = userAgent,
+            Os = userOs,
+            Url = requestUrl,
+            ClassName = controllerName,
+            MethodName = actionName,
+            ReqMethod = requestMethod,
+            Param = requestParams,
+            ElapsedTime = elapsedMilliseconds,
+            OpTime = operationTime,
+            Result = actionContext.Exception?.Message ?? (actionContext.Result is FileStreamResult ? null : actionContext.Result.ToJson())
         };
 
-        // 检查是否有异常发生
-        if (actionContext.Exception != null)
-        {
-            // 设置错误信息
-            entity.Result = actionContext.Exception.Message;
-        }
-        else
-        {
-            // 检查 ActionResult 类型
-            var result = actionContext.Result;
-
-            if (result.GetType() != typeof(FileStreamResult))
-                entity.Result = actionContext.Result.ToJson(); // 序列化异常，比如验证码
-        }
-
-        Console.WriteLine($"处理 {DateTime.Now} : {JsonConvert.SerializeObject(entity)}");
+        Console.WriteLine($"处理 {DateTime.Now} : {entity.ToJson()}");
 
         _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
 
-        //发送到队列或者直接添加到数据库
-        //await _eventPublisher.PublishAsync(new ChannelEventSource("Create:OpLog", ));
+
     }
 }

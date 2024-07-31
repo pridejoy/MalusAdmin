@@ -3,8 +3,8 @@
 public static class IOFileHelper
 {
     //相对路径
-    //await WriteAsync("file.txt", "Hello World", true, "UTF-8");
-    //await WriteAsync("subfolder/file.txt", "Hello World", true, "UTF-8");
+    //await WriteAsync("file.txt", "Hello World");
+    //await WriteAsync("subfolder/file.txt", "Hello World");
     /// <summary>
     /// 创建文件或者附加内容
     /// </summary>
@@ -12,13 +12,12 @@ public static class IOFileHelper
     /// <param name="Encode">编码方式</param>
     /// <param name="filePath">文件路径(支持相对路径或绝对路径)</param>
     /// <param name="IsAppend">附加还是全新写入</param>
-    public static async Task<bool> Write(string Data, string filePath = "", bool IsAppend = true,
-        string Encode = "UTF-8")
+    public static async Task<bool> Write(string filePath = "", string Data="")
     {
         filePath = filePath.Contains("txt")
             ? filePath
             : "logs/" + filePath + DateTime.Now.ToString("yyyyMMdd") + ".log";
-        Encode = string.IsNullOrEmpty(Encode) ? "UTF-8" : Encode;
+        var  Encode =  "UTF-8" ;
         Data = DateTime.Now + "  :" + Data + "\n";
         try
         {
@@ -35,7 +34,7 @@ public static class IOFileHelper
             else if (file.Attributes.ToString().IndexOf("ReadOnly") != -1) file.IsReadOnly = false;
 
             //将内容覆盖或者追加到文件的最后
-            using (var writer = new StreamWriter(file.FullName, IsAppend, Encoding.GetEncoding(Encode)))
+            using (var writer = new StreamWriter(file.FullName, true, Encoding.GetEncoding(Encode)))
             {
                 writer.Write(Data);
                 writer.Flush();

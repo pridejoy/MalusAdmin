@@ -123,32 +123,31 @@ public class Program
 
                 //c.UseRequestInterceptor("(request) => { return defaultRequestInterceptor(request); }");
                 //c.UseResponseInterceptor("(response) => { return defaultResponseInterceptor(response); }");
-            });
+            }); 
         }
 
+
+        app.UseDefaultFiles(); // 提供默认文件支持
+        app.UseStaticFiles(); // 启用静态文件服务
 
         app.UseHttpsRedirection(); // 放在前面，确保所有请求都通过HTTPS
 
         app.UseRouting(); // 确定路由
 
         app.UseCors(); // 配置跨域资源共享
-
-        app.UseMiddleware<CheckToken>(); // 如果CheckToken是身份验证中间件，放在认证之前
-
+         
         app.UseAuthentication(); // 启用身份验证中间件
 
         app.UseAuthorization(); // 启用授权中间件
 
         app.UseResponseCaching(); // 应用响应缓存
-
-        app.UseDefaultFiles(); // 提供默认文件支持
-        app.UseStaticFiles(); // 启用静态文件服务
+         
+        app.UseMiddleware<CheckToken>(); // 如果CheckToken是身份验证中间件，放在认证之前
 
         app.MapHub<OnlineUserHub>("/hub"); // 映射SignalR Hub
 
         app.MapControllers(); // 映射控制器
-
-
+         
         app.Run(); // 启动服务器
     }
 }
