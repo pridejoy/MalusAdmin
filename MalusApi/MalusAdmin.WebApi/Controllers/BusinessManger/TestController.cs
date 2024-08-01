@@ -21,15 +21,17 @@ namespace MalusAdmin.WebApi.Controllers.BusinessManger
             _testService = testService;
             _httpContextAccessor = httpContextAccessor;
         }
-
-        /// <summary>
-        /// 统一返回
-        /// </summary>
-        /// <returns></returns>
+         
         [HttpGet]
-        public  async Task<dynamic> Index()
+        public  async Task<dynamic> GetException207Bad()
         {
-            return await  _testService.GetFriendlyException();
+            return await  _testService.GetException207Bad();
+        }
+
+        [HttpGet]
+        public async Task<dynamic> GetException()
+        {
+            return await _testService.GetException();
         }
     }
 }

@@ -81,9 +81,14 @@ public class TestService
         return "";
     }
 
-    public async Task<bool> GetFriendlyException()
+    public async Task<bool> GetException207Bad()
     {
-        throw new Exception("error12312");
+        //throw new Exception("error12312");
         throw ResultHelper.Exception207Bad("sdasd,asdasd");
+    }
+
+    public async Task<bool> GetException()
+    {
+        throw new Exception("error12312"); 
     }
 }

@@ -1,4 +1,6 @@
-﻿using MalusAdmin.Common.Helper;
+﻿using MalusAdmin.Common;
+using MalusAdmin.Common.Helper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -23,10 +25,12 @@ public class GlobalExceptionFilter : IExceptionFilter,IOrderedFilter
     { 
         //日志记录
         _logger.LogError(context.Exception, context.Exception.Message);
-        //系统的异常进行记录，不处理状态
-      
-        await IOFileHelper.Write("error/", context.Exception.ToJson()); 
+        //异常进行记录 
+        await IOFileHelper.Write("error/", context.Exception.ToJson());  
 
-        context.ExceptionHandled = true; 
+        var ApiResult = new ApiResult(StatusCodes.Status500InternalServerError, context.Exception.Message, "");
+        // 如果是结果异常
+        IActionResult result = new ObjectResult(ApiResult) { StatusCode = StatusCodes.Status200OK };
+        context.Result = result;
     }
 }
