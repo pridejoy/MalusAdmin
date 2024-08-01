@@ -114,14 +114,11 @@ public class CheckToken
     public async Task ReturnUnauthorizedResult(HttpContext context)
     {
         var apiResult = new ApiResult(StatusCodes.Status401Unauthorized, "提供的令牌无效或已过期，请重新登录", "");
-        // 设置HTTP状态码
+         
         context.Response.StatusCode = 401;
         // 设置响应的Content-Type为application/json
-        context.Response.ContentType = "application/json";
-        // 使用System.Text.Json序列化对象为JSON字符串
-        var json = System.Text.Json.JsonSerializer.Serialize(apiResult);
-        // 写入JSON字符串到响应体
-        await context.Response.WriteAsync(json);
+        context.Response.ContentType = "application/json"; 
+        await context.Response.WriteAsync(apiResult.ToJson(true));
         //throw ResultHelper.Exception401Unauthorized();
     }
 
@@ -131,15 +128,12 @@ public class CheckToken
     /// <param name="context"></param>
     /// <returns></returns>
     public async Task Res403Async(HttpContext context)
-    {
-        var apiResult = new ApiResult(StatusCodes.Status401Unauthorized, "暂无权限", "");
-        // 设置HTTP状态码
-        context.Response.StatusCode = 403;
+    { 
+        var apiResult = new ApiResult(StatusCodes.Status403Forbidden, "暂无权限", "");
+       
         // 设置响应的Content-Type为application/json
-        context.Response.ContentType = "application/json";
-        // 使用System.Text.Json序列化对象为JSON字符串
-        var json = System.Text.Json.JsonSerializer.Serialize(apiResult);
+        context.Response.ContentType = "application/json"; 
         // 写入JSON字符串到响应体
-        await context.Response.WriteAsync(json);
+        await context.Response.WriteAsync(apiResult.ToJson(true));
     }
 }

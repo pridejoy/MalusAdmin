@@ -1,4 +1,6 @@
-﻿namespace MalusAdmin.Common;
+﻿using Newtonsoft.Json.Serialization;
+
+namespace MalusAdmin.Common;
 
 public static class JsonHelper
 {
@@ -21,5 +23,21 @@ public static class JsonHelper
     public static string ToJson(this object obj)
     {
         return JsonConvert.SerializeObject(obj);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="ContractResolver"></param>
+    /// <returns></returns>
+    public static string ToJson(this object obj,bool ContractResolver)
+    {
+        var settings = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
+        return JsonConvert.SerializeObject(obj, settings);
     }
 }
