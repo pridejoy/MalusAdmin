@@ -144,6 +144,7 @@ public class SysUserService : ISysUserService
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
         if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前账号");
         //Todo 更新用户缓存
+        //优化  更新的字段
 
         var sysUser = input.Adapt<TSysUser>();
         return await _sysUserRep.AsUpdateable(sysUser).IgnoreColumns(true).ExecuteCommandAsync() > 0;

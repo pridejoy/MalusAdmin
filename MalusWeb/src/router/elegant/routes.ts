@@ -440,8 +440,7 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'user-center',
       i18nKey: 'route.user-center',
-      hideInMenu: true,
-      constant: true
+      hideInMenu: true
     }
   }
 ];

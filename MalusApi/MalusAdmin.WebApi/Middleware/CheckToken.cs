@@ -114,12 +114,10 @@ public class CheckToken
     public async Task ReturnUnauthorizedResult(HttpContext context)
     {
         var apiResult = new ApiResult(StatusCodes.Status401Unauthorized, "提供的令牌无效或已过期，请重新登录", "");
-         
-        context.Response.StatusCode = 401;
         // 设置响应的Content-Type为application/json
+        context.Response.StatusCode = 401;
         context.Response.ContentType = "application/json"; 
-        await context.Response.WriteAsync(apiResult.ToJson(true));
-        //throw ResultHelper.Exception401Unauthorized();
+        await context.Response.WriteAsync(apiResult.ToJson(true)); 
     }
 
     /// <summary>
@@ -129,7 +127,7 @@ public class CheckToken
     /// <returns></returns>
     public async Task Res403Async(HttpContext context)
     { 
-        var apiResult = new ApiResult(StatusCodes.Status403Forbidden, "暂无权限", "");
+        var apiResult = new ApiResult(StatusCodes.Status207MultiStatus, "暂无权限", "");
        
         // 设置响应的Content-Type为application/json
         context.Response.ContentType = "application/json"; 

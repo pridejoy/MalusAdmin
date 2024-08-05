@@ -640,7 +640,7 @@ declare namespace App {
     /** 后端服务响应数据 */
     type Response<T = unknown> = {
       /** 后端服务响应代码 */
-      code: string;
+      code: number;
       /** 后端服务响应消息 */
       message: string;
       /** 后端服务响应数据体 */

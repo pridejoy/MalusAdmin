@@ -16,7 +16,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const token = ref(getToken());
 
-  const userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
+  let userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
 
   /** 是静态路由中的超级角色 */
   const isStaticSuper = computed(() => {
@@ -54,7 +54,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
     await reqLogin(userName, password).then(async res => {
-      // console.log(res, 'res');
       if (res.data) {
         const pass = await loginByToken(res.data.token);
         if (pass) {
@@ -88,7 +87,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     if (userInfores.data) {
       // 2. store user info
       localStg.set('userInfo', userInfores.data);
-
+      userInfo = userInfores.data;
       // 3. update store
       // token.value = loginToken;
       console.log('更新用户信息', userInfores.data);

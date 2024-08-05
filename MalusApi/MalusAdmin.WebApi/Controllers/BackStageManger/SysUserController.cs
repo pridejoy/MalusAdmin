@@ -58,6 +58,7 @@ public class SysUserController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [Permission("用户信息更新")]
+    [ReadOnly]
     public async Task<bool> Update(UserAddAndUpIn input)
     {
         return await _sysUserService.Update(input);

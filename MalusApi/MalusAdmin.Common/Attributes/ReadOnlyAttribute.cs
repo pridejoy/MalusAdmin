@@ -12,7 +12,7 @@ public class ReadOnlyAttribute : ActionFilterAttribute
     {
         if (AppSettings.IsDemo)
         {
-            throw ResultHelper.Exception200OK("演示环境,禁止操作"); 
+            throw ResultHelper.Exception207Bad("演示环境,禁止操作"); 
         }
         base.OnActionExecuting(context);
 

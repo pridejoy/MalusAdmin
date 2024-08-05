@@ -37,11 +37,13 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     },
     /** 判断后端响应是否成功，通过对比后端返回的 code 来判断 */
     isBackendSuccess(response) {
-      // when the backend response code is "0000"(default), it means the request is success
-      // to change this logic by yourself, you can modify the `VITE_SERVICE_SUCCESS_CODE` in `.env` file
-      // console.log('response1', response.data.code === import.meta.env.VITE_SERVICE_SUCCESS_CODE);
-      // 状态码等于200等于请求成功
-      return response.data.code == '200';
+      // 后端返回的状态码
+      // console.log('判断后端响应是否成功，通过对比后端返回的', response);
+      const resCodes = [200];
+      if (resCodes.includes(response.data.code)) {
+        return true;
+      }
+      return false;
     },
     /** 后端请求在业务上表示失败时调用的异步函数，例如：处理 token 过期 */
     async onBackendFail(response, instance) {
@@ -56,8 +58,6 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
         handleLogout();
         window.removeEventListener('beforeunload', handleLogout);
       }
-      debugger;
-
       // 当后端响应代码在logoutCodes中时，意味着用户将会登出并被重定向到登录页面。
       const logoutCodes = [401];
       if (logoutCodes.includes(response.data.code)) {
@@ -117,8 +117,15 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     },
     /** 当请求失败时调用的函数(包括请求失败和后端业务上的失败请求)，例如：处理错误信息 */
     onError(error) {
-      // 当请求失败时，您可以显示错误消息
-      const message = error.message;
+      console.log('接口响应错误', error);
+      let message = error.message;
+      const backendErrorCode = String(error.response?.data?.code || '');
+      const modalLogoutCodes = ['401'];
+      if (modalLogoutCodes.includes(backendErrorCode)) {
+        message = error.response?.data?.message;
+      } else {
+        message = error.message;
+      }
 
       window.$message?.error?.(message);
     }
