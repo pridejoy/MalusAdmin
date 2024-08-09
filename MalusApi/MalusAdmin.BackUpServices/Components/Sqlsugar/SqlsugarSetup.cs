@@ -1,20 +1,16 @@
-﻿using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using MalusAdmin.Common.Model;
+﻿ 
+using System.Linq.Expressions; 
 using Microsoft.Extensions.DependencyInjection;
+using SqlSugar;
 
-namespace MalusAdmin.Common;
+namespace MalusAdmin.BackUpServices;
 
 public static class SqlsugarSetup
 {
     public static void AddSqlsugarSetup(this IServiceCollection services)
     {
         //数据库链接,修改配置里面的SqlServerConnection的字符串
-        var ConnectionString = AppSettings.SqlServerConnection;
-
-        //注释这行，我是从本地文件读取的
-        if (!AppSettings.IsDemo)
-            ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
+        var ConnectionString =""; 
 
         var configConnection = new ConnectionConfig
         {
@@ -48,29 +44,13 @@ public static class SqlsugarSetup
             {
                 try
                 {
-
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
-                        var user = App.GetService<IUserContextService>();
-                        if (entityInfo.PropertyName == "SysCreateUser")
-                        { 
-                            if (user != null) entityInfo.SetValue(user.TokenData.UserId);
-                        }
-                        else if (entityInfo.PropertyName == "DeptId" && entityInfo.EntityName != "TSysUser")
-                        { 
-                            if (user != null)
-                            {
-                                //entityInfo.SetValue(token.UserDept);
-                            }
-                        }
+                        
                     }
                     else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
                     {
-                        var user = App.GetService<IUserContextService>();
-                        if (entityInfo.PropertyName == "SysUpdateUser")
-                        { 
-                            if (user != null) entityInfo.SetValue(user.TokenData.UserId);
-                        }
+                       
                     }
                 }
                 catch
@@ -108,24 +88,8 @@ public static class SqlsugarSetup
                 }
 
                 ;
-            };
-
-
-            //全局过滤器
-            var types = GetSugarTableTypes();
-            // 配置加删除全局过滤器
-            foreach (var entityType in types)
-                if (!entityType.GetProperty("SysIsDelete").IsEmpty())
-                {
-                    //判断实体类中包含IsDeleted属性
-                    //构建动态Lambda
-                    var lambda = DynamicExpressionParser.ParseLambda(new[] { Expression.Parameter(entityType, "it") },
-                        typeof(bool), $"{nameof(ModelBase.SysIsDelete)} ==  @0", false);
-                    db.QueryFilter.Add(new TableFilterItem<object>(entityType, lambda)
-                    {
-                        IsJoinQuery = true
-                    }); //将Lambda传入过滤器
-                }
+            };  
+           
         };
 
         //SqlSugarScope线程是安全的
@@ -136,27 +100,6 @@ public static class SqlsugarSetup
 
         // 注册 SqlSugar 仓储
         services.AddScoped(typeof(SqlSugarRepository<>));
-    }
-
-    public static List<Type> GetSugarTableTypes()
-    {
-        var assemblies = AssemblyHelper.GetAssemblies("MalusAdmin.Repository");
-        ;
-
-        var types = new List<Type>();
-
-        foreach (var assembly in assemblies)
-        {
-            // 获取所有类型
-            var assemblyTypes = assembly.GetTypes();
-
-            // 筛选出带有SugarTable特性的非抽象类
-            types.AddRange(assemblyTypes.Where(type =>
-                    !type.IsAbstract &&
-                    type.IsDefined(typeof(SugarTable), true) // true 表示从继承层次结构中搜索特性
-            ));
-        }
-
-        return types;
-    }
+    } 
+    
 }

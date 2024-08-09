@@ -55,7 +55,7 @@ public class CheckToken
             var user = tokenService.ParseTokenByCaChe(token);
             if (user == null || user.UserId <= 0)
             {
-                await ReturnUnauthorizedResult(context);
+                await Res401Async(context);
                 return;
             }
         }
@@ -66,7 +66,7 @@ public class CheckToken
                 // 进行身份校验
                 if (!tokenService.CheckToken(context)) 
                 {
-                    await ReturnUnauthorizedResult(context);
+                    await Res401Async(context);
                     return;
                 } 
                 //刷新用户的token过期时间
@@ -74,16 +74,22 @@ public class CheckToken
                 var User = tokenService.ParseToken(context);
                 if (User is null)
                 {
-                    await ReturnUnauthorizedResult(context);
+                    await Res401Async(context);
                     return;
                 }
                 // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
                 if (endpoint is RouteEndpoint routeEndpoint && !User.IsSuperAdmin)
                 {
                     // 获取路由模式
-                    //.Split("{")[0] 处理路由 api:SysUser:Delete:{id}
+                    //.Split("{")[0] 处理路由 api:SysUser:Delete:{id} 
                     var routePattern = routeEndpoint.RoutePattern.RawText?.Replace('/', ':').Split("{")[0];
-
+                    // 处理最后 ':' 的位置
+                    int lastColonIndex = routePattern.LastIndexOf(':');
+                    if (lastColonIndex != -1)
+                    {
+                        // 删除最后一个 ':' 后面的所有内容
+                        routePattern = routePattern.Substring(0, lastColonIndex);
+                    }
                     var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
 
                     var hapermissableAllowAnonymous = endpoint?.Metadata
@@ -111,7 +117,7 @@ public class CheckToken
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public async Task ReturnUnauthorizedResult(HttpContext context)
+    public async Task Res401Async(HttpContext context)
     {
         var apiResult = new ApiResult(StatusCodes.Status401Unauthorized, "提供的令牌无效或已过期，请重新登录", "");
         // 设置响应的Content-Type为application/json
