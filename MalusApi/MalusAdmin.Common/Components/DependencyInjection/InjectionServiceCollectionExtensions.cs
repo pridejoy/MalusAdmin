@@ -58,7 +58,7 @@ public static class InjectionServiceCollectionExtensions
                 if (!autoInjection.AutoRegister) return;
                 lifecyleType = autoInjection.Lifecycle;
             }
-            Console.WriteLine("注册方式："+lifecyleType.ToString() +"名称："+ serviceType.Name, "实例：" + implementationType.Name);
+            //Console.WriteLine("注册方式："+lifecyleType.ToString() +"名称："+ serviceType.Name, "实例：" + implementationType.Name);
             // 注册服务
             switch (lifecyleType)
             {

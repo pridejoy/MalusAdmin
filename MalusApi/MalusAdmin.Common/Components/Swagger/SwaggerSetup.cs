@@ -14,6 +14,10 @@ public static class SwaggerSetup
         // 默认配置
         Action<SwaggerGenOptions> defaultSetupAction = options =>
         {
+
+            options.SwaggerDoc("vdefault", new OpenApiInfo { Title = "Default API", Version = "v1" });
+
+
             var basePath = AppContext.BaseDirectory;
 
 
@@ -55,6 +59,21 @@ public static class SwaggerSetup
                 Name = "Token",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http
+            });
+
+
+            //判断接口归于哪个分组
+            options.DocInclusionPredicate((docName, apiDescription) =>
+            { 
+                if (docName == "vdefault")
+                {
+                    //当分组为NoGroup时，只要没加特性的都属于这个组
+                    return string.IsNullOrEmpty(apiDescription.GroupName);
+                }
+                else
+                {
+                    return apiDescription.GroupName == docName;
+                }
             });
         };
 

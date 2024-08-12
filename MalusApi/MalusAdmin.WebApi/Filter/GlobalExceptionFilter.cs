@@ -23,6 +23,7 @@ public class GlobalExceptionFilter : IExceptionFilter,IOrderedFilter
 
     public async void OnException(ExceptionContext context)
     { 
+        
         //日志记录
         _logger.LogError(context.Exception, context.Exception.Message);
         //异常进行记录 

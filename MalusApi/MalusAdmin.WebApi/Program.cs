@@ -1,3 +1,4 @@
+using MalusAdmin.Common.Components;
 using MalusAdmin.Servers.Hub;
 using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysUserButtonPermiss;
@@ -17,6 +18,8 @@ public class Program
         //  进行配置注册 | 添加静态文件读取(优先级比较高)
         AppSettings.AddConfigSteup(builder.Configuration);
 
+        //打印控制台显示
+        builder.Services.AddLogo();
         //进行选项注册
         builder.Services.AddConfigureSetup(builder.Configuration);
 
@@ -25,6 +28,7 @@ public class Program
 
         //HttpContext
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         // 添加过滤器
         builder.Services.AddControllers(options =>
@@ -77,10 +81,9 @@ public class Program
         // 添加EndpointsApiExplorer
         builder.Services.AddEndpointsApiExplorer();
 
-        var app = builder.Build();
-
+        var app = builder.Build(); 
         //写入静态类供全局获取
-        App.Instance = app.Services;
+        App.ServiceProvider = app.Services;
         App.Configuration = builder.Configuration;
 
         //ForwardedHeaders中间件会自动把反向代理服务器转发过来的X-Forwarded-For（客户端真实IP）以及X-Forwarded-Proto（客户端请求的协议）
@@ -94,36 +97,7 @@ public class Program
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                // 获取 IApiDescriptionGroupCollectionProvider 服务
-                var provider = App.GetService<IApiDescriptionGroupCollectionProvider>();
-
-                // 遍历所有API描述组
-                foreach (var descriptionGroup in provider.ApiDescriptionGroups.Items)
-                {
-                    // 为每个分组指定Swagger文档和标题
-                    c.SwaggerEndpoint($"/swagger/{descriptionGroup.GroupName}/swagger.json", descriptionGroup.GroupName);
-                }
-                //指定Swagger JSON文件的终结点，用于加载和显示API文档。
-                // 为默认分组设置端点
-                c.SwaggerEndpoint("/swagger/vdefault/swagger.json", "Default API");
-                //指定swagger文档的启动目录 。默认为swagger
-                //可以通过设置为空字符串来让Swagger UI直接在根路径下进行访问
-                //c.RoutePrefix = string.Empty;
-
-                //设置默认的接口文档展开方式，可选值包括None、List和Full。
-                //默认值为None，表示不展开接口文档；
-                //List表示只展开接口列表；
-                //Full表示展开所有接口详情
-                c.DocExpansion(DocExpansion.None); // 设置为完整模式 
-                c.DisplayRequestDuration();
-                c.EnablePersistAuthorization();
-
-                //c.UseRequestInterceptor("(request) => { return defaultRequestInterceptor(request); }");
-                //c.UseResponseInterceptor("(response) => { return defaultResponseInterceptor(response); }");
-            }); 
+            app.UseSwaggerExtension(); 
         }
 
 

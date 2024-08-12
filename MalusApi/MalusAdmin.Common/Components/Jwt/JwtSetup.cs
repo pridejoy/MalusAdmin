@@ -68,6 +68,7 @@ public static class JwtSetup
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
+            //验证token
             options.TokenValidationParameters = tokenValidationParameters;
             options.Events = jwtBearerEvents;
         });

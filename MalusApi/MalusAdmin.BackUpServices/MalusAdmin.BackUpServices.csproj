@@ -15,4 +15,8 @@
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.17" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
