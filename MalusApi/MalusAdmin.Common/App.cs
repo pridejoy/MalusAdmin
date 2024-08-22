@@ -27,6 +27,9 @@ public static class App
     /// </summary>
     public static HttpContext HttpContext => CatchOrDefault(() => ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext);
 
+
+    //public static HttpContext HttpContext
+
     /// <summary>
     /// 获取服务
     /// 最好只获取单例注入的服务

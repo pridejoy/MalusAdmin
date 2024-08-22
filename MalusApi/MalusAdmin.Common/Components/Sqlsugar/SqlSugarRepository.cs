@@ -6,8 +6,7 @@ namespace MalusAdmin.Common;
 /// SqlSugar 仓储实现类
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public class SqlSugarRepository<TEntity>
-    where TEntity : class, new()
+public class SqlSugarRepository<TEntity> where TEntity : class, new()
 {
     private readonly string[] UpdateIgnoreColumns = { "CreatedTime", "CreatedUserId", "CreatedUserName" };
 

@@ -7,6 +7,7 @@ namespace MalusAdmin.BackUpServices
         //文档地址:https://www.dotnetshare.com/guid/service/quartz-service.html
         public static async Task Main(string[] args)
         {
+            //为了解耦单独得做成服务
             var builder = WebApplication.CreateBuilder(args);
             //https://www.dotnetshare.com/guid/service/install/use-windows-server.html
             //指定项目可以部署为Windows服务

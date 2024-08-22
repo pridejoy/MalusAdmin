@@ -29,7 +29,7 @@
         
         // 定义一个客户端类来处理与Hub的通信
         var connection = new signalR.HubConnectionBuilder()
-            .withUrl("/hub?token=9b1bce5610314678ab22008a86d26e09") // 将"/yourHubUrl"替换为你的SignalR Hub的URL
+            .withUrl("wss://malusapi.dotnetshare.com/hub?token=9b1bce5610314678ab22008a86d26e09") // 将"/yourHubUrl"替换为你的SignalR Hub的URL
             .configureLogging(signalR.LogLevel.Information) // 可以设置日志级别
             .build();
 

@@ -8,12 +8,12 @@ using Quartz;
 
 namespace MalusAdmin.BackUpServices.QuartzJob
 {
-    public class HelloQuartzJob : IJob
+    public class HelloQuartzJob  
     {
         /// <summary>
         /// 当前任务执行的Core表达式
         /// </summary>
-        public static string Cron = "*/1 * * * * ?";
+        public static string Cron = "0 0/1 * * * ? ";
 
 
         public async Task Execute(IJobExecutionContext context)

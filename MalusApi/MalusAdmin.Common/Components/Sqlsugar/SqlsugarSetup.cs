@@ -1,5 +1,6 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using MalusAdmin.Common.Helper;
 using MalusAdmin.Common.Model;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -80,19 +81,19 @@ public static class SqlsugarSetup
             //查询事件 
             db.Aop.DataExecuted = (value, entity) => { };
 
-            db.Aop.OnError = ex =>
+            db.Aop.OnError = async ex =>
             {
                 if (ex.Parametres == null) return;
                 var originColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                var pars = db.Utilities.SerializeObject(
-                    ((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
+                var pars = db.Utilities.SerializeObject( ((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
                 Console.ForegroundColor = originColor;
                 Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars + " \r\n");
+                await IOFileHelper.Write("sqlerror/",ex.ToJson());
             };
 
             //监控所有超过1秒的Sql 
-            db.Aop.OnLogExecuted = (sql, p) =>
+            db.Aop.OnLogExecuted = async (sql, p) =>
             {
                 if (db.Ado.SqlExecutionTime.TotalSeconds > 1)
                 {
@@ -105,9 +106,8 @@ public static class SqlsugarSetup
                     //db.Ado.SqlStackTrace.MyStackTraceList[1].xxx 获取上层方法的信息
 
                     Console.WriteLine("【" + DateTime.Now + "——执行SQL超时】\r\n" + fileName + " \r\n");
-                }
-
-                ;
+                    await IOFileHelper.Write("sqlexcution/", fileName+sql+fileLine+FirstMethodName);
+                } ;
             };
 
 

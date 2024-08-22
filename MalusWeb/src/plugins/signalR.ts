@@ -2,7 +2,7 @@ import * as SignalR from '@microsoft/signalr';
 import { useNotification } from 'naive-ui';
 import { localStg } from '@/utils/storage';
 
-const baseURL = import.meta.env.VITE_SERVICE_BASE_URL;
+const baseURL = import.meta.env.VITE_SERVICE_Signarl_URL;
 const notification = useNotification();
 // 初始化SignalR对象
 const connection = new SignalR.HubConnectionBuilder()
