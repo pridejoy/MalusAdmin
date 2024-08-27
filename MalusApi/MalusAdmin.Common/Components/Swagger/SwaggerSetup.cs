@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Common.Components.Swagger;
+﻿using MalusAdmin.Common.Components;
+using MalusAdmin.Common.Components.Swagger;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -16,11 +17,9 @@ public static class SwaggerSetup
         {
 
             options.SwaggerDoc("vdefault", new OpenApiInfo { Title = "Default API", Version = "v1" });
-
-
+             
             var basePath = AppContext.BaseDirectory;
-
-
+             
             // 获取根目录下，所有 xml 完整路径（注：并不会获取二级目录下的文件）
             var directoryInfo = new DirectoryInfo(basePath);
             var xmls = directoryInfo
@@ -32,36 +31,9 @@ public static class SwaggerSetup
             // 添加注释文档
             foreach (var xml in xmls) options.IncludeXmlComments(xml, true);
 
-            //在 Swagger UI 中显示相应的安全要求信息（api有"Authorize" 特性，加上小锁）
-            options.OperationFilter<SecurityRequirementsOperationFilter>();
-
-            // api有"Authorize" 特性， header中添加 token 传递到后台
-            options.OperationFilter<TokenOperationFilter>();
-            // 添加授权要求
-
-
-            // 接入Jwt认证，swagger右上角加上手动可以添加token的按钮
-            //options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //{
-            //    Scheme = "Bearer",
-            //    BearerFormat = "JWT",
-            //    Description = "在下面输入框输入Token,不用输入Bearer[空格] ",
-            //    Name = "Authorization",
-            //    In = ParameterLocation.Header,
-            //    Type = SecuritySchemeType.Http
-            //});
-
-            options.AddSecurityDefinition("Token", new OpenApiSecurityScheme
-            {
-                Scheme = "Bearer",
-                BearerFormat = "Token",
-                Description = "在下面输入框输入GuidToken,不用输入",
-                Name = "Token",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http
-            });
-
-
+            //添加jwt的
+            options.AddJwtSwagger();
+             
             //判断接口归于哪个分组
             options.DocInclusionPredicate((docName, apiDescription) =>
             { 

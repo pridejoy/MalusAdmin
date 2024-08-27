@@ -1,0 +1,12 @@
+﻿[
+{
+  "WechatAppID": "wx7560d334dd837f70",
+  "WechatAppSecret": "你自己小程序的密钥",
+  "WechatAppName": "迷恋图库",
+  "UpTime": "2024-08-27T00:00:00",
+  "AccessToken": "1",
+  "ExpireTime": 1200,
+  "NextUpTime": "2024-08-27T00:00:00",
+  "Res": "初始化"
+}
+]

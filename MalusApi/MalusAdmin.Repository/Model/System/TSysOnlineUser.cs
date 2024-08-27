@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using SqlSugar;
 
-namespace MalusAdmin.Repository.Entity;
+namespace MalusAdmin.Models;
+
 
 [SugarTable("t_sys_onlineuser")]
 public class TSysOnlineUser

@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-public class AuthenticationOperationFilter : IOperationFilter
+public class JwtOperationFilter : IOperationFilter
 {
     /// <summary>
     /// Swagger UI 的配置代码。具体来说，它获取当前正在执行的 API 方法的所有自定义属性，

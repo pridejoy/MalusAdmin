@@ -1,7 +1,9 @@
 using MalusAdmin.Common.Model;
 using SqlSugar;
 
-namespace MalusAdmin.Entity;
+
+namespace MalusAdmin.Models;
+
 
 /// <summary>
 /// t_sys_login_log:数据库映射类

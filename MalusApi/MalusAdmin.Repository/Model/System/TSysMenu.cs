@@ -1,7 +1,7 @@
 using MalusAdmin.Common.Model;
 using SqlSugar;
 
-namespace MalusAdmin.Entity;
+namespace MalusAdmin.Models;
 
 /// <summary>
 /// t_sys_menu:数据库映射类

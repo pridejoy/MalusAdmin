@@ -40,6 +40,7 @@ public static class App
     {
         return ServiceProvider.GetService<T>();
     }
+
     /// <summary>
     /// 处理获取对象异常问题
     /// </summary>

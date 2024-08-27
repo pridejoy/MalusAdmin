@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using SqlSugar;
+namespace MalusAdmin.Models;
 
-namespace Models;
 
 /// <summary>
 ///操作日志表

@@ -1,7 +1,8 @@
 using MalusAdmin.Common.Model;
 using SqlSugar;
 
-namespace MalusAdmin.Entity;
+namespace MalusAdmin.Models;
+
 
 /// <summary>
 /// t_sys_user_button_permiss:数据库映射类

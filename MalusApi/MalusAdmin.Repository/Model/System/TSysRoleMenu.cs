@@ -1,7 +1,8 @@
 ﻿using MalusAdmin.Common.Model;
 using SqlSugar;
 
-namespace Models;
+namespace MalusAdmin.Models;
+
 
 /// <summary>
 /// 角色菜单表

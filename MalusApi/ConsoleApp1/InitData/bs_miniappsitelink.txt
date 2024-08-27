@@ -1,0 +1,10 @@
+[
+    {
+        "MiniAppSiteLinkId": 1,
+        "MiniAppId": "wx7560d334dd837f70",
+        "MiniAppUrl": "http://imagesoss.hunji.xyz/tuniao/sitelink/wx7560d334dd837f70.jpg",
+        "MiniAppName": "√‘¡µÕºø‚",
+        "Path": null,
+        "IsDeleted": false
+    }
+]
