@@ -11,7 +11,7 @@ public static class JwtHelper
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
-    public static string Create(Dictionary<string, string> Dic)
+    public static string Create(Dictionary<string, string> Dic,int ExpTime=0)
     {
         // 获取配置
         var issuer = AppSettings.Jwt.Issuer;
@@ -29,8 +29,7 @@ public static class JwtHelper
             new(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
             new(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
             //这个就是过期时间，目前是过期1000秒，可自定义，注意JWT有自己的缓冲过期时间
-            new(JwtRegisteredClaimNames.Exp,
-                $"{new DateTimeOffset(DateTime.Now.AddSeconds(1000)).ToUnixTimeSeconds()}"),
+            new(JwtRegisteredClaimNames.Exp, $"{ (ExpTime>0?ExpTime:new DateTimeOffset(DateTime.Now.AddDays(30)).ToUnixTimeSeconds())}"),
             new(JwtRegisteredClaimNames.Iss, issuer),
             new(JwtRegisteredClaimNames.Aud, audience)
         };

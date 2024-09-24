@@ -1,4 +1,4 @@
-﻿using MalusAdmin.Repository.Entity;
+﻿ 
 
 namespace MalusAdmin.Servers.WeatherForecast;
 

@@ -40,7 +40,7 @@ public partial class BsCustomer
     /// Default:
     /// Nullable:True
     /// </summary>
-    public string RealName { get; set; }
+    public string? RealName { get; set; }
 
     /// <summary>
     /// Desc:头像

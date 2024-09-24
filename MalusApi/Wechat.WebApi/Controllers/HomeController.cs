@@ -9,14 +9,12 @@ namespace Wechat.WebApi.Controllers;
 /// <summary>
 /// 测试服务
 /// </summary>
-[AllowAnonymous]
-[ApiExplorerSettings(GroupName = "小程序")]
-public class HomeController : ApiControllerBase
+[AllowAnonymous] 
+public class HomeController : WxApiControllerBase
 {
     private readonly IHttpContextAccessor _httpContextAccessor; 
 
-    public HomeController(   
-        IHttpContextAccessor httpContextAccessor)
+    public HomeController(IHttpContextAccessor httpContextAccessor)
     {  
         _httpContextAccessor = httpContextAccessor;
     }

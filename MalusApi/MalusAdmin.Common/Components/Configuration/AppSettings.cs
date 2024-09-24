@@ -41,6 +41,11 @@ public static class AppSettings
     /// </summary>
     public static bool IsDemo => Configuration["IsDemo"].ObjToBool();
 
+    /// <summary>
+    /// 是否展示swaggeer文档
+    /// </summary>
+    public static bool DisplaySwaggerDoc => Configuration["DisplaySwaggerDoc"].ObjToBool();
+
     public static string SqlServerConnection => Configuration["SqlServerConnection"];
 
     /// <summary>

@@ -4,6 +4,7 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,9 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MalusAdmin.Common\MalusAdmin.Common.csproj" />
-		<ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
-		<ProjectReference Include="..\Wechat.Servers\Wechat.Servers.csproj" />
+	  <ProjectReference Include="..\MalusAdmin.Common\MalusAdmin.Common.csproj" />
+	  <ProjectReference Include="..\Wechat.Servers\Wechat.Servers.csproj" />
 	</ItemGroup>
 
 </Project>

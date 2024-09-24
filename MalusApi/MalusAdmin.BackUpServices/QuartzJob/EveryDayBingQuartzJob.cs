@@ -20,7 +20,7 @@ namespace MalusAdmin.BackUpServices.QuartzJob
         /// 当前任务执行的Core表达式,meitian8dian1
         /// </summary>
         public static string Cron = "0 0 7 * * ? ";
-
+        //public static string Cron = "0 0/1 * * * ? ";
 
         public async Task Execute(IJobExecutionContext context)
         {

@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Repository.Entity;
+﻿
+using MalusAdmin.Models;
 using Microsoft.AspNetCore.SignalR;
 using ICacheService = MalusAdmin.Common.ICacheService;
 using Parser = UAParser.Parser;

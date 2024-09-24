@@ -95,7 +95,7 @@ public class Program
 
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (AppSettings.DisplaySwaggerDoc)
         {
             app.UseSwaggerExtension(); 
         }

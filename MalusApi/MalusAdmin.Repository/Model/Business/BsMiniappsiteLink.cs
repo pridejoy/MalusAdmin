@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SqlSugar;
 
-namespace Wallpaper.Net.Repository.Model
+namespace MalusAdmin.Models
 {
     ///<summary>
     ///小程序友链表

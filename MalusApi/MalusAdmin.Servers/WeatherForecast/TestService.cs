@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Repository.Entity;
+﻿
+using MalusAdmin.Models;
 using MalusAdmin.Servers.Hub;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;

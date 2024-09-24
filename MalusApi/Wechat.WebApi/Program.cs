@@ -1,9 +1,10 @@
-
 using MalusAdmin.Common;
-using MalusAdmin.Common.Components;
+using MalusAdmin.Common.Components; 
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Wechat.Servers;
+using Wechat.WebApi.Filter;
 
 namespace Wechat.WebApi
 {
@@ -29,7 +30,7 @@ namespace Wechat.WebApi
             builder.Services.AddControllers(options =>
             {
                 // 全局异常过滤
-                //options.Filters.Add<GlobalExceptionFilter>();
+                options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 //options.Filters.Add<RequestActionFilter>();
             })
@@ -38,7 +39,8 @@ namespace Wechat.WebApi
                 {
                     // 禁用默认模型验证过滤器
                     options.SuppressModelStateInvalidFilter = true;
-                });
+                })
+                .AddApiResult<CustomApiResultProvider>(); ;
 
             // 配置Json选项
             builder.Services.AddJsonOptions();
@@ -55,12 +57,14 @@ namespace Wechat.WebApi
             // 自动添加服务层
             builder.Services.AddAutoServices("Wechat.Servers");
             //添加授权
-            //builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization();
             // 添加自定义授权
-            //builder.Services.AddAuthorizationSetup();
+            builder.Services.AddAuthorizationSetup();
+
             // 替换默认 PermissionChecker
             //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-
+            builder.Services.AddSingleton<WeChatGetOpenId>();
+            builder.Services.AddSingleton<GalleryServiceController>();
             //builder.Services.AddSingleton<ITokenService, TokenService>();
             //builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
 
@@ -90,7 +94,7 @@ namespace Wechat.WebApi
             });
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (AppSettings.DisplaySwaggerDoc)
             {
                 app.UseSwaggerExtension();
             }

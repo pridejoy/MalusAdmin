@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using MalusAdmin.Common.Components.Token;
+using MalusAdmin.Models;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Models;
