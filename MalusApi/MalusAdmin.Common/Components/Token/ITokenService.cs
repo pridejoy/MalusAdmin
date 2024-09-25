@@ -34,4 +34,16 @@ public interface ITokenService
     /// <param name="tokenData"></param>
     /// <returns></returns>
     Task<TokenData> ParseTokenAsync(string token);
+
+    /// <summary>
+    /// 获取请求头的Token
+    /// </summary>
+    /// <returns></returns>
+    Task<string> GetHeadersToken();
+
+    /// <summary>
+    /// 获取当前登录的用户信息
+    /// </summary>
+    /// <returns></returns>
+    Task<TokenData> GetCurrentUserInfo();
 }

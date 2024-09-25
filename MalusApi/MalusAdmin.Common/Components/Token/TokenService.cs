@@ -1,5 +1,4 @@
-﻿using MalusAdmin.Common.Components.Token;
-
+﻿ 
 namespace MalusAdmin.Common;
 
 public class TokenService : ITokenService
@@ -89,5 +88,23 @@ public class TokenService : ITokenService
             return _httpContextAccessor.HttpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ", "");
         return "";
     }
-     
+
+
+    /// <summary>
+    /// 获取当前登录的用户信息
+    /// </summary>
+    /// <returns></returns>
+    public async Task<TokenData> GetCurrentUserInfo()
+    {
+        var token =await GetHeadersToken();
+        try
+        {
+            return await ParseTokenAsync(token);
+        }
+        catch (Exception)
+        {
+            return new TokenData();
+        }
+       
+    }
 }

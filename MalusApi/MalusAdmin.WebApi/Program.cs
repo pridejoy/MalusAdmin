@@ -59,8 +59,8 @@ public class Program
         // 自动添加服务层
         builder.Services.AddAutoServices("MalusAdmin.Servers");
 
-        // 添加jwt认证
-        //builder.Services.AddJwtSetup();
+        //注册项目所需要的服务
+        builder.Services.AddSomeServices();
 
         //添加授权
         //builder.Services.AddAuthorization();

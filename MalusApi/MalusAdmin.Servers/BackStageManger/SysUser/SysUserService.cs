@@ -1,4 +1,4 @@
-﻿using MalusAdmin.Common.Components.Token;
+﻿ 
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
@@ -14,21 +14,19 @@ public class SysUserService : ISysUserService
     private readonly SysRoleMenuService _sysRoleMenuService;
     private readonly SysRolePermissionService _sysRolePermissionService;
     private readonly SqlSugarRepository<TSysUser> _sysUserRep; // 仓储
-    private readonly ITokenService _TokenService;
-    private readonly IUserContextService _userContext;
+    private readonly ITokenService _TokenService; 
 
     public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
         ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
         SysMenuService sysMenuService, SysRolePermissionService sysRolePermissionService,
-        IHttpContextAccessor httpContext , IUserContextService userContextService)
+        IHttpContextAccessor httpContext  )
     {
         _sysUserRep = sysUserRep;
         _TokenService = tokenService;
         _HttpContext = httpContext;
         _sysRoleMenuService = sysRoleMenuService;
         _sysMenuService = sysMenuService;
-        _sysRolePermissionService = sysRolePermissionService;
-        _userContext = userContextService;
+        _sysRolePermissionService = sysRolePermissionService; 
     }
 
     /// <summary>
@@ -78,13 +76,14 @@ public class SysUserService : ISysUserService
     /// </summary>
     /// <returns></returns>
     public async Task<GetUserInfoOut> GetUserInfo()
-    {
+    { 
+        var user =await _TokenService.GetCurrentUserInfo();
         return new GetUserInfoOut
         {
-            userId = _userContext.TokenData.UserId,
-            userName = _userContext.TokenData.UserName,
-            roles = _userContext.TokenData.UserRolesId.Select(x => x.ToString()).ToList(),
-            buttons = _userContext.TokenData.UserPermiss
+            userId = user.UserId,
+            userName = user.UserName,
+            roles = user.UserRolesId.Select(x => x.ToString()).ToList(),
+            buttons = user.UserPermiss
         };
     }
 
@@ -157,17 +156,18 @@ public class SysUserService : ISysUserService
     /// <returns></returns>
     public async Task<UserMenuOut> GetUserMenu()
     {
+        var user = await _TokenService.GetCurrentUserInfo();
         var Out = new UserMenuOut();
 
         ////获取当前用户的菜单权限
-        var menuid = await _sysRoleMenuService.RoleUserMenu(_userContext.TokenData.UserRolesId);
+        var menuid = await _sysRoleMenuService.RoleUserMenu(user.UserRolesId);
 
         //获取所有的菜单权限
         var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
             .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
 
         //超级管理官
-        if (_userContext.TokenData.IsSuperAdmin)
+        if (user.IsSuperAdmin)
             menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                 .ToTree(x => x.Children, x => x.ParentId, 0);
         var res = new List<UserMenu>();

@@ -1,4 +1,4 @@
-﻿using MalusAdmin.Common.Components.Token;
+﻿ 
 using MalusAdmin.Servers.SysRolePermission;
 using MalusAdmin.Servers.SysRolePermission.Dto;
 using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
@@ -15,16 +15,16 @@ public class SysRolePermissionService : ISysRolePermission
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly ICacheService _cacheService;
     private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep; // 仓储 
-    private readonly IUserContextService _userContext;//
+    private readonly ITokenService _tokenService;
 
     public SysRolePermissionService(SqlSugarRepository<TSysRolePermission> sysuserpermissionRep,
         ICacheService cacheService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,
-        IUserContextService userContextService)
+        ITokenService tokenService)
     {
         _cacheService = cacheService;
         _sysuserpermissionRep = sysuserpermissionRep;
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
-        _userContext = userContextService;
+        _tokenService = tokenService;
     }
 
 
@@ -36,7 +36,8 @@ public class SysRolePermissionService : ISysRolePermission
     {
         // 获取当前用户-角色 的接口权限   
         var UserRolePer = new List<TSysRolePermission>();
-        _userContext.TokenData.UserRolesId.ForEach(
+        var user= await _tokenService.GetCurrentUserInfo();
+        user.UserRolesId.ForEach(
             async x => { UserRolePer.AddRange(await GetRoleButtonPermiss(x)); });
         return UserRolePer.Any(x => x.UserPermiss == RouthPath);
     }

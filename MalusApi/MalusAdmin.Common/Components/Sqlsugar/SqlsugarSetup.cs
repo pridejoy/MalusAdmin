@@ -49,13 +49,14 @@ public static class SqlsugarSetup
             {
                 try
                 {
-
+                    var tokenserver = App.GetService<ITokenService>();
+                    var user = tokenserver.GetCurrentUserInfo().Result;
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
-                        var user = App.GetService<IUserContextService>();
+                        
                         if (entityInfo.PropertyName == "SysCreateUser")
                         { 
-                            if (user != null) entityInfo.SetValue(user.TokenData.UserId);
+                            if (user != null) entityInfo.SetValue(user.UserId);
                         }
                         else if (entityInfo.PropertyName == "DeptId" && entityInfo.EntityName != "TSysUser")
                         { 
@@ -67,10 +68,10 @@ public static class SqlsugarSetup
                     }
                     else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
                     {
-                        var user = App.GetService<IUserContextService>();
+                         
                         if (entityInfo.PropertyName == "SysUpdateUser")
                         { 
-                            if (user != null) entityInfo.SetValue(user.TokenData.UserId);
+                            if (user != null) entityInfo.SetValue(user.UserId);
                         }
                     }
                 }

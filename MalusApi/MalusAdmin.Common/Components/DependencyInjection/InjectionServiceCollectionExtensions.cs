@@ -31,22 +31,16 @@ public static class InjectionServiceCollectionExtensions
             foreach (var serviceInterface in serviceInterfaces)
                 RegistrationType(services, serviceInterface, serviceType);
         }
-        RegistrationSome(services);
+
+       
+
         return services;
 
-        //注册项目所需的
-        static void RegistrationSome(IServiceCollection services)
-        {
-
-            services.AddSingleton<ITokenService, TokenService>();
-            services.AddTransient<IUserContextService, UserContextService>();
-            //services.AddScoped<ISysRolePermission, SysRolePermissionService>();
-            //services.AddTransient(TestTwoSevices);
-        }
+        
 
 
             // 实现自定义注册
-            static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
+       static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
         {
             // 设置默认生命周期为 Transient
             var lifecyleType = ServiceLifetime.Transient;

@@ -1,23 +1,23 @@
 ﻿
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 
-namespace MalusAdmin.Common;
+//namespace MalusAdmin.Common;
 
-/// <summary>
-/// 用户上下文服务，用于获取当前的用户信息
-/// </summary>
-public class UserContextService : IUserContextService
-{
-    public TokenData TokenData { get;}
+///// <summary>
+///// 用户上下文服务，用于获取当前的用户信息
+///// </summary>
+//public class UserContextService : IUserContextService
+//{
+//    public TokenData TokenData { get;}
 
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ITokenService _tokenService;
+//    private readonly IHttpContextAccessor _httpContextAccessor;
+//    private readonly ITokenService _tokenService;
 
-    public UserContextService(IHttpContextAccessor httpContextAccessor, ITokenService tokenService)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        _tokenService = tokenService;
-        TokenData =  new TokenData();
-    }
-}
+//    public UserContextService(IHttpContextAccessor httpContextAccessor, ITokenService tokenService)
+//    {
+//        _httpContextAccessor = httpContextAccessor;
+//        _tokenService = tokenService;
+//        TokenData =  new TokenData();
+//    }
+//}
 

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using MalusAdmin.Common.Components.Token;
 using MalusAdmin.Models;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -24,16 +23,14 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
 {
     private readonly ISqlSugarClient _db;
 
-    private readonly ITokenService _tokenService;
-    private readonly IUserContextService _userContext;
+    private readonly ITokenService _tokenService; 
     //private readonly IEventPublisher _publisher;
     //private readonly ICurrentUserService _currentUser; 
 
-    public RequestActionFilter(ISqlSugarClient sqldb, ITokenService tokenService, IUserContextService userContextService)
+    public RequestActionFilter(ISqlSugarClient sqldb, ITokenService tokenService)
     {
         _db = sqldb;
         _tokenService = tokenService;
-        _userContext = userContextService;
     }
 
     //筛选器按属性的升序排序 Order 执行 ,具有较低数值 Order 的同步筛选器将在具有较高值的
@@ -65,8 +62,9 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
             ? Parser.GetDefault().Parse(headers["User-Agent"])
             : null;
 
-        var userId = _userContext.TokenData?.UserId.ToString() ?? "";
-        var userAccount = _userContext.TokenData?.UserAccount ?? "";
+        var user = await _tokenService.GetCurrentUserInfo();
+        var userId = user?.UserId.ToString() ?? "";
+        var userAccount = user?.UserAccount ?? "";
         var requestIp = httpContext.GetRequestIPv4();
         var requestUrl = httpRequest.Path;
         var requestMethod = httpRequest.Method;
