@@ -51,6 +51,7 @@ public class SysUserService : ISysUserService
         {
             UserRolePer.AddRange(_sysRolePermissionService.GetRoleButtonPermiss(x).Result);
         });
+
         var button = UserRolePer.DistinctBy(x => x.UserPermiss).Select(x => x.UserPermiss).ToList();
 
         if (user.IsSuperAdmin)
@@ -66,8 +67,7 @@ public class SysUserService : ISysUserService
             UserPermiss = button
         };
 
-        //_TokenService.RemoveCheckToken(tokenData.UserId);
-        var UserToken = _TokenService.GenerateToken(tokenData);
+        var UserToken =await _TokenService.GenerateTokenAsync(tokenData);
 
 
         return new SysUserLoginOut { Id = user.Id, Name = user.Name, Token = UserToken };

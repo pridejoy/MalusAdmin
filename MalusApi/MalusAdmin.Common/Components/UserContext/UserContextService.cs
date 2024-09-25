@@ -17,7 +17,7 @@ public class UserContextService : IUserContextService
     {
         _httpContextAccessor = httpContextAccessor;
         _tokenService = tokenService;
-        TokenData =  _tokenService.ParseToken(_httpContextAccessor.HttpContext);
+        TokenData =  new TokenData();
     }
 }
 

@@ -49,6 +49,80 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'business',
+    path: '/business',
+    component: 'layout.base',
+    meta: {
+      title: 'business',
+      i18nKey: 'route.business'
+    },
+    children: [
+      {
+        name: 'business_calen',
+        path: '/business/calen',
+        component: 'view.business_calen',
+        meta: {
+          title: 'business_calen',
+          i18nKey: 'route.business_calen'
+        }
+      },
+      {
+        name: 'business_config',
+        path: '/business/config',
+        component: 'view.business_config',
+        meta: {
+          title: 'business_config',
+          i18nKey: 'route.business_config'
+        }
+      },
+      {
+        name: 'business_customer',
+        path: '/business/customer',
+        component: 'view.business_customer',
+        meta: {
+          title: 'business_customer',
+          i18nKey: 'route.business_customer'
+        }
+      },
+      {
+        name: 'business_order',
+        path: '/business/order',
+        component: 'view.business_order',
+        meta: {
+          title: 'business_order',
+          i18nKey: 'route.business_order'
+        }
+      },
+      {
+        name: 'business_sales',
+        path: '/business/sales',
+        component: 'view.business_sales',
+        meta: {
+          title: 'business_sales',
+          i18nKey: 'route.business_sales'
+        }
+      }
+    ]
+  },
+  {
+    name: 'cache',
+    path: '/cache',
+    component: 'layout.base$view.cache',
+    meta: {
+      title: 'cache',
+      i18nKey: 'route.cache'
+    }
+  },
+  {
+    name: 'dic',
+    path: '/dic',
+    component: 'layout.base$view.dic',
+    meta: {
+      title: 'dic',
+      i18nKey: 'route.dic'
+    }
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -104,24 +178,6 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
-        name: 'function_online-user',
-        path: '/function/online-user',
-        component: 'view.function_online-user',
-        meta: {
-          title: 'function_online-user',
-          i18nKey: 'route.function_online-user'
-        }
-      },
-      {
-        name: 'function_oplog',
-        path: '/function/oplog',
-        component: 'view.function_oplog',
-        meta: {
-          title: 'function_oplog',
-          i18nKey: 'route.function_oplog'
-        }
-      },
-      {
         name: 'function_request',
         path: '/function/request',
         component: 'view.function_request',
@@ -137,15 +193,6 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'function_super-page',
           i18nKey: 'route.function_super-page'
-        }
-      },
-      {
-        name: 'function_system',
-        path: '/function/system',
-        component: 'view.function_system',
-        meta: {
-          title: 'function_system',
-          i18nKey: 'route.function_system'
         }
       },
       {
@@ -432,6 +479,53 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       }
     ]
+  },
+  {
+    name: 'sysmanage',
+    path: '/sysmanage',
+    component: 'layout.base',
+    meta: {
+      title: 'sysmanage',
+      i18nKey: 'route.sysmanage'
+    },
+    children: [
+      {
+        name: 'sysmanage_online-user',
+        path: '/sysmanage/online-user',
+        component: 'view.sysmanage_online-user',
+        meta: {
+          title: 'sysmanage_online-user',
+          i18nKey: 'route.sysmanage_online-user'
+        }
+      },
+      {
+        name: 'sysmanage_oplog',
+        path: '/sysmanage/oplog',
+        component: 'view.sysmanage_oplog',
+        meta: {
+          title: 'sysmanage_oplog',
+          i18nKey: 'route.sysmanage_oplog'
+        }
+      },
+      {
+        name: 'sysmanage_systemstatus',
+        path: '/sysmanage/systemstatus',
+        component: 'view.sysmanage_systemstatus',
+        meta: {
+          title: 'sysmanage_systemstatus',
+          i18nKey: 'route.sysmanage_systemstatus'
+        }
+      }
+    ]
+  },
+  {
+    name: 'token',
+    path: '/token',
+    component: 'layout.base$view.token',
+    meta: {
+      title: 'token',
+      i18nKey: 'route.token'
+    }
   },
   {
     name: 'user-center',

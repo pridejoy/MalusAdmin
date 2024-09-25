@@ -47,8 +47,10 @@ public class SysMenuService
     /// <returns></returns>
     public async Task<bool> Add(MenuAddandUpIn input)
     {
-        var isExist = await _sysMenuRep.Where(x => x.MenuType == input.MenuType).AnyAsync();
-        if (isExist) throw ResultHelper.Exception207Bad("已存在当前角色");
+        var isExist = await _sysMenuRep.
+            Where(x =>  x.RoutePath==input.RoutePath||
+            x.RouteName==input.RouteName||x.MenuName==input.RouteName).AnyAsync();
+        if (isExist) throw ResultHelper.Exception207Bad("当前菜单已存在");
         var entity = input.Adapt<TSysMenu>();
         return await _sysMenuRep.InsertReturnIdentityAsync(entity) > 0;
     }

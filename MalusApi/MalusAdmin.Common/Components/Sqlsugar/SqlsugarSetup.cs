@@ -14,8 +14,8 @@ public static class SqlsugarSetup
         var ConnectionString = AppSettings.SqlServerConnection;
 
         //注释这行，我是从本地文件读取的
-        //if (!AppSettings.IsDemo)
-        //    ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
+        if (!AppSettings.IsDemo)
+            ConnectionString = File.ReadAllText("D:\\MalusAdmindb.txt");
 
         var configConnection = new ConnectionConfig
         {

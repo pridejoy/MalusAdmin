@@ -32,7 +32,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
         var token = httpContext?.Request.Query["token"];
 
         var tokenService = App.GetService<ITokenService>();
-        var user = tokenService.ParseTokenByCaChe(token);
+        var user =await tokenService.ParseTokenAsync(token);
         var client = Parser.GetDefault().Parse(httpContext.Request.Headers["User-Agent"]);
 
 
@@ -64,6 +64,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
         await Console.Out.WriteLineAsync("用户断开连接:" + Context.ConnectionId);
 
         await _rep.DeleteAsync(u => u.ConnectionId == Context.ConnectionId);
+
         _cacheService.Remove(Constant.Cache.OnlineUser + Context.ConnectionId);
 
         await base.OnDisconnectedAsync(exception);

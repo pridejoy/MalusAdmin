@@ -1,5 +1,4 @@
-﻿
-namespace MalusAdmin.Common;
+﻿namespace MalusAdmin.Common;
 
 /// <summary>
 /// 用户上下文服务接口

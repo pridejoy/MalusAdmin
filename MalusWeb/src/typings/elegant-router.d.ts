@@ -25,17 +25,22 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "business": "/business";
+    "business_calen": "/business/calen";
+    "business_config": "/business/config";
+    "business_customer": "/business/customer";
+    "business_order": "/business/order";
+    "business_sales": "/business/sales";
+    "cache": "/cache";
+    "dic": "/dic";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
     "function_hide-child_three": "/function/hide-child/three";
     "function_hide-child_two": "/function/hide-child/two";
     "function_multi-tab": "/function/multi-tab";
-    "function_online-user": "/function/online-user";
-    "function_oplog": "/function/oplog";
     "function_request": "/function/request";
     "function_super-page": "/function/super-page";
-    "function_system": "/function/system";
     "function_tab": "/function/tab";
     "function_toggle-auth": "/function/toggle-auth";
     "home": "/home";
@@ -64,6 +69,11 @@ declare module "@elegant-router/types" {
     "plugin_print": "/plugin/print";
     "plugin_swiper": "/plugin/swiper";
     "plugin_video": "/plugin/video";
+    "sysmanage": "/sysmanage";
+    "sysmanage_online-user": "/sysmanage/online-user";
+    "sysmanage_oplog": "/sysmanage/oplog";
+    "sysmanage_systemstatus": "/sysmanage/systemstatus";
+    "token": "/token";
     "user-center": "/user-center";
   };
 
@@ -104,12 +114,17 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "business"
+    | "cache"
+    | "dic"
     | "function"
     | "home"
     | "login"
     | "manage"
     | "multi-menu"
     | "plugin"
+    | "sysmanage"
+    | "token"
     | "user-center"
   >;
 
@@ -133,15 +148,19 @@ declare module "@elegant-router/types" {
     | "500"
     | "login"
     | "about"
+    | "business_calen"
+    | "business_config"
+    | "business_customer"
+    | "business_order"
+    | "business_sales"
+    | "cache"
+    | "dic"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
     | "function_multi-tab"
-    | "function_online-user"
-    | "function_oplog"
     | "function_request"
     | "function_super-page"
-    | "function_system"
     | "function_tab"
     | "function_toggle-auth"
     | "home"
@@ -161,6 +180,10 @@ declare module "@elegant-router/types" {
     | "plugin_print"
     | "plugin_swiper"
     | "plugin_video"
+    | "sysmanage_online-user"
+    | "sysmanage_oplog"
+    | "sysmanage_systemstatus"
+    | "token"
     | "user-center"
   >;
 

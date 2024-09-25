@@ -55,6 +55,8 @@ MalusAdmin 提供了以下演示和文档资源：
 - Naive UI 文档：[https://www.naiveui.com](https://www.naiveui.com/zh-CN/os-theme/docs/installation)
 - SqlSugar 文档：[https://www.donet5.com](https://www.donet5.com/Home/Doc?typeId=1215)
 
+PS: 不要乱改密码、权限、删除数据~
+
 ## 演示
 
 直接手机端上完美的运行，一套代码三端俱全。

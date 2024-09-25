@@ -9,3 +9,4 @@ export * from './sysrolemenu';
 export * from './sysdata';
 export * from './syslog';
 export * from './online-user';
+export * from './wechatconfig';

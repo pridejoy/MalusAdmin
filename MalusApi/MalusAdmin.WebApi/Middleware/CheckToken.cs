@@ -28,86 +28,83 @@ public class CheckToken
         // 获取当前请求的Endpoint
         var endpoint = context.GetEndpoint();
 
-        if (endpoint is null)
-        {
-            await _next(context);
-            return;
-        }
-         
-        // 检查Endpoint的元数据中是否包含AllowAnonymous特性
+        //一些禁用的资源放行检查
+        var DisplayNameStr = new string[] {
+            "hub"//
+        };
+
+        // 检查Endpoint的元数据中是否包含AllowAnonymous特性 
         var hasAllowAnonymous = endpoint.Metadata
             .OfType<IAllowAnonymous>()
             .Any();
 
-        var tokenService = App.GetService<ITokenService>();
-        if (hasAllowAnonymous)
+        //静态资源直接放行 
+        //禁用检查的资源放行
+        //匿名访问的资源直接放行
+        if (endpoint is null|| DisplayNameStr.Contains(endpoint.DisplayName)|| hasAllowAnonymous)
         {
-            // 动作允许匿名访问 
             await _next(context);
             return;
         }
+           
+        //权限检查
+        var token = context.Request.Query["token"].ToString();
 
-        var token = context.Request.Query["token"]; 
-        var hasHub = endpoint.DisplayName.Contains("hub");
+        //当前token是否在缓存中
+        var tokenService = App.GetService<ITokenService>();
 
-        if (hasHub)
-        { 
-            var user = tokenService.ParseTokenByCaChe(token);
-            if (user == null || user.UserId <= 0)
+        //是否过期
+        var validataToken =await tokenService.ValidateToken(token);
+        if (validataToken)
+        {
+            await Res401Async(context);
+            return;
+        }
+
+        //解析是否正确
+        using (var scope = _serviceScopeFactory.CreateScope())
+        {
+             
+            //刷新用户的token过期时间
+            await tokenService.RefreshTokenAsync(token);
+
+            var User =await tokenService.ParseTokenAsync(token);
+            if (User is null)
             {
                 await Res401Async(context);
                 return;
             }
-        }
-        else
-        {
-            using(var scope = _serviceScopeFactory.CreateScope())
+            // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
+            if (endpoint is RouteEndpoint routeEndpoint && !User.IsSuperAdmin)
             {
-                // 进行身份校验
-                if (!tokenService.CheckToken(context)) 
+                // 获取路由模式
+                //.Split("{")[0] 处理路由 api:SysUser:Delete:{id} 
+                var routePattern = routeEndpoint.RoutePattern.RawText?.Replace('/', ':').Split("{")[0];
+                // 处理最后 ':' 的位置
+                int lastColonIndex = routePattern.LastIndexOf(':');
+                if (lastColonIndex != -1)
                 {
-                    await Res401Async(context);
-                    return;
-                } 
-                //刷新用户的token过期时间
-                tokenService.RefreshToken(context); 
-                var User = tokenService.ParseToken(context);
-                if (User is null)
-                {
-                    await Res401Async(context);
-                    return;
+                    // 删除最后一个 ':' 后面的所有内容
+                    routePattern = routePattern.Substring(0, lastColonIndex);
                 }
-                // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
-                if (endpoint is RouteEndpoint routeEndpoint && !User.IsSuperAdmin)
+                var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
+
+                var hapermissableAllowAnonymous = endpoint?.Metadata
+                    .OfType<PermissionAttribute>()
+                    .Any() ?? true;
+                if (hapermissableAllowAnonymous)
                 {
-                    // 获取路由模式
-                    //.Split("{")[0] 处理路由 api:SysUser:Delete:{id} 
-                    var routePattern = routeEndpoint.RoutePattern.RawText?.Replace('/', ':').Split("{")[0];
-                    // 处理最后 ':' 的位置
-                    int lastColonIndex = routePattern.LastIndexOf(':');
-                    if (lastColonIndex != -1)
+                    // 权限检查  
+                    if (!await rolePermissService.HavePermission(routePattern))
                     {
-                        // 删除最后一个 ':' 后面的所有内容
-                        routePattern = routePattern.Substring(0, lastColonIndex);
+                        await Res403Async(context);
+                        return;
                     }
-                    var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
-
-                    var hapermissableAllowAnonymous = endpoint?.Metadata
-                        .OfType<PermissionAttribute>()
-                        .Any() ?? true;
-                    if (hapermissableAllowAnonymous)
-                    {
-                        // 权限检查  
-                        if (!await rolePermissService.HavePermission(routePattern))
-                        {
-                            await Res403Async(context);
-                            return;
-                        } 
-                    }
-
                 }
+
             }
         }
+        
 
         await _next(context);
     }
