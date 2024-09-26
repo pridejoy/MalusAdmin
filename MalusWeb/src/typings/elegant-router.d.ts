@@ -31,8 +31,6 @@ declare module "@elegant-router/types" {
     "business_customer": "/business/customer";
     "business_order": "/business/order";
     "business_sales": "/business/sales";
-    "cache": "/cache";
-    "dic": "/dic";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -69,11 +67,16 @@ declare module "@elegant-router/types" {
     "plugin_print": "/plugin/print";
     "plugin_swiper": "/plugin/swiper";
     "plugin_video": "/plugin/video";
+    "syslog": "/syslog";
+    "syslog_logerr": "/syslog/logerr";
+    "syslog_logop": "/syslog/logop";
+    "syslog_logvis": "/syslog/logvis";
     "sysmanage": "/sysmanage";
+    "sysmanage_cache": "/sysmanage/cache";
+    "sysmanage_config": "/sysmanage/config";
+    "sysmanage_dic": "/sysmanage/dic";
     "sysmanage_online-user": "/sysmanage/online-user";
-    "sysmanage_oplog": "/sysmanage/oplog";
     "sysmanage_systemstatus": "/sysmanage/systemstatus";
-    "token": "/token";
     "user-center": "/user-center";
   };
 
@@ -115,16 +118,14 @@ declare module "@elegant-router/types" {
     | "500"
     | "about"
     | "business"
-    | "cache"
-    | "dic"
     | "function"
     | "home"
     | "login"
     | "manage"
     | "multi-menu"
     | "plugin"
+    | "syslog"
     | "sysmanage"
-    | "token"
     | "user-center"
   >;
 
@@ -153,8 +154,6 @@ declare module "@elegant-router/types" {
     | "business_customer"
     | "business_order"
     | "business_sales"
-    | "cache"
-    | "dic"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
@@ -180,10 +179,14 @@ declare module "@elegant-router/types" {
     | "plugin_print"
     | "plugin_swiper"
     | "plugin_video"
+    | "syslog_logerr"
+    | "syslog_logop"
+    | "syslog_logvis"
+    | "sysmanage_cache"
+    | "sysmanage_config"
+    | "sysmanage_dic"
     | "sysmanage_online-user"
-    | "sysmanage_oplog"
     | "sysmanage_systemstatus"
-    | "token"
     | "user-center"
   >;
 

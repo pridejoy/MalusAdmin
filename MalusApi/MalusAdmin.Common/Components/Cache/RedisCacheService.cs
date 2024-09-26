@@ -14,6 +14,7 @@ public class RedisCacheService : ICacheService
         if (!AppSettings.IsDemo)
             //注释这行，我是从本地文件读取的
             redisconfig = File.ReadAllText("D:\\redisconfig.txt");
+
         cli = new RedisClient(redisconfig);
         cli.Serialize = obj => JsonConvert.SerializeObject(obj);
         cli.Deserialize = (json, type) => JsonConvert.DeserializeObject(json, type);
@@ -95,7 +96,7 @@ public class RedisCacheService : ICacheService
     /// 获取所有缓存键
     /// </summary>
     /// <returns></returns>
-    public List<string> GetKeys()
+    public List<string> GetAllKeys()
     {
         return cli.Keys("*").ToList();
     }
@@ -206,6 +207,16 @@ public class RedisCacheService : ICacheService
     public T Get<T>(string key)
     {
         return cli.Get<T>(key);
+    }
+
+    /// <summary>
+    /// 获取缓存对象string
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public string GetKeyString(string key)
+    {
+        return cli.Get(key);
     }
 
     /// <summary>

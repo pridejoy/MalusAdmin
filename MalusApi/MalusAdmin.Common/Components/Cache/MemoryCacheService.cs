@@ -37,6 +37,16 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
+    /// 获取缓存对象string
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public string GetKeyString(string key)
+    {
+        return _cache.Get(key).ToJson();
+    }
+
+    /// <summary>
     /// 获取缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
@@ -396,7 +406,7 @@ public class MemoryCacheService : ICacheService
     public long RemoveByPattern(string pattern)
     {
         if (string.IsNullOrEmpty(pattern)) throw new ArgumentNullException(nameof(pattern));
-        var cacheKeys = GetKeys();
+        var cacheKeys = GetAllKeys();
         if (cacheKeys.Any() == false) return 0;
 
         var keys = cacheKeys.Where(k => Regex.IsMatch(k, pattern)).ToArray();
@@ -413,7 +423,7 @@ public class MemoryCacheService : ICacheService
     public async Task<long> RemoveByPatternAsync(string pattern)
     {
         if (string.IsNullOrEmpty(pattern)) throw new ArgumentNullException(nameof(pattern));
-        var cacheKeys = GetKeys();
+        var cacheKeys = GetAllKeys();
         if (cacheKeys.Any() == false) return 0L;
 
         var keys = cacheKeys.Where(k => Regex.IsMatch(k, pattern)).ToArray();
@@ -426,7 +436,7 @@ public class MemoryCacheService : ICacheService
     /// 获取所有缓存键
     /// </summary>
     /// <returns></returns>
-    public List<string> GetKeys()
+    public List<string> GetAllKeys()
     {
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
         var entries = _cache.GetType().GetField("_entries", flags).GetValue(_cache);

@@ -32,31 +32,31 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
       key: 'index',
       title: $t('common.index'),
       align: 'center',
-      width: 64
+      width: 48
     },
     {
       key: 'account',
       title: $t('page.manage.user.userName'),
       align: 'center',
-      minWidth: 100
+      minWidth: 70
     },
     {
       key: 'name',
       title: $t('page.manage.user.nickName'),
       align: 'center',
-      minWidth: 100
+      minWidth: 70
     },
     {
       key: 'tel',
       title: $t('page.manage.user.userPhone'),
       align: 'center',
-      width: 120
+      width: 130
     },
     {
       key: 'email',
       title: $t('page.manage.user.userEmail'),
       align: 'center',
-      minWidth: 200
+      minWidth: 130
     },
     {
       key: 'status',
@@ -80,7 +80,7 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 200,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
@@ -96,6 +96,9 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
               )
             }}
           </NPopconfirm>
+          <NButton type="warning" ghost size="small" onClick={() => resetPassword(row.id)}>
+            重置密码
+          </NButton>
         </div>
       )
     }
@@ -130,6 +133,11 @@ function handleDelete(id: number) {
       getData();
     }
   });
+}
+
+function resetPassword(id: number) {
+  // request
+  console.log(id);
 }
 
 function edit(id: number) {

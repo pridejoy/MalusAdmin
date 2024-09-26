@@ -163,11 +163,8 @@ const routeMap: RouteMap = {
   "function_hide-child_three": "/function/hide-child/three",
   "function_hide-child_two": "/function/hide-child/two",
   "function_multi-tab": "/function/multi-tab",
-  "function_online-user": "/function/online-user",
-  "function_oplog": "/function/oplog",
   "function_request": "/function/request",
   "function_super-page": "/function/super-page",
-  "function_system": "/function/system",
   "function_tab": "/function/tab",
   "function_toggle-auth": "/function/toggle-auth",
   "home": "/home",
@@ -196,6 +193,13 @@ const routeMap: RouteMap = {
   "plugin_print": "/plugin/print",
   "plugin_swiper": "/plugin/swiper",
   "plugin_video": "/plugin/video",
+  "sysmanage": "/sysmanage",
+  "sysmanage_cache": "/sysmanage/cache",
+  "sysmanage_dic": "/sysmanage/dic",
+  "sysmanage_online-user": "/sysmanage/online-user",
+  "sysmanage_oplog": "/sysmanage/oplog",
+  "sysmanage_systemstatus": "/sysmanage/systemstatus",
+  "sysmanage_token": "/sysmanage/token",
   "user-center": "/user-center"
 };
 

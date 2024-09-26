@@ -105,24 +105,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
-    name: 'cache',
-    path: '/cache',
-    component: 'layout.base$view.cache',
-    meta: {
-      title: 'cache',
-      i18nKey: 'route.cache'
-    }
-  },
-  {
-    name: 'dic',
-    path: '/dic',
-    component: 'layout.base$view.dic',
-    meta: {
-      title: 'dic',
-      i18nKey: 'route.dic'
-    }
-  },
-  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -481,6 +463,44 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'syslog',
+    path: '/syslog',
+    component: 'layout.base',
+    meta: {
+      title: 'syslog',
+      i18nKey: 'route.syslog'
+    },
+    children: [
+      {
+        name: 'syslog_logerr',
+        path: '/syslog/logerr',
+        component: 'view.syslog_logerr',
+        meta: {
+          title: 'syslog_logerr',
+          i18nKey: 'route.syslog_logerr'
+        }
+      },
+      {
+        name: 'syslog_logop',
+        path: '/syslog/logop',
+        component: 'view.syslog_logop',
+        meta: {
+          title: 'syslog_logop',
+          i18nKey: 'route.syslog_logop'
+        }
+      },
+      {
+        name: 'syslog_logvis',
+        path: '/syslog/logvis',
+        component: 'view.syslog_logvis',
+        meta: {
+          title: 'syslog_logvis',
+          i18nKey: 'route.syslog_logvis'
+        }
+      }
+    ]
+  },
+  {
     name: 'sysmanage',
     path: '/sysmanage',
     component: 'layout.base',
@@ -490,21 +510,39 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'sysmanage_cache',
+        path: '/sysmanage/cache',
+        component: 'view.sysmanage_cache',
+        meta: {
+          title: 'sysmanage_cache',
+          i18nKey: 'route.sysmanage_cache'
+        }
+      },
+      {
+        name: 'sysmanage_config',
+        path: '/sysmanage/config',
+        component: 'view.sysmanage_config',
+        meta: {
+          title: 'sysmanage_config',
+          i18nKey: 'route.sysmanage_config'
+        }
+      },
+      {
+        name: 'sysmanage_dic',
+        path: '/sysmanage/dic',
+        component: 'view.sysmanage_dic',
+        meta: {
+          title: 'sysmanage_dic',
+          i18nKey: 'route.sysmanage_dic'
+        }
+      },
+      {
         name: 'sysmanage_online-user',
         path: '/sysmanage/online-user',
         component: 'view.sysmanage_online-user',
         meta: {
           title: 'sysmanage_online-user',
           i18nKey: 'route.sysmanage_online-user'
-        }
-      },
-      {
-        name: 'sysmanage_oplog',
-        path: '/sysmanage/oplog',
-        component: 'view.sysmanage_oplog',
-        meta: {
-          title: 'sysmanage_oplog',
-          i18nKey: 'route.sysmanage_oplog'
         }
       },
       {
@@ -517,15 +555,6 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       }
     ]
-  },
-  {
-    name: 'token',
-    path: '/token',
-    component: 'layout.base$view.token',
-    meta: {
-      title: 'token',
-      i18nKey: 'route.token'
-    }
   },
   {
     name: 'user-center',

@@ -9,15 +9,13 @@ public interface ITokenService
     /// <param name="tokenData"></param>
     /// <returns></returns>
     Task<string> GenerateTokenAsync(TokenData tokenData);
-
-
+     
     /// <summary>
     /// 校验token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
     Task<bool> ValidateToken(string token);
-
      
     /// <summary>
     /// 刷新token

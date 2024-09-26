@@ -34,7 +34,8 @@ public class TokenService : ITokenService
         var token = Guid.NewGuid().ToString("N");
         tokenData.LoginTime = DateTime.Now;
         tokenData.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
-        if (tokenData.UserId > 0) _cacheService.Set(Constant.Cache.UserToken + token, tokenData, 60 * 60);
+        //有效期为半个小时
+        if (tokenData.UserId > 0) _cacheService.Set(Constant.Cache.UserToken + token, tokenData, 60 * expiresTime);
         return token;
     }
      
@@ -63,7 +64,8 @@ public class TokenService : ITokenService
     {
         var tokeninfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
         tokeninfo.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
-        _cacheService.Set(Constant.Cache.UserToken + token, tokeninfo, 60 * 60); 
+        //expiresTime 内操作，变增加30分钟的有效期
+        _cacheService.Set(Constant.Cache.UserToken + token, tokeninfo, 60 * expiresTime); 
     }
 
 

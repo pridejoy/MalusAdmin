@@ -8,13 +8,15 @@ const appStore = useAppStore();
 const column = computed(() => (appStore.isMobile ? 1 : 2));
 
 const sysdata = ref<SystemInfo | null>();
-
+const isLoading = ref(true);
 onMounted(async () => {
   try {
     sysdata.value = (await getSysData()).data;
   } catch (error) {
     console.error('Failed to fetch system data:', error);
     // 可以在这里添加更多的错误处理逻辑
+  } finally {
+    isLoading.value = false;
   }
 });
 </script>
@@ -25,7 +27,8 @@ onMounted(async () => {
       <NCard title="服务器信息" :bordered="false" size="small" segmented class="card-wrapper">
         <NDescriptions label-placement="left" bordered size="small" :column="column">
           <NDescriptionsItem label="服务器名称">
-            <a class="text-primary" rel="noopener noreferrer">{{ sysdata?.machineName }}</a>
+            <NSkeleton v-if="isLoading" :sharp="false" class="card-primary" />
+            <a v-else class="text-primary" rel="noopener noreferrer">{{ sysdata?.machineName }}</a>
           </NDescriptionsItem>
           <NDescriptionsItem label="服务器IP">
             <a class="text-primary" rel="noopener noreferrer">{{ sysdata?.ip }}</a>
@@ -67,7 +70,9 @@ onMounted(async () => {
         </NFlex>
       </NCard>
       <NCard title="磁盘信息" :bordered="false" size="small" segmented class="card-wrapper">
-        <NFlex justify="space-around" class="flex-container">
+        <!-- 骨架屏 -->
+        <NSkeleton v-if="isLoading" :sharp="false" class="card-primary" />
+        <NFlex v-else justify="space-around" class="flex-container">
           <div v-for="(item, index) in sysdata?.diskInfo" :key="index" class="flex-item">
             <NProgress type="circle" :percentage="item.availablePercent" />
             <span>{{ item.diskName }}</span>

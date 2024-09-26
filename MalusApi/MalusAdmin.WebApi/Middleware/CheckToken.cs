@@ -35,9 +35,9 @@ public class CheckToken
         };
 
         // 检查Endpoint的元数据中是否包含AllowAnonymous特性 
-        var hasAllowAnonymous = endpoint.Metadata
+        var hasAllowAnonymous = endpoint?.Metadata
             .OfType<IAllowAnonymous>()
-            .Any();
+            .Any()??true;
 
         //静态资源直接放行 
         //禁用检查的资源放行
@@ -51,7 +51,7 @@ public class CheckToken
         //当前token是否在缓存中
         var tokenService = App.GetService<ITokenService>();
 
-        //权限检查
+        //获取token
         var token = await tokenService.GetHeadersToken();
 
         //是否有效
@@ -65,17 +65,15 @@ public class CheckToken
         //刷新用户的token过期时间
         await tokenService.RefreshTokenAsync(token);
 
-        var User = await tokenService.ParseTokenAsync(token);
-        if (User is null)
+        var sysuser = await tokenService.ParseTokenAsync(token);
+        if (sysuser is null)
         {
             await Res401Async(context);
             return;
-        }
-
-        // 权限校验  把 User.UserId!=拿掉就所有人进行权限校验
-        if (endpoint is RouteEndpoint routeEndpoint && !User.IsSuperAdmin)
+        } 
+        // 权限校验 
+        if (endpoint is RouteEndpoint routeEndpoint && !sysuser.IsSuperAdmin)
         { 
-             
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
@@ -97,10 +95,8 @@ public class CheckToken
                     }
                 }
             }
-             
         }
-
-
+         
         await _next(context);
     }
 
