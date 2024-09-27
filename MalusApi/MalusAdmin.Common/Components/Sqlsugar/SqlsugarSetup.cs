@@ -53,7 +53,8 @@ public static class SqlsugarSetup
                     var user = tokenserver.GetCurrentUserInfo().Result;
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
-                        
+                       
+
                         if (entityInfo.PropertyName == "SysCreateUser")
                         { 
                             if (user != null) entityInfo.SetValue(user.UserId);

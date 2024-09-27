@@ -8,7 +8,7 @@ namespace MalusAdmin.Models;
 ///操作日志表
 /// </summary>
 [SplitTable(SplitType.Month)]
-[SugarTable("sys_log_op_{year}{month}{day}")]
+[SugarTable("sys_log_vis_{year}{month}{day}")]
 [Description("操作日志表")]
 public class TSysLogVis
 {

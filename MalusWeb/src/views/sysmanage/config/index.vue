@@ -1,16 +1,14 @@
 <script setup lang="tsx">
-import { NButton, NPopconfirm } from 'naive-ui';
-import { onMounted } from 'vue';
-import { deleteConfig, getWechatconfigPage } from '@/service/api';
+import { deleteConfig, getConfigPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-// import type { BsWechatConfigRes } from '@/typings/res/wechatconfig';
 import ConfigOperateDrawer from './modules/config-operate-drawer.vue';
+
 const appStore = useAppStore();
 
 const { data, getData, columns, loading, pagination, mobilePagination } = useTable({
-  apiFn: getWechatconfigPage,
+  apiFn: getConfigPage,
   apiParams: {
     pageNo: 1,
     pageSize: 10
@@ -26,6 +24,16 @@ const { data, getData, columns, loading, pagination, mobilePagination } = useTab
     {
       key: 'configKey',
       title: '配置名称',
+      align: 'center',
+      width: 100,
+      minWidth: 200,
+      ellipsis: {
+        tooltip: true
+      }
+    },
+    {
+      key: 'configType',
+      title: '配置类型',
       align: 'center',
       width: 100,
       minWidth: 200,
@@ -80,19 +88,18 @@ const {
   drawerVisible,
   handleAdd,
   editingData,
-  handleEditData,
+  handleEditAny,
   operateType
   // closeDrawer
 } = useTableOperate(data, getData);
-
 function edit(rowData: any) {
-  handleEditData(rowData);
+  handleEditAny(rowData);
+  console.log('editingData', editingData);
 }
 
-function handleDelete(id: number) {
-  // request
+function handleDelete(configID: number) {
   // console.log(id);
-  deleteConfig(id).then(res => {
+  deleteConfig(configID).then(res => {
     if (res.data) {
       window.$message?.success('删除成功');
       getData();
@@ -101,22 +108,13 @@ function handleDelete(id: number) {
     }
   });
 }
-
-onMounted(async () => {
-  try {
-    // console.log('res');
-  } catch (error) {
-    console.error('Failed to fetch system data:', error);
-    // 可以在这里添加更多的错误处理逻辑
-  }
-});
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard title="配置管理" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
-        <TableHeaderOperation :loading="loading" :is-hidden="true" @add="handleAdd" @refresh="getData" />
+        <TableHeaderOperation :loading="loading" is-hidden disabled-delete @add="handleAdd" @refresh="getData" />
       </template>
       <NDataTable
         :columns="columns"
@@ -126,7 +124,7 @@ onMounted(async () => {
         :scroll-x="962"
         :loading="loading"
         remote
-        :row-key="row => row.id"
+        :row-key="row => row.configID"
         :pagination="mobilePagination"
         class="sm:h-full"
       />

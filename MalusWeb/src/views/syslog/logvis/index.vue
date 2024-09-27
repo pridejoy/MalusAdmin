@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { NButton } from 'naive-ui';
 import { onMounted, ref } from 'vue';
-import { getSyslogPage } from '@/service/api';
+import { getSysVislogPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
@@ -11,16 +11,16 @@ const appStore = useAppStore();
 // 抽屉开关
 const active = ref(false);
 
-const activedata = ref<sysLogPageRecord | null>();
+const activedata = ref<sysVisLogPageRes | null>();
 // 开关抽屉的方法
-const activate = (row: sysLogPageRecord) => {
+const activate = (row: sysVisLogPageRes) => {
   active.value = true;
   activedata.value = row;
   console.log(row);
 };
 
 const { data, columns, loading, pagination, mobilePagination } = useTable({
-  apiFn: getSyslogPage,
+  apiFn: getSysVislogPage,
   apiParams: {
     pageNo: 1,
     pageSize: 10
@@ -36,7 +36,7 @@ const { data, columns, loading, pagination, mobilePagination } = useTable({
       key: 'reqMethod',
       title: '请求方式',
       align: 'center',
-      width: 70
+      width: 80
     },
     {
       key: 'url',

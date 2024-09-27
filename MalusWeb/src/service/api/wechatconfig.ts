@@ -1,9 +1,9 @@
-import type { BsWechatConfigRes } from '@/types/res/BsWechatConfig';
+import type { SysConfigRes } from '@/typings/res/sysconfig';
 import { request } from '../request';
 
-export function getWechatconfigPage(params?: Api.SystemManage.UserSearchParams) {
-  return request<BsWechatConfigRes>({
-    url: '/BsWechatConfig/PageList',
+export function getConfigPage(params?: Api.SystemManage.UserSearchParams) {
+  return request<SysConfigRes>({
+    url: '/SysConfig/PageList',
     method: 'get',
     params
   });
@@ -12,7 +12,7 @@ export function getWechatconfigPage(params?: Api.SystemManage.UserSearchParams) 
 // 修改用户
 export function upConfig(data?: any) {
   return request<boolean>({
-    url: '/SysUser/Update',
+    url: '/SysConfig/Update',
     method: 'post',
     data
   });
@@ -21,7 +21,7 @@ export function upConfig(data?: any) {
 // 添加p
 export function addConfig(data: any) {
   return request<boolean>({
-    url: `/BsWechatConfig/Add`,
+    url: `/SysConfig/Add`,
     method: 'post',
     data
   });
@@ -30,7 +30,7 @@ export function addConfig(data: any) {
 // 删除用户
 export function deleteConfig(id?: number) {
   return request<boolean>({
-    url: `/BsWechatConfig/Delete/${id}`,
+    url: `/SysConfig/Delete/${id}`,
     method: 'post'
   });
 }

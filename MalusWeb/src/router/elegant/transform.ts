@@ -193,13 +193,16 @@ const routeMap: RouteMap = {
   "plugin_print": "/plugin/print",
   "plugin_swiper": "/plugin/swiper",
   "plugin_video": "/plugin/video",
+  "syslog": "/syslog",
+  "syslog_logerr": "/syslog/logerr",
+  "syslog_logop": "/syslog/logop",
+  "syslog_logvis": "/syslog/logvis",
   "sysmanage": "/sysmanage",
   "sysmanage_cache": "/sysmanage/cache",
+  "sysmanage_config": "/sysmanage/config",
   "sysmanage_dic": "/sysmanage/dic",
   "sysmanage_online-user": "/sysmanage/online-user",
-  "sysmanage_oplog": "/sysmanage/oplog",
   "sysmanage_systemstatus": "/sysmanage/systemstatus",
-  "sysmanage_token": "/sysmanage/token",
   "user-center": "/user-center"
 };
 

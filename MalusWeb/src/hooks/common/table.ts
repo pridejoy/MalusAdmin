@@ -1,6 +1,6 @@
 import { computed, effectScope, onScopeDispose, reactive, ref, watch } from 'vue';
 import type { Ref } from 'vue';
-import type { PaginationProps } from 'naive-ui';
+import type PaginationProps from 'naive-ui';
 import { useBoolean, useHookTable } from '@sa/hooks';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
@@ -194,6 +194,11 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     openDrawer();
   }
 
+  function handleEditAny(datas: any) {
+    operateType.value = 'edit';
+    editingData.value = datas;
+    openDrawer();
+  }
   /** the checked row keys of table */
   const checkedRowKeys = ref<string[]>([]);
 
@@ -221,6 +226,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     handleAdd,
     editingData,
     handleEdit,
+    handleEditAny,
     checkedRowKeys,
     onBatchDeleted,
     onDeleted

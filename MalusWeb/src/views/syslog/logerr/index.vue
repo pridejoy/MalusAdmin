@@ -1,105 +1,73 @@
 <script setup lang="tsx">
 import { NButton } from 'naive-ui';
-import { onMounted, ref } from 'vue';
-import { getSyslogPage } from '@/service/api';
+import { ref } from 'vue';
+import VueJsonPretty from 'vue-json-pretty';
+import { getSysErrlogPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
+import 'vue-json-pretty/lib/styles.css';
 
 const appStore = useAppStore();
 
 // 抽屉开关
 const active = ref(false);
 
-const activedata = ref<sysLogPageRecord | null>();
+const activedata = ref<any>();
 // 开关抽屉的方法
-const activate = (row: sysLogPageRecord) => {
+const activate = (row: any) => {
   active.value = true;
   activedata.value = row;
-  console.log(row);
 };
 
 const { data, columns, loading, pagination, mobilePagination } = useTable({
-  apiFn: getSyslogPage,
+  apiFn: getSysErrlogPage,
   apiParams: {
     pageNo: 1,
     pageSize: 10
   },
   columns: () => [
     {
-      key: 'account',
-      title: '用户名',
+      key: 'id',
+      title: '序号',
       align: 'center',
-      minWidth: 50
+      minWidth: 150
     },
     {
-      key: 'reqMethod',
-      title: '请求方式',
+      key: 'exceptionType',
+      title: '异常类型',
       align: 'center',
-      width: 70
+      minWidth: 150
     },
     {
-      key: 'url',
-      title: '请求地址',
+      key: 'actionName',
+      title: '异常方法',
       align: 'center',
-      minWidth: 100,
+      width: 150
+    },
+    {
+      key: 'logDateTime',
+      title: '异常时间',
+      align: 'center',
+      minWidth: 150,
       ellipsis: {
         tooltip: true
       }
     },
     {
-      key: 'ip',
-      title: 'Ip',
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'os',
-      title: '系统',
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'browser',
-      title: '浏览器',
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'elapsedTime',
-      title: '耗时',
-      align: 'center',
-      minWidth: 30
-    },
-    {
-      key: 'opTime',
-      title: '请求时间',
-      align: 'center',
-      minWidth: 100
-    },
-    {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 150,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton type="primary" ghost size="small" onClick={() => activate(row)}>
+          <NButton type="primary" ghost size="small" onClick={() => activate(row.message)}>
             详情
           </NButton>
         </div>
       )
     }
   ]
-});
-
-onMounted(async () => {
-  try {
-    // console.log('res');
-  } catch (error) {
-    console.error('Failed to fetch system data:', error);
-    // 可以在这里添加更多的错误处理逻辑
-  }
 });
 </script>
 
@@ -125,18 +93,28 @@ onMounted(async () => {
           <template #header>日志详情</template>
           <NList hoverable clickable>
             <div v-if="activedata">
-              <div v-for="([key, value], index) in Object.entries(activedata)" :key="index">
-                <NListItem>
-                  <NThing title="" content-style="margin-top: 10px;">
-                    <template #description>
-                      <NSpace size="small" style="margin-top: 4px">
-                        <NTag :bordered="false" type="info" size="small">{{ key }}</NTag>
-                      </NSpace>
-                    </template>
-                    {{ value }}
-                  </NThing>
-                </NListItem>
-              </div>
+              <NListItem>
+                <NThing title="" content-style="margin-top: 10px;">
+                  <template #description>
+                    <NSpace size="small" style="margin-top: 4px">
+                      <NTag :bordered="false" type="info" size="small">详情</NTag>
+                    </NSpace>
+                  </template>
+                  <div>
+                    {{ activedata }}
+                    <!--
+ <VueJsonPretty
+                      show-length
+                      show-icon
+                      virtual
+                      show-line-number
+                      show-select-controller
+                      :data=""
+                    ></VueJsonPretty>
+-->
+                  </div>
+                </NThing>
+              </NListItem>
             </div>
           </NList>
         </NDrawerContent>

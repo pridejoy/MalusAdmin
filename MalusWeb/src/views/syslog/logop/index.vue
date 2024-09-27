@@ -1,7 +1,6 @@
 <script setup lang="tsx">
-import { NButton } from 'naive-ui';
 import { onMounted, ref } from 'vue';
-import { getSyslogPage } from '@/service/api';
+import { getSysOplogPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
@@ -11,36 +10,35 @@ const appStore = useAppStore();
 // 抽屉开关
 const active = ref(false);
 
-const activedata = ref<sysLogPageRecord | null>();
+const activedata = ref<any>();
 // 开关抽屉的方法
-const activate = (row: sysLogPageRecord) => {
+const activate = (row: any) => {
   active.value = true;
   activedata.value = row;
-  console.log(row);
 };
 
 const { data, columns, loading, pagination, mobilePagination } = useTable({
-  apiFn: getSyslogPage,
+  apiFn: getSysOplogPage,
   apiParams: {
     pageNo: 1,
     pageSize: 10
   },
   columns: () => [
     {
-      key: 'account',
-      title: '用户名',
+      key: 'id',
+      title: '序号',
       align: 'center',
-      minWidth: 50
+      minWidth: 150
     },
     {
-      key: 'reqMethod',
-      title: '请求方式',
+      key: 'logType',
+      title: '类型',
       align: 'center',
-      width: 70
+      minWidth: 150
     },
     {
-      key: 'url',
-      title: '请求地址',
+      key: 'message',
+      title: '详情',
       align: 'center',
       minWidth: 100,
       ellipsis: {
@@ -48,32 +46,8 @@ const { data, columns, loading, pagination, mobilePagination } = useTable({
       }
     },
     {
-      key: 'ip',
-      title: 'Ip',
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'os',
-      title: '系统',
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'browser',
-      title: '浏览器',
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'elapsedTime',
-      title: '耗时',
-      align: 'center',
-      minWidth: 30
-    },
-    {
-      key: 'opTime',
-      title: '请求时间',
+      key: 'logDateTime',
+      title: '日志时间',
       align: 'center',
       minWidth: 100
     },

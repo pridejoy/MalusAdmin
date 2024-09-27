@@ -4,13 +4,13 @@ using Mapster;
 
 namespace MalusAdmin.Server
 {
-    public class BsWechatConfigService
+    public class SysConfigService: ISysConfigService
     {
         private readonly ISqlSugarClient _db;
-        private readonly SqlSugarRepository<BsWechatConfig> _rep; // 仓储
+        private readonly SqlSugarRepository<TBsSysConfig> _rep; // 仓储
         private readonly ITokenService _TokenService;
 
-        public BsWechatConfigService(SqlSugarRepository<BsWechatConfig> rep, ITokenService tokenService)
+        public SysConfigService(SqlSugarRepository<TBsSysConfig> rep, ITokenService tokenService)
         {
             _rep = rep;
             _TokenService = tokenService;
@@ -21,7 +21,7 @@ namespace MalusAdmin.Server
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<PageList<BsWechatConfig>> PageList(PageParamBase input)
+        public async Task<PageList<TBsSysConfig>> PageList(PageParamBase input)
         {
             var dictTypes = await _rep.AsQueryable()
                 .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord),
@@ -39,7 +39,7 @@ namespace MalusAdmin.Server
         {
             var isExist = await _rep.Where(x => x.ConfigKey == input.ConfigKey).AnyAsync();
             if (isExist) throw new Exception("已存在当前配置");
-            var entity = input.Adapt<BsWechatConfig>();
+            var entity = input.Adapt<TBsSysConfig>();
             entity.IsDeleted=false;
             return await _rep.InsertReturnIdentityAsync(entity) > 0;
         }
@@ -65,8 +65,22 @@ namespace MalusAdmin.Server
         {
             var entity = await _rep.FirstOrDefaultAsync(u => u.ConfigID == input.ConfigID);
             if (entity == null) throw new Exception("未找到当前配置");
-            var sysRole = input.Adapt<BsWechatConfig>();
+            var sysRole = input.Adapt<TBsSysConfig>();
             return await _rep.AsUpdateable(sysRole).IgnoreColumns(true).ExecuteCommandAsync() > 0;
+        }
+
+        /// <summary>
+        /// 通过类型和key来返回配置值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<string> GetTypeKeyConfig(string key, string type)
+        {
+            var entity = await _rep.Where(x => x.ConfigKey == key&&x.ConfigType== type).FirstAsync();
+            return entity?.ConfigValue??"";
+       
         }
     }
 }

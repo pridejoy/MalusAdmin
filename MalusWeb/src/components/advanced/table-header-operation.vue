@@ -5,7 +5,7 @@ defineOptions({
 
 interface Props {
   itemAlign?: NaiveUI.Align;
-  disabledDelete?: boolean;
+  showbatchDelete?: boolean;
   loading?: boolean;
 }
 
@@ -48,7 +48,7 @@ function refresh() {
       </NButton>
       <NPopconfirm @positive-click="batchDelete">
         <template #trigger>
-          <NButton size="small" ghost type="error" :disabled="disabledDelete">
+          <NButton v-show="showbatchDelete" size="small" ghost type="error">
             <template #icon>
               <icon-ic-round-delete class="text-icon" />
             </template>

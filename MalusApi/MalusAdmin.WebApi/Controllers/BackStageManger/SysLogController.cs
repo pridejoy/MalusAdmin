@@ -1,5 +1,5 @@
 ﻿using MalusAdmin.Servers;
-using MalusAdmin.Servers.SysOpLog.Dto;
+using MalusAdmin.Servers.SysLog;
 using MalusAdmin.WebApi.Filter;
 
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
@@ -11,21 +11,43 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysLogController : ApiControllerBase
 {
-    private readonly SysOpLogService _server;
+    private readonly SysLogService _server;
 
-    public SysLogController(SysOpLogService server)
+    public SysLogController(SysLogService server)
     {
         _server = server;
     }
 
 
     /// <summary>
+    /// 访问日志分页
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<dynamic> VisPageList([FromQuery] SysLogPageIn input)
+    {
+        return await _server.VisPageList(input);
+    }
+
+    /// <summary>
     /// 日志分页
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<dynamic> PageList([FromQuery] SysLogPageIn input)
+    public async Task<dynamic> ErrPageList([FromQuery] SysLogPageIn input)
     {
-        return await _server.PageList(input);
+        await _server.AddLog("后台日志", "用户123登录了系统");
+        return await _server.ErrPageList(input);
+    }
+
+    /// <summary>
+    ///操作 日志分页
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<dynamic> OpPageList([FromQuery] SysLogPageIn input)
+    {
+     
+        return await _server.OpPageList(input);
     }
 }

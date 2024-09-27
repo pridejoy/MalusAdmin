@@ -19,6 +19,11 @@
         public string? ConfigValue { get; set; }
 
         /// <summary>
+        /// 参数配置类型
+        /// </summary>
+        public string? ConfigType { get; set; }
+
+        /// <summary>
         /// Desc:
         /// Default:
         /// Nullable:True

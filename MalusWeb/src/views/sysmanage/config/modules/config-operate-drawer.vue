@@ -1,8 +1,8 @@
-<script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
-import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+<script setup lang="tsx">
+import { computed, reactive, watch } from 'vue';
+import { useNaiveForm } from '@/hooks/common/form';
 import { addConfig, upConfig } from '@/service/api';
-import type { BsWechatConfigRes } from '@/types/res/BsWechatConfig.ts';
+import type { SysConfigRes } from '@/typings/res/sysconfig';
 defineOptions({
   name: 'ConfigOperateDrawer'
 });
@@ -11,7 +11,7 @@ interface Props {
   /** the type of operation */
   operateType: NaiveUI.TableOperateType;
   /** the edit row data */
-  rowData?: BsWechatConfigRes | null;
+  rowData?: SysConfigRes | null;
 }
 
 const props = defineProps<Props>();
@@ -36,7 +36,7 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Pick<BsWechatConfigRes | any, 'configID' | 'configKey' | 'configValue' | 'configdDescribe'>;
+type Model = Pick<SysConfigRes | any, 'configID' | 'configKey' | 'configType' | 'configValue' | 'configdDescribe'>;
 
 const model: Model = reactive(createDefaultModel());
 
@@ -44,6 +44,7 @@ function createDefaultModel(): Model {
   return {
     configID: 0,
     configKey: '',
+    configType: '',
     configValue: '',
     configdDescribe: ''
   };
@@ -58,6 +59,7 @@ function handleUpdateModelWhenEdit() {
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
   }
+  // console.log('当前接收的数据', model, props);
 }
 
 function closeDrawer() {
@@ -68,7 +70,6 @@ async function handleSubmit() {
   await validate();
   // request
   if (props.operateType === 'add') {
-    // console.log('当前接收的数据', model);
     // console.log('提交表单', model);
     addConfig(model).then(res => {
       // console.log('请求成功', res);
@@ -84,7 +85,7 @@ async function handleSubmit() {
     upConfig(model).then(res => {
       // console.log('修改返回的状态', res);
       if (res.data) {
-        window.$message?.success($t('common.updateSuccess'));
+        window.$message?.success('修改成功');
         closeDrawer();
         emit('submitted');
       } else {
@@ -110,6 +111,9 @@ watch(visible, () => {
       <NForm ref="formRef" :model="model">
         <NFormItem label="配置名称" path="configKey">
           <NInput v-model:value="model.configKey" :disabled="model.configID > 0" placeholder="请输入配置名称" />
+        </NFormItem>
+        <NFormItem label="配置类型" path="configValue">
+          <NInput v-model:value="model.configType" placeholder="请输入配置参数" />
         </NFormItem>
         <NFormItem label="配置参数" path="configValue">
           <NInput v-model:value="model.configValue" placeholder="请输入配置参数" />

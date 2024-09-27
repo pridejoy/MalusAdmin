@@ -1,6 +1,6 @@
+import type { SysOnlineUserRecord } from '@/typings/res/sys_onlie_user_res.ts';
 import { request } from '../request';
 // import type { PaginatedData, SysOnlineUserRecord } from '../types';
-import type { SysOnlineUserRecord } from '../types';
 /** 在线用户 */
 export function getOnlineUser(params?: any) {
   return request<SysOnlineUserRecord>({
@@ -12,7 +12,7 @@ export function getOnlineUser(params?: any) {
 
 /// 强制下线
 export function ForceOffline(params?: string) {
-  return request<bool>({
+  return request<Boolean>({
     url: '/SysOnlineUser/ForceOffline',
     method: 'get',
     params
@@ -21,7 +21,7 @@ export function ForceOffline(params?: string) {
 
 /// 强制下线
 export function SendMsgToOne(data?: any) {
-  return request<bool>({
+  return request<Boolean>({
     url: '/SysOnlineUser/SendMsgToOne',
     method: 'post',
     data

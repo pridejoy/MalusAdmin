@@ -22,7 +22,7 @@ namespace MalusAdmin.Servers
         {  
            return _cacheService.GetAllKeys();
         }
-
+         
         /// <summary>
         /// 根据key获取缓存的value
         /// </summary>
@@ -34,7 +34,7 @@ namespace MalusAdmin.Servers
 
 
         /// <summary>
-        /// 根据key获取缓存的value
+        /// 删除缓存
         /// </summary>
         /// <returns></returns>
         public async Task<long> RemoveAsync(string key)

@@ -33,9 +33,3 @@ interface SystemInfo {
   diskInfo: DiskInfo[];
   memoryInfo: MemoryInfo;
 }
-
-// interface SysDataApiResponse {
-//   code: number;
-//   message: string;
-//   body: SystemInfo;
-// }

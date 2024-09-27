@@ -3,10 +3,10 @@
 namespace MalusAdmin.Repository.Entity
 {
     /// <summary>
-    /// 微信配置表
+    /// 参数配置表
     /// </summary>
-    [SugarTable("bs_wechatconfig")]
-    public class BsWechatConfig
+    [SugarTable("t_sys_config")]
+    public class TBsSysConfig
     { /// <summary>
       /// Desc:
       /// Default:
@@ -16,14 +16,20 @@ namespace MalusAdmin.Repository.Entity
         public int ConfigID { get; set; }
 
         /// <summary>
-        /// Desc:
+        /// Desc:参数key
         /// Default:
         /// Nullable:True
         /// </summary>
         public string? ConfigKey { get; set; }
 
+
         /// <summary>
-        /// Desc:
+        /// 参数类型
+        /// </summary>
+        public string? ConfigType { get; set; }
+
+        /// <summary>
+        /// Desc:参数值
         /// Default:
         /// Nullable:True
         /// </summary>
