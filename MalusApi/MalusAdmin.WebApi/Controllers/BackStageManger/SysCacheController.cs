@@ -24,7 +24,7 @@ namespace MalusAdmin.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Permission("缓存-获取所有缓存的Key")]
-        public async Task<List<string>> GetSystemInfo()
+        public async Task<List<string>> GetAllKeys()
         {
             return  _sysCacheService.GetAllKeys();
         }

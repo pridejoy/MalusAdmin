@@ -94,7 +94,7 @@ const {
 } = useTableOperate(data, getData);
 function edit(rowData: any) {
   handleEditAny(rowData);
-  console.log('editingData', editingData);
+  // console.log('editingData', editingData);
 }
 
 function handleDelete(configID: number) {

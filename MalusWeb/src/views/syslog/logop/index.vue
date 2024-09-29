@@ -4,7 +4,7 @@ import { getSysOplogPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
-
+import SysLogSearch from '../modules/syslog-search.vue';
 const appStore = useAppStore();
 
 // 抽屉开关
@@ -17,7 +17,7 @@ const activate = (row: any) => {
   activedata.value = row;
 };
 
-const { data, columns, loading, pagination, mobilePagination } = useTable({
+const { columns, columnChecks, data, getData, loading, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getSysOplogPage,
   apiParams: {
     pageNo: 1,
@@ -79,7 +79,17 @@ onMounted(async () => {
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <SysLogSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
+
     <NCard title="日志列表" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+      <template #header-extra>
+        <NButton size="small" @click="getData">
+          <template #icon>
+            <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
+          </template>
+          刷新
+        </NButton>
+      </template>
       <NDataTable
         :columns="columns"
         :data="data"

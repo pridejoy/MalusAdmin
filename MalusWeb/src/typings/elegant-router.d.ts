@@ -25,12 +25,6 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
-    "business": "/business";
-    "business_calen": "/business/calen";
-    "business_config": "/business/config";
-    "business_customer": "/business/customer";
-    "business_order": "/business/order";
-    "business_sales": "/business/sales";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -117,7 +111,6 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
-    | "business"
     | "function"
     | "home"
     | "login"
@@ -149,11 +142,6 @@ declare module "@elegant-router/types" {
     | "500"
     | "login"
     | "about"
-    | "business_calen"
-    | "business_config"
-    | "business_customer"
-    | "business_order"
-    | "business_sales"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"

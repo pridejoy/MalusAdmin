@@ -36,15 +36,7 @@ public class MemoryCacheService : ICacheService
         return _cache.Get<T>(key);
     }
 
-    /// <summary>
-    /// 获取缓存对象string
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public string GetKeyString(string key)
-    {
-        return _cache.Get(key).ToJson();
-    }
+ 
 
     /// <summary>
     /// 获取缓存

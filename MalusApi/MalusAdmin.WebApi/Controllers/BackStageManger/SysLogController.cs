@@ -35,8 +35,7 @@ public class SysLogController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     public async Task<dynamic> ErrPageList([FromQuery] SysLogPageIn input)
-    {
-        await _server.AddLog("后台日志", "用户123登录了系统");
+    { 
         return await _server.ErrPageList(input);
     }
 

@@ -220,12 +220,7 @@ public interface ICacheService
     /// <returns></returns>
     List<string> GetAllKeys();
 
-    /// <summary>
-    /// 通过key获取缓存的string类型的value
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    string GetKeyString(string key);
+ 
 
     /// <summary>
     /// 获取匹配的缓存键

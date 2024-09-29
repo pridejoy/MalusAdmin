@@ -49,62 +49,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'business',
-    path: '/business',
-    component: 'layout.base',
-    meta: {
-      title: 'business',
-      i18nKey: 'route.business'
-    },
-    children: [
-      {
-        name: 'business_calen',
-        path: '/business/calen',
-        component: 'view.business_calen',
-        meta: {
-          title: 'business_calen',
-          i18nKey: 'route.business_calen'
-        }
-      },
-      {
-        name: 'business_config',
-        path: '/business/config',
-        component: 'view.business_config',
-        meta: {
-          title: 'business_config',
-          i18nKey: 'route.business_config'
-        }
-      },
-      {
-        name: 'business_customer',
-        path: '/business/customer',
-        component: 'view.business_customer',
-        meta: {
-          title: 'business_customer',
-          i18nKey: 'route.business_customer'
-        }
-      },
-      {
-        name: 'business_order',
-        path: '/business/order',
-        component: 'view.business_order',
-        meta: {
-          title: 'business_order',
-          i18nKey: 'route.business_order'
-        }
-      },
-      {
-        name: 'business_sales',
-        path: '/business/sales',
-        component: 'view.business_sales',
-        meta: {
-          title: 'business_sales',
-          i18nKey: 'route.business_sales'
-        }
-      }
-    ]
-  },
-  {
     name: 'function',
     path: '/function',
     component: 'layout.base',

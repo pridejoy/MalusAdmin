@@ -1,92 +1,77 @@
 <!--  -->
 <script setup lang="tsx">
 import { ref } from 'vue';
-import type { TreeOption } from 'naive-ui';
+import type { TreeOption, TreeOverrideNodeClickBehavior } from 'naive-ui';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
+import { getAllKeys, getKeys } from '@/service/api';
 
-const data = createData();
-const defaultExpandedKeys = ref(['40', '41']);
-function createData(level = 4, baseKey = ''): TreeOption[] | undefined {
-  if (!level) return undefined;
-  return [
-    {
-      whateverLabel: 'Level 2, Index 0',
-      whateverKey: 'root21',
-      whateverChildren: [
-        {
-          whateverLabel: 'Level 1, Index 0',
-          whateverKey: 'root21_1',
-          whateverChildren: [
-            {
-              whateverLabel: 'Level 0, Index 0',
-              whateverKey: 'root21_1_1',
-              whateverChildren: undefined
-            },
-            {
-              whateverLabel: 'Level 0, Index 1',
-              whateverKey: 'root21_1_2',
-              whateverChildren: undefined
-            }
-          ]
-        },
-        {
-          whateverLabel: 'Level 1, Index 1',
-          whateverKey: 'root21_2',
-          whateverChildren: [
-            {
-              whateverLabel: 'Level 0, Index 0',
-              whateverKey: 'root21_2_1',
-              whateverChildren: undefined
-            },
-            {
-              whateverLabel: 'Level 0, Index 1',
-              whateverKey: 'root21_2_2',
-              whateverChildren: undefined
-            }
-          ]
-        }
-      ]
-    },
-    {
-      whateverLabel: 'Level 2, Index 1',
-      whateverKey: 'root22',
-      whateverChildren: [
-        {
-          whateverLabel: 'Level 1, Index 0',
-          whateverKey: 'root22_1',
-          whateverChildren: [
-            {
-              whateverLabel: 'Level 0, Index 0',
-              whateverKey: 'root22_1_1',
-              whateverChildren: undefined
-            },
-            {
-              whateverLabel: 'Level 0, Index 1',
-              whateverKey: 'root22_1_2',
-              whateverChildren: undefined
-            }
-          ]
-        },
-        {
-          whateverLabel: 'Level 1, Index 1',
-          whateverKey: 'root22_2',
-          whateverChildren: [
-            {
-              whateverLabel: 'Level 0, Index 0',
-              whateverKey: 'root22_2_1',
-              whateverChildren: undefined
-            },
-            {
-              whateverLabel: 'Level 0, Index 1',
-              whateverKey: 'root22_2_2',
-              whateverChildren: undefined
-            }
-          ]
-        }
-      ]
+// const loading = ref(false);
+const data = ref();
+const info = ref();
+const showstr = ref();
+
+getAllCacheData();
+
+function getAllCacheData() {
+  getAllKeys().then(res => {
+    data.value = buildTree(res.data);
+    // console.log('data', data.value);
+  });
+}
+
+const override: TreeOverrideNodeClickBehavior = ({ option }) => {
+  if (option.children) {
+    // console.log('toggleExpand');
+    return 'toggleExpand';
+  }
+  showstr.value = option.value;
+  getKeys(option.value).then(res => {
+    info.value = res.data;
+  });
+  return 'default';
+};
+function buildTree(keyList: Array<string>): TreeOption[] {
+  const cacheData: TreeOption[] = [];
+
+  // 遍历数组，构建树
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < keyList.length; i++) {
+    const keyNames = keyList[i].split(':');
+    const pName = keyNames[0];
+    const childName = keyNames[1] || '';
+
+    // 查找或创建父节点
+    let parentNode = cacheData.find((x: TreeOption) => x.label === pName);
+    if (!parentNode) {
+      parentNode = {
+        label: pName,
+        value: pName,
+        children: []
+      };
+      cacheData.push(parentNode);
     }
-  ];
+
+    // 如果存在子节点名称，创建子节点
+    if (childName) {
+      const childNode: TreeOption = {
+        label: childName,
+        value: keyList[i],
+        children: []
+      };
+      parentNode.children.push(childNode);
+    }
+  }
+
+  // 移除没有子节点的children属性;
+  const cleanTree = (nodes: TreeOption[]): TreeOption[] => {
+    return nodes.map(node => ({
+      ...node,
+      children: node.children.length ? cleanTree(node.children) : undefined
+    }));
+  };
+
+  return cleanTree(cacheData);
 }
 </script>
 
@@ -106,9 +91,9 @@ function createData(level = 4, baseKey = ''): TreeOption[] | undefined {
         >
           <template #header-extra>
             <div class="button-container">
-              <NButton size="small" @click="refresh">
+              <NButton size="small" @click="getAllCacheData">
                 <template #icon>
-                  <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
+                  <icon-mdi-refresh class="text-icon" />
                 </template>
                 刷新
               </NButton>
@@ -121,20 +106,21 @@ function createData(level = 4, baseKey = ''): TreeOption[] | undefined {
               </NButton>
             </div>
           </template>
+
           <NTree
             block-line
             :data="data"
-            :default-expanded-keys="defaultExpandedKeys"
-            key-field="whateverKey"
-            label-field="whateverLabel"
-            children-field="whateverChildren"
+            key-field="label"
+            label-field="value"
+            :override-default-node-click-behavior="override"
+            children-field="children"
             selectable
           />
         </NCard>
       </NCol>
       <NCol :span="17">
         <NCard
-          title="缓存数据"
+          :title="`缓存数据:[${showstr}]`"
           :bordered="false"
           size="small"
           class="sm:flex-1-hidden card-wrapper"
@@ -151,7 +137,7 @@ function createData(level = 4, baseKey = ''): TreeOption[] | undefined {
               show-line-number
               show-select-controller
               style="padding-bottom: 60px"
-              :data="data"
+              :data="info"
             ></VueJsonPretty>
           </div>
         </NCard>

@@ -1,11 +1,10 @@
 <script setup lang="tsx">
-import { NButton } from 'naive-ui';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { getSysVislogPage } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
-
+import SysLogSearch from '../modules/syslog-search.vue';
 const appStore = useAppStore();
 
 // 抽屉开关
@@ -19,7 +18,7 @@ const activate = (row: sysVisLogPageRes) => {
   console.log(row);
 };
 
-const { data, columns, loading, pagination, mobilePagination } = useTable({
+const { columns, columnChecks, data, getData, loading, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getSysVislogPage,
   apiParams: {
     pageNo: 1,
@@ -92,20 +91,21 @@ const { data, columns, loading, pagination, mobilePagination } = useTable({
     }
   ]
 });
-
-onMounted(async () => {
-  try {
-    // console.log('res');
-  } catch (error) {
-    console.error('Failed to fetch system data:', error);
-    // 可以在这里添加更多的错误处理逻辑
-  }
-});
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <SysLogSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
+
     <NCard title="日志列表" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+      <template #header-extra>
+        <NButton size="small" @click="getData">
+          <template #icon>
+            <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
+          </template>
+          刷新
+        </NButton>
+      </template>
       <NDataTable
         :columns="columns"
         :data="data"
