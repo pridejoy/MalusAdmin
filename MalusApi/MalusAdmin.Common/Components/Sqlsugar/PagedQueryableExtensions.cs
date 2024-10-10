@@ -1,10 +1,10 @@
 ﻿/// <summary>
-/// 分页拓展类
+///     分页拓展类
 /// </summary>
 public static class PagedQueryableExtensions
 {
     /// <summary>
-    /// 分页拓展
+    ///     分页拓展
     /// </summary>
     /// <param name="query"></param>
     /// <param name="pageIndex"></param>
@@ -31,49 +31,49 @@ public static class PagedQueryableExtensions
 
 
 /// <summary>
-/// 分页泛型集合
+///     分页泛型集合
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 public class SqlSugarPagedList<TEntity>
 {
     /// <summary>
-    /// 页码
+    ///     页码
     /// </summary>
     public int PageIndex { get; set; }
 
     /// <summary>
-    /// 页容量
+    ///     页容量
     /// </summary>
     public int PageSize { get; set; }
 
     /// <summary>
-    /// 总条数
+    ///     总条数
     /// </summary>
     public int TotalCount { get; set; }
 
     /// <summary>
-    /// 总页数
+    ///     总页数
     /// </summary>
     public int TotalPages { get; set; }
 
     /// <summary>
-    /// 当前页集合
+    ///     当前页集合
     /// </summary>
     public IEnumerable<TEntity> Items { get; set; }
 
     /// <summary>
-    /// 是否有上一页
+    ///     是否有上一页
     /// </summary>
     public bool HasPrevPages { get; set; }
 
     /// <summary>
-    /// 是否有下一页
+    ///     是否有下一页
     /// </summary>
     public bool HasNextPages { get; set; }
 }
 
 /// <summary>
-/// 分页集合
+///     分页集合
 /// </summary>
 public class PagedModel : SqlSugarPagedList<object>
 {
@@ -90,12 +90,12 @@ public class PageList<T>
 }
 
 /// <summary>
-/// 小诺分页列表结果
+///     小诺分页列表结果
 /// </summary>
 public static class PageResult
 {
     /// <summary>
-    /// 替换sqlsugar分页
+    ///     替换sqlsugar分页
     /// </summary>
     /// <param name="page"></param>
     /// <returns></returns>

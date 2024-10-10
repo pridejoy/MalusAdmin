@@ -55,7 +55,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     startLoading();
     await reqLogin(userName, password).then(async res => {
       if (res.data) {
-        const pass = await loginByToken(res.data.token);
+        const pass = await getUserInfoByToken(res.data.token);
         if (pass) {
           await routeStore.initAuthRoute();
           if (redirect) {
@@ -77,20 +77,17 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     endLoading();
   }
 
-  async function loginByToken(loginToken: string) {
+  async function getUserInfoByToken(loginToken: string) {
     // 1. stored in the localStorage, the later requests need it in headers
     localStg.set('token', loginToken);
     // localStg.set('refreshToken', loginToken.refreshToken);
-
     const userInfores = await getTokenUserInfo();
-
     if (userInfores.data) {
       // 2. store user info
       localStg.set('userInfo', userInfores.data);
       userInfo = userInfores.data;
       // 3. update store
-      // token.value = loginToken;
-      console.log('更新用户信息', userInfores.data);
+      // console.log('更新用户信息', userInfores.data);
       Object.assign(userInfo, userInfores.data);
 
       return true;

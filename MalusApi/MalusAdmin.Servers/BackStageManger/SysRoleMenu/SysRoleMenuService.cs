@@ -1,10 +1,9 @@
 ﻿using MalusAdmin.Servers.SysRoleMenu.Dto;
-using Models;
 
 namespace MalusAdmin.Servers.SysRoleMenu;
 
 /// <summary>
-/// 角色菜单服务
+///     角色菜单服务
 /// </summary>
 public class SysRoleMenuService
 {
@@ -20,23 +19,25 @@ public class SysRoleMenuService
 
 
     /// <summary>
-    /// 角色菜单获取
+    ///     角色菜单获取
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
     public async Task<List<int>> RoleUserMenu(List<int> RoleId)
     {
-        var  HideorDisableMenusId=await _sysRoleMenuRep.Context.Queryable<TSysMenu>()
-            .Where(x=>x.HideInMenu==true||x.Status==2).Select(x=>x.Id).ToListAsync();
+        var HideorDisableMenusId = await _sysRoleMenuRep.Context.Queryable<TSysMenu>()
+            .Where(x => x.Status == 2).Select(x => x.Id).ToListAsync();
+
         var Res = await _sysRoleMenuRep.Where(x => RoleId.Contains(x.RoleId))
-            .Where(x=> !HideorDisableMenusId.Contains(x.MenuId))
+            .Where(x => !HideorDisableMenusId.Contains(x.MenuId))
             .Select(x => x.MenuId)
             .ToListAsync();
+
         return Res;
     }
 
     /// <summary>
-    /// 角色菜单设置
+    ///     角色菜单设置
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

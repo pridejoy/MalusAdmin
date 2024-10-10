@@ -1,26 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<OutputType>Exe</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="SqlSugarCore" Version="5.1.4.167" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.1.6"/> 
+    </ItemGroup>
 
-	<ItemGroup>
-		<None Update="InitData\bs_bingwallpaper.txt">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="InitData\bs_gallery.txt">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="InitData\bs_miniappsitelink.txt">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
+    <ItemGroup>
+        <None Update="InitData\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None> 
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
+    </ItemGroup>
 
 </Project>

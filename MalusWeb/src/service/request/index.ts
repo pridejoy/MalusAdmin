@@ -37,8 +37,8 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     },
     /** 判断后端响应是否成功，通过对比后端返回的 code 来判断 */
     isBackendSuccess(response) {
+      // 判断后端响应是否成功，通过对比后端返回的 code 来判断
       // 后端返回的状态码
-      // console.log('判断后端响应是否成功，通过对比后端返回的', response);
       const resCodes = [200];
       if (resCodes.includes(response.data.code)) {
         return true;
@@ -47,7 +47,8 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     },
     /** 后端请求在业务上表示失败时调用的异步函数，例如：处理 token 过期 */
     async onBackendFail(response, instance) {
-      console.log('接口响应错误123123', response, instance);
+      // 此处状态码不等于200
+      console.log('此处状态码code不等于200', response, instance);
       const authStore = useAuthStore();
 
       function handleLogout() {
@@ -73,7 +74,7 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
       }
 
       // 当后端响应代码在modalLogoutCodes中时，意味着用户将会通过显示一个模态框来被登出。
-      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
+      const modalLogoutCodes = [401];
       if (modalLogoutCodes.includes(response.data.code)) {
         // 阻止用户刷新页面
         window.addEventListener('beforeunload', handleLogout);
@@ -94,21 +95,6 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
         return null;
       }
 
-      // 当后端响应代码处于“expiredTokeCodes”中时，表示令牌已过期，并刷新令牌
-      // api“refreshToken”不能在“expiredTokeCodes”中返回错误代码，否则它将是一个死循环，应返回“logoutCodes”或“modalLogoutCodes”`
-      // const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
-      // if (expiredTokenCodes.includes(response.data.code) && !request.state.isRefreshingToken) {
-      //   request.state.isRefreshingToken = true;
-
-      //   const refreshConfig = await handleRefreshToken(response.config);
-
-      //   request.state.isRefreshingToken = false;
-
-      //   if (refreshConfig) {
-      //     return instance.request(refreshConfig) as Promise<AxiosResponse>;
-      //   }
-      // }
-
       return null;
     },
     /** 当 responseType 为 json 时，转换后端响应的数据 */
@@ -117,14 +103,20 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
     },
     /** 当请求失败时调用的函数(包括请求失败和后端业务上的失败请求)，例如：处理错误信息 */
     onError(error) {
+      // http 状态码错误
       console.log('接口响应错误', error);
       let message = error.message;
+
       const backendErrorCode = String(error.response?.data?.code || '');
       const modalLogoutCodes = ['401'];
+
       if (modalLogoutCodes.includes(backendErrorCode)) {
-        message = error.response?.data?.message;
-      } else {
-        message = error.message;
+        message = error.response?.data?.message || '';
+      }
+      // 处理状态码等于401
+      if (backendErrorCode === '401') {
+        const authStore = useAuthStore();
+        authStore.resetStore();
       }
 
       window.$message?.error?.(message);

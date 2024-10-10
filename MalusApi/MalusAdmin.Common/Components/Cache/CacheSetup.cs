@@ -6,7 +6,7 @@ namespace MalusAdmin.Common;
 public static class CacheSetup
 {
     /// <summary>
-    /// 注册缓存服务，如有配置 Redis 则启用，没有则启用分布式内存缓存（DistributedMemoryCache）
+    ///     注册缓存服务，如有配置 Redis 则启用，没有则启用分布式内存缓存（DistributedMemoryCache）
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
@@ -23,8 +23,8 @@ public static class CacheSetup
             services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheService>();
         }
-           
-      
+
+
         //更多的缓存实现方式 
         return services;
     }

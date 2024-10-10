@@ -1,12 +1,11 @@
-﻿
-using MalusAdmin.Servers.SysMenu;
+﻿using MalusAdmin.Servers.SysMenu;
 using MalusAdmin.Servers.SysRole;
 using Mapster;
 
 namespace MalusAdmin.Servers;
 
 /// <summary>
-/// 菜单服务
+///     菜单服务
 /// </summary>
 public class SysMenuService
 {
@@ -22,7 +21,7 @@ public class SysMenuService
 
 
     /// <summary>
-    /// 菜单树状查询
+    ///     菜单树状查询
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -42,14 +41,14 @@ public class SysMenuService
 
 
     /// <summary>
-    /// 添加
+    ///     添加
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(MenuAddandUpIn input)
     {
-        var isExist = await _sysMenuRep.
-            Where(x =>  x.RoutePath==input.RoutePath||
-            x.RouteName==input.RouteName||x.MenuName==input.RouteName).AnyAsync();
+        var isExist = await _sysMenuRep.Where(x => x.RoutePath == input.RoutePath ||
+                                                   x.RouteName == input.RouteName || x.MenuName == input.RouteName)
+            .AnyAsync();
         if (isExist) throw ResultHelper.Exception207Bad("当前菜单已存在");
         var entity = input.Adapt<TSysMenu>();
         return await _sysMenuRep.InsertReturnIdentityAsync(entity) > 0;
@@ -57,7 +56,7 @@ public class SysMenuService
 
 
     /// <summary>
-    /// 删除
+    ///     删除
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -70,7 +69,7 @@ public class SysMenuService
     }
 
     /// <summary>
-    /// 更新菜单
+    ///     更新菜单
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -84,7 +83,7 @@ public class SysMenuService
     }
 
     /// <summary>
-    /// 用户菜单
+    ///     用户菜单
     /// </summary>
     /// <returns></returns>
     public async Task<List<RoleListOut>> GetUserMenu()
@@ -96,7 +95,7 @@ public class SysMenuService
 
 
     /// <summary>
-    /// 全部菜单
+    ///     全部菜单
     /// </summary>
     /// <returns></returns>
     public async Task<List<RoleListOut>> GetAllMenu()

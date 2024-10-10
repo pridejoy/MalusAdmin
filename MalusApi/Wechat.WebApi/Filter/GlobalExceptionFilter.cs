@@ -1,7 +1,7 @@
-﻿using MalusAdmin.Common.Helper;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using MalusAdmin.Common;
+using MalusAdmin.Common.Helper;
 using Microsoft.AspNetCore.Mvc;
-using MalusAdmin.Common;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
 {
@@ -12,14 +12,8 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
         _logger = logger;
     }
 
-    /// <summary>
-    /// 最先执行
-    /// </summary>
-    public int Order => int.MinValue;
-
     public async void OnException(ExceptionContext context)
     {
-
         //日志记录
         _logger.LogError(context.Exception, context.Exception.Message);
         //异常进行记录 
@@ -30,4 +24,9 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
         IActionResult result = new ObjectResult(ApiResult) { StatusCode = StatusCodes.Status200OK };
         context.Result = result;
     }
+
+    /// <summary>
+    ///     最先执行
+    /// </summary>
+    public int Order => int.MinValue;
 }

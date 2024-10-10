@@ -1,11 +1,7 @@
 using MalusAdmin.Common.Components;
 using MalusAdmin.Servers.Hub;
-using MalusAdmin.Servers.SysRolePermission;
-using MalusAdmin.Servers.SysUserButtonPermiss;
 using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using SqlSugar;
 
 namespace MalusAdmin.WebApi;
 
@@ -54,7 +50,7 @@ public class Program
         builder.Services.AddSqlsugarSetup();
 
         // 添加swagger文档
-        builder.Services.AddSwaggerSetup(); 
+        builder.Services.AddSwaggerSetup();
 
         // 自动添加服务层
         builder.Services.AddAutoServices("MalusAdmin.Servers");
@@ -68,7 +64,7 @@ public class Program
         builder.Services.AddAuthorizationSetup();
         // 替换默认 PermissionChecker
         //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-         
+
         // 添加跨域支持
         builder.Services.AddCorsSetup();
 
@@ -81,7 +77,7 @@ public class Program
         // 添加EndpointsApiExplorer
         builder.Services.AddEndpointsApiExplorer();
 
-        var app = builder.Build(); 
+        var app = builder.Build();
         //写入静态类供全局获取
         App.ServiceProvider = app.Services;
         App.Configuration = builder.Configuration;
@@ -95,10 +91,7 @@ public class Program
 
 
         // Configure the HTTP request pipeline.
-        if (AppSettings.DisplaySwaggerDoc)
-        {
-            app.UseSwaggerExtension(); 
-        }
+        if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
 
 
         app.UseDefaultFiles(); // 提供默认文件支持
@@ -109,19 +102,19 @@ public class Program
         app.UseRouting(); // 确定路由
 
         app.UseCors(); // 配置跨域资源共享
-         
+
         app.UseAuthentication(); // 启用身份验证中间件
 
         app.UseAuthorization(); // 启用授权中间件
 
         app.UseResponseCaching(); // 应用响应缓存
-         
+
         app.UseMiddleware<CheckToken>(); // 如果CheckToken是身份验证中间件，放在认证之前
 
         app.MapHub<OnlineUserHub>("/hub"); // 映射SignalR Hub
 
         app.MapControllers(); // 映射控制器
-         
+
         app.Run(); // 启动服务器
     }
 }

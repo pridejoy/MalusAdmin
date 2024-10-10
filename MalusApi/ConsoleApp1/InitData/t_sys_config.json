@@ -1,0 +1,18 @@
+﻿[
+  {
+    "ConfigID": 1,
+    "ConfigKey": "tokenExpireTime",
+    "ConfigType": "后台",
+    "ConfigValue": "301",
+    "ConfigDescribe": "Token过期时间【分钟】",
+    "IsDeleted": false
+  },
+  {
+    "ConfigID": 2,
+    "ConfigKey": "Apptime",
+    "ConfigType": "小程序测试参数",
+    "ConfigValue": "3",
+    "ConfigDescribe": "测试参数",
+    "IsDeleted": false
+  }
+]

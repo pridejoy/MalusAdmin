@@ -1,41 +1,41 @@
-﻿ 
-using MalusAdmin.Servers.Hub;
-using Microsoft.AspNetCore.SignalR; 
+﻿using MalusAdmin.Servers.Hub;
+using Microsoft.AspNetCore.SignalR;
 
 namespace MalusAdmin.Servers.SysOnlineUser;
 
 /// <summary>
 /// </summary>
 public class SysOnlineUserService
-{ 
-    private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
+{
     private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
-    public SysOnlineUserService( SqlSugarRepository<TSysOnlineUser> rep,
+    private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
+
+    public SysOnlineUserService(SqlSugarRepository<TSysOnlineUser> rep,
         IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext)
-    { 
+    {
         _rep = rep;
         _onlineUserHubContext = onlineUserHubContext;
     }
 
     /// <summary>
-    /// 在线用户分页
+    ///     在线用户分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
     public async Task<PageList<TSysOnlineUser>> PageList(OnlineUserPageInput input)
-    { 
+    {
         var data = await _rep.AsQueryable()
-            .Where(x=>x.Time>=DateTime.Now.AddHours(-3))
+            .Where(x => x.Time >= DateTime.Now.AddHours(-3))
             .ToPagedListAsync(input.PageNo, input.PageSize);
         return data.PagedResult();
     }
-    
+
     /// <summary>
-    /// 强制用户下线
+    ///     强制用户下线
     /// </summary>
     /// <param name="connectionId">链接的id</param>
     /// <returns></returns>
-    public async Task<Boolean> ForceOffline(string connectionId)
+    public async Task<bool> ForceOffline(string connectionId)
     {
         try
         {
@@ -44,17 +44,18 @@ public class SysOnlineUserService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e); 
-        } 
+            Console.WriteLine(e);
+        }
+
         return true;
     }
-    
+
     /// <summary>
-    /// 给某人发送消息
+    ///     给某人发送消息
     /// </summary>
-    /// <param name="input"></param> 
+    /// <param name="input"></param>
     /// <returns></returns>
-    public async Task<Boolean> SendMsgToOne(SendMsgOneInput input)
+    public async Task<bool> SendMsgToOne(SendMsgOneInput input)
     {
         try
         {
@@ -62,8 +63,9 @@ public class SysOnlineUserService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e); 
+            Console.WriteLine(e);
         }
+
         return true;
     }
 }

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-/// <summary>
-/// 分页返回
+﻿/// <summary>
+///     分页返回
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class PageResult<T>
@@ -18,12 +12,12 @@ public class PageResult<T>
 }
 
 /// <summary>
-/// Scui分页
+///     Scui分页
 /// </summary>
 public static class XnPageResult
 {
     /// <summary>
-    /// 替换sqlsugar分页
+    ///     替换sqlsugar分页
     /// </summary>
     /// <param name="page"></param>
     /// <returns></returns>
@@ -32,7 +26,7 @@ public static class XnPageResult
         return new
         {
             Page = page.PageIndex,
-            PageSize = page.PageSize,
+            page.PageSize,
             TotalPage = page.TotalPages,
             Total = page.TotalCount,
             Rows = page.Items

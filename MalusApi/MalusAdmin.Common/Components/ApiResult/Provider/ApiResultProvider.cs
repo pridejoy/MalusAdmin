@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MalusAdmin.Common;
+﻿namespace MalusAdmin.Common;
 
 public class ApiResultProvider : IApiResultProvider
 {
@@ -14,14 +8,11 @@ public class ApiResultProvider : IApiResultProvider
         if (actionResult is ObjectResult objectResult)
         {
             // 已经是统一返回结果，直接返回
-            if (objectResult.Value is ApiResult)
-            {
-                return actionResult;
-            }
+            if (objectResult.Value is ApiResult) return actionResult;
 
             // 其他情况，包装成 API 统一返回结果
-            int statusCode = objectResult.StatusCode ?? StatusCodes.Status200OK;
-            string message = ApiResultHelper.GetMessage(statusCode); 
+            var statusCode = objectResult.StatusCode ?? StatusCodes.Status200OK;
+            var message = ApiResultHelper.GetMessage(statusCode);
             var apiResult = ApiResultHelper.Result(statusCode, message, objectResult.Value);
             var newResult = new ObjectResult(apiResult);
             return newResult;

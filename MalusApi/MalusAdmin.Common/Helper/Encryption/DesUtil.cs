@@ -5,7 +5,7 @@ namespace MalusAdmin.Encryption;
 public class DesUtil
 {
     /// <summary>
-    /// DES加密
+    ///     DES加密
     /// </summary>
     /// <param name="desModel"></param>
     /// <returns></returns>
@@ -52,7 +52,7 @@ public class DesUtil
     }
 
     /// <summary>
-    /// DES解密
+    ///     DES解密
     /// </summary>
     /// <param name="desModel"></param>
     /// <returns></returns>
@@ -104,7 +104,7 @@ public class DesUtil
     }
 
     /// <summary>
-    /// DES加密字符串
+    ///     DES加密字符串
     /// </summary>
     /// <param name="data"></param>
     /// <param name="key"></param>
@@ -126,7 +126,7 @@ public class DesUtil
     }
 
     /// <summary>
-    /// DES解密字符串
+    ///     DES解密字符串
     /// </summary>
     /// <param name="data"></param>
     /// <param name="key"></param>
@@ -151,27 +151,27 @@ public class DesUtil
     public class DesModel
     {
         /// <summary>
-        /// 需要加密/解密的数据
+        ///     需要加密/解密的数据
         /// </summary>
         public byte[] Data { get; set; }
 
         /// <summary>
-        /// 密钥
+        ///     密钥
         /// </summary>
         public string Key { get; set; }
 
         /// <summary>
-        /// 向量
+        ///     向量
         /// </summary>
         public string IV { get; set; }
 
         /// <summary>
-        /// 加密模式
+        ///     加密模式
         /// </summary>
         public CipherMode Mode { get; set; }
 
         /// <summary>
-        /// 填充模式
+        ///     填充模式
         /// </summary>
         public PaddingMode Padding { get; set; }
     }

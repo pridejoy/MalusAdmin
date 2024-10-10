@@ -1,15 +1,13 @@
-﻿using System.Diagnostics;
-using MalusAdmin.Models;
+﻿using System.Diagnostics; 
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Models;
 using SqlSugar;
 using UAParser;
 
 namespace MalusAdmin.WebApi.Filter;
 
 /// <summary>
-/// 禁用请求记录过滤器
+///     禁用请求记录过滤器
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DisabledRequestRecordAttribute : Attribute
@@ -17,13 +15,16 @@ public class DisabledRequestRecordAttribute : Attribute
 }
 
 /// <summary>
-/// 请求日志拦截
+///     请求日志拦截
 /// </summary>
 public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
 {
+    //筛选器按属性的升序排序 Order 执行 ,具有较低数值 Order 的同步筛选器将在具有较高值的
+    //Order筛选器的 after 方法之后执行
+    internal const int FilterOrder = -1000;
     private readonly ISqlSugarClient _db;
 
-    private readonly ITokenService _tokenService; 
+    private readonly ITokenService _tokenService;
     //private readonly IEventPublisher _publisher;
     //private readonly ICurrentUserService _currentUser; 
 
@@ -33,11 +34,6 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
         _tokenService = tokenService;
     }
 
-    //筛选器按属性的升序排序 Order 执行 ,具有较低数值 Order 的同步筛选器将在具有较高值的
-    //Order筛选器的 after 方法之后执行
-    internal const int FilterOrder = -1000;
-    public int Order => FilterOrder;
-
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var isSkipRecord = false;
@@ -45,7 +41,8 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
         var httpRequest = httpContext.Request;
         var actionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
 
-        if (actionDescriptor == null || actionDescriptor.EndpointMetadata.OfType<DisabledRequestRecordAttribute>().Any())
+        if (actionDescriptor == null ||
+            actionDescriptor.EndpointMetadata.OfType<DisabledRequestRecordAttribute>().Any())
         {
             await next();
             return;
@@ -92,11 +89,14 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
             Param = requestParams,
             ElapsedTime = elapsedMilliseconds,
             OpTime = operationTime,
-            Result = actionContext.Exception?.Message ?? (actionContext.Result is FileStreamResult ? null : actionContext.Result.ToJson())
+            Result = actionContext.Exception?.Message ??
+                     (actionContext.Result is FileStreamResult ? null : actionContext.Result.ToJson())
         };
 
         Console.WriteLine($"处理 {DateTime.Now} : {entity.ToJson()}");
 
-         _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId(); 
+        _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
     }
+
+    public int Order => FilterOrder;
 }

@@ -5,12 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 public static class CorsServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加默认跨域配置
+    ///     添加默认跨域配置
     /// </summary>
     /// <param name="services"></param>
     /// <param name="setupAction"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCorsSetup(this IServiceCollection services, Action<CorsOptions>? setupAction = null)
+    public static IServiceCollection AddCorsSetup(this IServiceCollection services,
+        Action<CorsOptions>? setupAction = null)
     {
         //教程
         //https://www.dotnetshare.com/guid/cors.html

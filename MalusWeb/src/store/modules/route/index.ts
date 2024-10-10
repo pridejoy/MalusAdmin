@@ -74,6 +74,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     // 更新认证路由列表，用映射中的值替换原有数组
     authRoutes.value = Array.from(authRoutesMap.values());
+
     console.log('更新认证路由列表', authRoutes.value);
   }
 
@@ -191,20 +192,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /** 初始化常量路由 */
   async function initConstantRoute() {
     if (isInitConstantRoute.value) return;
-
-    // if (authRouteMode.value === 'static') {
-    //   const staticRoute = createStaticRoutes();
-    //   addConstantRoutes(staticRoute.constantRoutes);
-    // } else {
-    //   const { data, error } = await fetchGetConstantRoutes();
-    //   addConstantRoutes(data);
-    // }
     const staticRoute = createStaticRoutes();
     console.log('1.初始化常量路由', staticRoute.constantRoutes);
     addConstantRoutes(staticRoute.constantRoutes);
     handleConstantAndAuthRoutes();
     setIsInitConstantRoute(true);
-    initAuthRoute();
+    // initAuthRoute();
     // 先获取静态路由
     // const { constantRoutes } = createStaticRoutes();
     // addAuthRoutes(constantRoutes);
@@ -242,12 +235,11 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /** 初始化动态身份验证路由 */
   async function initDynamicAuthRoute() {
     const data = await getUserRoutes();
-    console.log('2. 初始化动态身份验证路由', data.data?.routes);
+    console.log('2. 获取动态身份验证路由', data.data?.routes);
     addAuthRoutes(data.data?.routes ?? []);
 
-    const home = data.data?.home || 'home';
-
     handleConstantAndAuthRoutes();
+    const home = data.data?.home || 'home';
     console.log('3. 设置主页', home);
     setRouteHome(home);
 

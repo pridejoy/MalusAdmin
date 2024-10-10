@@ -1,8 +1,7 @@
-﻿namespace Wechat.WebApi.Controllers
+﻿namespace Wechat.WebApi.Controllers;
+
+public class BingEveryInput
 {
-    public class BingEveryInput
-    {
-        //当前月份
-        public string monthstr { get; set; }
-    }
+    //当前月份
+    public string monthstr { get; set; }
 }

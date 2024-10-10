@@ -3,7 +3,6 @@ using MalusAdmin.Common.Components.Swagger;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace MalusAdmin.Common;
@@ -15,11 +14,10 @@ public static class SwaggerSetup
         // 默认配置
         Action<SwaggerGenOptions> defaultSetupAction = options =>
         {
-
             options.SwaggerDoc("vdefault", new OpenApiInfo { Title = "Default API", Version = "v1" });
-             
+
             var basePath = AppContext.BaseDirectory;
-             
+
             // 获取根目录下，所有 xml 完整路径（注：并不会获取二级目录下的文件）
             var directoryInfo = new DirectoryInfo(basePath);
             var xmls = directoryInfo
@@ -38,16 +36,11 @@ public static class SwaggerSetup
 
             //判断接口归于哪个分组
             options.DocInclusionPredicate((docName, apiDescription) =>
-            { 
+            {
                 if (docName == "vdefault")
-                {
                     //当分组为NoGroup时，只要没加特性的都属于这个组
                     return string.IsNullOrEmpty(apiDescription.GroupName);
-                }
-                else
-                {
-                    return apiDescription.GroupName == docName;
-                }
+                return apiDescription.GroupName == docName;
             });
         };
 

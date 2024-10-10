@@ -3,7 +3,7 @@
 public static class EnumHelper
 {
     /// <summary>
-    /// 获取枚举类型的所有值和它们的描述
+    ///     获取枚举类型的所有值和它们的描述
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

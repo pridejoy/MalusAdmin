@@ -23,10 +23,10 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function ForceOffline(msg){
-            console.log("收到消息",msg);
+        function ForceOffline(msg) {
+            console.log("收到消息", msg);
         }
-        
+
         // 定义一个客户端类来处理与Hub的通信
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("wss://malusapi.dotnetshare.com/hub?token=9b1bce5610314678ab22008a86d26e09") // 将"/yourHubUrl"替换为你的SignalR Hub的URL
@@ -36,9 +36,9 @@
         // 处理连接打开事件 
         //定义一个方法，共后端调用
         connection.on("ReceiveMessage", messageReceived);
-        
+
         connection.on("ForceOffline", ForceOffline);
-        
+
         // 连接到Hub
         connection.start().catch(function (err) {
             console.error(err.toString());

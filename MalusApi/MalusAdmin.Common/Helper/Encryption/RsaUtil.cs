@@ -5,7 +5,7 @@ namespace MalusAdmin.Encryption;
 public class RsaUtil
 {
     /// <summary>
-    /// 生成公钥和私钥
+    ///     生成公钥和私钥
     /// </summary>
     /// <returns></returns>
     public static RsaKey CreateKey()
@@ -19,7 +19,7 @@ public class RsaUtil
     }
 
     /// <summary>
-    /// RSA加密
+    ///     RSA加密
     /// </summary>
     /// <param name="rsaModel"></param>
     /// <returns></returns>
@@ -40,7 +40,7 @@ public class RsaUtil
     }
 
     /// <summary>
-    /// RSA解密
+    ///     RSA解密
     /// </summary>
     /// <param name="rsaModel"></param>
     /// <returns></returns>
@@ -61,7 +61,7 @@ public class RsaUtil
     }
 
     /// <summary>
-    /// RSA加密字符串
+    ///     RSA加密字符串
     /// </summary>
     /// <param name="data">要加密的字符串</param>
     /// <param name="key">公钥</param>
@@ -79,7 +79,7 @@ public class RsaUtil
     }
 
     /// <summary>
-    /// RSA解密字符串
+    ///     RSA解密字符串
     /// </summary>
     /// <param name="data">要解密的字符串</param>
     /// <param name="key">私钥</param>
@@ -117,12 +117,12 @@ public class RsaUtil
     public class RsaKey
     {
         /// <summary>
-        /// 公钥
+        ///     公钥
         /// </summary>
         public string PublicKey { get; set; }
 
         /// <summary>
-        /// 私钥
+        ///     私钥
         /// </summary>
         public string PrivateKey { get; set; }
     }
@@ -130,12 +130,12 @@ public class RsaUtil
     public class RsaModel
     {
         /// <summary>
-        /// 需要加密/解密的数据
+        ///     需要加密/解密的数据
         /// </summary>
         public byte[] Data { get; set; }
 
         /// <summary>
-        /// 密钥(加密:公钥;解密:私钥)
+        ///     密钥(加密:公钥;解密:私钥)
         /// </summary>
         public string Key { get; set; }
     }

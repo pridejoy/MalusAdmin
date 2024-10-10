@@ -1,7 +1,4 @@
-﻿ 
-using System.Linq.Expressions; 
-using Microsoft.Extensions.DependencyInjection;
-using SqlSugar;
+﻿using SqlSugar;
 
 namespace MalusAdmin.BackUpServices;
 
@@ -10,7 +7,7 @@ public static class SqlsugarSetup
     public static void AddSqlsugarSetup(this IServiceCollection services)
     {
         //数据库链接,修改配置里面的SqlServerConnection的字符串
-        var ConnectionString =""; 
+        var ConnectionString = "";
 
         var configConnection = new ConnectionConfig
         {
@@ -46,11 +43,9 @@ public static class SqlsugarSetup
                 {
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
-                        
                     }
                     else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
                     {
-                       
                     }
                 }
                 catch
@@ -88,8 +83,7 @@ public static class SqlsugarSetup
                 }
 
                 ;
-            };  
-           
+            };
         };
 
         //SqlSugarScope线程是安全的
@@ -100,6 +94,5 @@ public static class SqlsugarSetup
 
         // 注册 SqlSugar 仓储
         services.AddScoped(typeof(SqlSugarRepository<>));
-    } 
-    
+    }
 }

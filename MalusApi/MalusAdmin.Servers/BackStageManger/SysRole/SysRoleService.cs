@@ -5,7 +5,7 @@ using Mapster;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-/// 角色服务
+///     角色服务
 /// </summary>
 public class SysRoleService
 {
@@ -21,7 +21,7 @@ public class SysRoleService
 
 
     /// <summary>
-    /// 角色列表分页
+    ///     角色列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -37,47 +37,47 @@ public class SysRoleService
     }
 
     /// <summary>
-    /// 添加角色
+    ///     添加角色
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(RoleAddandUpIn input)
     {
         var isExist = await _sysRoleRep.Where(x => x.Name == input.Name).AnyAsync();
-        if (isExist)  throw ResultHelper.Exception207Bad("已存在当前角色");
+        if (isExist) throw ResultHelper.Exception207Bad("已存在当前角色");
         var entity = input.Adapt<TSysRole>();
         return await _sysRoleRep.InsertReturnIdentityAsync(entity) > 0;
     }
 
 
     /// <summary>
-    /// 删除角色
+    ///     删除角色
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
     public async Task<bool> Delete(int id)
     {
         var entity = await _sysRoleRep.FirstOrDefaultAsync(u => u.Id == id);
-        if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前角色");
+        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前角色");
         entity.SysIsDelete = true;
         return await _sysRoleRep.UpdateAsync(entity) > 0;
     }
 
     /// <summary>
-    /// 更新角色
+    ///     更新角色
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
     public async Task<bool> Update(RoleAddandUpIn input)
     {
         var entity = await _sysRoleRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前账号");
+        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前账号");
 
         var sysRole = input.Adapt<TSysRole>();
         return await _sysRoleRep.AsUpdateable(sysRole).IgnoreColumns(true).ExecuteCommandAsync() > 0;
     }
 
     /// <summary>
-    /// 用户列表
+    ///     用户列表
     /// </summary>
     /// <returns></returns>
     public async Task<List<RoleListOut>> List()

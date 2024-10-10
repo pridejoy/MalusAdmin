@@ -5,7 +5,7 @@ namespace MalusAdmin.Common.Helper;
 public class ShellUtil
 {
     /// <summary>
-    /// linux 系统命令
+    ///     linux 系统命令
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
@@ -31,7 +31,7 @@ public class ShellUtil
     }
 
     /// <summary>
-    /// windows系统命令
+    ///     windows系统命令
     /// </summary>
     /// <param name="fileName"></param>
     /// <param name="args"></param>

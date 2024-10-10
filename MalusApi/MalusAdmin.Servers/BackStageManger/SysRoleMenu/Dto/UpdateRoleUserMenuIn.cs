@@ -1,7 +1,7 @@
 ﻿namespace MalusAdmin.Servers.SysRoleMenu.Dto;
 
 /// <summary>
-/// 用户菜单更新
+///     用户菜单更新
 /// </summary>
 public class UpdateRoleUserMenuIn
 {

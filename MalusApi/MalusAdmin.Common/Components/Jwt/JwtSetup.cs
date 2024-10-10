@@ -7,7 +7,7 @@ namespace MalusAdmin.Common;
 public static class JwtSetup
 {
     /// <summary>
-    /// 添加jwt认证
+    ///     添加jwt认证
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>

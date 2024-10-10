@@ -1,11 +1,10 @@
-﻿using MalusAdmin.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
 using Wechat.Servers;
 
 /// <summary>
-/// 小程序服务
-/// </summary> 
+///     小程序服务
+/// </summary>
 public class MiniServiceController : WxApiControllerBase
 {
     private readonly ISqlSugarClient _db;
@@ -17,7 +16,7 @@ public class MiniServiceController : WxApiControllerBase
 
 
     /// <summary>
-    /// 获取小程序的友联
+    ///     获取小程序的友联
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -29,5 +28,4 @@ public class MiniServiceController : WxApiControllerBase
 
         return list;
     }
-
 }

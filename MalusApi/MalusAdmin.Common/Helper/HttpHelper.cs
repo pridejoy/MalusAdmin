@@ -3,7 +3,7 @@
 public static class HttpHelper
 {
     /// <summary>
-    /// 获取完整请求地址
+    ///     获取完整请求地址
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -19,7 +19,7 @@ public static class HttpHelper
 
 
     /// <summary>
-    /// 获取请求的ip4
+    ///     获取请求的ip4
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>

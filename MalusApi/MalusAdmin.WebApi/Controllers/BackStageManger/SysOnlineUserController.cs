@@ -3,10 +3,10 @@ using MalusAdmin.Servers.SysOnlineUser;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-/// 在线用户
+///     在线用户
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
-public class SysOnlineUserController: ApiControllerBase
+public class SysOnlineUserController : ApiControllerBase
 {
     private readonly SysOnlineUserService _service;
 
@@ -14,9 +14,9 @@ public class SysOnlineUserController: ApiControllerBase
     {
         _service = service;
     }
-    
+
     /// <summary>
-    /// 分页查询
+    ///     分页查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -25,10 +25,10 @@ public class SysOnlineUserController: ApiControllerBase
     {
         return await _service.PageList(input);
     }
-    
-    
+
+
     /// <summary>
-    /// 强制下线
+    ///     强制下线
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -37,14 +37,14 @@ public class SysOnlineUserController: ApiControllerBase
     {
         return await _service.ForceOffline(connectionId);
     }
-    
+
     /// <summary>
-    /// 给指定用户发送消息
+    ///     给指定用户发送消息
     /// </summary>
     /// <returns></returns>
     [HttpPost]
     [Permission("给指定用户发送消息")]
-    public async Task<bool> SendMsgToOne([FromBody] SendMsgOneInput input )
+    public async Task<bool> SendMsgToOne([FromBody] SendMsgOneInput input)
     {
         return await _service.SendMsgToOne(input);
     }

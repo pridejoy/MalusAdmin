@@ -5,7 +5,7 @@ namespace MalusAdmin.Encryption;
 public class AesUtil
 {
     /// <summary>
-    /// AES加密
+    ///     AES加密
     /// </summary>
     /// <param name="aesModel"></param>
     /// <returns></returns>
@@ -53,7 +53,7 @@ public class AesUtil
     }
 
     /// <summary>
-    /// AES解密
+    ///     AES解密
     /// </summary>
     /// <param name="aesModel"></param>
     /// <returns></returns>
@@ -106,7 +106,7 @@ public class AesUtil
     }
 
     /// <summary>
-    /// AES加密字符串
+    ///     AES加密字符串
     /// </summary>
     /// <param name="data"></param>
     /// <param name="key"></param>
@@ -128,7 +128,7 @@ public class AesUtil
     }
 
     /// <summary>
-    /// AES解密字符串
+    ///     AES解密字符串
     /// </summary>
     /// <param name="data"></param>
     /// <param name="key"></param>
@@ -153,27 +153,27 @@ public class AesUtil
     public class AesModel
     {
         /// <summary>
-        /// 需要加密/解密的数据
+        ///     需要加密/解密的数据
         /// </summary>
         public byte[] Data { get; set; }
 
         /// <summary>
-        /// 密钥
+        ///     密钥
         /// </summary>
         public string Key { get; set; }
 
         /// <summary>
-        /// 向量
+        ///     向量
         /// </summary>
         public string IV { get; set; }
 
         /// <summary>
-        /// 加密模式
+        ///     加密模式
         /// </summary>
         public CipherMode Mode { get; set; }
 
         /// <summary>
-        /// 填充模式
+        ///     填充模式
         /// </summary>
         public PaddingMode Padding { get; set; }
     }

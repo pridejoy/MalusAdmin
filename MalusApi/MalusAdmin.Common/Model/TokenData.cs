@@ -17,7 +17,7 @@ public class TokenData
     public DateTime? LoginTime { get; set; }
 
     /// <summary>
-    /// 过期时间
+    ///     过期时间
     /// </summary>
     public DateTime? ExpireTime { get; set; }
 }

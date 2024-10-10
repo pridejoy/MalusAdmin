@@ -19,11 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MalusAdmin.BackUpServices",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "A微信小程序", "A微信小程序", "{B281D228-3B53-499A-AFBF-EAFFCF2B844D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wechat.WebApi", "Wechat.WebApi\Wechat.WebApi.csproj", "{C584919D-FDF7-4C1B-ABD6-EB27E6FB3446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wechat.WebApi", "Wechat.WebApi\Wechat.WebApi.csproj", "{C584919D-FDF7-4C1B-ABD6-EB27E6FB3446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wechat.Servers", "Wechat.Servers\Wechat.Servers.csproj", "{537A3C68-5645-4C47-BC11-680015BD0EE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wechat.Servers", "Wechat.Servers\Wechat.Servers.csproj", "{537A3C68-5645-4C47-BC11-680015BD0EE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{50B2E6F4-1540-48D5-9034-E13A79CA0A50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{50B2E6F4-1540-48D5-9034-E13A79CA0A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

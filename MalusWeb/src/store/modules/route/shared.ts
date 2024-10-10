@@ -70,7 +70,7 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
  */
 export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
   const menus: App.Global.Menu[] = [];
-
+  // 隐藏需要隐藏的菜单
   routes.forEach(route => {
     if (!route.meta?.hideInMenu) {
       const menu = getGlobalMenuByBaseRoute(route);

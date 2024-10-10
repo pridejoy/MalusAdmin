@@ -6,18 +6,18 @@ public static class IOFileHelper
     //await WriteAsync("file.txt", "Hello World");
     //await WriteAsync("subfolder/file.txt", "Hello World");
     /// <summary>
-    /// 创建文件或者附加内容
+    ///     创建文件或者附加内容
     /// </summary>
     /// <param name="Data">要写入的文本</param>
     /// <param name="Encode">编码方式</param>
     /// <param name="filePath">文件路径(支持相对路径或绝对路径)</param>
     /// <param name="IsAppend">附加还是全新写入</param>
-    public static async Task<bool> Write(string filePath = "", string Data="")
+    public static async Task<bool> Write(string filePath = "", string Data = "")
     {
         filePath = filePath.Contains("txt")
             ? filePath
             : "logs/" + filePath + DateTime.Now.ToString("yyyyMMdd") + ".log";
-        var  Encode =  "UTF-8" ;
+        var Encode = "UTF-8";
         Data = DateTime.Now + "  :" + Data + "\n";
         try
         {

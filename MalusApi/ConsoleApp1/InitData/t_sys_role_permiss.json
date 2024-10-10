@@ -1,3 +1,592 @@
-{
-
-}
+[
+  {
+    "Id": 4,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-19T10:16:08.510",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 2,
+    "UserPermiss": "api:SysMenu:Add"
+  },
+  {
+    "Id": 5,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-19T10:16:08.510",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 2,
+    "UserPermiss": "api:SysMenu:MenuTreeList"
+  },
+  {
+    "Id": 12,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysMenu:MenuTreeList"
+  },
+  {
+    "Id": 13,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysMenu:Add"
+  },
+  {
+    "Id": 14,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysMenu:Update"
+  },
+  {
+    "Id": 15,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysMenu:Delete"
+  },
+  {
+    "Id": 16,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysRole:PageList"
+  },
+  {
+    "Id": 17,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysRole:Add"
+  },
+  {
+    "Id": 18,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysRole:Delete"
+  },
+  {
+    "Id": 19,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T10:59:18.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 5,
+    "UserPermiss": "api:SysRole:Update"
+  },
+  {
+    "Id": 22,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysUser:Update"
+  },
+  {
+    "Id": 23,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysUser:Delete"
+  },
+  {
+    "Id": 24,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysUser:Add"
+  },
+  {
+    "Id": 25,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysUser:PageList"
+  },
+  {
+    "Id": 26,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysRolePermission:AddUserButtonPermiss"
+  },
+  {
+    "Id": 27,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysRolePermission:GetRoleButen"
+  },
+  {
+    "Id": 28,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysRole:Update"
+  },
+  {
+    "Id": 29,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysRole:Delete"
+  },
+  {
+    "Id": 30,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysRole:Add"
+  },
+  {
+    "Id": 31,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysRole:PageList"
+  },
+  {
+    "Id": 32,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysMenu:Delete"
+  },
+  {
+    "Id": 33,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysMenu:Update"
+  },
+  {
+    "Id": 34,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-23T13:50:47.410",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 4,
+    "UserPermiss": "api:SysMenu:Add"
+  },
+  {
+    "Id": 1051,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-15T09:41:16.100",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "UserPermiss": "api:SysUser:PageList"
+  },
+  {
+    "Id": 1068,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysMenu:MenuTreeList"
+  },
+  {
+    "Id": 1069,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysMenu:Add"
+  },
+  {
+    "Id": 1070,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysMenu:Update"
+  },
+  {
+    "Id": 1071,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysMenu:Delete"
+  },
+  {
+    "Id": 1072,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRole:PageList"
+  },
+  {
+    "Id": 1073,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRole:Add"
+  },
+  {
+    "Id": 1074,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRole:Delete"
+  },
+  {
+    "Id": 1075,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRole:Update"
+  },
+  {
+    "Id": 1076,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRoleMenu:Get"
+  },
+  {
+    "Id": 1077,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRoleMenu:Set"
+  },
+  {
+    "Id": 1078,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRolePermission:GetRoleButen"
+  },
+  {
+    "Id": 1079,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysRolePermission:AddUserButtonPermiss"
+  },
+  {
+    "Id": 1080,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysUser:PageList"
+  },
+  {
+    "Id": 1081,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysUser:Add"
+  },
+  {
+    "Id": 1082,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysUser:Delete"
+  },
+  {
+    "Id": 1083,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-23T16:39:00.130",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "UserPermiss": "api:SysUser:Update"
+  },
+  {
+    "Id": 1084,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysMenu:MenuTreeList"
+  },
+  {
+    "Id": 1085,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysMenu:Add"
+  },
+  {
+    "Id": 1086,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysMenu:Update"
+  },
+  {
+    "Id": 1087,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysMenu:Delete"
+  },
+  {
+    "Id": 1088,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysOnlineUser:PageList"
+  },
+  {
+    "Id": 1089,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysOnlineUser:ForceOffline"
+  },
+  {
+    "Id": 1090,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysOnlineUser:SendMsgToOne"
+  },
+  {
+    "Id": 1091,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRole:PageList"
+  },
+  {
+    "Id": 1092,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRole:Add"
+  },
+  {
+    "Id": 1093,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRole:Delete"
+  },
+  {
+    "Id": 1094,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRole:Update"
+  },
+  {
+    "Id": 1095,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRoleMenu:Get"
+  },
+  {
+    "Id": 1096,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRoleMenu:Set"
+  },
+  {
+    "Id": 1097,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRolePermission:GetRoleButen"
+  },
+  {
+    "Id": 1098,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysRolePermission:AddUserButtonPermiss"
+  },
+  {
+    "Id": 1099,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysUser:PageList"
+  },
+  {
+    "Id": 1100,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysUser:Add"
+  },
+  {
+    "Id": 1101,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysUser:Delete"
+  },
+  {
+    "Id": 1102,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-01T16:33:42.893",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "UserPermiss": "api:SysUser:Update"
+  }
+]

@@ -1,31 +1,30 @@
-﻿ 
-namespace MalusAdmin.Common;
+﻿namespace MalusAdmin.Common;
 
 public class TokenService : ITokenService
 {
     private readonly ICacheService _cacheService;
 
     private readonly IHttpContextAccessor _httpContextAccessor;
-     
+
     /// <summary>
-    /// 30分钟内无操作
+    ///     30分钟内无操作
     /// </summary>
     private readonly int expiresTime = 30;
 
     /// <summary>
-    /// 请求头的前缀
+    ///     请求头的前缀
     /// </summary>
     private readonly string tokenTag = "Token";
-     
+
 
     public TokenService(ICacheService cacheService, IHttpContextAccessor httpContextAccessor)
     {
         _cacheService = cacheService;
         _httpContextAccessor = httpContextAccessor;
     }
-     
+
     /// <summary>
-    /// 生成token
+    ///     生成token
     /// </summary>
     /// <param name="tokenData"></param>
     /// <returns></returns>
@@ -38,16 +37,15 @@ public class TokenService : ITokenService
         if (tokenData.UserId > 0) _cacheService.Set(Constant.Cache.UserToken + token, tokenData, 60 * expiresTime);
         return token;
     }
-     
+
 
     /// <summary>
-    /// 检查Token
+    ///     检查Token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
     public async Task<bool> ValidateToken(string token)
-    { 
-
+    {
         if (string.IsNullOrWhiteSpace(token)) return false;
         //是否在缓存，是否过期
         var userinfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
@@ -65,20 +63,20 @@ public class TokenService : ITokenService
         var tokeninfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
         tokeninfo.ExpireTime = DateTime.Now.AddMinutes(expiresTime);
         //expiresTime 内操作，变增加30分钟的有效期
-        _cacheService.Set(Constant.Cache.UserToken + token, tokeninfo, 60 * expiresTime); 
+        _cacheService.Set(Constant.Cache.UserToken + token, tokeninfo, 60 * expiresTime);
     }
 
 
     //解析token
     public async Task<TokenData> ParseTokenAsync(string token)
     {
-       var tokeninfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
-       return tokeninfo;
+        var tokeninfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);
+        return tokeninfo;
     }
 
 
     /// <summary>
-    /// 获取heard的token
+    ///     获取heard的token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
@@ -93,12 +91,12 @@ public class TokenService : ITokenService
 
 
     /// <summary>
-    /// 获取当前登录的用户信息
+    ///     获取当前登录的用户信息
     /// </summary>
     /// <returns></returns>
     public async Task<TokenData> GetCurrentUserInfo()
     {
-        var token =await GetHeadersToken();
+        var token = await GetHeadersToken();
         try
         {
             return await ParseTokenAsync(token);
@@ -107,6 +105,5 @@ public class TokenService : ITokenService
         {
             return new TokenData();
         }
-       
     }
 }

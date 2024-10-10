@@ -71,7 +71,7 @@ declare module "@elegant-router/types" {
     "sysmanage_dic": "/sysmanage/dic";
     "sysmanage_online-user": "/sysmanage/online-user";
     "sysmanage_systemstatus": "/sysmanage/systemstatus";
-    "user-center": "/user-center";
+    "sysmanage_usercenter": "/sysmanage/usercenter";
   };
 
   /**
@@ -119,7 +119,6 @@ declare module "@elegant-router/types" {
     | "plugin"
     | "syslog"
     | "sysmanage"
-    | "user-center"
   >;
 
   /**
@@ -175,7 +174,7 @@ declare module "@elegant-router/types" {
     | "sysmanage_dic"
     | "sysmanage_online-user"
     | "sysmanage_systemstatus"
-    | "user-center"
+    | "sysmanage_usercenter"
   >;
 
   /**

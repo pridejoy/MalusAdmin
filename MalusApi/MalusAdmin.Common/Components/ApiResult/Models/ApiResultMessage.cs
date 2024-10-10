@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MalusAdmin.Common;
+﻿namespace MalusAdmin.Common;
 
 public class ApiResultMessage
 {
@@ -17,4 +11,3 @@ public class ApiResultMessage
     public const string Status409Conflict = "存在冲突";
     public const string Status500InternalServerError = "服务器错误";
 }
-

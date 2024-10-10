@@ -1,6 +1,4 @@
-﻿ 
-
-namespace MalusAdmin.Servers.WeatherForecast;
+﻿namespace MalusAdmin.Servers.WeatherForecast;
 
 public class WeatherForecastService : IWeatherForecastService
 {
@@ -18,7 +16,7 @@ public class WeatherForecastService : IWeatherForecastService
     }
 
     /// <summary>
-    /// 生成实体
+    ///     生成实体
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
@@ -31,7 +29,7 @@ public class WeatherForecastService : IWeatherForecastService
 
 
     /// <summary>
-    /// 生成数据库表
+    ///     生成数据库表
     /// </summary>
     /// <returns></returns>
     public async Task CreatTable()
@@ -40,7 +38,7 @@ public class WeatherForecastService : IWeatherForecastService
     }
 
     /// <summary>
-    /// 测试
+    ///     测试
     /// </summary>
     /// <returns></returns>
     public async Task<IEnumerable<WeatherForecast>> Get()

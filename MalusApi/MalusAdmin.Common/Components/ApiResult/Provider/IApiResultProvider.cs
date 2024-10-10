@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MalusAdmin.Common;
 
-namespace MalusAdmin.Common
+public interface IApiResultProvider
 {
-    public interface IApiResultProvider
-    {
-        IActionResult ProcessActionResult(IActionResult actionResult);
+    IActionResult ProcessActionResult(IActionResult actionResult);
 
-        IActionResult ProcessApiResultException(ApiResultException resultException);
-    }
+    IActionResult ProcessApiResultException(ApiResultException resultException);
 }

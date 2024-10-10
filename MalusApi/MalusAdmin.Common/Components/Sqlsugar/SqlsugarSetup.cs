@@ -1,7 +1,7 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using MalusAdmin.Common.Helper;
-using MalusAdmin.Common.Model;
+using MalusAdmin.Repository.Model;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MalusAdmin.Common;
@@ -53,14 +53,12 @@ public static class SqlsugarSetup
                     var user = tokenserver.GetCurrentUserInfo().Result;
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
-                       
-
                         if (entityInfo.PropertyName == "SysCreateUser")
-                        { 
+                        {
                             if (user != null) entityInfo.SetValue(user.UserId);
                         }
                         else if (entityInfo.PropertyName == "DeptId" && entityInfo.EntityName != "TSysUser")
-                        { 
+                        {
                             if (user != null)
                             {
                                 //entityInfo.SetValue(token.UserDept);
@@ -69,11 +67,9 @@ public static class SqlsugarSetup
                     }
                     else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
                     {
-                         
                         if (entityInfo.PropertyName == "SysUpdateUser")
-                        { 
-                            if (user != null) entityInfo.SetValue(user.UserId);
-                        }
+                            if (user != null)
+                                entityInfo.SetValue(user.UserId);
                     }
                 }
                 catch
@@ -88,10 +84,11 @@ public static class SqlsugarSetup
                 if (ex.Parametres == null) return;
                 var originColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                var pars = db.Utilities.SerializeObject( ((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
+                var pars = db.Utilities.SerializeObject(
+                    ((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
                 Console.ForegroundColor = originColor;
                 Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars + " \r\n");
-                await IOFileHelper.Write("sqlerror/",ex.ToJson());
+                await IOFileHelper.Write("sqlerror/", ex.ToJson());
             };
 
             //监控所有超过1秒的Sql 
@@ -108,8 +105,8 @@ public static class SqlsugarSetup
                     //db.Ado.SqlStackTrace.MyStackTraceList[1].xxx 获取上层方法的信息
 
                     Console.WriteLine("【" + DateTime.Now + "——执行SQL超时】\r\n" + fileName + " \r\n");
-                    await IOFileHelper.Write("sqlexcution/", fileName+sql+fileLine+FirstMethodName);
-                } ;
+                    await IOFileHelper.Write("sqlexcution/", fileName + sql + fileLine + FirstMethodName);
+                };
             };
 
 
@@ -143,7 +140,6 @@ public static class SqlsugarSetup
     public static List<Type> GetSugarTableTypes()
     {
         var assemblies = AssemblyHelper.GetAssemblies("MalusAdmin.Repository");
-        ;
 
         var types = new List<Type>();
 

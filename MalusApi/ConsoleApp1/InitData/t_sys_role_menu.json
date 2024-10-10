@@ -1,3 +1,702 @@
-{
-
-}
+[
+  {
+    "Id": 110,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 9
+  },
+  {
+    "Id": 111,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 14
+  },
+  {
+    "Id": 112,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 15
+  },
+  {
+    "Id": 113,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 10
+  },
+  {
+    "Id": 114,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 11
+  },
+  {
+    "Id": 115,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 12
+  },
+  {
+    "Id": 116,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 13
+  },
+  {
+    "Id": 117,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 16
+  },
+  {
+    "Id": 118,
+    "SysCreateUser": 0,
+    "SysCreateTime": "2024-04-30T14:57:56.043",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 3,
+    "MenuId": 17
+  },
+  {
+    "Id": 1065,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 27
+  },
+  {
+    "Id": 1066,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 28
+  },
+  {
+    "Id": 1067,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 29
+  },
+  {
+    "Id": 1068,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 30
+  },
+  {
+    "Id": 1069,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 31
+  },
+  {
+    "Id": 1070,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 32
+  },
+  {
+    "Id": 1071,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 33
+  },
+  {
+    "Id": 1072,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 34
+  },
+  {
+    "Id": 1073,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 35
+  },
+  {
+    "Id": 1074,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 36
+  },
+  {
+    "Id": 1075,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 37
+  },
+  {
+    "Id": 1076,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 38
+  },
+  {
+    "Id": 1077,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 39
+  },
+  {
+    "Id": 1078,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-13T09:58:23.837",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 9,
+    "MenuId": 16
+  },
+  {
+    "Id": 1082,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-14T13:55:58.397",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "MenuId": 9
+  },
+  {
+    "Id": 1083,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-14T13:55:58.397",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "MenuId": 11
+  },
+  {
+    "Id": 1084,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-14T13:55:58.397",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "MenuId": 16
+  },
+  {
+    "Id": 1085,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-14T13:55:58.397",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "MenuId": 14
+  },
+  {
+    "Id": 1086,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-14T13:55:58.397",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "MenuId": 17
+  },
+  {
+    "Id": 1087,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-14T13:55:58.397",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 12,
+    "MenuId": 10
+  },
+  {
+    "Id": 1114,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 16
+  },
+  {
+    "Id": 1115,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 27
+  },
+  {
+    "Id": 1116,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 28
+  },
+  {
+    "Id": 1117,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 29
+  },
+  {
+    "Id": 1118,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 30
+  },
+  {
+    "Id": 1119,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 31
+  },
+  {
+    "Id": 1120,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 32
+  },
+  {
+    "Id": 1121,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 33
+  },
+  {
+    "Id": 1122,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 34
+  },
+  {
+    "Id": 1123,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 35
+  },
+  {
+    "Id": 1124,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 36
+  },
+  {
+    "Id": 1125,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 37
+  },
+  {
+    "Id": 1126,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 38
+  },
+  {
+    "Id": 1127,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-05-28T11:07:45.803",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 15,
+    "MenuId": 39
+  },
+  {
+    "Id": 1128,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 9
+  },
+  {
+    "Id": 1129,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 14
+  },
+  {
+    "Id": 1130,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 15
+  },
+  {
+    "Id": 1131,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 17
+  },
+  {
+    "Id": 1132,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 19
+  },
+  {
+    "Id": 1133,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 42
+  },
+  {
+    "Id": 1134,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 43
+  },
+  {
+    "Id": 1135,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 10
+  },
+  {
+    "Id": 1136,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 11
+  },
+  {
+    "Id": 1137,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 12
+  },
+  {
+    "Id": 1138,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 13
+  },
+  {
+    "Id": 1139,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 27
+  },
+  {
+    "Id": 1140,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 28
+  },
+  {
+    "Id": 1141,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 29
+  },
+  {
+    "Id": 1142,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 30
+  },
+  {
+    "Id": 1143,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 31
+  },
+  {
+    "Id": 1144,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 32
+  },
+  {
+    "Id": 1145,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 33
+  },
+  {
+    "Id": 1146,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 34
+  },
+  {
+    "Id": 1147,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 35
+  },
+  {
+    "Id": 1148,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 36
+  },
+  {
+    "Id": 1149,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 37
+  },
+  {
+    "Id": 1150,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 38
+  },
+  {
+    "Id": 1151,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 39
+  },
+  {
+    "Id": 1152,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-08-02T13:58:51.170",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 1,
+    "MenuId": 16
+  },
+  {
+    "Id": 1155,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-09-26T10:50:05.403",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 49,
+    "MenuId": 16
+  },
+  {
+    "Id": 1156,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-09-26T10:50:05.403",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "RoleId": 49,
+    "MenuId": 27
+  }
+]

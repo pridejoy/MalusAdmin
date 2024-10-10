@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using SqlSugar.Extensions;
+﻿using SqlSugar.Extensions;
 
 namespace Wechat.Servers;
 
@@ -10,7 +9,6 @@ namespace Wechat.Servers;
 [ApiExplorerSettings(GroupName = "小程序")]
 public class WxApiControllerBase : ControllerBase
 {
-
-    private int UserId { get => HttpContext?.User.FindFirst("UserId")?.Value.ObjToInt() ?? 0; }
-    private string OpenID { get { return HttpContext?.User.FindFirst("OpenID")?.Value.ToString() ?? ""; } }
+    private int UserId => HttpContext?.User.FindFirst("UserId")?.Value.ObjToInt() ?? 0;
+    private string OpenID => HttpContext?.User.FindFirst("OpenID")?.Value ?? "";
 }

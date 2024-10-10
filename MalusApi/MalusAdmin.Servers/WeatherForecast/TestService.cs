@@ -1,6 +1,4 @@
-﻿
-using MalusAdmin.Models;
-using MalusAdmin.Servers.Hub;
+﻿using MalusAdmin.Servers.Hub;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
@@ -8,7 +6,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace MalusAdmin.Servers.WeatherForecast;
 
 /// <summary>
-/// 测试服务
+///     测试服务
 /// </summary>
 public class TestService
 {
@@ -17,8 +15,9 @@ public class TestService
     private readonly IHttpContextAccessor _httpContext;
     private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
     private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
+
     public TestService(ISqlSugarClient db, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,
-        IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext,SqlSugarRepository<TSysOnlineUser> rep)
+        IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext, SqlSugarRepository<TSysOnlineUser> rep)
 
     {
         _rep = rep;
@@ -28,7 +27,7 @@ public class TestService
     }
 
     /// <summary>
-    /// 获取接口所有的路由信息
+    ///     获取接口所有的路由信息
     /// </summary>
     /// <returns></returns>
     public async Task<dynamic> GetAllButton()
@@ -90,6 +89,6 @@ public class TestService
 
     public async Task<bool> GetException()
     {
-        throw new Exception("error12312"); 
+        throw new Exception("error12312");
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
-using MalusAdmin.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class InjectionServiceCollectionExtensions
 {
     /// <summary>
-    /// 自动注册程序集内以 Service 结尾的服务
+    ///     自动注册程序集内以 Service 结尾的服务
     /// </summary>
     /// <param name="services"></param>
     /// <param name="dllNames"></param>
@@ -32,15 +31,12 @@ public static class InjectionServiceCollectionExtensions
                 RegistrationType(services, serviceInterface, serviceType);
         }
 
-       
 
         return services;
 
-        
 
-
-            // 实现自定义注册
-       static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
+        // 实现自定义注册
+        static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
         {
             // 设置默认生命周期为 Transient
             var lifecyleType = ServiceLifetime.Transient;
@@ -52,6 +48,7 @@ public static class InjectionServiceCollectionExtensions
                 if (!autoInjection.AutoRegister) return;
                 lifecyleType = autoInjection.Lifecycle;
             }
+
             //Console.WriteLine("注册方式："+lifecyleType.ToString() +"名称："+ serviceType.Name, "实例：" + implementationType.Name);
             // 注册服务
             switch (lifecyleType)

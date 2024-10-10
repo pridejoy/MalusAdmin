@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace MalusAdmin.Common;
@@ -11,7 +6,7 @@ namespace MalusAdmin.Common;
 public static class ApiResultMvcBuilderExtensions
 {
     /// <summary>
-    /// 配置 API 统一返回结果
+    ///     配置 API 统一返回结果
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="filterOrder">结果过滤器排序</param>
@@ -24,13 +19,13 @@ public static class ApiResultMvcBuilderExtensions
     }
 
     /// <summary>
-    /// 配置 API 统一返回结果
+    ///     配置 API 统一返回结果
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="builder"></param>
     /// <param name="filterOrder">结果过滤器排序</param>
     /// <returns></returns>
-    public static IMvcBuilder AddApiResult<T>(this IMvcBuilder builder)  where T : IApiResultProvider
+    public static IMvcBuilder AddApiResult<T>(this IMvcBuilder builder) where T : IApiResultProvider
     {
         // 添加过滤器
         builder.AddMvcOptions(options =>
@@ -45,10 +40,9 @@ public static class ApiResultMvcBuilderExtensions
         builder.Services.AddSingleton<IApiResultProvider, ApiResultProvider>();
 
         // 替换 IApiResultProvider 的默认实现
-        builder.Services.Replace(new ServiceDescriptor(typeof(IApiResultProvider), typeof(T), ServiceLifetime.Singleton));
+        builder.Services.Replace(
+            new ServiceDescriptor(typeof(IApiResultProvider), typeof(T), ServiceLifetime.Singleton));
 
         return builder;
     }
-
- 
 }

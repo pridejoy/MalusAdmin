@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SqlSugar;
+﻿using SqlSugar;
 
-namespace MalusAdmin.Models;
-
+namespace MalusAdmin.Repository.Model;
 
 /// <summary>
-/// 壁纸库
-///</summary>
+///     壁纸库
+/// </summary>
 [SugarTable("bs_gallery", TableDescription = "")]
 public class BsGallery
 {
     /// <summary>
-    /// 父id
-    ///</summary>
+    ///     父id
+    /// </summary>
     [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
     public int ImagesID { get; set; }
 

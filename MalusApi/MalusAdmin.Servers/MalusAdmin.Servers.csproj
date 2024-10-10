@@ -8,7 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
+        <ProjectReference Include="..\MalusAdmin.Common\MalusAdmin.Common.csproj"/>
+        <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj"/>
     </ItemGroup>
 
 </Project>

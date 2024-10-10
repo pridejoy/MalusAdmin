@@ -1,8 +1,6 @@
-﻿ 
-using MalusAdmin.Servers.SysRoleMenu;
+﻿using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
-using MalusAdmin.Servers.SysUserButtonPermiss;
 using Mapster;
 
 namespace MalusAdmin.Servers;
@@ -10,27 +8,30 @@ namespace MalusAdmin.Servers;
 public class SysUserService : ISysUserService
 {
     private readonly IHttpContextAccessor _HttpContext;
+    private readonly SysLogService _sysLogService;
     private readonly SysMenuService _sysMenuService;
     private readonly SysRoleMenuService _sysRoleMenuService;
     private readonly SysRolePermissionService _sysRolePermissionService;
     private readonly SqlSugarRepository<TSysUser> _sysUserRep; // 仓储
-    private readonly ITokenService _TokenService; 
+    private readonly ITokenService _TokenService;
 
     public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
         ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
         SysMenuService sysMenuService, SysRolePermissionService sysRolePermissionService,
-        IHttpContextAccessor httpContext  )
+        SysLogService sysLogService,
+        IHttpContextAccessor httpContext)
     {
         _sysUserRep = sysUserRep;
+        _sysLogService = sysLogService;
         _TokenService = tokenService;
         _HttpContext = httpContext;
         _sysRoleMenuService = sysRoleMenuService;
         _sysMenuService = sysMenuService;
-        _sysRolePermissionService = sysRolePermissionService; 
+        _sysRolePermissionService = sysRolePermissionService;
     }
 
     /// <summary>
-    /// 用户登录
+    ///     用户登录
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -39,10 +40,10 @@ public class SysUserService : ISysUserService
     {
         var user = await _sysUserRep
             .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
-        if (user == null)  throw ResultHelper.Exception207Bad("未找到用户");
+        if (user == null) throw ResultHelper.Exception207Bad("未找到用户");
 
-        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper())  throw ResultHelper.Exception207Bad("密码输入错误");
-        if (user.Status != 1)  throw ResultHelper.Exception207Bad("该账户已被冻结");
+        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper()) throw ResultHelper.Exception207Bad("密码输入错误");
+        if (user.Status != 1) throw ResultHelper.Exception207Bad("该账户已被冻结");
 
         var UserRolePer = new List<TSysRolePermission>();
         user.UserRolesId.ForEach(x =>
@@ -65,19 +66,21 @@ public class SysUserService : ISysUserService
             UserPermiss = button
         };
 
-        var UserToken =await _TokenService.GenerateTokenAsync(tokenData);
+        var UserToken = await _TokenService.GenerateTokenAsync(tokenData);
 
+
+        await _sysLogService.AddLog("后台日志", $"用户{user.Name}登录了系统");
 
         return new SysUserLoginOut { Id = user.Id, Name = user.Name, Token = UserToken };
     }
 
     /// <summary>
-    /// 获取用户的信息
+    ///     获取用户的信息
     /// </summary>
     /// <returns></returns>
     public async Task<GetUserInfoOut> GetUserInfo()
-    { 
-        var user =await _TokenService.GetCurrentUserInfo();
+    {
+        var user = await _TokenService.GetCurrentUserInfo();
         return new GetUserInfoOut
         {
             userId = user.UserId,
@@ -89,7 +92,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    /// 用户列表分页
+    ///     用户列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -104,13 +107,13 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    /// 添加用户
+    ///     添加用户
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(UserAddAndUpIn input)
     {
         var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
-        if (isExist)  throw ResultHelper.Exception207Bad("已存在当前账号");
+        if (isExist) throw ResultHelper.Exception207Bad("已存在当前账号");
         var entity = input.Adapt<TSysUser>();
         entity.PassWord = Md5Util.Encrypt(input.PassWord);
         return await _sysUserRep.InsertReturnIdentityAsync(entity) > 0;
@@ -118,7 +121,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    /// 删除用户
+    ///     删除用户
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
@@ -126,22 +129,23 @@ public class SysUserService : ISysUserService
     public async Task<bool> Delete(int userId)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
-        if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前账号");
+        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前账号");
         entity.SysIsDelete = true;
         //Todo 删除用户缓存
-        
+
         return await _sysUserRep.UpdateAsync(entity) > 0;
     }
 
     /// <summary>
-    /// 更新用户
+    ///     更新用户
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [ReadOnly]
     public async Task<bool> Update(UserAddAndUpIn input)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null)  throw ResultHelper.Exception207Bad("未找到当前账号");
+        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前账号");
         //Todo 更新用户缓存
         //优化  更新的字段
 
@@ -151,7 +155,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    /// 获取登录用户的菜单权限
+    ///     获取登录用户的菜单权限
     /// </summary>
     /// <returns></returns>
     public async Task<UserMenuOut> GetUserMenu()
@@ -180,7 +184,7 @@ public class SysUserService : ISysUserService
     }
 
     /// <summary>
-    /// 私有方法，转化前端路由
+    ///     私有方法，转化前端路由
     /// </summary>
     /// <param name="menu"></param>
     /// <returns></returns>
@@ -195,14 +199,16 @@ public class SysUserService : ISysUserService
             {
                 Title = menu.MenuName,
                 Icon = menu.Icon,
-                Order = menu.Sort
+                Order = menu.Sort,
+                HideInMenu = menu.HideInMenu,
+                Href = menu.Href
             },
             Children = menu.Children?.Select(ConvertMenu).ToList()
         };
     }
 
     /// <summary>
-    /// 私有方法.获取当前角色的路由
+    ///     私有方法.获取当前角色的路由
     /// </summary>
     /// <param name="menutree"></param>
     /// <param name="menuid"></param>

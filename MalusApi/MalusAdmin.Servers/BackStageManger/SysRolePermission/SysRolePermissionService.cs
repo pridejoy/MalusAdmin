@@ -1,6 +1,4 @@
-﻿ 
-using MalusAdmin.Servers.SysRolePermission;
-using MalusAdmin.Servers.SysRolePermission.Dto;
+﻿using MalusAdmin.Servers.SysRolePermission.Dto;
 using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using ICacheService = MalusAdmin.Common.ICacheService;
@@ -8,7 +6,7 @@ using ICacheService = MalusAdmin.Common.ICacheService;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-/// 用户按钮权限
+///     用户按钮权限
 /// </summary>
 public class SysRolePermissionService : ISysRolePermission
 {
@@ -29,14 +27,14 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    /// 是否有访问当前接口的权限
+    ///     是否有访问当前接口的权限
     /// </summary>
     /// <returns></returns>
     public async Task<bool> HavePermission(string RouthPath)
     {
         // 获取当前用户-角色 的接口权限   
         var UserRolePer = new List<TSysRolePermission>();
-        var user= await _tokenService.GetCurrentUserInfo();
+        var user = await _tokenService.GetCurrentUserInfo();
         user.UserRolesId.ForEach(
             async x => { UserRolePer.AddRange(await GetRoleButtonPermiss(x)); });
         return UserRolePer.Any(x => x.UserPermiss == RouthPath);
@@ -44,7 +42,7 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    /// 获取接口所有的路由信息
+    ///     获取接口所有的路由信息
     /// </summary>
     /// <param name="values"></param>
     /// <returns></returns>
@@ -93,7 +91,7 @@ public class SysRolePermissionService : ISysRolePermission
 
 
     /// <summary>
-    /// 删除角色的所有的权限信息
+    ///     删除角色的所有的权限信息
     /// </summary>
     /// <returns></returns>
     public async Task<bool> DeleteRoleButtonPermiss(int RoleId)
@@ -104,7 +102,7 @@ public class SysRolePermissionService : ISysRolePermission
     }
 
     /// <summary>
-    /// 为角色添加按钮权限
+    ///     为角色添加按钮权限
     /// </summary>
     /// <returns></returns>
     public async Task<bool> AddRoleButtonPermiss(UpdateRoleButtonIn Input)
@@ -119,7 +117,7 @@ public class SysRolePermissionService : ISysRolePermission
     }
 
     /// <summary>
-    /// 获取当前角色按钮权限
+    ///     获取当前角色按钮权限
     /// </summary>
     /// <param name="RoleId"></param>
     /// <returns></returns>

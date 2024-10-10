@@ -3,7 +3,7 @@
 namespace MalusAdmin.Common;
 
 /// <summary>
-/// SqlSugar 仓储实现类
+///     SqlSugar 仓储实现类
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 public class SqlSugarRepository<TEntity> where TEntity : class, new()
@@ -13,33 +13,33 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     #region 属性
 
     /// <summary>
-    /// 初始化 SqlSugar 客户端
+    ///     初始化 SqlSugar 客户端
     /// </summary>
     private readonly ISqlSugarClient _db;
 
     /// <summary>
-    /// 数据库上下文
+    ///     数据库上下文
     /// </summary>
     public ISqlSugarClient Context { get; }
 
     /// <summary>
-    /// 独立数据库上下文
+    ///     独立数据库上下文
     /// </summary>
     private SqlSugarScopeProvider EntityContext { get; }
 
     /// <summary>
-    /// 实体集合
+    ///     实体集合
     /// </summary>
     private ISugarQueryable<TEntity> Entities =>
         _db.AsTenant().GetConnectionScopeWithAttr<TEntity>().Queryable<TEntity>();
 
     /// <summary>
-    /// 原生 Ado 对象
+    ///     原生 Ado 对象
     /// </summary>
     private IAdo Ado { get; }
 
     /// <summary>
-    /// 构造函数
+    ///     构造函数
     /// </summary>
     /// <param name="db"></param>
     public SqlSugarRepository(ISqlSugarClient db)
@@ -54,7 +54,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     #region 查询
 
     /// <summary>
-    /// 获取总数
+    ///     获取总数
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -64,7 +64,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取总数
+    ///     获取总数
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -74,7 +74,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 检查是否存在
+    ///     检查是否存在
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -84,7 +84,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 检查是否存在
+    ///     检查是否存在
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -94,7 +94,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 通过主键获取实体
+    ///     通过主键获取实体
     /// </summary>
     /// <param name="Id"></param>
     /// <returns></returns>
@@ -104,7 +104,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取一个实体
+    ///     获取一个实体
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -114,7 +114,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取一个实体
+    ///     获取一个实体
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -124,7 +124,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取一个实体
+    ///     获取一个实体
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -134,7 +134,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取一个实体
+    ///     获取一个实体
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -144,7 +144,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取一个实体
+    ///     获取一个实体
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -154,7 +154,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取列表
+    ///     获取列表
     /// </summary>
     /// <returns></returns>
     public List<TEntity> ToList()
@@ -163,7 +163,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取列表
+    ///     获取列表
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -173,7 +173,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取列表
+    ///     获取列表
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <param name="orderByExpression"></param>
@@ -187,7 +187,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取列表
+    ///     获取列表
     /// </summary>
     /// <returns></returns>
     public Task<List<TEntity>> ToListAsync()
@@ -196,7 +196,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取列表
+    ///     获取列表
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -206,7 +206,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 获取列表
+    ///     获取列表
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <param name="orderByExpression"></param>
@@ -234,7 +234,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录
+    ///     新增一条记录
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -244,7 +244,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增多条记录
+    ///     新增多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -254,7 +254,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增多条记录
+    ///     新增多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -264,7 +264,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录返回自增Id
+    ///     新增一条记录返回自增Id
     /// </summary>
     /// <param name="insertObj"></param>
     /// <returns></returns>
@@ -274,7 +274,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录返回雪花Id
+    ///     新增一条记录返回雪花Id
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -284,7 +284,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录返回实体
+    ///     新增一条记录返回实体
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -295,7 +295,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
 
 
     /// <summary>
-    /// 新增一条记录
+    ///     新增一条记录
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -305,7 +305,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增多条记录
+    ///     新增多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -315,7 +315,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增多条记录
+    ///     新增多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -327,7 +327,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录返回自增Id
+    ///     新增一条记录返回自增Id
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -337,7 +337,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录返回雪花Id
+    ///     新增一条记录返回雪花Id
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -347,7 +347,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 新增一条记录返回实体
+    ///     新增一条记录返回实体
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -361,7 +361,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     #region 更新
 
     /// <summary>
-    /// 更新一条记录
+    ///     更新一条记录
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -371,7 +371,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新多条记录
+    ///     更新多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -381,7 +381,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新多条记录
+    ///     更新多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -391,7 +391,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新一条记录
+    ///     更新一条记录
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -401,7 +401,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新记录
+    ///     更新记录
     /// </summary>
     /// <param name="predicate">更新的条件</param>
     /// <param name="content">更新的内容</param>
@@ -412,7 +412,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新记录
+    ///     更新记录
     /// </summary>
     /// <param name="predicate">更新的条件</param>
     /// <param name="content">更新的内容</param>
@@ -425,7 +425,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新多条记录
+    ///     更新多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -435,7 +435,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 更新多条记录
+    ///     更新多条记录
     /// </summary>
     /// <param name="entities"></param>
     /// <returns></returns>
@@ -459,7 +459,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     #region 删除
 
     /// <summary>
-    /// 删除一条记录
+    ///     删除一条记录
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -469,7 +469,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 删除一条记录
+    ///     删除一条记录
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
@@ -479,7 +479,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 删除多条记录
+    ///     删除多条记录
     /// </summary>
     /// <param name="keys"></param>
     /// <returns></returns>
@@ -489,7 +489,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 自定义条件删除记录
+    ///     自定义条件删除记录
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -499,7 +499,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 删除一条记录
+    ///     删除一条记录
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -509,7 +509,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 删除一条记录
+    ///     删除一条记录
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
@@ -519,7 +519,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 删除多条记录
+    ///     删除多条记录
     /// </summary>
     /// <param name="keys"></param>
     /// <returns></returns>
@@ -529,7 +529,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 自定义条件删除记录
+    ///     自定义条件删除记录
     /// </summary>
     /// <param name="whereExpression"></param>
     /// <returns></returns>
@@ -543,7 +543,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     #region 其他
 
     /// <summary>
-    /// 根据表达式查询多条记录
+    ///     根据表达式查询多条记录
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
@@ -553,7 +553,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 根据表达式查询多条记录
+    ///     根据表达式查询多条记录
     /// </summary>
     /// <param name="condition"></param>
     /// <param name="predicate"></param>
@@ -564,7 +564,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 构建查询分析器
+    ///     构建查询分析器
     /// </summary>
     /// <returns></returns>
     public virtual ISugarQueryable<TEntity> AsQueryable()
@@ -573,7 +573,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 构建查询分析器
+    ///     构建查询分析器
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
@@ -583,7 +583,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 直接返回数据库结果
+    ///     直接返回数据库结果
     /// </summary>
     /// <returns></returns>
     public virtual List<TEntity> AsEnumerable()
@@ -592,7 +592,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 直接返回数据库结果
+    ///     直接返回数据库结果
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
@@ -602,7 +602,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 直接返回数据库结果
+    ///     直接返回数据库结果
     /// </summary>
     /// <returns></returns>
     public virtual Task<List<TEntity>> AsAsyncEnumerable()
@@ -611,7 +611,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 直接返回数据库结果
+    ///     直接返回数据库结果
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
@@ -635,7 +635,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     #region 仓储事务
 
     /// <summary>
-    /// 切换仓储(注意使用环境)
+    ///     切换仓储(注意使用环境)
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
     /// <returns>仓储</returns>
@@ -646,7 +646,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 当前db
+    ///     当前db
     /// </summary>
     public void CurrentBeginTran()
     {
@@ -654,7 +654,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 当前db
+    ///     当前db
     /// </summary>
     public void CurrentCommitTran()
     {
@@ -662,7 +662,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 当前db
+    ///     当前db
     /// </summary>
     public void CurrentRollbackTran()
     {
@@ -670,7 +670,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 所有db
+    ///     所有db
     /// </summary>
     public void BeginTran()
     {
@@ -678,7 +678,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 所有db
+    ///     所有db
     /// </summary>
     public void CommitTran()
     {
@@ -686,7 +686,7 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
     }
 
     /// <summary>
-    /// 所有db
+    ///     所有db
     /// </summary>
     public void RollbackTran()
     {

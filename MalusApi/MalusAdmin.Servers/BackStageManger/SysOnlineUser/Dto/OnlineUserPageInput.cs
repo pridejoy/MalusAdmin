@@ -1,6 +1,5 @@
 namespace MalusAdmin.Servers.SysOnlineUser;
 
-public class OnlineUserPageInput:PageParamBase
+public class OnlineUserPageInput : PageParamBase
 {
-    
 }

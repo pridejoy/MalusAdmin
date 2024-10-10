@@ -6,6 +6,7 @@
 import type { GeneratedRoute } from '@elegant-router/types';
 
 export const generatedRoutes: GeneratedRoute[] = [
+
   {
     name: '403',
     path: '/403',
@@ -14,7 +15,7 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: '403',
       i18nKey: 'route.403',
       constant: true,
-      hideInMenu: true
+      hideInMenu: true,
     }
   },
   {
@@ -45,7 +46,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.about',
     meta: {
       title: 'about',
-      i18nKey: 'route.about'
+      i18nKey: 'route.about',
+      href:"https://www.dotnetshare.com",
     }
   },
   {
@@ -497,17 +499,16 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'sysmanage_systemstatus',
           i18nKey: 'route.sysmanage_systemstatus'
         }
+      },
+      {
+        name: 'sysmanage_usercenter',
+        path: '/sysmanage/usercenter',
+        component: 'view.sysmanage_usercenter',
+        meta: {
+          title: 'sysmanage_usercenter',
+          i18nKey: 'route.sysmanage_usercenter'
+        }
       }
     ]
-  },
-  {
-    name: 'user-center',
-    path: '/user-center',
-    component: 'layout.base$view.user-center',
-    meta: {
-      title: 'user-center',
-      i18nKey: 'route.user-center',
-      hideInMenu: true
-    }
   }
 ];

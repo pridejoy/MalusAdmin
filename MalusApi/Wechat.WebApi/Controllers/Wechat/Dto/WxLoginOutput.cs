@@ -1,6 +1,4 @@
-﻿using MalusAdmin.Models;
-
-public class WxLoginOutput
+﻿public class WxLoginOutput
 {
     public string token { get; set; }
 

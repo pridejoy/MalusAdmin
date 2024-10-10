@@ -5,7 +5,7 @@ namespace MalusAdmin.Encryption;
 public class Md5Util
 {
     /// <summary>
-    /// MD5加密
+    ///     MD5加密
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
@@ -16,7 +16,7 @@ public class Md5Util
     }
 
     /// <summary>
-    /// MD5加密字符串
+    ///     MD5加密字符串
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>

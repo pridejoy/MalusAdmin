@@ -1,3 +1,93 @@
-{
-
-}
+[
+  {
+    "Id": 1,
+    "SysCreateUser": 0,
+    "SysCreateTime": "1900-01-01T00:00:00",
+    "SysUpdateUser": 1,
+    "SysUpdateTime": "1900-01-01T00:00:00",
+    "SysDeleteUser": 0,
+    "SysDeleteTime": "1900-01-01T00:00:00",
+    "SysIsDelete": false,
+    "Name": "超级管理员",
+    "Desc": "超级管理员",
+    "Status": 1,
+    "DataRang": "全部",
+    "Permission": ""
+  },
+  {
+    "Id": 15,
+    "SysCreateUser": 0,
+    "SysCreateTime": "1900-01-01T00:00:00",
+    "SysUpdateUser": 1,
+    "SysUpdateTime": "1900-01-01T00:00:00",
+    "SysDeleteUser": 0,
+    "SysDeleteTime": "1900-01-01T00:00:00",
+    "SysIsDelete": false,
+    "Name": "测试角色",
+    "Desc": "测试角色【忽动】",
+    "Status": 1
+  },
+  {
+    "Id": 16,
+    "SysCreateUser": 0,
+    "SysCreateTime": "1900-01-01T00:00:00",
+    "SysUpdateUser": 1,
+    "SysUpdateTime": "1900-01-01T00:00:00",
+    "SysDeleteUser": 0,
+    "SysDeleteTime": "1900-01-01T00:00:00",
+    "SysIsDelete": true,
+    "Name": "销售",
+    "Desc": "4567890",
+    "Status": 1
+  },
+  {
+    "Id": 17,
+    "SysCreateUser": 0,
+    "SysCreateTime": "1900-01-01T00:00:00",
+    "SysUpdateUser": 2,
+    "SysUpdateTime": "1900-01-01T00:00:00",
+    "SysDeleteUser": 0,
+    "SysDeleteTime": "1900-01-01T00:00:00",
+    "SysIsDelete": false,
+    "Name": "测试",
+    "Desc": "测试角色",
+    "Status": 1
+  },
+  {
+    "Id": 48,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-09-25T11:44:07.017",
+    "SysUpdateUser": 1,
+    "SysUpdateTime": "1900-01-01T00:00:00",
+    "SysDeleteUser": 0,
+    "SysDeleteTime": "1900-01-01T00:00:00",
+    "SysIsDelete": true,
+    "Name": "去去去",
+    "Desc": "企鹅额问问",
+    "Status": 1
+  },
+  {
+    "Id": 49,
+    "SysCreateUser": 1,
+    "SysCreateTime": "2024-09-25T19:13:15.400",
+    "SysUpdateUser": 0,
+    "SysDeleteUser": 0,
+    "SysIsDelete": false,
+    "Name": "信息管理员",
+    "Desc": "信息管理员，用于基础信息管理",
+    "Status": 1
+  },
+  {
+    "Id": 50,
+    "SysCreateUser": 2,
+    "SysCreateTime": "2024-10-05T21:50:55.947",
+    "SysUpdateUser": 1,
+    "SysUpdateTime": "1900-01-01T00:00:00",
+    "SysDeleteUser": 0,
+    "SysDeleteTime": "1900-01-01T00:00:00",
+    "SysIsDelete": true,
+    "Name": "777",
+    "Desc": "66666",
+    "Status": 1
+  }
+]

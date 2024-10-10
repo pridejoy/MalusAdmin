@@ -1,126 +1,121 @@
 using MalusAdmin.Common;
-using MalusAdmin.Common.Components; 
+using MalusAdmin.Common.Components;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Wechat.Servers;
 using Wechat.WebApi.Filter;
 
-namespace Wechat.WebApi
+namespace Wechat.WebApi;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
-            //  ½øĞĞÅäÖÃ×¢²á | Ìí¼Ó¾²Ì¬ÎÄ¼ş¶ÁÈ¡(ÓÅÏÈ¼¶±È½Ï¸ß)
-            AppSettings.AddConfigSteup(builder.Configuration);
+        //  è¿›è¡Œé…ç½®æ³¨å†Œ | æ·»åŠ é™æ€æ–‡ä»¶è¯»å–(ä¼˜å…ˆçº§æ¯”è¾ƒé«˜)
+        AppSettings.AddConfigSteup(builder.Configuration);
 
-            //½øĞĞÑ¡Ïî×¢²á
-            builder.Services.AddConfigureSetup(builder.Configuration);
+        //è¿›è¡Œé€‰é¡¹æ³¨å†Œ
+        builder.Services.AddConfigureSetup(builder.Configuration);
 
-            // »º´æ
-            builder.Services.AddCacheSetup();
+        // ç¼“å­˜
+        builder.Services.AddCacheSetup();
 
-            //HttpContext
-            builder.Services.AddHttpContextAccessor();
+        //HttpContext
+        builder.Services.AddHttpContextAccessor();
 
-            // Ìí¼Ó¹ıÂËÆ÷
-            builder.Services.AddControllers(options =>
+        // æ·»åŠ è¿‡æ»¤å™¨
+        builder.Services.AddControllers(options =>
             {
-                // È«¾ÖÒì³£¹ıÂË
+                // å…¨å±€å¼‚å¸¸è¿‡æ»¤
                 options.Filters.Add<GlobalExceptionFilter>();
-                // ÈÕÖ¾¹ıÂËÆ÷
+                // æ—¥å¿—è¿‡æ»¤å™¨
                 //options.Filters.Add<RequestActionFilter>();
             })
-                // ÅäÖÃApiĞĞÎªÑ¡Ïî
-                .ConfigureApiBehaviorOptions(options =>
-                {
-                    // ½ûÓÃÄ¬ÈÏÄ£ĞÍÑéÖ¤¹ıÂËÆ÷
-                    options.SuppressModelStateInvalidFilter = true;
-                })
-                .AddApiResult<CustomApiResultProvider>(); ;
-
-            // ÅäÖÃJsonÑ¡Ïî
-            builder.Services.AddJsonOptions();
-
-            // Ìí¼Ósqlsugar
-            builder.Services.AddSqlsugarSetup();
-
-            // Ìí¼ÓjwtÈÏÖ¤
-            builder.Services.AddJwtSetup();
-
-            // Ìí¼ÓswaggerÎÄµµ
-            builder.Services.AddSwaggerSetup();
-
-            // ×Ô¶¯Ìí¼Ó·şÎñ²ã
-            builder.Services.AddAutoServices("Wechat.Servers");
-            //Ìí¼ÓÊÚÈ¨
-            builder.Services.AddAuthorization();
-            // Ìí¼Ó×Ô¶¨ÒåÊÚÈ¨
-            builder.Services.AddAuthorizationSetup();
-
-            // Ìæ»»Ä¬ÈÏ PermissionChecker
-            //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-            builder.Services.AddSingleton<WeChatGetOpenId>();
-            builder.Services.AddSingleton<GalleryServiceController>();
-            //builder.Services.AddSingleton<ITokenService, TokenService>();
-            //builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
-
-            // Ìí¼Ó¿çÓòÖ§³Ö
-            builder.Services.AddCorsSetup();
-
-            //ÏìÓ¦»º´æÖĞ¼ä¼ş
-            builder.Services.AddResponseCaching();
-
-            //ÊµÊ±Ó¦ÓÃ
-            //builder.Services.AddSignalR();
-
-            // Ìí¼ÓEndpointsApiExplorer
-            builder.Services.AddEndpointsApiExplorer();
-
-            var app = builder.Build();
-
-            //Ğ´Èë¾²Ì¬Àà¹©È«¾Ö»ñÈ¡
-            App.ServiceProvider = app.Services;
-            App.Configuration = builder.Configuration;
-
-            //ForwardedHeadersÖĞ¼ä¼ş»á×Ô¶¯°Ñ·´Ïò´úÀí·şÎñÆ÷×ª·¢¹ıÀ´µÄX-Forwarded-For£¨¿Í»§¶ËÕæÊµIP£©ÒÔ¼°X-Forwarded-Proto£¨¿Í»§¶ËÇëÇóµÄĞ­Òé£©
-            //×Ô¶¯Ìî³äµ½HttpContext.Connection.RemoteIPAddressºÍHttpContext.Request.SchemeÖĞ£¬ÕâÑùÓ¦ÓÃ´úÂëÖĞ¶ÁÈ¡µ½µÄ¾ÍÊÇÕæÊµµÄIPºÍÕæÊµµÄĞ­ÒéÁË£¬²»ĞèÒªÓ¦ÓÃ×öÌØÊâ´¦Àí¡£
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            // é…ç½®Apiè¡Œä¸ºé€‰é¡¹
+            .ConfigureApiBehaviorOptions(options =>
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+                // ç¦ç”¨é»˜è®¤æ¨¡å‹éªŒè¯è¿‡æ»¤å™¨
+                options.SuppressModelStateInvalidFilter = true;
+            })
+            .AddApiResult<CustomApiResultProvider>();
+        ;
 
-            // Configure the HTTP request pipeline.
-            if (AppSettings.DisplaySwaggerDoc)
-            {
-                app.UseSwaggerExtension();
-            }
+        // é…ç½®Jsoné€‰é¡¹
+        builder.Services.AddJsonOptions();
 
-            app.UseHttpsRedirection(); // ·ÅÔÚÇ°Ãæ£¬È·±£ËùÓĞÇëÇó¶¼Í¨¹ıHTTPS
+        // æ·»åŠ sqlsugar
+        builder.Services.AddSqlsugarSetup();
 
-            app.UseRouting(); // È·¶¨Â·ÓÉ
+        // æ·»åŠ jwtè®¤è¯
+        builder.Services.AddJwtSetup();
 
-            app.UseCors(); // ÅäÖÃ¿çÓò×ÊÔ´¹²Ïí
+        // æ·»åŠ swaggeræ–‡æ¡£
+        builder.Services.AddSwaggerSetup();
 
-            //app.UseMiddleware<CheckToken>(); // Èç¹ûCheckTokenÊÇÉí·İÑéÖ¤ÖĞ¼ä¼ş£¬·ÅÔÚÈÏÖ¤Ö®Ç°
+        // è‡ªåŠ¨æ·»åŠ æœåŠ¡å±‚
+        builder.Services.AddAutoServices("Wechat.Servers");
+        //æ·»åŠ æˆæƒ
+        builder.Services.AddAuthorization();
+        // æ·»åŠ è‡ªå®šä¹‰æˆæƒ
+        builder.Services.AddAuthorizationSetup();
 
-            app.UseAuthentication(); // ÆôÓÃÉí·İÑéÖ¤ÖĞ¼ä¼ş
+        // æ›¿æ¢é»˜è®¤ PermissionChecker
+        //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
+        builder.Services.AddSingleton<WeChatGetOpenId>();
+        builder.Services.AddSingleton<GalleryServiceController>();
+        //builder.Services.AddSingleton<ITokenService, TokenService>();
+        //builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
 
-            app.UseAuthorization(); // ÆôÓÃÊÚÈ¨ÖĞ¼ä¼ş
+        // æ·»åŠ è·¨åŸŸæ”¯æŒ
+        builder.Services.AddCorsSetup();
 
-            app.UseResponseCaching(); // Ó¦ÓÃÏìÓ¦»º´æ
+        //å“åº”ç¼“å­˜ä¸­é—´ä»¶
+        builder.Services.AddResponseCaching();
 
-            app.UseDefaultFiles(); // Ìá¹©Ä¬ÈÏÎÄ¼şÖ§³Ö
-            app.UseStaticFiles(); // ÆôÓÃ¾²Ì¬ÎÄ¼ş·şÎñ
+        //å®æ—¶åº”ç”¨
+        //builder.Services.AddSignalR();
 
-            //app.MapHub<OnlineUserHub>("/hub"); // Ó³ÉäSignalR Hub
+        // æ·»åŠ EndpointsApiExplorer
+        builder.Services.AddEndpointsApiExplorer();
 
-            app.MapControllers(); // Ó³Éä¿ØÖÆÆ÷
+        var app = builder.Build();
 
-            app.Run(); // Æô¶¯·şÎñÆ÷
-        }
+        //å†™å…¥é™æ€ç±»ä¾›å…¨å±€è·å–
+        App.ServiceProvider = app.Services;
+        App.Configuration = builder.Configuration;
+
+        //ForwardedHeadersä¸­é—´ä»¶ä¼šè‡ªåŠ¨æŠŠåå‘ä»£ç†æœåŠ¡å™¨è½¬å‘è¿‡æ¥çš„X-Forwarded-Forï¼ˆå®¢æˆ·ç«¯çœŸå®IPï¼‰ä»¥åŠX-Forwarded-Protoï¼ˆå®¢æˆ·ç«¯è¯·æ±‚çš„åè®®ï¼‰
+        //è‡ªåŠ¨å¡«å……åˆ°HttpContext.Connection.RemoteIPAddresså’ŒHttpContext.Request.Schemeä¸­ï¼Œè¿™æ ·åº”ç”¨ä»£ç ä¸­è¯»å–åˆ°çš„å°±æ˜¯çœŸå®çš„IPå’ŒçœŸå®çš„åè®®äº†ï¼Œä¸éœ€è¦åº”ç”¨åšç‰¹æ®Šå¤„ç†ã€‚
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+
+        // Configure the HTTP request pipeline.
+        if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
+
+        app.UseHttpsRedirection(); // æ”¾åœ¨å‰é¢ï¼Œç¡®ä¿æ‰€æœ‰è¯·æ±‚éƒ½é€šè¿‡HTTPS
+
+        app.UseRouting(); // ç¡®å®šè·¯ç”±
+
+        app.UseCors(); // é…ç½®è·¨åŸŸèµ„æºå…±äº«
+
+        //app.UseMiddleware<CheckToken>(); // å¦‚æœCheckTokenæ˜¯èº«ä»½éªŒè¯ä¸­é—´ä»¶ï¼Œæ”¾åœ¨è®¤è¯ä¹‹å‰
+
+        app.UseAuthentication(); // å¯ç”¨èº«ä»½éªŒè¯ä¸­é—´ä»¶
+
+        app.UseAuthorization(); // å¯ç”¨æˆæƒä¸­é—´ä»¶
+
+        app.UseResponseCaching(); // åº”ç”¨å“åº”ç¼“å­˜
+
+        app.UseDefaultFiles(); // æä¾›é»˜è®¤æ–‡ä»¶æ”¯æŒ
+        app.UseStaticFiles(); // å¯ç”¨é™æ€æ–‡ä»¶æœåŠ¡
+
+        //app.MapHub<OnlineUserHub>("/hub"); // æ˜ å°„SignalR Hub
+
+        app.MapControllers(); // æ˜ å°„æ§åˆ¶å™¨
+
+        app.Run(); // å¯åŠ¨æœåŠ¡å™¨
     }
 }

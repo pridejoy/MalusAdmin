@@ -53,5 +53,5 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   sysmanage_dic: () => import("@/views/sysmanage/dic/index.vue"),
   "sysmanage_online-user": () => import("@/views/sysmanage/online-user/index.vue"),
   sysmanage_systemstatus: () => import("@/views/sysmanage/systemstatus/index.vue"),
-  "user-center": () => import("@/views/user-center/index.vue"),
+  sysmanage_usercenter: () => import("@/views/sysmanage/usercenter/index.vue"),
 };

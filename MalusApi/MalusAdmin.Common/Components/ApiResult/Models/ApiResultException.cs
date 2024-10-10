@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
-namespace MalusAdmin.Common;
+﻿namespace MalusAdmin.Common;
 
 /// <summary>
-/// 返回统一结果的异常。
-/// 需要配合 AppResultActionFilter 使用。
+///     返回统一结果的异常。
+///     需要配合 AppResultActionFilter 使用。
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class ApiResultException : Exception
 {
-    /// <summary>
-    /// API 结果
-    /// </summary>
-    public ApiResult ApiResult { get; private set; }
-
     public ApiResultException()
         : this(new ApiResult())
     {
@@ -40,5 +28,9 @@ public class ApiResultException : Exception
     {
         ApiResult = apiResult;
     }
-}
 
+    /// <summary>
+    ///     API 结果
+    /// </summary>
+    public ApiResult ApiResult { get; private set; }
+}

@@ -5,7 +5,7 @@ using MalusAdmin.Servers.SysUser.Dto;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-/// 角色服务
+///     角色服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysRoleController : ApiControllerBase
@@ -18,7 +18,7 @@ public class SysRoleController : ApiControllerBase
     }
 
     /// <summary>
-    /// 分页查询
+    ///     分页查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -29,7 +29,7 @@ public class SysRoleController : ApiControllerBase
     }
 
     /// <summary>
-    /// 添加用户
+    ///     添加用户
     /// </summary>
     /// <returns></returns>
     [HttpPost]
@@ -41,7 +41,7 @@ public class SysRoleController : ApiControllerBase
 
 
     /// <summary>
-    /// 删除用户
+    ///     删除用户
     /// </summary>
     /// <returns></returns>
     [HttpPost("{id}")]
@@ -53,7 +53,7 @@ public class SysRoleController : ApiControllerBase
 
 
     /// <summary>
-    /// 更新用户
+    ///     更新用户
     /// </summary>
     /// <returns></returns>
     [HttpPost]
@@ -65,7 +65,7 @@ public class SysRoleController : ApiControllerBase
 
 
     /// <summary>
-    /// 角色列表
+    ///     角色列表
     /// </summary>
     /// <returns></returns>
     [HttpGet]
