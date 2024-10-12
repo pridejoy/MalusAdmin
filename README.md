@@ -1,8 +1,7 @@
 
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">MalusAdmin</h1>
-<h4 align="center">基于 Vue3/TypeScript/NaiveUI 和 NET7 & Sqlsugar  开发的后台管理框架。采用最原生最简洁的方式来实现,
-前端清新优雅高颜值，后端 结构清晰，优雅易懂，功能强大</h4>
 
+ 
 <p align="center">
        <a style="margin-right: 5px">
        <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license">
@@ -17,6 +16,17 @@
        <img src="https://gitee.com/Pridejoy/MalusAdmin/badge/fork.svg?theme=dark" alt="MalusAdmin">
     </a>
 </p>
+<div align="center">
+
+[在线体验](https://malus.dotnetshare.com) |
+[帮助文档](https://www.dotnetshare.com) 
+
+</div>
+ 
+ <div align="center">
+    如果对您有帮助，您可以点右上角 "Star" ❤️ 支持一下 谢谢！
+</div>
+
 
 ## 简介
 
@@ -25,7 +35,7 @@ Malus是海棠的意思，顾名思义，海棠后台管理系统，读音与【
 基于NET Core  | NET7/8 & Sqlsugar  | Vue3 | vite4 | TypeScript | NaiveUI  开发的前后端分离式权限管理系统,采用最原生最简洁的方式来实现,
 前端清新优雅高颜值，后端 结构清晰，优雅易懂，功能强大,提供快速开发的解决方案。
 
- > [!NOTE] 如果您觉得  `MalusAdmin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
+
 
 ## 特性
 
@@ -43,7 +53,7 @@ Malus是海棠的意思，顾名思义，海棠后台管理系统，读音与【
 
  > 数据库文件见【doc/dbsql/20240429.sql】
 
-## 预览
+## 预览&文档
 
 MalusAdmin 提供了以下演示和文档资源：
 
@@ -57,7 +67,7 @@ MalusAdmin 提供了以下演示和文档资源：
 
 PS: 不要乱改密码、权限、删除数据~
 
-## 演示
+## 演示截图
 
 直接手机端上完美的运行，一套代码三端俱全。
 
@@ -82,6 +92,7 @@ PS: 不要乱改密码、权限、删除数据~
 **邮箱:pridejoy@foxmail.com**
 
 ![公众号](./doc/images//mp-code.png)
+
 
 ## 开源
 
