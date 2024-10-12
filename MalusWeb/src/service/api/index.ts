@@ -11,3 +11,6 @@ export * from './syslog';
 export * from './online-user';
 export * from './wechatconfig';
 export * from './syscache';
+export * from './cutsomer';
+export * from './bing';
+export * from './gallery';

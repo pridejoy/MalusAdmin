@@ -89,6 +89,9 @@ importers:
       vue-router:
         specifier: 4.3.2
         version: 4.3.2(vue@3.4.26(typescript@5.4.5))
+      vue-waterfall-plugin-next:
+        specifier: ^2.6.0
+        version: 2.6.0
       wangeditor:
         specifier: 4.7.15
         version: 4.7.15
@@ -5239,6 +5242,9 @@ packages:
     hasBin: true
     peerDependencies:
       typescript: '*'
+
+  vue-waterfall-plugin-next@2.6.0:
+    resolution: {integrity: sha512-GgovHXWkEP0flI/60GPeTC9vQAnYXLfhohAe8BudIljlcpBS+UCFXOS+S7FCsoujhvdcUY1heKxZglf13KGl9g==}
 
   vue@3.4.26:
     resolution: {integrity: sha512-bUIq/p+VB+0xrJubaemrfhk1/FiW9iX+pDV+62I/XJ6EkspAO9/DXEjbDFoe8pIfOZBqfk45i9BMc41ptP/uRg==}
@@ -11084,6 +11090,8 @@ snapshots:
       '@vue/language-core': 2.0.16(typescript@5.4.5)
       semver: 7.6.0
       typescript: 5.4.5
+
+  vue-waterfall-plugin-next@2.6.0: {}
 
   vue@3.4.26(typescript@5.4.5):
     dependencies:

@@ -25,6 +25,8 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "datamanage": "/datamanage";
+    "datamanage_user": "/datamanage/user";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -35,6 +37,11 @@ declare module "@elegant-router/types" {
     "function_super-page": "/function/super-page";
     "function_tab": "/function/tab";
     "function_toggle-auth": "/function/toggle-auth";
+    "gallery": "/gallery";
+    "gallery_bing": "/gallery/bing";
+    "gallery_category": "/gallery/category";
+    "gallery_list": "/gallery/list";
+    "gallery_upload": "/gallery/upload";
     "home": "/home";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -111,7 +118,9 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "datamanage"
     | "function"
+    | "gallery"
     | "home"
     | "login"
     | "manage"
@@ -141,6 +150,7 @@ declare module "@elegant-router/types" {
     | "500"
     | "login"
     | "about"
+    | "datamanage_user"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
@@ -149,6 +159,10 @@ declare module "@elegant-router/types" {
     | "function_super-page"
     | "function_tab"
     | "function_toggle-auth"
+    | "gallery_bing"
+    | "gallery_category"
+    | "gallery_list"
+    | "gallery_upload"
     | "home"
     | "manage_menu"
     | "manage_role"

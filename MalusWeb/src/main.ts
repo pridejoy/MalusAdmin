@@ -7,7 +7,6 @@ import { setupRouter } from './router';
 import { setupI18n } from './locales';
 import App from './App.vue';
 
-
 // import { getSysRolePage } from './service/api';
 
 // getSysRolePage()

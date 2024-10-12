@@ -6,7 +6,6 @@
 import type { GeneratedRoute } from '@elegant-router/types';
 
 export const generatedRoutes: GeneratedRoute[] = [
-
   {
     name: '403',
     path: '/403',
@@ -15,7 +14,7 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: '403',
       i18nKey: 'route.403',
       constant: true,
-      hideInMenu: true,
+      hideInMenu: true
     }
   },
   {
@@ -47,8 +46,39 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'about',
       i18nKey: 'route.about',
-      href:"https://www.dotnetshare.com",
+      href: 'https://www.dotnetshare.com'
     }
+  },
+  {
+    name: 'datamanage',
+    path: '/datamanage',
+    component: 'layout.base',
+    meta: {
+      title: 'datamanage',
+      i18nKey: 'route.datamanage'
+    },
+    children: [
+      {
+        name: 'datamanage_user',
+        path: '/datamanage/user',
+        component: 'view.datamanage_user',
+        meta: {
+          title: 'datamanage_user',
+          i18nKey: 'route.datamanage_user'
+        },
+        children: [
+          {
+            name: 'datamanage_user_modules',
+            path: '/datamanage/user/modules',
+            component: 'view.datamanage_user_modules',
+            meta: {
+              title: 'datamanage_user_modules',
+              i18nKey: 'route.datamanage_user_modules'
+            }
+          }
+        ]
+      }
+    ]
   },
   {
     name: 'function',
@@ -139,6 +169,53 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'function_toggle-auth',
           i18nKey: 'route.function_toggle-auth'
+        }
+      }
+    ]
+  },
+  {
+    name: 'gallery',
+    path: '/gallery',
+    component: 'layout.base',
+    meta: {
+      title: 'gallery',
+      i18nKey: 'route.gallery'
+    },
+    children: [
+      {
+        name: 'gallery_bing',
+        path: '/gallery/bing',
+        component: 'view.gallery_bing',
+        meta: {
+          title: 'gallery_bing',
+          i18nKey: 'route.gallery_bing'
+        }
+      },
+      {
+        name: 'gallery_category',
+        path: '/gallery/category',
+        component: 'view.gallery_category',
+        meta: {
+          title: 'gallery_category',
+          i18nKey: 'route.gallery_category'
+        }
+      },
+      {
+        name: 'gallery_list',
+        path: '/gallery/list',
+        component: 'view.gallery_list',
+        meta: {
+          title: 'gallery_list',
+          i18nKey: 'route.gallery_list'
+        }
+      },
+      {
+        name: 'gallery_upload',
+        path: '/gallery/upload',
+        component: 'view.gallery_upload',
+        meta: {
+          title: 'gallery_upload',
+          i18nKey: 'route.gallery_upload'
         }
       }
     ]

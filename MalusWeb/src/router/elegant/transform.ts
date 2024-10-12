@@ -151,6 +151,8 @@ const routeMap: RouteMap = {
   "404": "/404",
   "500": "/500",
   "about": "/about",
+  "datamanage": "/datamanage",
+  "datamanage_user": "/datamanage/user",
   "function": "/function",
   "function_hide-child": "/function/hide-child",
   "function_hide-child_one": "/function/hide-child/one",
@@ -161,6 +163,11 @@ const routeMap: RouteMap = {
   "function_super-page": "/function/super-page",
   "function_tab": "/function/tab",
   "function_toggle-auth": "/function/toggle-auth",
+  "gallery": "/gallery",
+  "gallery_bing": "/gallery/bing",
+  "gallery_category": "/gallery/category",
+  "gallery_list": "/gallery/list",
+  "gallery_upload": "/gallery/upload",
   "home": "/home",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
   "manage": "/manage",
@@ -197,7 +204,7 @@ const routeMap: RouteMap = {
   "sysmanage_dic": "/sysmanage/dic",
   "sysmanage_online-user": "/sysmanage/online-user",
   "sysmanage_systemstatus": "/sysmanage/systemstatus",
-  "user-center": "/user-center"
+  "sysmanage_usercenter": "/sysmanage/usercenter"
 };
 
 /**

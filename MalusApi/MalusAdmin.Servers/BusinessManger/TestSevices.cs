@@ -1,5 +1,5 @@
 ﻿namespace MalusAdmin.Servers;
 
-public class TestTwoSevices
+public class TestTwoService
 {
 }

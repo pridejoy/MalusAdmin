@@ -239,6 +239,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     addAuthRoutes(data.data?.routes ?? []);
 
     handleConstantAndAuthRoutes();
+
     const home = data.data?.home || 'home';
     console.log('3. 设置主页', home);
     setRouteHome(home);
