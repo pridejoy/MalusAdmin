@@ -42,6 +42,7 @@ declare module "@elegant-router/types" {
     "gallery_category": "/gallery/category";
     "gallery_list": "/gallery/list";
     "gallery_upload": "/gallery/upload";
+    "gallery_waterfall": "/gallery/waterfall";
     "home": "/home";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -163,6 +164,7 @@ declare module "@elegant-router/types" {
     | "gallery_category"
     | "gallery_list"
     | "gallery_upload"
+    | "gallery_waterfall"
     | "home"
     | "manage_menu"
     | "manage_role"

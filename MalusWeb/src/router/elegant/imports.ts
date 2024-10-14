@@ -33,6 +33,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   gallery_category: () => import("@/views/gallery/category/index.vue"),
   gallery_list: () => import("@/views/gallery/list/index.vue"),
   gallery_upload: () => import("@/views/gallery/upload/index.vue"),
+  gallery_waterfall: () => import("@/views/gallery/waterfall/index.vue"),
   home: () => import("@/views/home/index.vue"),
   manage_menu: () => import("@/views/manage/menu/index.vue"),
   manage_role: () => import("@/views/manage/role/index.vue"),

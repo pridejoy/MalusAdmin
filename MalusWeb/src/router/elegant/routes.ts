@@ -217,6 +217,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'gallery_upload',
           i18nKey: 'route.gallery_upload'
         }
+      },
+      {
+        name: 'gallery_waterfall',
+        path: '/gallery/waterfall',
+        component: 'view.gallery_waterfall',
+        meta: {
+          title: 'gallery_waterfall',
+          i18nKey: 'route.gallery_waterfall'
+        }
       }
     ]
   },
