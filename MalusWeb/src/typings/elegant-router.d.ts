@@ -64,10 +64,13 @@ declare module "@elegant-router/types" {
     "plugin_editor": "/plugin/editor";
     "plugin_editor_markdown": "/plugin/editor/markdown";
     "plugin_editor_quill": "/plugin/editor/quill";
+    "plugin_excel": "/plugin/excel";
     "plugin_icon": "/plugin/icon";
     "plugin_map": "/plugin/map";
+    "plugin_pdf": "/plugin/pdf";
     "plugin_print": "/plugin/print";
     "plugin_swiper": "/plugin/swiper";
+    "plugin_typeit": "/plugin/typeit";
     "plugin_video": "/plugin/video";
     "syslog": "/syslog";
     "syslog_logerr": "/syslog/logerr";
@@ -177,10 +180,13 @@ declare module "@elegant-router/types" {
     | "plugin_copy"
     | "plugin_editor_markdown"
     | "plugin_editor_quill"
+    | "plugin_excel"
     | "plugin_icon"
     | "plugin_map"
+    | "plugin_pdf"
     | "plugin_print"
     | "plugin_swiper"
+    | "plugin_typeit"
     | "plugin_video"
     | "syslog_logerr"
     | "syslog_logop"

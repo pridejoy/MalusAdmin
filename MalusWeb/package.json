@@ -66,15 +66,18 @@
     "pinia": "2.1.7",
     "print-js": "1.6.0",
     "swiper": "11.1.1",
+    "typeit": "^8.8.5",
     "vditor": "3.10.4",
     "vue": "3.4.26",
     "vue-draggable-plus": "0.4.0",
     "vue-i18n": "9.13.1",
     "vue-json-pretty": "^2.4.0",
+    "vue-pdf-embed": "^2.1.0",
     "vue-router": "4.3.2",
     "vue-waterfall-plugin-next": "^2.6.0",
     "wangeditor": "4.7.15",
-    "xgplayer": "3.0.17"
+    "xgplayer": "3.0.17",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@amap/amap-jsapi-types": "0.0.8",

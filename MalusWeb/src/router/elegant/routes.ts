@@ -443,6 +443,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
+        name: 'plugin_excel',
+        path: '/plugin/excel',
+        component: 'view.plugin_excel',
+        meta: {
+          title: 'plugin_excel',
+          i18nKey: 'route.plugin_excel'
+        }
+      },
+      {
         name: 'plugin_icon',
         path: '/plugin/icon',
         component: 'view.plugin_icon',
@@ -463,6 +472,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'plugin_pdf',
+        path: '/plugin/pdf',
+        component: 'view.plugin_pdf',
+        meta: {
+          title: 'plugin_pdf',
+          i18nKey: 'route.plugin_pdf'
+        }
+      },
+      {
         name: 'plugin_print',
         path: '/plugin/print',
         component: 'view.plugin_print',
@@ -480,6 +498,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'plugin_swiper',
           i18nKey: 'route.plugin_swiper',
           icon: 'simple-icons:swiper'
+        }
+      },
+      {
+        name: 'plugin_typeit',
+        path: '/plugin/typeit',
+        component: 'view.plugin_typeit',
+        meta: {
+          title: 'plugin_typeit',
+          i18nKey: 'route.plugin_typeit'
         }
       },
       {

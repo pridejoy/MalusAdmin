@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Caching.Memory;
+using static MalusAdmin.Common.Constant;
 
 namespace MalusAdmin.Common;
 
@@ -424,17 +425,23 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取所有缓存键
+    ///获取所有缓存键
     /// </summary>
     /// <returns></returns>
     public List<string> GetAllKeys()
     {
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-        var entries = _cache.GetType().GetField("_entries", flags).GetValue(_cache);
+        var coherentStateFiledInfo = _cache.GetType().GetField("_coherentState", flags);
+        var coherentStateValue = coherentStateFiledInfo.GetValue(_cache);
+        var entriesFiledInfo = coherentStateFiledInfo.FieldType.GetRuntimeFields().Where(f => f.Name == "_entries").FirstOrDefault();
+        var entries = entriesFiledInfo.GetValue(coherentStateValue);
         var cacheItems = entries as IDictionary;
         var keys = new List<string>();
         if (cacheItems == null) return keys;
-        foreach (DictionaryEntry cacheItem in cacheItems) keys.Add(cacheItem.Key.ToString());
+        foreach (DictionaryEntry cacheItem in cacheItems)
+        {
+            keys.Add(cacheItem.Key.ToString());
+        }
         return keys;
     }
 

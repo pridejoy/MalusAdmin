@@ -8,13 +8,7 @@ public class RedisCacheService : ICacheService
 
     public RedisCacheService()
     {
-        var redisconfig = AppSettings.Redis.ConnectionString;
-
-
-        if (!AppSettings.IsDemo)
-            //注释这行，我是从本地文件读取的
-            redisconfig = File.ReadAllText("D:\\redisconfig.txt");
-
+        var redisconfig = AppSettings.Redis.ConnectionString; 
         cli = new RedisClient(redisconfig);
         cli.Serialize = obj => JsonConvert.SerializeObject(obj);
         cli.Deserialize = (json, type) => JsonConvert.DeserializeObject(json, type);
