@@ -22,21 +22,20 @@ public class TSysLogErr
     public string ExceptionType { get; set; }
 
     /// <summary>
-    ///     操作方法名称
+    ///操作方法名称
     /// </summary>
     [SugarColumn(Length = 100)]
     public string ActionName { get; set; }
 
 
     /// <summary>
-    ///     日志消息
-    /// </summary>
-    [SugarColumn(Length = int.MaxValue)]
+    ///日志消息
+    /// </summary> 
     public string Message { get; set; }
 
 
     /// <summary>
-    ///     日志时间
+    ///日志时间
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public DateTime LogDateTime { get; set; } = DateTime.Now;

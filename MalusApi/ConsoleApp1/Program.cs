@@ -12,13 +12,13 @@ internal class Program
     private static void Main(string[] args)
     {
         //初始数据库 
-        var ConnectionString = File.ReadAllText("D:\\testdb.txt");
-        //var ConnectionString ="";
+        //var ConnectionString = File.ReadAllText("D:\\testdb.txt");
+        var ConnectionString = "server=.;Database=malustest;Uid=MalusTest;Pwd=beRnZ2iezcpNGzzp";
 
         var db = new SqlSugarClient(new ConnectionConfig
         {
             ConnectionString = ConnectionString,
-            DbType = DbType.SqlServer,
+            DbType = DbType.MySql,
             IsAutoCloseConnection = true
         });
 

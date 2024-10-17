@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Servers.SysRoleMenu;
+﻿using System.Collections.Generic;
+using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
 using Mapster;
@@ -155,7 +156,7 @@ public class SysUserService : ISysUserService
 
 
     /// <summary>
-    ///     获取登录用户的菜单权限
+    /// 获取登录用户的菜单权限
     /// </summary>
     /// <returns></returns>
     public async Task<UserMenuOut> GetUserMenu()
@@ -177,6 +178,10 @@ public class SysUserService : ISysUserService
         var res = new List<UserMenu>();
         //var usermenus = GetMenusByIds(menutree, menuid);
         foreach (var item in menutree) res.Add(ConvertMenu(item));
+
+        //List直接构造树 要高版本sqlsugar
+        //var a = UtilMethods.BuildTree(_sysUserRep.Context, menutree, "Id", "ParentId", "Children", 0);
+
         Out.Home = res.FirstOrDefault()?.Name;
         Out.Routes = res;
 

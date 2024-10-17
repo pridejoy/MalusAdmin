@@ -19,9 +19,9 @@ public class TSysLogVis
     public virtual long Id { get; set; }
 
     /// <summary>
-    ///     名称
+    ///名称
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(100)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string Name { get; set; }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class TSysLogVis
     /// <summary>
     ///     具体消息
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(max)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string Message { get; set; }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class TSysLogVis
     public string Url { get; set; }
 
     /// <summary>
-    ///     类名称
+    /// 类名称
     /// </summary>
     [MaxLength(100)]
     [SugarColumn(IsNullable = true)]
@@ -93,15 +93,15 @@ public class TSysLogVis
     public string ReqMethod { get; set; }
 
     /// <summary>
-    ///     请求参数
+    ///请求参数
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(max)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string Param { get; set; }
 
     /// <summary>
     ///     返回结果
     /// </summary>
-    [SugarColumn(ColumnDataType = "nvarchar(max)", IsNullable = true)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string Result { get; set; }
 
     /// <summary>

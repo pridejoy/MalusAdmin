@@ -26,7 +26,7 @@ public class TSysLogOp
     /// <summary>
     ///     日志详情
     /// </summary>
-    [SugarColumn(Length = int.MaxValue)]
+    [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString)]
     public string Message { get; set; }
 
 
