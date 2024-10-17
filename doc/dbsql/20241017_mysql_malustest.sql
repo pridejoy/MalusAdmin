@@ -4,7 +4,7 @@
  Source Server         : MalusTest
  Source Server Type    : MySQL
  Source Server Version : 50744 (5.7.44-log)
- Source Host           : 42.192.86.8:3306
+ Source Host           :  .
  Source Schema         : malustest
 
  Target Server Type    : MySQL
