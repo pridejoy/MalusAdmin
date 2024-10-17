@@ -51,7 +51,7 @@ Malus是海棠的意思，顾名思义，海棠后台管理系统，读音与【
 
 ![项目依赖](doc/images/20240429132404.png)
 
- > 数据库文件见【doc/dbsql/20240429.sql】
+ > 数据库文件见 [mysql和sqlserver](https://gitee.com/Pridejoy/MalusAdmin/tree/master/doc/dbsql)
 
 ## 预览&文档
 

@@ -5,7 +5,7 @@ using MalusAdmin.WebApi.Filter;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-///     日志服务
+/// 日志服务
 /// </summary>
 [DisabledRequestRecord]
 [ApiExplorerSettings(GroupName = "后台管理")]
@@ -20,7 +20,7 @@ public class SysLogController : ApiControllerBase
 
 
     /// <summary>
-    ///     访问日志分页
+    /// 访问日志分页
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -30,7 +30,7 @@ public class SysLogController : ApiControllerBase
     }
 
     /// <summary>
-    ///     日志分页
+    /// 日志分页
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -40,7 +40,7 @@ public class SysLogController : ApiControllerBase
     }
 
     /// <summary>
-    ///     操作 日志分页
+    /// 操作 日志分页
     /// </summary>
     /// <returns></returns>
     [HttpGet]

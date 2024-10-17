@@ -6,12 +6,12 @@ using Quartz;
 namespace MalusAdmin.BackUpServices.QuartzJob;
 
 /// <summary>
-///     要继承IJob
+/// 要继承IJob
 /// </summary>
 public class EveryDayBingQuartzJob : IJob
 {
     /// <summary>
-    ///     当前任务执行的Core表达式,meitian8dian1
+    /// 当前任务执行的Core表达式,meitian8dian1
     /// </summary>
     public static string Cron = "0 0 7 * * ? ";
     //public static string Cron = "0 0/1 * * * ? ";
@@ -29,7 +29,7 @@ public class EveryDayBingQuartzJob : IJob
     }
 
     /// <summary>
-    ///     处理当天的必应壁纸
+    /// 处理当天的必应壁纸
     /// </summary>
     public async Task Doing()
     {

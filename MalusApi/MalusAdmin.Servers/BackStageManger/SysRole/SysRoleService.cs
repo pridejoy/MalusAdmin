@@ -5,7 +5,7 @@ using Mapster;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-///     角色服务
+/// 角色服务
 /// </summary>
 public class SysRoleService
 {
@@ -21,7 +21,7 @@ public class SysRoleService
 
 
     /// <summary>
-    ///     角色列表分页
+    /// 角色列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -37,7 +37,7 @@ public class SysRoleService
     }
 
     /// <summary>
-    ///     添加角色
+    /// 添加角色
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(RoleAddandUpIn input)
@@ -50,7 +50,7 @@ public class SysRoleService
 
 
     /// <summary>
-    ///     删除角色
+    /// 删除角色
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -63,7 +63,7 @@ public class SysRoleService
     }
 
     /// <summary>
-    ///     更新角色
+    /// 更新角色
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -77,7 +77,7 @@ public class SysRoleService
     }
 
     /// <summary>
-    ///     用户列表
+    /// 用户列表
     /// </summary>
     /// <returns></returns>
     public async Task<List<RoleListOut>> List()

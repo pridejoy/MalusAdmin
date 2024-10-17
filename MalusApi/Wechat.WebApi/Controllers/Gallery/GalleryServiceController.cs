@@ -6,7 +6,7 @@ using SqlSugar.Extensions;
 using Wechat.Servers;
 
 /// <summary>
-///     图库分类服务
+/// 图库分类服务
 /// </summary>
 public class GalleryServiceController : WxApiControllerBase
 {
@@ -22,7 +22,7 @@ public class GalleryServiceController : WxApiControllerBase
 
 
     /// <summary>
-    ///     获取图库分类
+    /// 获取图库分类
     /// </summary>
     /// <returns></returns>
     [Description("获取图库分类信息")]
@@ -53,7 +53,7 @@ public class GalleryServiceController : WxApiControllerBase
 
 
     /// <summary>
-    ///     获取一张随机壁纸的照片
+    /// 获取一张随机壁纸的照片
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -80,7 +80,7 @@ public class GalleryServiceController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     喜欢图片
+    /// 喜欢图片
     /// </summary>
     /// <param name="imgid"></param>
     /// <returns></returns>
@@ -132,7 +132,7 @@ public class GalleryServiceController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     获取用户喜欢的照片
+    /// 获取用户喜欢的照片
     /// </summary>
     /// <param name="imgid"></param>
     /// <returns></returns>

@@ -4,7 +4,7 @@ using MalusAdmin.Servers.SysRolePermission.Dto;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-///     按钮权限服务
+/// 按钮权限服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysRolePermissionController : ApiControllerBase
@@ -18,7 +18,7 @@ public class SysRolePermissionController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取所有按钮列表
+    /// 获取所有按钮列表
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -29,7 +29,7 @@ public class SysRolePermissionController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取角色按钮
+    /// 获取角色按钮
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -40,7 +40,7 @@ public class SysRolePermissionController : ApiControllerBase
     }
 
     /// <summary>
-    ///     设置角色按钮
+    /// 设置角色按钮
     /// </summary>
     /// <returns></returns>
     [HttpPost]

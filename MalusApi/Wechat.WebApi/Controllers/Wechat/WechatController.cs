@@ -7,7 +7,7 @@ using Wechat.Servers;
 namespace Wechat.WebApi.Controllers;
 
 /// <summary>
-///     小程序基本服务
+/// 小程序基本服务
 /// </summary>
 public class WechatController : WxApiControllerBase
 {
@@ -27,7 +27,7 @@ public class WechatController : WxApiControllerBase
 
 
     /// <summary>
-    ///     静默授权登录接口
+    /// 静默授权登录接口
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -64,7 +64,7 @@ public class WechatController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     用户基本信息输出
+    /// 用户基本信息输出
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -81,7 +81,7 @@ public class WechatController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     模拟的登录
+    /// 模拟的登录
     /// </summary>
     /// <param name="Password"></param>
     /// <returns>LoginOutput</returns>

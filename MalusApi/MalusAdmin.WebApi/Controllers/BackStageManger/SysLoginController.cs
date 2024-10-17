@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-///     登录服务
+/// 登录服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysLoginController : ApiControllerBase
@@ -17,7 +17,7 @@ public class SysLoginController : ApiControllerBase
     }
 
     /// <summary>
-    ///     用户登录
+    /// 用户登录
     /// </summary>
     /// <returns></returns>
     [HttpPost]
@@ -29,7 +29,7 @@ public class SysLoginController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取登录用户的信息
+    /// 获取登录用户的信息
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -40,7 +40,7 @@ public class SysLoginController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取登录用户的路由
+    /// 获取登录用户的路由
     /// </summary>
     /// <returns></returns>
     [HttpGet]

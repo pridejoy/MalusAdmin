@@ -3,7 +3,7 @@ using MalusAdmin.Servers.SysOnlineUser;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-///     在线用户
+/// 在线用户
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysOnlineUserController : ApiControllerBase
@@ -16,7 +16,7 @@ public class SysOnlineUserController : ApiControllerBase
     }
 
     /// <summary>
-    ///     分页查询
+    /// 分页查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -28,7 +28,7 @@ public class SysOnlineUserController : ApiControllerBase
 
 
     /// <summary>
-    ///     强制下线
+    /// 强制下线
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -39,7 +39,7 @@ public class SysOnlineUserController : ApiControllerBase
     }
 
     /// <summary>
-    ///     给指定用户发送消息
+    /// 给指定用户发送消息
     /// </summary>
     /// <returns></returns>
     [HttpPost]

@@ -97,7 +97,7 @@ public class CheckToken
     }
 
     /// <summary>
-    ///     登录后返回401
+    /// 登录后返回401
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
@@ -111,7 +111,7 @@ public class CheckToken
     }
 
     /// <summary>
-    ///     登录后返回暂无权限
+    /// 登录后返回暂无权限
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>

@@ -19,7 +19,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     }
 
     /// <summary>
-    ///     当用户连接
+    /// 当用户连接
     /// </summary>
     /// <returns></returns>
     public override async Task OnConnectedAsync()
@@ -54,7 +54,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     }
 
     /// <summary>
-    ///     用户断开连接
+    /// 用户断开连接
     /// </summary>
     /// <returns></returns>
     public override async Task OnDisconnectedAsync(Exception? exception)
@@ -69,7 +69,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     }
 
     /// <summary>
-    ///     定义一个方法供客户端调用
+    /// 定义一个方法供客户端调用
     /// </summary>
     /// <param name="username"></param>
     /// <param name="message"></param>
@@ -83,7 +83,7 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     }
 
     /// <summary>
-    ///     强制下线
+    /// 强制下线
     /// </summary>
     /// <param name="connectionId"></param>
     /// <returns></returns>

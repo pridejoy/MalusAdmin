@@ -7,7 +7,7 @@ namespace MalusAdmin.Common;
 public static class JwtHelper
 {
     /// <summary>
-    ///     生成 JWT Token
+    /// 生成 JWT Token
     /// </summary>
     /// <param name="tokenModel"></param>
     /// <returns></returns>
@@ -17,7 +17,6 @@ public static class JwtHelper
         var issuer = AppSettings.Jwt.Issuer;
         var audience = AppSettings.Jwt.Audience;
         var secret = AppSettings.Jwt.SecretKey;
-
 
         var claims = new List<Claim>
         {

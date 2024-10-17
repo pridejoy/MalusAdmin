@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     分页返回
+/// 分页返回
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class PageResult<T>
@@ -12,12 +12,12 @@ public class PageResult<T>
 }
 
 /// <summary>
-///     Scui分页
+/// Scui分页
 /// </summary>
 public static class XnPageResult
 {
     /// <summary>
-    ///     替换sqlsugar分页
+    /// 替换sqlsugar分页
     /// </summary>
     /// <param name="page"></param>
     /// <returns></returns>

@@ -4,7 +4,7 @@ using MalusAdmin.Servers.SysLog;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-///     日志服务
+/// 日志服务
 /// </summary>
 public class SysLogService : ISysLogService
 {
@@ -16,7 +16,7 @@ public class SysLogService : ISysLogService
     }
 
     /// <summary>
-    ///     系统操作日志
+    /// 系统操作日志
     /// </summary>
     /// <param name="type"></param>
     /// <param name="Message"></param>
@@ -33,7 +33,7 @@ public class SysLogService : ISysLogService
     }
 
     /// <summary>
-    ///     访问 日志列表分页
+    /// 访问 日志列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -49,7 +49,7 @@ public class SysLogService : ISysLogService
 
 
     /// <summary>
-    ///     异常 日志列表分页
+    /// 异常 日志列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -65,7 +65,7 @@ public class SysLogService : ISysLogService
 
 
     /// <summary>
-    ///     操作日志分页
+    /// 操作日志分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

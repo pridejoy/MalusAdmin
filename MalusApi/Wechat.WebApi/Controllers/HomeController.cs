@@ -6,7 +6,7 @@ using Wechat.Servers;
 namespace Wechat.WebApi.Controllers;
 
 /// <summary>
-///     测试服务
+/// 测试服务
 /// </summary>
 [AllowAnonymous]
 public class HomeController : WxApiControllerBase
@@ -19,7 +19,7 @@ public class HomeController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     统一返回
+    /// 统一返回
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -30,7 +30,7 @@ public class HomeController : WxApiControllerBase
 
 
     /// <summary>
-    ///     获取远程请求的ip
+    /// 获取远程请求的ip
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -41,7 +41,7 @@ public class HomeController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     统一返回
+    /// 统一返回
     /// </summary>
     /// <returns></returns>
     [HttpGet]

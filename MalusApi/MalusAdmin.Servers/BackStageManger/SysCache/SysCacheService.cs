@@ -12,7 +12,7 @@ public class SysCacheService
     }
 
     /// <summary>
-    ///     获取所有缓存的key
+    /// 获取所有缓存的key
     /// </summary>
     /// <returns></returns>
     public List<string> GetAllKeys()
@@ -21,7 +21,7 @@ public class SysCacheService
     }
 
     /// <summary>
-    ///     根据key获取缓存的value
+    /// 根据key获取缓存的value
     /// </summary>
     /// <returns></returns>
     public dynamic GetKeys(string key)
@@ -31,7 +31,7 @@ public class SysCacheService
 
 
     /// <summary>
-    ///     删除缓存
+    /// 删除缓存
     /// </summary>
     /// <returns></returns>
     public async Task<long> RemoveAsync(string key)

@@ -7,7 +7,7 @@ namespace MalusAdmin.Servers;
 public class SysDataService
 {
     /// <summary>
-    ///     获取服务器信息
+    /// 获取服务器信息
     /// </summary>
     /// <returns></returns>
     public async Task<ServerInfo> GetServerInfo()
@@ -31,7 +31,7 @@ public class SysDataService
     }
 
     /// <summary>
-    ///     获取当前使用的Nuget包
+    /// 获取当前使用的Nuget包
     /// </summary>
     /// <returns></returns>
     public async Task<List<NuGetPackage>> GetNuGetPackages()

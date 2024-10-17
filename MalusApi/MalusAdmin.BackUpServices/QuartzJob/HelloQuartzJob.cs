@@ -5,7 +5,7 @@ namespace MalusAdmin.BackUpServices.QuartzJob;
 public class HelloQuartzJob
 {
     /// <summary>
-    ///     当前任务执行的Core表达式
+    /// 当前任务执行的Core表达式
     /// </summary>
     public static string Cron = "0 0/1 * * * ? ";
 

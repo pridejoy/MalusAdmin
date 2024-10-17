@@ -3,7 +3,7 @@
 namespace MalusAdmin.WebApi.Controllers.BusinessManger;
 
 /// <summary>
-///     测试业务
+/// 测试业务
 /// </summary>
 [AllowAnonymous]
 [ApiExplorerSettings(GroupName = "业务管理")]

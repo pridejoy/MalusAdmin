@@ -18,7 +18,7 @@ public static class AppSettings
 
 
     /// <summary>
-    ///     设置 Configuration 的实例
+    /// 设置 Configuration 的实例
     /// </summary>
     /// <param name="configuration"></param>
     /// <exception cref="Exception"></exception>
@@ -32,24 +32,24 @@ public static class AppSettings
     #region 以下存放的全部都是静态配置
 
     /// <summary>
-    ///     允许跨域请求列表
+    /// 允许跨域请求列表
     /// </summary>
     public static string[] AllowCors => Configuration.GetSection("AllowCors").Get<string[]>();
 
     /// <summary>
-    ///     是否演示环境
+    /// 是否演示环境
     /// </summary>
     public static bool IsDemo => Configuration["IsDemo"].ObjToBool();
 
     /// <summary>
-    ///     是否展示swaggeer文档
+    /// 是否展示swaggeer文档
     /// </summary>
     public static bool DisplaySwaggerDoc => Configuration["DisplaySwaggerDoc"].ObjToBool();
 
     public static string SqlServerConnection => Configuration["SqlServerConnection"];
 
     /// <summary>
-    ///     Jwt 配置
+    /// Jwt 配置
     /// </summary>
     public static class Jwt
     {
@@ -60,7 +60,7 @@ public static class AppSettings
 
 
     /// <summary>
-    ///     Redis 配置
+    /// Redis 配置
     /// </summary>
     public static class Redis
     {

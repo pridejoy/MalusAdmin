@@ -7,12 +7,12 @@ public class TokenService : ITokenService
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     /// <summary>
-    ///     30分钟内无操作
+    /// 60分钟内无操作
     /// </summary>
-    private readonly int expiresTime = 30;
+    private readonly int expiresTime = 60 * 4;
 
     /// <summary>
-    ///     请求头的前缀
+    /// 请求头的前缀
     /// </summary>
     private readonly string tokenTag = "Token";
 
@@ -24,7 +24,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    ///     生成token
+    /// 生成token
     /// </summary>
     /// <param name="tokenData"></param>
     /// <returns></returns>
@@ -40,7 +40,7 @@ public class TokenService : ITokenService
 
 
     /// <summary>
-    ///     检查Token
+    /// 检查Token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
@@ -76,7 +76,7 @@ public class TokenService : ITokenService
 
 
     /// <summary>
-    ///     获取heard的token
+    /// 获取heard的token
     /// </summary>
     /// <param name="httpContext"></param>
     /// <returns></returns>
@@ -91,7 +91,7 @@ public class TokenService : ITokenService
 
 
     /// <summary>
-    ///     获取当前登录的用户信息
+    /// 获取当前登录的用户信息
     /// </summary>
     /// <returns></returns>
     public async Task<TokenData> GetCurrentUserInfo()

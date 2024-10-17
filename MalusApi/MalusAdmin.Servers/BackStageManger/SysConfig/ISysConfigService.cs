@@ -1,7 +1,7 @@
 ﻿namespace MalusAdmin.Servers;
 
 /// <summary>
-///     参数配置
+/// 参数配置
 /// </summary>
 public interface ISysConfigService
 {

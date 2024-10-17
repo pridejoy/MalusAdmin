@@ -1,7 +1,7 @@
 ﻿public class CategorizeOutput
 {
     /// <summary>
-    ///     博客元素
+    /// 博客元素
     /// </summary>
     public string title { get; set; }
 
@@ -15,7 +15,7 @@
 }
 
 /// <summary>
-///     小类
+/// 小类
 /// </summary>
 public class CategorizeOutputItem
 {
@@ -24,7 +24,7 @@ public class CategorizeOutputItem
     public string icon { get; set; }
 
     /// <summary>
-    ///     内容中心
+    /// 内容中心
     /// </summary>
     public string title { get; set; }
 

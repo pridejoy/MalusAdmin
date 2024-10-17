@@ -48,7 +48,7 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
     }
 
     /// <summary>
-    ///     最先执行
+    /// 最先执行
     /// </summary>
     public int Order => int.MinValue;
 }

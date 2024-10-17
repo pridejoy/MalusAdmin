@@ -7,7 +7,7 @@ public class EveryDayBingOutput
     public string GitUrl { get; set; }
 
     /// <summary>
-    ///     开始时间
+    /// 开始时间
     /// </summary>
     public DateTime StartDate { get; set; }
 

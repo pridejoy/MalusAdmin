@@ -1,7 +1,7 @@
 ﻿namespace MalusAdmin.Common;
 
 /// <summary>
-///     系统存放所有常量的地方
+/// 系统存放所有常量的地方
 /// </summary>
 public static class Constant
 {

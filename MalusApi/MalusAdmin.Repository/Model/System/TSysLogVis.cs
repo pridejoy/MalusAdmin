@@ -5,7 +5,7 @@ using SqlSugar;
 namespace MalusAdmin.Repository.Model;
 
 /// <summary>
-///     操作日志表
+/// 操作日志表
 /// </summary>
 [SplitTable(SplitType.Month)]
 [SugarTable("sys_log_vis_{year}{month}{day}")]
@@ -13,7 +13,7 @@ namespace MalusAdmin.Repository.Model;
 public class TSysLogVis
 {
     /// <summary>
-    ///     主键Id
+    /// 主键Id
     /// </summary>
     [SugarColumn(ColumnDescription = "Id主键", IsPrimaryKey = true)]
     public virtual long Id { get; set; }
@@ -25,47 +25,47 @@ public class TSysLogVis
     public string Name { get; set; }
 
     /// <summary>
-    ///     是否执行成功（Y-是，N-否）
+    /// 是否执行成功（Y-是，N-否）
     /// </summary>
     [SugarColumn(IsNullable = true)]
     public bool Success { get; set; }
 
     /// <summary>
-    ///     具体消息
+    /// 具体消息
     /// </summary>
     [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string Message { get; set; }
 
     /// <summary>
-    ///     IP
+    /// IP
     /// </summary>
     [MaxLength(20)]
     [SugarColumn(IsNullable = true)]
     public string Ip { get; set; }
 
     /// <summary>
-    ///     地址
+    /// 地址
     /// </summary>
     //[MaxLength(500)]
     [SugarColumn(IsNullable = true)]
     public string Location { get; set; }
 
     /// <summary>
-    ///     浏览器
+    /// 浏览器
     /// </summary>
     [MaxLength(100)]
     [SugarColumn(IsNullable = true)]
     public string Browser { get; set; }
 
     /// <summary>
-    ///     操作系统
+    /// 操作系统
     /// </summary>
     [MaxLength(500)]
     [SugarColumn(IsNullable = true)]
     public string Os { get; set; }
 
     /// <summary>
-    ///     请求地址
+    /// 请求地址
     /// </summary>
     //[MaxLength(100)]
     [SugarColumn(IsNullable = true)]
@@ -79,14 +79,14 @@ public class TSysLogVis
     public string ClassName { get; set; }
 
     /// <summary>
-    ///     方法名称
+    /// 方法名称
     /// </summary>
     [MaxLength(100)]
     [SugarColumn(IsNullable = true)]
     public string MethodName { get; set; }
 
     /// <summary>
-    ///     请求方式（GET POST PUT DELETE)
+    /// 请求方式（GET POST PUT DELETE)
     /// </summary>
     [MaxLength(10)]
     [SugarColumn(IsNullable = true)]
@@ -99,25 +99,25 @@ public class TSysLogVis
     public string Param { get; set; }
 
     /// <summary>
-    ///     返回结果
+    /// 返回结果
     /// </summary>
     [SugarColumn(ColumnDataType = StaticConfig.CodeFirst_BigString, IsNullable = true)]
     public string Result { get; set; }
 
     /// <summary>
-    ///     耗时（毫秒）
+    /// 耗时（毫秒）
     /// </summary>
     public long ElapsedTime { get; set; }
 
     /// <summary>
-    ///     操作时间
+    /// 操作时间
     /// </summary>
     [SplitField] //分表字段 在插入的时候会根据这个字段插入哪个表，在更新删除的时候用这个字段找出相关表
     [SugarColumn(IsNullable = true)]
     public DateTime OpTime { get; set; }
 
     /// <summary>
-    ///     操作人
+    /// 操作人
     /// </summary>
     [MaxLength(20)]
     [SugarColumn(IsNullable = true)]

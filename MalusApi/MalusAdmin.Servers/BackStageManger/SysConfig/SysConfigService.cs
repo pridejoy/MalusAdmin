@@ -16,7 +16,7 @@ public class SysConfigService : ISysConfigService
     }
 
     /// <summary>
-    ///     通过类型和key来返回配置值
+    /// 通过类型和key来返回配置值
     /// </summary>
     /// <param name="key"></param>
     /// <param name="type"></param>
@@ -29,7 +29,7 @@ public class SysConfigService : ISysConfigService
     }
 
     /// <summary>
-    ///     配置分页
+    /// 配置分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -44,7 +44,7 @@ public class SysConfigService : ISysConfigService
     }
 
     /// <summary>
-    ///     添加配置
+    /// 添加配置
     /// </summary>
     /// <returns></returns>
     public async Task<bool> Add(WechatConfigAddandUpIn input)
@@ -57,7 +57,7 @@ public class SysConfigService : ISysConfigService
     }
 
     /// <summary>
-    ///     删除配置
+    /// 删除配置
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -69,7 +69,7 @@ public class SysConfigService : ISysConfigService
     }
 
     /// <summary>
-    ///     更新配置
+    /// 更新配置
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

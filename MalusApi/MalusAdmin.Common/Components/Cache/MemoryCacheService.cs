@@ -16,7 +16,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     是否存在
+    /// 是否存在
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <returns></returns>
@@ -27,7 +27,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
+    /// 获取缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <returns></returns>
@@ -39,7 +39,7 @@ public class MemoryCacheService : ICacheService
 
 
     /// <summary>
-    ///     获取缓存
+    /// 获取缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <returns></returns>
@@ -52,8 +52,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     根据多个key
-    ///     批量获取缓存
+    /// 根据多个key
+    /// 批量获取缓存
     /// </summary>
     /// <param name="keys">缓存Keys</param>
     /// <returns></returns>
@@ -65,8 +65,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     根据多个key
-    ///     批量获取缓存
+    /// 根据多个key
+    /// 批量获取缓存
     /// </summary>
     /// <param name="keys">缓存Keys</param>
     /// <returns></returns>
@@ -83,8 +83,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -97,8 +97,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -115,8 +115,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -134,8 +134,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -154,8 +154,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -168,8 +168,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -186,8 +186,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -205,8 +205,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取缓存
-    ///     没有获取到就创建新的缓存
+    /// 获取缓存
+    /// 没有获取到就创建新的缓存
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key">缓存Key</param>
@@ -225,7 +225,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     添加缓存
+    /// 添加缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
@@ -237,7 +237,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     添加缓存
+    /// 添加缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
@@ -252,7 +252,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     添加缓存
+    /// 添加缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
@@ -265,7 +265,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     添加缓存
+    /// 添加缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <param name="value">缓存Value</param>
@@ -281,8 +281,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     修改缓存值
-    ///     删除原有的，添加新的
+    /// 修改缓存值
+    /// 删除原有的，添加新的
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
@@ -298,8 +298,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     修改缓存值
-    ///     删除原有的，添加新的
+    /// 修改缓存值
+    /// 删除原有的，添加新的
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
@@ -315,7 +315,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     删除缓存
+    /// 删除缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <returns></returns>
@@ -334,7 +334,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     批量删除缓存
+    /// 批量删除缓存
     /// </summary>
     /// <returns></returns>
     public long Remove(params string[] keys)
@@ -356,7 +356,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     删除缓存
+    /// 删除缓存
     /// </summary>
     /// <param name="key">缓存Key</param>
     /// <returns></returns>
@@ -368,7 +368,7 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     批量删除缓存
+    /// 批量删除缓存
     /// </summary>
     /// <returns></returns>
     public Task<long> RemoveAsync(params string[] keys)
@@ -391,8 +391,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     删除匹配的缓存
-    ///     例如：pattern=ai，删除key为ai开头缓存
+    /// 删除匹配的缓存
+    /// 例如：pattern=ai，删除key为ai开头缓存
     /// </summary>
     /// <param name="pattern">匹配key</param>
     public long RemoveByPattern(string pattern)
@@ -408,8 +408,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     删除匹配的缓存
-    ///     例如：pattern=ai，删除key为ai开头缓存
+    /// 删除匹配的缓存
+    /// 例如：pattern=ai，删除key为ai开头缓存
     /// </summary>
     /// <param name="pattern">匹配key</param>
     public async Task<long> RemoveByPatternAsync(string pattern)
@@ -446,8 +446,8 @@ public class MemoryCacheService : ICacheService
     }
 
     /// <summary>
-    ///     获取匹配的缓存键
-    ///     例如：pattern=ai，获取key为ai开头的缓存键
+    /// 获取匹配的缓存键
+    /// 例如：pattern=ai，获取key为ai开头的缓存键
     /// </summary>
     /// <returns></returns>
     public async Task<List<string>> GetKeysByPatternAsync(string pattern)

@@ -4,7 +4,7 @@ using MalusAdmin.Servers.SysMenu;
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 /// <summary>
-///     菜单服务
+/// 菜单服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysMenuController : ApiControllerBase
@@ -18,7 +18,7 @@ public class SysMenuController : ApiControllerBase
 
 
     /// <summary>
-    ///     分页查询
+    /// 分页查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]

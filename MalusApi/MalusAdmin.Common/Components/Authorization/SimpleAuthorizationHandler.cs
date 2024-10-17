@@ -10,7 +10,7 @@ public class SimpleAuthorizationHandler : AuthorizationHandler<SimpleAuthorizati
     }
 
     /// <summary>
-    ///     处理满足简单授权需求的授权逻辑。
+    /// 处理满足简单授权需求的授权逻辑。
     /// </summary>
     /// <param name="context">授权上下文。</param>
     /// <param name="requirement">授权需求。</param>

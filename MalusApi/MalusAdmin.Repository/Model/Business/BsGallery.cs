@@ -3,13 +3,13 @@
 namespace MalusAdmin.Repository.Model;
 
 /// <summary>
-///     壁纸库
+/// 壁纸库
 /// </summary>
 [SugarTable("bs_gallery", TableDescription = "")]
 public class BsGallery
 {
     /// <summary>
-    ///     父id
+    /// 父id
     /// </summary>
     [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
     public int ImagesID { get; set; }

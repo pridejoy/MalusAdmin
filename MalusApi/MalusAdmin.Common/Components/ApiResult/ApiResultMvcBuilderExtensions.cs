@@ -6,7 +6,7 @@ namespace MalusAdmin.Common;
 public static class ApiResultMvcBuilderExtensions
 {
     /// <summary>
-    ///     配置 API 统一返回结果
+    /// 配置 API 统一返回结果
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="filterOrder">结果过滤器排序</param>
@@ -19,7 +19,7 @@ public static class ApiResultMvcBuilderExtensions
     }
 
     /// <summary>
-    ///     配置 API 统一返回结果
+    /// 配置 API 统一返回结果
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="builder"></param>

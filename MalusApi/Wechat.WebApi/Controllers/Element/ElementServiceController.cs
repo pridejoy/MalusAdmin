@@ -4,7 +4,7 @@ using Wechat.Servers;
 using Wechat.WebApi.Controllers;
 
 /// <summary>
-///     元素服务
+/// 元素服务
 /// </summary>
 public class ElementServiceController : WxApiControllerBase
 {
@@ -19,7 +19,7 @@ public class ElementServiceController : WxApiControllerBase
 
 
     /// <summary>
-    ///     获取每日必应(每日早上八点更新)
+    /// 获取每日必应(每日早上八点更新)
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -34,7 +34,7 @@ public class ElementServiceController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     根据日期过去相应的历史必应
+    /// 根据日期过去相应的历史必应
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public class ElementServiceController : WxApiControllerBase
     }
 
     /// <summary>
-    ///     获取指定分类的照片
+    /// 获取指定分类的照片
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

@@ -3,7 +3,7 @@
 namespace MalusAdmin.Common;
 
 /// <summary>
-///     演示环境禁止操作
+/// 演示环境禁止操作
 /// </summary>
 public class ReadOnlyAttribute : ActionFilterAttribute
 {

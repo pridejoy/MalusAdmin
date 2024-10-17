@@ -6,7 +6,7 @@ public static class IOFileHelper
     //await WriteAsync("file.txt", "Hello World");
     //await WriteAsync("subfolder/file.txt", "Hello World");
     /// <summary>
-    ///     创建文件或者附加内容
+    /// 创建文件或者附加内容
     /// </summary>
     /// <param name="Data">要写入的文本</param>
     /// <param name="Encode">编码方式</param>

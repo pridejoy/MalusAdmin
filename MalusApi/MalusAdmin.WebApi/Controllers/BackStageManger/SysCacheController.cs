@@ -3,7 +3,7 @@
 namespace MalusAdmin.WebApi.Controllers;
 
 /// <summary>
-///     缓存服务
+/// 缓存服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysCacheController : ApiControllerBase
@@ -17,7 +17,7 @@ public class SysCacheController : ApiControllerBase
 
 
     /// <summary>
-    ///     获取所有缓存的Key
+    /// 获取所有缓存的Key
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -28,7 +28,7 @@ public class SysCacheController : ApiControllerBase
     }
 
     /// <summary>
-    ///     根据key获取缓存的value
+    /// 根据key获取缓存的value
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -40,7 +40,7 @@ public class SysCacheController : ApiControllerBase
 
 
     /// <summary>
-    ///     根据key获取缓存的value
+    /// 根据key获取缓存的value
     /// </summary>
     /// <returns></returns>
     [HttpPost]

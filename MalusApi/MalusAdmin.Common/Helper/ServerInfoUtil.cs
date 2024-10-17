@@ -7,52 +7,52 @@ using System.Runtime.InteropServices;
 namespace MalusAdmin.Common.Helper;
 
 /// <summary>
-///     服务器信息工具类
+/// 服务器信息工具类
 /// </summary>
 public class ServerInfoUtil
 {
     /// <summary>
-    ///     CPU数量
+    /// CPU数量
     /// </summary>
     public static int CpuCount => Environment.ProcessorCount;
 
     /// <summary>
-    ///     计算机名称
+    /// 计算机名称
     /// </summary>
     public static string MachineName => Environment.MachineName;
 
     /// <summary>
-    ///     系统名称
+    /// 系统名称
     /// </summary>
     public static string OSName => RuntimeInformation.OSDescription;
 
     /// <summary>
-    ///     系统架构
+    /// 系统架构
     /// </summary>
     public static string OSArchitecture => RuntimeInformation.OSArchitecture.ToString();
 
     /// <summary>
-    ///     .Net版本名称
+    /// .Net版本名称
     /// </summary>
     public static string DoNetName => RuntimeInformation.FrameworkDescription;
 
     /// <summary>
-    ///     占用内存
+    /// 占用内存
     /// </summary>
     public static string UseRam => ((double)Process.GetCurrentProcess().WorkingSet64 / 1048576).ToString("N2") + " MB";
 
     /// <summary>
-    ///     服务开始运行时间
+    /// 服务开始运行时间
     /// </summary>
     public static string StartTime => Process.GetCurrentProcess().StartTime.ToString("G");
 
     /// <summary>
-    ///     服务运行时间
+    /// 服务运行时间
     /// </summary>
     public static string RunTime => (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString();
 
     /// <summary>
-    ///     ip
+    /// ip
     /// </summary>
     public static List<string> IP
     {
@@ -88,14 +88,14 @@ public class ServerInfoUtil
     }
 
     /// <summary>
-    ///     是否Unix系统
+    /// 是否Unix系统
     /// </summary>
     /// <returns></returns>
     public static bool IsUnix => RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ||
                                  RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
     /// <summary>
-    ///     内存使用综合情况
+    /// 内存使用综合情况
     /// </summary>
     /// <returns></returns>
     public static MemoryInfo MemoryInfo
@@ -134,7 +134,7 @@ public class ServerInfoUtil
 
 
     /// <summary>
-    ///     磁盘使用综合大小
+    /// 磁盘使用综合大小
     /// </summary>
     /// <returns></returns>
     public static List<DiskInfo> DiskInfo
@@ -195,7 +195,7 @@ public class ServerInfoUtil
     }
 
     /// <summary>
-    ///     windows系统获取内存信息
+    /// windows系统获取内存信息
     /// </summary>
     /// <returns></returns>
     public static MemoryInfo GetWindowsMetrics()
@@ -218,7 +218,7 @@ public class ServerInfoUtil
     }
 
     /// <summary>
-    ///     Unix系统获取
+    /// Unix系统获取
     /// </summary>
     /// <returns></returns>
     public static MemoryInfo GetUnixMetrics()
@@ -246,7 +246,7 @@ public class ServerInfoUtil
 }
 
 /// <summary>
-///     内存信息
+/// 内存信息
 /// </summary>
 public class MemoryInfo
 {
@@ -259,68 +259,68 @@ public class MemoryInfo
     public string UsedRam { get; set; }
 
     /// <summary>
-    ///     CPU使用率%
+    /// CPU使用率%
     /// </summary>
     public double CPURate { get; set; }
 
     /// <summary>
-    ///     总内存 GB
+    /// 总内存 GB
     /// </summary>
     public double TotalRAM { get; set; }
 
     /// <summary>
-    ///     内存使用率 %
+    /// 内存使用率 %
     /// </summary>
     public double RAMRate { get; set; }
 
     /// <summary>
-    ///     空闲内存
+    /// 空闲内存
     /// </summary>
     public string FreeRam { get; set; }
 
     /// <summary>
-    ///     APP内存使用率
+    /// APP内存使用率
     /// </summary>
     public double AppRAMRate { get; set; }
 }
 
 /// <summary>
-///     磁盘信息
+/// 磁盘信息
 /// </summary>
 public class DiskInfo
 {
     /// <summary>
-    ///     磁盘的名称。
+    /// 磁盘的名称。
     /// </summary>
     public string DiskName { get; set; }
 
     /// <summary>
-    ///     磁盘的类型。
+    /// 磁盘的类型。
     /// </summary>
     public string TypeName { get; set; }
 
     /// <summary>
-    ///     磁盘的剩余空间总量（字节）。
+    /// 磁盘的剩余空间总量（字节）。
     /// </summary>
     public long TotalFree { get; set; }
 
     /// <summary>
-    ///     磁盘的总大小（字节）。
+    /// 磁盘的总大小（字节）。
     /// </summary>
     public long TotalSize { get; set; }
 
     /// <summary>
-    ///     磁盘已使用的空间量（字节）。
+    /// 磁盘已使用的空间量（字节）。
     /// </summary>
     public long Used { get; set; }
 
     /// <summary>
-    ///     磁盘可使用的剩余空间（字节）。
+    /// 磁盘可使用的剩余空间（字节）。
     /// </summary>
     public long AvailableFreeSpace { get; set; }
 
     /// <summary>
-    ///     磁盘剩余空间的百分比。
+    /// 磁盘剩余空间的百分比。
     /// </summary>
     public decimal AvailablePercent { get; set; }
 }

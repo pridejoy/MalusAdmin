@@ -1,8 +1,8 @@
 ﻿namespace MalusAdmin.Common;
 
 /// <summary>
-///     返回统一结果的异常。
-///     需要配合 AppResultActionFilter 使用。
+/// 返回统一结果的异常。
+/// 需要配合 AppResultActionFilter 使用。
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class ApiResultException : Exception
@@ -30,7 +30,7 @@ public class ApiResultException : Exception
     }
 
     /// <summary>
-    ///     API 结果
+    /// API 结果
     /// </summary>
     public ApiResult ApiResult { get; private set; }
 }

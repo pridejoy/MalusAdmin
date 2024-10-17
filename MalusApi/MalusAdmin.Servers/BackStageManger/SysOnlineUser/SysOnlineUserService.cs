@@ -18,7 +18,7 @@ public class SysOnlineUserService
     }
 
     /// <summary>
-    ///     在线用户分页
+    /// 在线用户分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
@@ -31,7 +31,7 @@ public class SysOnlineUserService
     }
 
     /// <summary>
-    ///     强制用户下线
+    /// 强制用户下线
     /// </summary>
     /// <param name="connectionId">链接的id</param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public class SysOnlineUserService
     }
 
     /// <summary>
-    ///     给某人发送消息
+    /// 给某人发送消息
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

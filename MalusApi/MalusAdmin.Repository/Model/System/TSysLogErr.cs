@@ -3,20 +3,20 @@
 namespace MalusAdmin.Repository.Model;
 
 /// <summary>
-///     操作日志表
+/// 操作日志表
 /// </summary>
 [SplitTable(SplitType.Month)]
 [SugarTable("sys_log_err_{year}{month}{day}")]
 public class TSysLogErr
 {
     /// <summary>
-    ///     主键Id
+    /// 主键Id
     /// </summary>
     [SugarColumn(ColumnDescription = "Id主键", IsPrimaryKey = true)]
     public virtual long Id { get; set; }
 
     /// <summary>
-    ///     异常类型
+    /// 异常类型
     /// </summary>
     [SugarColumn(Length = 100)]
     public string ExceptionType { get; set; }

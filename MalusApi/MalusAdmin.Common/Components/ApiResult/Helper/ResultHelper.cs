@@ -67,7 +67,7 @@ public static class ResultHelper
     }
 
     /// <summary>
-    ///     有错误提示
+    /// 有错误提示
     /// </summary>
     /// <param name="message"></param>
     /// <param name="data"></param>

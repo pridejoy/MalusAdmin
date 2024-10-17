@@ -11,9 +11,9 @@ public class WeChatGetOpenId
     }
 
     /// <summary>
-    ///     获取OpenID
-    ///     小程序登录凭证校验
-    ///     URL：https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/user-login/code2Session.html
+    /// 获取OpenID
+    /// 小程序登录凭证校验
+    /// URL：https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/user-login/code2Session.html
     /// </summary>
     /// <param name="code">登录时获取的 code</param>
     /// <returns></returns>
@@ -40,7 +40,7 @@ public class WeChatGetOpenId
 
 
     /// <summary>
-    ///     微信小程序登录
+    /// 微信小程序登录
     /// </summary>
     public class WechatOpenIDInfo
     {

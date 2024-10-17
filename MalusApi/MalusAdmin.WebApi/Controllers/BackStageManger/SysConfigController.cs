@@ -2,7 +2,7 @@
 using MalusAdmin.Servers;
 
 /// <summary>
-///     参数配置管理
+/// 参数配置管理
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysConfigController : ApiControllerBase
@@ -15,7 +15,7 @@ public class SysConfigController : ApiControllerBase
     }
 
     /// <summary>
-    ///     分页查询
+    /// 分页查询
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -26,7 +26,7 @@ public class SysConfigController : ApiControllerBase
     }
 
     /// <summary>
-    ///     添加配置
+    /// 添加配置
     /// </summary>
     /// <returns></returns>
     [HttpPost]
@@ -37,7 +37,7 @@ public class SysConfigController : ApiControllerBase
     }
 
     /// <summary>
-    ///     删除配置
+    /// 删除配置
     /// </summary>
     /// <returns></returns>
     [HttpPost("{id}")]
@@ -48,7 +48,7 @@ public class SysConfigController : ApiControllerBase
     }
 
     /// <summary>
-    ///     更新配置
+    /// 更新配置
     /// </summary>
     /// <returns></returns>
     [HttpPost]
