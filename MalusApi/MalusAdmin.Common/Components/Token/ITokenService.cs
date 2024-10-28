@@ -1,4 +1,7 @@
-﻿namespace MalusAdmin.Common;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace MalusAdmin.Common;
+ 
 
 public interface ITokenService
 {

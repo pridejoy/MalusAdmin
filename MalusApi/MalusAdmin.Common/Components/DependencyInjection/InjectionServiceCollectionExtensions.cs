@@ -38,18 +38,32 @@ public static class InjectionServiceCollectionExtensions
         // 实现自定义注册
         static void RegistrationType(IServiceCollection services, Type serviceType, Type implementationType)
         {
+            
             // 设置默认生命周期为 Transient
             var lifecyleType = ServiceLifetime.Transient;
 
+            Console.WriteLine("注册方式：" + lifecyleType.ToString() + 
+                "名称：" + serviceType.Name, 
+                "实例：" + implementationType.Name);
+
+            // 获取服务自动注入标签（AutoInject）
             // 获取服务自动注入标签（AutoInject）
             var autoInjection = serviceType.GetCustomAttribute<AutoInjectionAttribute>();
             if (autoInjection != null)
             {
-                if (!autoInjection.AutoRegister) return;
+                if (!autoInjection.AutoRegister)
+                {
+                    return;
+                }
                 lifecyleType = autoInjection.Lifecycle;
             }
+            //AutoIocAttribute attribute = (AutoIocAttribute)Attribute.GetCustomAttribute(serviceType, typeof(AutoIocAttribute));
+            //if (attribute != null)
+            //{
+            //    services.Add(new ServiceDescriptor(serviceType, attribute.Mode));
+            //}
+            //https://blog.csdn.net/qq_39427511/article/details/128212497
 
-            // Console.WriteLine("注册方式："+lifecyleType.ToString() +"名称："+ serviceType.Name, "实例：" + implementationType.Name);
             // 注册服务
             switch (lifecyleType)
             {

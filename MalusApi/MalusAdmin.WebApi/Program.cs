@@ -22,10 +22,9 @@ public class Program
 
         //缓存
         builder.Services.AddCacheSetup(); 
-
-        //HttpContext
-        builder.Services.AddHttpContextAccessor();
-        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+         
+        //基础服务注册
+        builder.Services.AddBaseServices();
 
         // 添加过滤器
         builder.Services.AddControllers(options =>
@@ -46,17 +45,16 @@ public class Program
 
         // 添加swagger文档
         builder.Services.AddSwaggerSetup();
-
+         
+        var dllnames =new string[] { "MalusAdmin.Servers", "MalusAdmin.Common" };
         // 自动添加服务层
-        builder.Services.AddAutoServices("MalusAdmin.Servers");
-
-        //注册项目所需要的服务
-        builder.Services.AddSomeServices();
-
+        builder.Services.AddAutoServices(dllnames);
+          
         //添加授权
         //builder.Services.AddAuthorization();
         // 添加自定义授权
         builder.Services.AddAuthorizationSetup();
+
         // 替换默认 PermissionChecker
         //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
 
