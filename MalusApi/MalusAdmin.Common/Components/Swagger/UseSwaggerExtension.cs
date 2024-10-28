@@ -20,6 +20,7 @@ public static class SwaggerExtension
 
             // 遍历所有API描述组
             foreach (var descriptionGroup in provider.ApiDescriptionGroups.Items)
+            {
                 if (descriptionGroup.GroupName is null)
                     // 为默认分组设置端点
                     c.SwaggerEndpoint("/swagger/vdefault/swagger.json", "Default API");
@@ -27,6 +28,7 @@ public static class SwaggerExtension
                     // 为每个分组指定Swagger文档和标题
                     c.SwaggerEndpoint($"/swagger/{descriptionGroup.GroupName}/swagger.json",
                         descriptionGroup.GroupName);
+            }
             //指定Swagger JSON文件的终结点，用于加载和显示API文档。
 
             //指定swagger文档的启动目录 。默认为swagger
@@ -40,9 +42,7 @@ public static class SwaggerExtension
             c.DocExpansion(DocExpansion.None); // 设置为完整模式 
             c.DisplayRequestDuration();
             c.EnablePersistAuthorization();
-
-            //c.UseRequestInterceptor("(request) => { return defaultRequestInterceptor(request); }");
-            //c.UseResponseInterceptor("(response) => { return defaultResponseInterceptor(response); }");
+             
         });
     }
 }

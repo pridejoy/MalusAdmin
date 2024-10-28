@@ -16,7 +16,7 @@ public class TokenService : ITokenService
     /// <summary>
     /// 请求头的前缀
     /// </summary>
-    private readonly string tokenTag = "Token";
+    private readonly string tokenTag = "Authorization";
 
 
     public TokenService(ICacheService cacheService, IHttpContextAccessor httpContextAccessor)
@@ -48,6 +48,7 @@ public class TokenService : ITokenService
     /// <returns></returns>
     public async Task<bool> ValidateToken(string token)
     {
+        token = token.Replace("Bearer ", "");
         if (string.IsNullOrWhiteSpace(token)) return false;
         //是否在缓存，是否过期
         var userinfo = _cacheService.Get<TokenData>(Constant.Cache.UserToken + token);

@@ -27,25 +27,7 @@ public class TokenOperationFilter : IOperationFilter
                     Type = "string"
                 }
             });
-
-            //var bearerScheme = new OpenApiSecurityScheme
-            //{
-            //    Scheme = "Bearer",
-            //    Reference = new OpenApiReference
-            //    {
-
-            //        Type = ReferenceType.Header,
-            //        Id = "Token"
-            //    }
-            //};
-
-            //operation.Security = new List<OpenApiSecurityRequirement>
-            //{
-            //    new OpenApiSecurityRequirement()
-            //    {
-            //        [ bearerScheme ] = Array.Empty<string>()
-            //    }
-            //};
+             
         }
     }
 }

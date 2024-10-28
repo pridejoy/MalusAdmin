@@ -9,7 +9,7 @@ namespace MalusAdmin.Common;
 
 public static class SwaggerSetup
 {
-    public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
+    public static IServiceCollection AddSwaggerBaseSetup(this IServiceCollection services)
     {
         // 默认配置
         Action<SwaggerGenOptions> defaultSetupAction = options =>
@@ -29,10 +29,10 @@ public static class SwaggerSetup
             // 添加注释文档
             foreach (var xml in xmls) options.IncludeXmlComments(xml, true);
 
-            //添加jwt的
-            //options.AddJwtSwagger();
+            //添加jwt
+            options.AddJwtSwagger();
             //DOTO: 此处根据用的是jwt或者是Guid Token 来进行切换
-            options.AddTokenSwagger();
+            //options.AddTokenSwagger();
 
             //判断接口归于哪个分组
             options.DocInclusionPredicate((docName, apiDescription) =>
@@ -48,7 +48,7 @@ public static class SwaggerSetup
         services.AddSwaggerGen(defaultSetupAction);
 
         //文档分组
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfigureOptions>();
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerGroup>();
  
 
         return services;

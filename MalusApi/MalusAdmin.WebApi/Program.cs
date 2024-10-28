@@ -44,7 +44,7 @@ public class Program
         builder.Services.AddSqlsugarSetup();
 
         // 添加swagger文档
-        builder.Services.AddSwaggerSetup();
+        builder.Services.AddSwaggerBaseSetup();
          
         var dllnames =new string[] { "MalusAdmin.Servers", "MalusAdmin.Common" };
         // 自动添加服务层

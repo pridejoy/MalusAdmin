@@ -51,7 +51,7 @@ public class Program
         builder.Services.AddJwtSetup();
 
         // 添加swagger文档
-        builder.Services.AddSwaggerSetup();
+        builder.Services.AddSwaggerBaseSetup();
 
         // 自动添加服务层
         builder.Services.AddAutoServices("Wechat.Servers");

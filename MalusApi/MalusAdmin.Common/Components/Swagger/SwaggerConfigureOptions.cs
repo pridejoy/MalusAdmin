@@ -6,11 +6,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace MalusAdmin.Common.Components.Swagger;
 
-public class SwaggerConfigureOptions : IConfigureOptions<SwaggerGenOptions>
+public class SwaggerGroup : IConfigureOptions<SwaggerGenOptions>
 {
     private readonly IApiDescriptionGroupCollectionProvider provider;
 
-    public SwaggerConfigureOptions(IApiDescriptionGroupCollectionProvider provider)
+    public SwaggerGroup(IApiDescriptionGroupCollectionProvider provider)
     {
         this.provider = provider;
     }

@@ -10,7 +10,7 @@ public static class AddJwtSwaggerSetup
     public static SwaggerGenOptions AddJwtSwagger(this SwaggerGenOptions options)
     {
         //在 Swagger UI 中显示相应的安全要求信息（api有"Authorize" 特性，加上小锁）
-        options.OperationFilter<SecurityRequirementsOperationFilter>();
+        //options.OperationFilter<SecurityRequirementsOperationFilter>();
 
         // api有"Authorize" 特性， header中添加 token 传递到后台
         options.OperationFilter<JwtOperationFilter>();
