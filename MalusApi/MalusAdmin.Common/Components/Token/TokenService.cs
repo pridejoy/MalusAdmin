@@ -1,5 +1,6 @@
 ﻿namespace MalusAdmin.Common;
 
+[AutoInjection]
 public class TokenService : ITokenService
 {
     private readonly ICacheService _cacheService;

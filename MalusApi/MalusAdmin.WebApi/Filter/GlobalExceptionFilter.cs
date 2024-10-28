@@ -43,8 +43,8 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
         //弹出500异常
         var ApiResult = new ApiResult(StatusCodes.Status500InternalServerError, context.Exception.Message, "");
         // 如果是结果异常
-        IActionResult result = new ObjectResult(ApiResult) { StatusCode = StatusCodes.Status200OK };
-        context.Result = result;
+        //IActionResult result = new ObjectResult(ApiResult) { StatusCode = StatusCodes.Status200OK };
+        context.Result = new JsonResult(ApiResult);
     }
 
     /// <summary>

@@ -49,9 +49,7 @@ public static class SwaggerSetup
 
         //文档分组
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfigureOptions>();
-
-        // 如果有自定义配置
-        //if (setupAction != null) services.Configure(setupAction);
+ 
 
         return services;
     }

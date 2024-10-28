@@ -1,4 +1,7 @@
-﻿namespace MalusAdmin.Servers;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MalusAdmin.Servers;
+
 
 public class SysUserLoginIn
 {
@@ -6,6 +9,7 @@ public class SysUserLoginIn
     /// 登录账号
     /// </summary>
     /// <example>admin</example>
+    [Required] 
     public string? Account { get; set; }
 
 

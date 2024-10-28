@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace MalusAdmin.Common.Components;
 
-public static class AddTokenSwaggerSetup
+public static class AddTokenSwaggerOptions
 {
     public static SwaggerGenOptions AddTokenSwagger(this SwaggerGenOptions options)
     {

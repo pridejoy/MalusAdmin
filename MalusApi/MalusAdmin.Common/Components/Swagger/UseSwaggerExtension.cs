@@ -6,6 +6,10 @@ namespace MalusAdmin.Common.Components;
 
 public static class SwaggerExtension
 {
+    /// <summary>
+    /// app.use
+    /// </summary>
+    /// <param name="app"></param>
     public static void UseSwaggerExtension(this IApplicationBuilder app)
     {
         app.UseSwagger();

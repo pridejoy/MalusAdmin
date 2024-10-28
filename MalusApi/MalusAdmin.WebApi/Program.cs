@@ -9,18 +9,19 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args); 
 
-        //  进行配置注册 | 添加静态文件读取(优先级比较高)
-        AppSettings.AddConfigSteup(builder.Configuration);
+        //进行配置注册 | 添加静态文件读取(优先级比较高)
+        AppSettings.AddConfigSteup(builder.Configuration); 
 
         //打印控制台显示
         builder.Services.AddLogo();
-        //进行选项注册
-        builder.Services.AddConfigureSetup(builder.Configuration);
 
-        // 缓存
-        builder.Services.AddCacheSetup();
+        //进行选项注册
+        builder.Services.AddConfigureSetup(builder.Configuration); 
+
+        //缓存
+        builder.Services.AddCacheSetup(); 
 
         //HttpContext
         builder.Services.AddHttpContextAccessor();
@@ -34,14 +35,8 @@ public class Program
                 // 日志过滤器
                 options.Filters.Add<RequestActionFilter>();
             })
-            // 配置Api行为选项
-            .ConfigureApiBehaviorOptions(options =>
-            {
-                // 禁用默认模型验证过滤器
-                options.SuppressModelStateInvalidFilter = true;
-            })
-            .AddApiResult<CustomApiResultProvider>();
-
+            .AddDataValidation()
+            .AddApiResult<CustomApiResultProvider>(); 
 
         // 配置Json选项
         builder.Services.AddJsonOptions();
@@ -76,6 +71,7 @@ public class Program
 
         // 添加EndpointsApiExplorer
         builder.Services.AddEndpointsApiExplorer();
+
 
         var app = builder.Build();
         //写入静态类供全局获取

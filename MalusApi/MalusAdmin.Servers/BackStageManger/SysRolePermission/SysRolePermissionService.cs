@@ -8,6 +8,7 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 用户按钮权限
 /// </summary>
+[AutoInjection]
 public class SysRolePermissionService : ISysRolePermission
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
