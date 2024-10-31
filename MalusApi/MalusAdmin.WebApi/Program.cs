@@ -1,4 +1,5 @@
 using MalusAdmin.Common.Components;
+using MalusAdmin.Common.Components.JsonOptionsExtensions;
 using MalusAdmin.Servers.Hub;
 using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -38,7 +39,7 @@ public class Program
             .AddApiResult<CustomApiResultProvider>(); 
 
         // ≈‰÷√Json—°œÓ
-        builder.Services.AddJsonOptions();
+        builder.Services.AddTextJsonOptions();
 
         // ÃÌº”sqlsugar
         builder.Services.AddSqlsugarSetup();

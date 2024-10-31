@@ -8,6 +8,7 @@ public static class JsonCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
+    [Obsolete("不在使用")]
     public static IServiceCollection AddJsonOptions(this IServiceCollection services,
         Action<JsonSerializerOptions>? setupAction = null)
     {
