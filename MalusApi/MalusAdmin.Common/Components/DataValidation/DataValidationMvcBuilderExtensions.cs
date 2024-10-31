@@ -26,7 +26,7 @@ namespace MalusAdmin.Common
             builder.AddMvcOptions(options =>
             {
                 // 添加自定义模型验证过滤器
-                options.Filters.Add<DataValidationFilter>(filterOrder);
+                //options.Filters.Add<DataValidationFilter>(filterOrder);
             });
 
             return builder;

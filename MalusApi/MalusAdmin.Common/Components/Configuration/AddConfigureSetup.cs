@@ -11,6 +11,8 @@ public static class Configure
         //https://www.dotnetshare.com/guid/conf-options/options.html
         //services.Configure<PositionOptions>(config.GetSection(PositionOptions.Position));
 
+        services.Configure<RabbitMQConfig>(config.GetSection("RabbitMQConfig"));
+
         //等其他选项
         return services;
     }

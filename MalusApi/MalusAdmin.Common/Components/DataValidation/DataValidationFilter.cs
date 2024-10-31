@@ -16,6 +16,16 @@ namespace MalusAdmin.Common
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
+
+            // 检查是否需要禁用模型验证
+            //if (context.ActionArguments.ContainsKey("pageInput") &&
+            //    context.ActionArguments["pageInput"] is Keyword)
+            //{
+            //    // 禁用模型验证
+            //    //context.ModelState.Clear();
+            //    return;
+            //}
+
             // 如果其他过滤器已经设置了结果，则跳过验证
             if (context.Result != null) return;
 
@@ -35,7 +45,7 @@ namespace MalusAdmin.Common
             var result = ApiResultHelper.Result400BadRequest("数据验证不通过！", errors);
 
             // 设置结果
-            context.Result = new BadRequestObjectResult(result); // ObjectResult(result);
+            context.Result = new ObjectResult(result); 
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

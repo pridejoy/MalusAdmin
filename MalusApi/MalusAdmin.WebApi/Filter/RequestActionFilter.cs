@@ -95,7 +95,7 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
 
         Console.WriteLine($"处理 {DateTime.Now} : {entity.ToJson()}");
 
-        _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
+        //_db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
     }
 
     public int Order => FilterOrder;

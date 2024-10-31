@@ -34,7 +34,7 @@ public static class AppSettings
     /// <summary>
     /// 允许跨域请求列表
     /// </summary>
-    public static string[] AllowCors => Configuration.GetSection("AllowCors").Get<string[]>();
+    public static string[] AllowCors => Configuration.GetSection("AllowCors").Get<string[]>()??new string[] { };
 
     /// <summary>
     /// 是否演示环境
@@ -46,16 +46,26 @@ public static class AppSettings
     /// </summary>
     public static bool DisplaySwaggerDoc => Configuration["DisplaySwaggerDoc"].ObjToBool();
 
-    public static string SqlServerConnection => Configuration["SqlServerConnection"];
+    /// <summary>
+    /// 数据库链接
+    /// </summary>
+    public static string SqlServerConnection => Configuration["SqlServerConnection"]??"";
+
+
+    /// <summary>
+    /// RabbitMq链接
+    /// </summary>
+    public static string RabbitMqConnetion => Configuration["RabbitMqConnetion"]??"";
+
 
     /// <summary>
     /// Jwt 配置
     /// </summary>
     public static class Jwt
     {
-        public static string SecretKey => Configuration["Jwt:SecretKey"];
-        public static string Issuer => Configuration["Jwt:Issuer"];
-        public static string Audience => Configuration["Jwt:Audience"];
+        public static string SecretKey => Configuration["Jwt:SecretKey"] ?? "";
+        public static string Issuer => Configuration["Jwt:Issuer"] ?? "";
+        public static string Audience => Configuration["Jwt:Audience"] ?? "";
     }
 
 

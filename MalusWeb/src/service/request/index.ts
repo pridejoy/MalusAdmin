@@ -30,7 +30,7 @@ export const request = createFlatRequest<App.Service.Response, InstanceState>(
       const token = localStg.get('token');
       // const Authorization = token ? `${token}` : null;
       // 更改 请求头信息
-      headers.Token = token ? `${token}` : null;
+      headers.Authorization = token ? `${token}` : null;
       // Object.assign(headers, { Authorization });
 
       return config;

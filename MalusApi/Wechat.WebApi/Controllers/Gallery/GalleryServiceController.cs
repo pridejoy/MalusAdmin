@@ -143,7 +143,7 @@ public class GalleryServiceController : WxApiControllerBase
         var like = await _db.Queryable<BsGallery>()
             .RightJoin<BsCustomerCollect>((g, c) => g.ImagesID == c.ImagesID)
             .Where((g, c) => c.IsLike == true && c.UserID == UserId)
-            .ToPagedListAsync(input.Page, input.PageSize);
+            .ToPagedListAsync(input.PageNo, input.PageSize);
 
         return like.XnPagedResult();
     }
