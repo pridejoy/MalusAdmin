@@ -55,10 +55,7 @@ public class Program
         //builder.Services.AddAuthorization();
         // 添加自定义授权
         builder.Services.AddAuthorizationSetup();
-
-        // 替换默认 PermissionChecker
-        //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
-
+ 
         // 添加跨域支持
         builder.Services.AddCorsSetup();
 
@@ -68,9 +65,12 @@ public class Program
         //实时应用
         builder.Services.AddSignalR();
 
+        //rabbit
+        //builder.Services.AddRabbitMqClientExtension();
+        builder.Services.AddEasyNetQExtension();
+
         // 添加EndpointsApiExplorer
         builder.Services.AddEndpointsApiExplorer();
-
 
         var app = builder.Build();
         //写入静态类供全局获取
@@ -87,8 +87,7 @@ public class Program
 
         // Configure the HTTP request pipeline.
         if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
-
-
+         
         app.UseDefaultFiles(); // 提供默认文件支持
         app.UseStaticFiles(); // 启用静态文件服务
 

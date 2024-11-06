@@ -86,7 +86,7 @@ public class TokenService : ITokenService
     /// <exception cref="SystemException"></exception>
     public async Task<string> GetHeadersToken()
     {
-        if (_httpContextAccessor == null) throw new SystemException("参数错误");
+        if (_httpContextAccessor.HttpContext == null) throw new SystemException("参数错误");
         if (_httpContextAccessor.HttpContext.Request.Headers.ContainsKey(tokenTag))
             return _httpContextAccessor.HttpContext.Request.Headers[tokenTag].ToString().Replace("Bearer ", "");
         return "";

@@ -28,4 +28,8 @@
     <ItemGroup>
       <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Components\CAP\" />
+    </ItemGroup>
 </Project>

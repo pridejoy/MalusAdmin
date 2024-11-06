@@ -33,6 +33,7 @@ public class SysLoginController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [ResponseCache(Duration = 60 * 60)]
     public async Task<dynamic> GetUserInfo()
     {
         return await _sysUserService.GetUserInfo();

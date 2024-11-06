@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MalusAdmin.Common.Components;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MalusAdmin.WebApi.Controllers.BusinessManger;
 
@@ -11,13 +12,24 @@ public class OrtherController : ApiControllerBase
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly TestService _testService;
     private readonly IWeatherForecastService _weatherForecastService;
+    private readonly MQPublish _mQPublish;
 
     public OrtherController(IWeatherForecastService weatherForecastService, TestService testService,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, MQPublish mQPublish)
     {
         _weatherForecastService = weatherForecastService;
         _testService = testService;
         _httpContextAccessor = httpContextAccessor;
+        _mQPublish = mQPublish;
+    }
+
+
+
+    [HttpGet("123")]
+    public async Task<dynamic> GetException(string name)
+    {
+        await _mQPublish.PublishMessageAsync("Test",name);
+        return true;
     }
 
     [HttpGet]
