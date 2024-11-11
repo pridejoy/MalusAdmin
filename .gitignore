@@ -3,3 +3,5 @@
 /MalusApi/MalusAdmin.WebApi/appsettings.json
 /MalusApi/MalusAdmin.WebApi/appsettings.Development.json
 /MalusApi/MalusAdmin.WebApi/Filter/RequestActionFilter.cs
+/MalusApi/Wechat.WebApi/appsettings.Development.json
+/MalusApi/MalusAdmin.BackUpServices/appsettings.Development.json
