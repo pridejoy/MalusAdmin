@@ -9,6 +9,7 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using MalusAdmin.Common.Components.SystemTextJson;
+using Microsoft.Extensions.Options;
 
 namespace MalusAdmin.Common.Components.JsonOptionsExtensions
 {
@@ -17,6 +18,8 @@ namespace MalusAdmin.Common.Components.JsonOptionsExtensions
         public static IServiceCollection AddTextJsonOptions(this IServiceCollection services,
             Action<JsonSerializerOptions>? setupAction = null)
         {
+
+        
 
             // 配置 JsonOptions
             services.Configure<JsonOptions>(options =>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MalusAdmin.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class BaseServiceRegister
@@ -13,6 +14,9 @@ public static class BaseServiceRegister
         //HttpContext
         services.AddHttpContextAccessor();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
+        services.AddSingleton<ITokenService, TokenService>();
 
         return services;
     }

@@ -36,10 +36,11 @@ public class Program
                 options.Filters.Add<RequestActionFilter>();
             })
             .AddDataValidation()
-            .AddApiResult<CustomApiResultProvider>(); 
+            .AddApiResult<CustomApiResultProvider>();
 
         // 配置Json选项
-        builder.Services.AddTextJsonOptions();
+        //builder.Services.AddTextJsonOptions();
+        builder.Services.AddJsonOptions();
 
         // 添加sqlsugar
         builder.Services.AddSqlsugarSetup();
@@ -47,7 +48,7 @@ public class Program
         // 添加swagger文档
         builder.Services.AddSwaggerBaseSetup();
          
-        var dllnames =new string[] { "MalusAdmin.Servers", "MalusAdmin.Common" };
+        var dllnames =new string[] { "MalusAdmin.Servers" };
         // 自动添加服务层
         builder.Services.AddAutoServices(dllnames);
           
@@ -84,6 +85,10 @@ public class Program
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
 
+        if (app.Environment.IsDevelopment())
+        {
+             
+        }
 
         // Configure the HTTP request pipeline.
         if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();

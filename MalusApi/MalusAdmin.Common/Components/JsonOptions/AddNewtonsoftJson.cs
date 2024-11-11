@@ -8,16 +8,11 @@ public static class JsonCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    [Obsolete("不在使用")]
+    //[Obsolete("不在使用")]
     public static IServiceCollection AddJsonOptions(this IServiceCollection services,
         Action<JsonSerializerOptions>? setupAction = null)
     {
-        // 不对 JsonSerializerOptions 进行配置，直接读取 Microsoft.AspNetCore.Mvc.JsonOptions 的 Json 配置
-        //// 配置 JsonSerializerOptions
-        //services.Configure<JsonSerializerOptions>(options =>
-        //{
-        //    ConfigureJsonOptions(options);
-        //});
+ 
 
         // 配置 JsonOptions
         services.AddControllers()
