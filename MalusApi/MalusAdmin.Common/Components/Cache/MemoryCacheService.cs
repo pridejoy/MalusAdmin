@@ -432,8 +432,8 @@ public class MemoryCacheService : ICacheService
     {
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
         var coherentStateFiledInfo = _cache.GetType().GetField("_coherentState", flags);
-        var coherentStateValue = coherentStateFiledInfo.GetValue(_cache);
-        var entriesFiledInfo = coherentStateFiledInfo.FieldType.GetRuntimeFields().Where(f => f.Name == "_entries").FirstOrDefault();
+        var coherentStateValue = coherentStateFiledInfo.GetValue(_cache); 
+        var entriesFiledInfo = coherentStateFiledInfo.FieldType.GetRuntimeFields().Where(f => f.Name == "_stringEntries").FirstOrDefault();
         var entries = entriesFiledInfo.GetValue(coherentStateValue);
         var cacheItems = entries as IDictionary;
         var keys = new List<string>();

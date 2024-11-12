@@ -19,8 +19,7 @@ namespace MalusAdmin.Common.Components.JsonOptionsExtensions
             Action<JsonSerializerOptions>? setupAction = null)
         {
 
-        
-
+         
             // 配置 JsonOptions
             services.Configure<JsonOptions>(options =>
             {

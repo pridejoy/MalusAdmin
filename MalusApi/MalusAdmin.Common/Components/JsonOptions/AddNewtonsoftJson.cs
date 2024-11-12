@@ -9,11 +9,9 @@ public static class JsonCollectionExtensions
     /// <param name="services"></param>
     /// <returns></returns>
     //[Obsolete("不在使用")]
-    public static IServiceCollection AddJsonOptions(this IServiceCollection services,
-        Action<JsonSerializerOptions>? setupAction = null)
+    public static IServiceCollection AddJsonOptions(this IServiceCollection services, Action<JsonSerializerOptions>? setupAction = null)
     {
- 
-
+  
         // 配置 JsonOptions
         services.AddControllers()
             .AddNewtonsoftJson(options =>
