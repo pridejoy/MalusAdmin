@@ -24,8 +24,7 @@ public static class JwtSetup
         // 获取密钥
         var keyByteArray = Encoding.UTF8.GetBytes(symmetricKeyAsBase64);
         var signingKey = new SymmetricSecurityKey(keyByteArray);
-        var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-
+        
         // 令牌验证参数
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -43,6 +42,26 @@ public static class JwtSetup
         // events
         var jwtBearerEvents = new JwtBearerEvents
         {
+                //  1. **OnMessageReceived**:
+                //   -触发时机：当接收到一个身份验证请求。
+                //   -用途：用来处理接收到的原始身份验证消息，你可以根据请求的具体情况来修改或取消身份验证过程。
+
+                //2. * *OnTokenValidated * *:
+                //   -触发时机：在JWT被成功验证后触发。
+                //   -用途：用来处理已验证的token，例如，你可以在这里添加额外的日志记录或执行一些安全检查。
+
+                //3. * *OnAuthenticationFailed * *:
+                //   -触发时机：当身份验证失败时触发。
+                //   -用途：用来处理身份验证失败的情况，例如，记录失败原因、执行额外的错误处理逻辑等。
+
+                //4. * *OnChallenge * *:
+                //   -触发时机：当需要向客户端发出一个挑战（例如，要求客户端提供凭据）时触发。
+                //   -用途：自定义挑战的响应，例如，修改返回给客户端的`401 Unauthorized`响应。
+
+                //5. * *OnForbidden * *:
+                //   -触发时机：当授权失败时触发（即用户已通过身份验证，但没有足够的权限访问特定资源）。
+                //   -用途：自定义处理禁止访问的情况，例如，返回一个自定义的错误消息或执行其他逻辑。
+
             OnChallenge = async context =>
             {
                 // refresh token 

@@ -4,8 +4,7 @@
 [AutoInjection]
 public class TokenService : ITokenService
 {
-    private readonly ICacheService _cacheService;
-
+    private readonly ICacheService _cacheService; 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     /// <summary>

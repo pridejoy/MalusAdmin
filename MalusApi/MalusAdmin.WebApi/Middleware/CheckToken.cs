@@ -1,7 +1,11 @@
 ﻿using System.Text.RegularExpressions;
+using MalusAdmin.Common;
+using MalusAdmin.Repository.Model;
 using MalusAdmin.Servers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MalusAdmin.WebApi;
 
@@ -55,8 +59,7 @@ public class CheckToken
         var validataToken = await tokenService.ValidateToken(token);
         if (!validataToken)
         {
-            await Res401Async(context);
-            return;
+            throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
         }
 
         //刷新用户的token过期时间
@@ -65,12 +68,12 @@ public class CheckToken
         var sysuser = await tokenService.ParseTokenAsync(token);
         if (sysuser is null)
         {
-            await Res401Async(context);
-            return;
+            throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
         }
 
         // 权限校验 
         if (endpoint is RouteEndpoint routeEndpoint && !sysuser.IsSuperAdmin)
+        {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
@@ -86,42 +89,32 @@ public class CheckToken
                     routePattern = Regex.Replace(routePattern, @":\d+$", "");
                     // 权限检查  
                     if (!await rolePermissService.HavePermission(routePattern))
-                    {
-                        await Res403Async(context);
-                        return;
+                    { 
+                         await Res207Async(context);
+                         return;
                     }
                 }
             }
+        }    
 
         await _next(context);
     }
 
-    /// <summary>
-    /// 登录后返回401
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public async Task Res401Async(HttpContext context)
-    {
-        var apiResult = new ApiResult(StatusCodes.Status401Unauthorized, "提供的令牌无效或已过期，请重新登录", "");
-        // 设置响应的Content-Type为application/json
-        context.Response.StatusCode = 401;
-        context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(apiResult.ToJson(true));
-    }
+    
 
     /// <summary>
     /// 登录后返回暂无权限
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public async Task Res403Async(HttpContext context)
+    public async Task Res207Async(HttpContext context)
     {
         var apiResult = new ApiResult(StatusCodes.Status207MultiStatus, "暂无权限", "");
 
         // 设置响应的Content-Type为application/json
         context.Response.ContentType = "application/json";
         // 写入JSON字符串到响应体
-        await context.Response.WriteAsync(apiResult.ToJson(true));
+         await context.Response.WriteAsync(apiResult.ToJson(true));
+         return;
     }
 }

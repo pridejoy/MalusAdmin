@@ -31,7 +31,7 @@ public class Program
         builder.Services.AddControllers(options =>
             {
                 // 全局异常过滤
-                options.Filters.Add<GlobalExceptionFilter>();
+                //options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 options.Filters.Add<RequestActionFilter>();
             })
@@ -85,15 +85,16 @@ public class Program
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
 
-        if (app.Environment.IsDevelopment())
-        {
-             
-        }
-
+        //if (app.Environment.IsDevelopment()) 
         // Configure the HTTP request pipeline.
         if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
+
+        app.UseMiddleware<CheckToken>(); //身份验证中间件 
+
+        app.UseMiddleware<GlobalExceptionMiddleware>(); //全局异常中间件 
          
         app.UseDefaultFiles(); // 提供默认文件支持
+
         app.UseStaticFiles(); // 启用静态文件服务
 
         app.UseHttpsRedirection(); // 放在前面，确保所有请求都通过HTTPS
@@ -101,15 +102,13 @@ public class Program
         app.UseRouting(); // 确定路由
 
         app.UseCors(); // 配置跨域资源共享
-
+          
         app.UseAuthentication(); // 启用身份验证中间件
 
         app.UseAuthorization(); // 启用授权中间件
 
         app.UseResponseCaching(); // 应用响应缓存
-
-        app.UseMiddleware<CheckToken>(); // 如果CheckToken是身份验证中间件，放在认证之前
-
+         
         app.MapHub<OnlineUserHub>("/hub"); // 映射SignalR Hub
 
         app.MapControllers(); // 映射控制器

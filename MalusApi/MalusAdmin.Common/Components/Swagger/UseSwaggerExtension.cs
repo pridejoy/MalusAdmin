@@ -40,6 +40,7 @@ public static class SwaggerExtension
             //List表示只展开接口列表；
             //Full表示展开所有接口详情
             c.DocExpansion(DocExpansion.None); // 设置为完整模式 
+
             c.DisplayRequestDuration();
             c.EnablePersistAuthorization();
              

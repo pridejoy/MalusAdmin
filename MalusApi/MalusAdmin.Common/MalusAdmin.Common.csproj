@@ -15,9 +15,9 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+        <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.1.6" />
         <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
-        <PackageReference Include="SqlSugar.IOC" Version="2.0.0" /> 
-        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
+        <PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
         <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.7" /> 
@@ -28,9 +28,5 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MalusAdmin.Repository\MalusAdmin.Repository.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Components\CAP\" />
     </ItemGroup>
 </Project>

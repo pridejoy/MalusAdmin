@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using SqlSugar;
 
 namespace MalusAdmin.WebApi.Filter;
-
-public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
+ 
+public class GlobalExceptionFilter : IAsyncExceptionFilter, IOrderedFilter
 {
     private readonly ISqlSugarClient _db;
     private readonly ILogger<GlobalExceptionFilter> _logger;
@@ -15,8 +15,8 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
         _logger = logger;
         _db = sqldb;
     }
-
-    public async void OnException(ExceptionContext context)
+     
+    public async Task OnExceptionAsync(ExceptionContext context)
     {
         try
         {
@@ -39,7 +39,9 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
             //异常进行记录 
             await IOFileHelper.Write("error/", e.ToJson());
         }
-
+        // 设置为true，表示异常已经被处理了
+        context.ExceptionHandled = true;
+      
         //弹出500异常
         var ApiResult = new ApiResult(StatusCodes.Status500InternalServerError, context.Exception.Message, "");
         // 如果是结果异常
