@@ -21,6 +21,7 @@ public class BsGallery
     public string Type { get; set; }
     public bool VerticalScreen { get; set; }
     public bool IsDelete { get; set; }
+    public DateTime UpdateTime { get; set; }
     public int Praise { get; set; }
     public int DisLike { get; set; }
 }

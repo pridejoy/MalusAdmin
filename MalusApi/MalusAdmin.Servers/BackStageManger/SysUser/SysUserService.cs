@@ -39,6 +39,7 @@ public class SysUserService : ISysUserService
     /// <exception cref="Exception"></exception>
     public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
     {
+       
         var user = await _sysUserRep
             .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
         if (user == null) throw ResultHelper.Exception207Bad("未找到用户");

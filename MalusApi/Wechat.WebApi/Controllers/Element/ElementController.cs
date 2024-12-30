@@ -6,12 +6,12 @@ using Wechat.WebApi.Controllers;
 /// <summary>
 /// 元素服务
 /// </summary>
-public class ElementServiceController : WxApiControllerBase
+public class ElementController : WxApiControllerBase
 {
     private readonly ISqlSugarClient _db;
-    private readonly GalleryServiceController _galleryService;
+    private readonly GalleryController _galleryService;
 
-    public ElementServiceController(ISqlSugarClient db, GalleryServiceController galleryService)
+    public ElementController(ISqlSugarClient db, GalleryController galleryService)
     {
         _db = db;
         _galleryService = galleryService;

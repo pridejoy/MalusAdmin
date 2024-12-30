@@ -39,7 +39,7 @@ public class Program
                 options.SuppressModelStateInvalidFilter = true;
             })
             .AddApiResult<CustomApiResultProvider>();
-        ;
+      
 
         // 配置Json选项
         builder.Services.AddJsonOptions();
@@ -63,7 +63,7 @@ public class Program
         // 替换默认 PermissionChecker
         //builder.Services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
         builder.Services.AddSingleton<WeChatGetOpenId>();
-        builder.Services.AddSingleton<GalleryServiceController>();
+        builder.Services.AddSingleton<GalleryController>();
         //builder.Services.AddSingleton<ITokenService, TokenService>();
         //builder.Services.AddScoped<ISysRolePermission, SysRolePermissionService>();
 
@@ -75,6 +75,9 @@ public class Program
 
         //实时应用
         //builder.Services.AddSignalR();
+
+
+        builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
         // 添加EndpointsApiExplorer
         builder.Services.AddEndpointsApiExplorer();

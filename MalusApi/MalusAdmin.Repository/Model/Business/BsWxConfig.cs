@@ -2,7 +2,7 @@
 
 namespace MalusAdmin.Repository.Model;
 
-[SugarTable("bs_wx_config")]
+[SugarTable("bs_wechatconfig")]
 public class BsWxConfig
 {
     /// <summary>

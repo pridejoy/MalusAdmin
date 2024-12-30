@@ -8,11 +8,11 @@ using Wechat.Servers;
 /// <summary>
 /// 图库分类服务
 /// </summary>
-public class GalleryServiceController : WxApiControllerBase
+public class GalleryController : WxApiControllerBase
 {
     private readonly ISqlSugarClient _db;
 
-    public GalleryServiceController(ISqlSugarClient db)
+    public GalleryController(ISqlSugarClient db)
     {
         _db = db;
     }
@@ -77,6 +77,22 @@ public class GalleryServiceController : WxApiControllerBase
                 .Where(x => x.ImagesID == output.ImagesID).FirstAsync();
 
         return output;
+    }
+
+    /// <summary>
+    /// 随机获取图片
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<List<BsGallery>> Random(RandomPage input)
+    {  
+        var date = await _db.Queryable<BsGallery>() 
+            .Where(x => x.IsDelete == false)
+            .Take(10)
+            .OrderBy(x => SqlFunc.GetRandom())
+            .ToListAsync(); 
+
+        return date;
     }
 
     /// <summary>
