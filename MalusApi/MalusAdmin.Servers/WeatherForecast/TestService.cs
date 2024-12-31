@@ -31,8 +31,7 @@ public class TestService
     /// </summary>
     /// <returns></returns>
     public async Task<dynamic> GetAllButton()
-    {
-        _httpContext.HttpContext.Connection.RemoteIpAddress
+    { 
         // 获取所有路由信息
         var actionDescriptors = _actionDescriptorCollectionProvider.ActionDescriptors.Items;
 

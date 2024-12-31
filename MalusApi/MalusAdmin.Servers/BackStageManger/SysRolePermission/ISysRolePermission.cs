@@ -2,5 +2,5 @@
 
 public interface ISysRolePermission
 {
-    Task<bool> HavePermission(string RouthPath);
+    Task<bool> HasPermissionAsync(string RouthPath);
 }

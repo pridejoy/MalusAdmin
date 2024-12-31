@@ -30,14 +30,11 @@ public class SysRolePermissionService : ISysRolePermission
     /// 是否有访问当前接口的权限
     /// </summary>
     /// <returns></returns>
-    public async Task<bool> HavePermission(string RouthPath)
+    public async Task<bool> HasPermissionAsync(string RouthPath)
     {
-        // 获取当前用户-角色 的接口权限   
-        var UserRolePer = new List<TSysRolePermission>();
         var user = await _tokenService.GetCurrentUserInfo();
-        user.UserRolesId.ForEach(
-            async x => { UserRolePer.AddRange(await GetRoleButtonPermiss(x)); });
-        return UserRolePer.Any(x => x.UserPermiss == RouthPath);
+         
+        return user.UserPermiss.Any(x => x == RouthPath);
     }
 
 
@@ -97,7 +94,7 @@ public class SysRolePermissionService : ISysRolePermission
     public async Task<bool> DeleteRoleButtonPermiss(int RoleId)
     {
         await _sysuserpermissionRep.DeleteAsync(x => x.RoleId == RoleId);
-        await _cacheService.RemoveAsync(Constant.Cache.RoleButtonPermiss + RoleId);
+ 
         return true;
     }
 
@@ -123,15 +120,9 @@ public class SysRolePermissionService : ISysRolePermission
     /// <returns></returns>
     public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
     {
-        var cacheButtonPermiss = _cacheService.Get<List<TSysRolePermission>>(Constant.Cache.RoleButtonPermiss + RoleId);
-        if (cacheButtonPermiss == null)
-        {
-            var roleButtonPermiss = await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();
-            //进行缓存
-            _cacheService.Set(Constant.Cache.RoleButtonPermiss + RoleId, roleButtonPermiss);
-            return roleButtonPermiss;
-        }
+        var roleButtonPermiss = await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();
+        //进行缓存
 
-        return cacheButtonPermiss;
+        return roleButtonPermiss;
     }
 }

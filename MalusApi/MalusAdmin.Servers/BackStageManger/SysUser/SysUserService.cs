@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using MalusAdmin.Common;
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
+using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
 using Mapster;
 
 namespace MalusAdmin.Servers;
@@ -15,11 +17,12 @@ public class SysUserService : ISysUserService
     private readonly SysRolePermissionService _sysRolePermissionService;
     private readonly SqlSugarRepository<TSysUser> _sysUserRep; // 仓储
     private readonly ITokenService _TokenService;
+    private readonly Common.ICacheService _cacheService;
 
     public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
         ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
         SysMenuService sysMenuService, SysRolePermissionService sysRolePermissionService,
-        SysLogService sysLogService,
+        SysLogService sysLogService, Common.ICacheService cacheService,
         IHttpContextAccessor httpContext)
     {
         _sysUserRep = sysUserRep;
@@ -29,6 +32,7 @@ public class SysUserService : ISysUserService
         _sysRoleMenuService = sysRoleMenuService;
         _sysMenuService = sysMenuService;
         _sysRolePermissionService = sysRolePermissionService;
+        _cacheService = cacheService;
     }
 
     /// <summary>
@@ -68,12 +72,12 @@ public class SysUserService : ISysUserService
             UserPermiss = button
         };
 
-        var UserToken = await _TokenService.GenerateTokenAsync(tokenData);
+        var token = await _TokenService.GenerateTokenAsync(tokenData);
 
 
         await _sysLogService.AddLog("后台日志", $"用户{user.Name}登录了系统");
 
-        return new SysUserLoginOut { Id = user.Id, Name = user.Name, Token = UserToken };
+        return new SysUserLoginOut { Id = user.Id, Name = user.Name, Token = token };
     }
 
     /// <summary>
@@ -163,30 +167,41 @@ public class SysUserService : ISysUserService
     public async Task<UserMenuOut> GetUserMenu()
     {
         var user = await _TokenService.GetCurrentUserInfo();
-        var Out = new UserMenuOut();
+        //缓存
+        var cache_user_menus = _cacheService.Get<UserMenuOut>(Constant.Cache.UserMenus+ user.UserId);
+        if (cache_user_menus == null)
+        {
+            var userMenuOut = new UserMenuOut();
+        
+            ////获取当前用户的菜单权限
+            var menuid = await _sysRoleMenuService.RoleUserMenu(user.UserRolesId);
 
-        ////获取当前用户的菜单权限
-        var menuid = await _sysRoleMenuService.RoleUserMenu(user.UserRolesId);
+            //获取所有的菜单权限
+            var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
+                .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
 
-        //获取所有的菜单权限
-        var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
-            .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
+            //超级管理官
+            if (user.IsSuperAdmin)
+                menutree = _sysUserRep.Context.Queryable<TSysMenu>()
+                    .ToTree(x => x.Children, x => x.ParentId, 0);
+            var res = new List<UserMenu>();
+            //var usermenus = GetMenusByIds(menutree, menuid);
+            foreach (var item in menutree) res.Add(ConvertMenu(item));
 
-        //超级管理官
-        if (user.IsSuperAdmin)
-            menutree = _sysUserRep.Context.Queryable<TSysMenu>()
-                .ToTree(x => x.Children, x => x.ParentId, 0);
-        var res = new List<UserMenu>();
-        //var usermenus = GetMenusByIds(menutree, menuid);
-        foreach (var item in menutree) res.Add(ConvertMenu(item));
+            //List直接构造树 要高版本sqlsugar
+            //var a = UtilMethods.BuildTree(_sysUserRep.Context, menutree, "Id", "ParentId", "Children", 0);
 
-        //List直接构造树 要高版本sqlsugar
-        //var a = UtilMethods.BuildTree(_sysUserRep.Context, menutree, "Id", "ParentId", "Children", 0);
+            userMenuOut.Home = res.FirstOrDefault()?.Name;
+            userMenuOut.Routes = res;
+            //进行缓存
+            _cacheService.Set(Constant.Cache.UserMenus + user.UserId, userMenuOut, 60*60*60);
+            return userMenuOut;
+        }
+        return cache_user_menus;
 
-        Out.Home = res.FirstOrDefault()?.Name;
-        Out.Routes = res;
 
-        return Out;
+
+
     }
 
     /// <summary>

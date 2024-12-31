@@ -23,18 +23,18 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
     //筛选器按属性的升序排序 Order 执行 ,具有较低数值 Order 的同步筛选器将在具有较高值的
     //Order筛选器的 after 方法之后执行
     internal const int FilterOrder = -1000;
-    //private readonly ISqlSugarClient _db;
+    private readonly ISqlSugarClient _db;
 
     private readonly ITokenService _tokenService;
     //private readonly IRabbitMQService _publisher;
     //private readonly IEventPublisher _publisher;  
-    private readonly MQPublish _publisher;  
+    //private readonly MQPublish _publisher;  
 
-    public RequestActionFilter(/*ISqlSugarClient sqldb,*/ ITokenService tokenService
-        , MQPublish publisher)
+    public RequestActionFilter(ISqlSugarClient sqldb, ITokenService tokenService
+          /*MQPublish publisher*/)
     {
-        _publisher = publisher;
-        //_db = sqldb;
+        //_publisher = publisher;
+        _db = sqldb;
         _tokenService = tokenService;
     }
 
@@ -96,9 +96,9 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
             Result = actionContext.Exception?.Message ??
                      (actionContext.Result is FileStreamResult ? null : actionContext.Result.ToJson())
         };
-
+        _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
         //Console.WriteLine(entity.ToJson());
-        await _publisher.PublishMessageAsync("TSysLogVis", entity); 
+        //await _publisher.PublishMessageAsync("TSysLogVis", entity); 
     }
 
     public int Order => FilterOrder;

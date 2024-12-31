@@ -136,7 +136,7 @@ function buildTree(keyList: Array<string>): TreeOption[] {
               virtual
               show-line-number
               show-select-controller
-              style="padding-bottom: 60px"
+              style="padding-bottom: 70px"
               :data="info"
             ></VueJsonPretty>
           </div>

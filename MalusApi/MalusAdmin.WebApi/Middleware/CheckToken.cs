@@ -5,6 +5,7 @@ using MalusAdmin.Servers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Features;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MalusAdmin.WebApi;
@@ -23,98 +24,80 @@ public class CheckToken
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         _serviceScopeFactory = serviceScopeFactory;
     }
-
+     
     public async Task InvokeAsync(HttpContext context)
-    {
-        // 获取当前请求的Endpoint
+    {  
+        //UseRouting中间件负责将请求路由到对应的端点。
+        //任何在UseRouting之前执行的中间件，如果尝试调用context.GetEndpoint()，很可能返回null，
+        //因为在那个时刻路由匹配还没有发生
         var endpoint = context.GetEndpoint();
-
-        //一些禁用的资源放行检查
-        var DisplayNameStr = new[]
+        // 定义不需要认证的资源路径
+        var allowedPaths = new[]
         {
-            "/hub" //
+            "/hub"
         };
 
-        // 检查Endpoint的元数据中是否包含AllowAnonymous特性 
-        var hasAllowAnonymous = endpoint?.Metadata
-            .OfType<IAllowAnonymous>()
-            .Any() ?? true;
-
-        //静态资源直接放行 
-        //禁用检查的资源放行
-        //匿名访问的资源直接放行
-        if (endpoint is null || DisplayNameStr.Contains(endpoint.DisplayName) || hasAllowAnonymous)
+        // 检查请求路径是否在允许列表中或者是否允许匿名访问
+        if (allowedPaths.Contains(context.Request.Path.ToString()) || IsAllowAnonymous(endpoint))
         {
             await _next(context);
             return;
         }
 
-        //当前token是否在缓存中
+        // 获取并验证令牌
         var tokenService = App.GetService<ITokenService>();
-
-        //获取token
         var token = await tokenService.GetHeadersToken();
+        var isValidToken = await tokenService.ValidateToken(token);
 
-        //是否有效
-        var validataToken = await tokenService.ValidateToken(token);
-        if (!validataToken)
+        if (!isValidToken)
         {
             throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
         }
 
-        //刷新用户的token过期时间
+        // 刷新用户的令牌过期时间
         await tokenService.RefreshTokenAsync(token);
 
+        // 解析令牌获取用户信息
         var sysuser = await tokenService.ParseTokenAsync(token);
-        if (sysuser is null)
+        if (sysuser == null)
         {
             throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
         }
 
-        // 权限校验 
+        // 权限校验
         if (endpoint is RouteEndpoint routeEndpoint && !sysuser.IsSuperAdmin)
         {
             using (var scope = _serviceScopeFactory.CreateScope())
-            {
-                var rolePermissService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
-
-                var hapermissableAllowAnonymous = endpoint?.Metadata
-                    .OfType<PermissionAttribute>()
-                    .Any() ?? true;
-                if (hapermissableAllowAnonymous)
+            { 
+                //var hasPermissionAttribute = routeEndpoint.Metadata.OfType<PermissionAttribute>().Any();
+                //if (hasPermissionAttribute)
                 {
-                    //获取路由模式  处理路由 api:SysUser:Delete:{id} 
-                    var routePattern = routeEndpoint.RoutePattern.RawText?.Replace('/', ':');
-                    // 处理最后 ':' 的位置  使用正则表达式匹配最后一个冒号后面的数字，并将其替换为空字符串
+                    // 获取路由模式并处理，例如：api:SysUser:Delete:{id}
+                    var routePattern = routeEndpoint.RoutePattern.RawText.Replace('/', ':');
+                    // 处理最后一个冒号后面的数字，并将其替换为空字符串
                     routePattern = Regex.Replace(routePattern, @":\d+$", "");
-                    // 权限检查  
-                    if (!await rolePermissService.HavePermission(routePattern))
-                    { 
-                         await Res207Async(context);
-                         return;
+
+                    var rolePermissionService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
+                    // 检查用户是否有权限
+                    if (!await rolePermissionService.HasPermissionAsync(routePattern))
+                    {
+                        await context.Response.WriteAsync("暂无权限");
+                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        return;
                     }
                 }
             }
-        }    
+        }
+
 
         await _next(context);
     }
 
-    
 
-    /// <summary>
-    /// 登录后返回暂无权限
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public async Task Res207Async(HttpContext context)
+    private bool IsAllowAnonymous(Endpoint endpoint)
     {
-        var apiResult = new ApiResult(StatusCodes.Status207MultiStatus, "暂无权限", "");
-
-        // 设置响应的Content-Type为application/json
-        context.Response.ContentType = "application/json";
-        // 写入JSON字符串到响应体
-         await context.Response.WriteAsync(apiResult.ToJson(true));
-         return;
+        return endpoint?.Metadata.OfType<IAllowAnonymous>().Any() ?? false;
     }
+
+ 
 }

@@ -14,10 +14,7 @@ public class Program
 
         //进行配置注册 | 添加静态文件读取(优先级比较高)
         AppSettings.AddConfigSteup(builder.Configuration); 
-
-        //打印控制台显示
-        builder.Services.AddLogo();
-
+         
         //进行选项注册
         builder.Services.AddConfigureSetup(builder.Configuration); 
 
@@ -27,9 +24,11 @@ public class Program
         //基础服务注册
         builder.Services.AddBaseServices();
 
-        // 添加过滤器
+        //添加过滤器
         builder.Services.AddControllers(options =>
             {
+                //授权筛选器 
+                //options.Filters.Add<CustomAuthorizationFilter>();
                 // 全局异常过滤
                 //options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
@@ -38,7 +37,7 @@ public class Program
             .AddDataValidation()
             .AddApiResult<CustomApiResultProvider>();
 
-        // 配置Json选项
+        //配置Json选项
         //builder.Services.AddTextJsonOptions();
         builder.Services.AddJsonOptions();
 
@@ -51,7 +50,7 @@ public class Program
         var dllnames =new string[] { "MalusAdmin.Servers" };
         // 自动添加服务层
         builder.Services.AddAutoServices(dllnames);
-          
+         
         //添加授权
         //builder.Services.AddAuthorization();
         // 添加自定义授权
@@ -65,10 +64,10 @@ public class Program
 
         //实时应用
         builder.Services.AddSignalR();
-
+         
         //rabbit
         //builder.Services.AddRabbitMqClientExtension();
-        builder.Services.AddEasyNetQExtension();
+        //builder.Services.AddEasyNetQExtension(); 
 
         // 添加EndpointsApiExplorer
         builder.Services.AddEndpointsApiExplorer();
@@ -89,30 +88,34 @@ public class Program
         // Configure the HTTP request pipeline.
         if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
 
-        app.UseMiddleware<CheckToken>(); //身份验证中间件 
-
-        app.UseMiddleware<GlobalExceptionMiddleware>(); //全局异常中间件 
-         
-        app.UseDefaultFiles(); // 提供默认文件支持
-
-        app.UseStaticFiles(); // 启用静态文件服务
-
-        app.UseHttpsRedirection(); // 放在前面，确保所有请求都通过HTTPS
+        app.UseHttpsRedirection(); // 确保所有请求都通过HTTPS
 
         app.UseRouting(); // 确定路由
 
         app.UseCors(); // 配置跨域资源共享
-          
+
         app.UseAuthentication(); // 启用身份验证中间件
 
         app.UseAuthorization(); // 启用授权中间件
 
+        app.UseStaticFiles(); // 启用静态文件服务
+        app.UseDefaultFiles(); // 提供默认文件支持
+
         app.UseResponseCaching(); // 应用响应缓存
-         
-        app.MapHub<OnlineUserHub>("/hub"); // 映射SignalR Hub
 
-        app.MapControllers(); // 映射控制器
+        //// 全局异常中间件
+        app.UseMiddleware<GlobalExceptionMiddleware>(); 
 
-        app.Run(); // 启动服务器
+        // 身份验证中间件（如果需要在控制器之前执行特定的检查）
+        app.UseMiddleware<CheckToken>();
+
+        // 映射SignalR Hub
+        app.MapHub<OnlineUserHub>("/hub");
+
+        // 映射控制器
+        app.MapControllers(); 
+
+        // 启动服务器
+        app.Run(); 
     }
 }

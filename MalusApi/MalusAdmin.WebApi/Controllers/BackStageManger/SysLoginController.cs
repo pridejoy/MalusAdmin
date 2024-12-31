@@ -1,4 +1,5 @@
 ﻿using MalusAdmin.Servers;
+using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
@@ -46,6 +47,7 @@ public class SysLoginController : ApiControllerBase
     /// <returns></returns>
     [HttpGet]
     [ResponseCache(Duration = 60 * 60)]
+    [DisabledRequestRecord]
     public async Task<dynamic> GetUserMenu()
     {
         return await _sysUserService.GetUserMenu();
