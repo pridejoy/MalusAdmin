@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 // 抽屉开关
-const formRef = ref({
+const formValue = ref({
   name: '',
   phone: '',
   email: '',
@@ -9,17 +9,15 @@ const formRef = ref({
 });
 
 const rules = {
-  user: {
-    name: {
-      required: true,
-      message: '请输入姓名',
-      trigger: 'blur'
-    },
-    age: {
-      required: true,
-      message: '请输入年龄',
-      trigger: ['input', 'blur']
-    }
+  name: {
+    required: true,
+    message: '请输入姓名',
+    trigger: 'blur'
+  },
+  age: {
+    required: true,
+    message: '请输入年龄',
+    trigger: ['input', 'blur']
   },
   phone: {
     required: true,
@@ -34,24 +32,28 @@ const rules = {
     <NCard title="个人信息" style="margin-bottom: 16px">
       <NTabs type="line" animated>
         <NTabPane name="oasis" tab="信息修改">
-          <NForm ref="formRef" inline :label-width="80" :model="formValue" :rules="rules" :size="size">
-            <NFormItem label="姓名" path="name">
-              <NInput v-model:value="formValue.name" placeholder="输入姓名" />
-            </NFormItem>
-            <NFormItem label="手机号码" path="phone">
-              <NInput v-model:value="formValue.phone" placeholder="手机号码" />
-            </NFormItem>
-            <NFormItem label="邮箱" path="email">
-              <NInput v-model:value="formValue.email" placeholder="邮箱" />
-            </NFormItem>
-            <NFormItem label="备注" path="remark">
-              <NInput v-model:value="formValue.remark" placeholder="备注" />
-            </NFormItem>
-            <NFormItem>
-              <NButton attr-type="button" @click="handleValidateClick">验证</NButton>
-            </NFormItem>
-          </NForm>
-          <pre>{{ JSON.stringify(formRef, null, 2) }}</pre>
+          <div style="width: 60%">
+            <NForm ref="form" :label-width="10" :model="formValue" :rules="rules">
+              <NFormItem label="姓名" path="name">
+                <NInput v-model:value="formValue.name" placeholder="输入姓名" />
+              </NFormItem>
+              <NFormItem label="手机号码" path="phone">
+                <NInput v-model:value="formValue.phone" placeholder="手机号码" />
+              </NFormItem>
+              <NFormItem label="邮箱" path="email">
+                <NInput v-model:value="formValue.email" placeholder="邮箱" />
+              </NFormItem>
+              <NFormItem label="备注" path="remark">
+                <NInput v-model:value="formValue.remark" placeholder="备注" />
+              </NFormItem>
+              <NFormItem>
+                <NButton attr-type="button" @click="handleValidateClick">提交</NButton>
+              </NFormItem>
+            </NForm>
+          </div>
+
+          <NDivider />
+          <pre>{{ JSON.stringify(formValue, null, 2) }}</pre>
         </NTabPane>
         <NTabPane name="the beatles" tab="密码修改"></NTabPane>
       </NTabs>

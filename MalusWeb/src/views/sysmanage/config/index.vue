@@ -49,7 +49,7 @@ const { data, getData, columns, loading, pagination, mobilePagination } = useTab
       minWidth: 200
     },
     {
-      key: 'configdDescribe',
+      key: 'configDescribe',
       title: '配置描述',
       align: 'center',
       width: 100,

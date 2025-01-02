@@ -4,12 +4,11 @@ import { ref } from 'vue';
 import type { TreeOption, TreeOverrideNodeClickBehavior } from 'naive-ui';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
-import { getAllKeys, getKeys } from '@/service/api';
-
+import { deleteKey, getAllKeys, getKeys } from '@/service/api';
 // const loading = ref(false);
 const data = ref();
 const info = ref();
-const showstr = ref();
+const showkeystr = ref();
 
 getAllCacheData();
 
@@ -20,12 +19,26 @@ function getAllCacheData() {
   });
 }
 
+function deleteCache() {
+  if (showkeystr.value === 'undefined') {
+    window.$message?.info?.('请先选择缓存的Key');
+  }
+  deleteKey(showkeystr.value).then(res => {
+    if (res.data) {
+      window.$message?.success?.('删除成功');
+    } else {
+      window.$message?.success?.('删除失败');
+    }
+  });
+  getAllCacheData();
+}
+
 const override: TreeOverrideNodeClickBehavior = ({ option }) => {
   if (option.children) {
     // console.log('toggleExpand');
     return 'toggleExpand';
   }
-  showstr.value = option.value;
+  showkeystr.value = option.value;
   getKeys(option.value).then(res => {
     info.value = res.data;
   });
@@ -98,7 +111,7 @@ function buildTree(keyList: Array<string>): TreeOption[] {
                 刷新
               </NButton>
 
-              <NButton size="small" ghost type="error">
+              <NButton size="small" ghost type="error" @click="deleteCache">
                 <template #icon>
                   <icon-ic-round-delete class="text-icon" />
                 </template>
@@ -120,7 +133,7 @@ function buildTree(keyList: Array<string>): TreeOption[] {
       </NCol>
       <NCol :span="17">
         <NCard
-          :title="`缓存数据:[${showstr}]`"
+          :title="`缓存数据:[${showkeystr}]`"
           :bordered="false"
           size="small"
           class="sm:flex-1-hidden card-wrapper"

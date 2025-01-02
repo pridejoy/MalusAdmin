@@ -110,21 +110,10 @@ const { columns, columnChecks, data, getData, loading, mobilePagination, searchP
     <div>
       <NDrawer v-model:show="active" :width="502">
         <NDrawerContent>
-          <template #header>日志详情</template>
+          <template #header>详情</template>
           <NList hoverable clickable>
-            <div v-if="activedata">
-              <div v-for="([key, value], index) in Object.entries(activedata)" :key="index">
-                <NListItem>
-                  <NThing title="" content-style="margin-top: 10px;">
-                    <template #description>
-                      <NSpace size="small" style="margin-top: 4px">
-                        <NTag :bordered="false" type="info" size="small">{{ key }}</NTag>
-                      </NSpace>
-                    </template>
-                    {{ value }}
-                  </NThing>
-                </NListItem>
-              </div>
+            <div>
+              <pre>{{ JSON.stringify(activedata, null, 2) }}</pre>
             </div>
           </NList>
         </NDrawerContent>

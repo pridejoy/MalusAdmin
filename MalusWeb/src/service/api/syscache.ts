@@ -16,9 +16,9 @@ export function getKeys(params?: any) {
 }
 
 // 删除指定的key;
-export function deleteKey() {
+export function deleteKey(params?: any) {
   return request<boolean>({
-    url: '/SysCache/DeleteKey?key=',
+    url: `/SysCache/DeleteKey?key=${params}`,
     method: 'post'
   });
 }
