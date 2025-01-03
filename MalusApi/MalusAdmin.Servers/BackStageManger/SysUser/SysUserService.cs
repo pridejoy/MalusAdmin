@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using MalusAdmin.Common;
 using MalusAdmin.Servers.BackStageManger;
 using MalusAdmin.Servers.SysRoleMenu;
@@ -49,7 +50,7 @@ public class SysUserService : ISysUserService
             .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
         if (user == null) throw ApiException.Exception207Bad("未找到用户");
 
-        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper()) throw ApiException.Exception(ApiCode.自定义错误信息,"密码输入错误");
+        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper()) throw ApiException.Exception207Bad("密码输入错误");
         if (user.Status != 1) throw ApiException.Exception207Bad("该账户已被冻结");
 
         var UserRolePer = new List<TSysRolePermission>();
@@ -108,11 +109,13 @@ public class SysUserService : ISysUserService
     /// <returns></returns>
     public async Task<bool> UpdateUserInfo(SysUserInfo input)
     {
-        var user = await _TokenService.GetCurrentUserInfo();
-        var userinfo = input.Adapt<TSysUser>();
-        userinfo.Id = user.UserId; 
-        return await _sysUserRep.UpIgnoreAllNull(userinfo)
-            .ExecuteCommandAsync()>0; 
+        var currentUser = await _TokenService.GetCurrentUserInfo();
+        if (currentUser == null) return false;
+        var entity = input.Adapt<TSysUser>(); 
+        return await  _sysUserRep.Context.Updateable<TSysUser>(entity)
+            .UpdateColumns(x=> new { x.Name,x.Remark,x.Tel,x.Email} )
+            .Where(x => x.Id == currentUser.UserId).ExecuteCommandAsync()>0;
+        //return await _sysUserRep.UpdateAsync(content).where >0; 
     }
 
     /// <summary>

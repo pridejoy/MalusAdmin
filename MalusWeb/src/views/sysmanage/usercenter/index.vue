@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { getTokenUserInfo, resetPassWord, updateUserInfo } from '@/service/api';
+import { useAuthStore } from '@/store/modules/auth';
+import { useRouterPush } from '@/hooks/common/router';
+const authStore = useAuthStore();
+const { toLogin } = useRouterPush();
 // 抽屉开关
 const formValue = ref({
   name: '',
@@ -54,6 +58,8 @@ function handleSetPassWord() {
   resetPassWord(formResetPassWord.value).then(res => {
     if (res.data) {
       window.$message?.success?.('更改密码成功');
+      authStore.resetStore();
+      toLogin();
     }
   });
 }

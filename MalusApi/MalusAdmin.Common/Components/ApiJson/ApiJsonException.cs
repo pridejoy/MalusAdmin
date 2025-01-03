@@ -10,18 +10,19 @@ public class ApiJsonException : Exception
     public ApiJsonException(ApiJson ApiJson)
         : this(ApiJson, null)
     {
+        apiJson = ApiJson; 
     }
-      
+
     public ApiJsonException(ApiJson ApiJson, Exception? innerException)
-        : base(ApiJson.Message, innerException)
+     : base(ApiJson.Message, innerException)
     {
-        ApiJson = ApiJson;
+        apiJson = ApiJson; 
     }
 
     /// <summary>
     /// API 结果
     /// </summary>
-    public ApiJson ApiJson { get; private set; }
+    public ApiJson apiJson { get; private set; }
 }
 
 public static class ApiException
@@ -39,7 +40,8 @@ public static class ApiException
     }
 
     public static ApiJsonException Exception207Bad(string? message, object? data = null)
-    { 
-        return new ApiJsonException(ApiCode.缺少权限.RJson(data,message));
+    {
+        var j = ApiCode.Exception207Bad.RJson(data, message);
+        return new ApiJsonException(j);
     }
 }

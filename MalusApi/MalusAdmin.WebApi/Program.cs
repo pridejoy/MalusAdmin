@@ -85,8 +85,10 @@ public class Program
             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         });
 
-        //if (app.Environment.IsDevelopment()) 
-        // Configure the HTTP request pipeline.
+        // 全局异常中间件
+        app.UseMiddleware<GlobalException>();
+
+        //if (app.Environment.IsDevelopment())  
         if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
 
         app.UseHttpsRedirection(); // 确保所有请求都通过HTTPS
@@ -104,11 +106,8 @@ public class Program
 
         app.UseResponseCaching(); // 应用响应缓存
 
-        //// 全局异常中间件
-        app.UseMiddleware<GlobalExceptionMiddleware>(); 
-        // 统一结果返回中间件
-        app.UseMiddleware<GlobalExceptionMiddleware>(); 
-
+        
+         
         // 身份验证中间件（如果需要在控制器之前执行特定的检查）
         app.UseMiddleware<CheckToken>();
 

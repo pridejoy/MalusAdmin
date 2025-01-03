@@ -11,14 +11,14 @@ using SqlSugar;
 
 namespace MalusAdmin.Common
 {
-    public class GlobalExceptionMiddleware
+    public class GlobalException
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<GlobalExceptionMiddleware> _logger;
+        private readonly ILogger<GlobalException> _logger;
         private readonly ISqlSugarClient _db;
 
-        public GlobalExceptionMiddleware(RequestDelegate next,
-            ILogger<GlobalExceptionMiddleware> logger, ISqlSugarClient db  )
+        public GlobalException(RequestDelegate next,
+            ILogger<GlobalException> logger, ISqlSugarClient db  )
         {
             _db = db;
             _next = next;
@@ -53,7 +53,7 @@ namespace MalusAdmin.Common
             }
             else if (exception is ApiJsonException)
             {
-                ApiJson apiJson = ((ApiJsonException)exception).ApiJson;
+                ApiJson apiJson = ((ApiJsonException)exception).apiJson;
                 // 设置响应的Content-Type为application/json
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
