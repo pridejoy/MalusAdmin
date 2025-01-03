@@ -27,7 +27,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   });
 
   /** 是登录名 */
-  const isLogin = computed(() => Boolean(token.value));
+  const isLogin = ref(() => Boolean(userInfo.userName));
 
   /** 重置身份验证存储 */
   async function resetStore() {
@@ -56,6 +56,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     await reqLogin(userName, password).then(async res => {
       if (res.data) {
         const pass = await getUserInfoByToken(res.data.token);
+        // console.log('登录成功pass', pass);
         if (pass) {
           await routeStore.initAuthRoute();
           if (redirect) {
@@ -87,7 +88,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
       localStg.set('userInfo', userInfores.data);
       userInfo = userInfores.data;
       // 3. update store
-      // console.log('更新用户信息', userInfores.data);
       Object.assign(userInfo, userInfores.data);
 
       return true;

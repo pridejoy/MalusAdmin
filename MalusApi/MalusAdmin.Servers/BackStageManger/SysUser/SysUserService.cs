@@ -91,12 +91,16 @@ public class SysUserService : ISysUserService
         var user = await _TokenService.GetCurrentUserInfo();
         var userinfo= await _sysUserRep
             .Where(t => t.Id==user.UserId).FirstAsync();
+        var otherButton = new List<string>() 
+        {
+            //"api:Syslogin:ResetPassword",//修改密码的权限
+        }; 
         return new GetUserInfoOut
         {
             userId = user.UserId,
             userName = user.UserName,
             roles = user.UserRolesId.Select(x => x.ToString()).ToList(),
-            buttons = user.UserPermiss,
+            buttons = otherButton.Concat(user.UserPermiss).ToList(),
             userInfo= userinfo.Adapt<SysUserInfo>()
         };
     }

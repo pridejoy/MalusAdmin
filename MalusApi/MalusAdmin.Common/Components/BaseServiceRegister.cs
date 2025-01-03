@@ -16,7 +16,7 @@ public static class BaseServiceRegister
         services.AddLogo();
 
         //配置url小写
-        services.AddRouting(o => { o.LowercaseUrls = true; });
+        //services.AddRouting(o => { o.LowercaseUrls = true; });
 
         //HttpContext
         services.AddHttpContextAccessor();

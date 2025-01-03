@@ -82,7 +82,7 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
       menus.push(menu);
     }
   });
-  console.log('通过身份验证路由获取全局菜单menus', menus);
+  // console.log('通过身份验证路由获取全局菜单menus', menus);
 
   return menus;
 }

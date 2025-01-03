@@ -8,7 +8,17 @@ import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
  *
  * @link https://github.com/soybeanjs/elegant-router?tab=readme-ov-file#custom-route
  */
-const customRoutes: CustomRoute[] = [];
+const customRoutes: CustomRoute[] = [
+  {
+    name: 'sysmanage_usercenter',
+    path: '/sysmanage/usercenter',
+    component: 'view.sysmanage_usercenter',
+    meta: {
+      title: 'sysmanage_usercenter',
+      i18nKey: 'route.sysmanage_usercenter'
+    }
+  }
+];
 
 /** 当身份验证路由模式为静态时创建路由 */
 export function createStaticRoutes() {
