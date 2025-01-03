@@ -11,7 +11,8 @@ export function getUserInfo() {
     userId: '',
     userName: '',
     roles: [],
-    buttons: []
+    buttons: [],
+    userInfo: {}
   };
   const userInfo = localStg.get('userInfo') || emptyInfo;
 

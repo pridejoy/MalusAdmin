@@ -7,7 +7,7 @@ import { getTokenUserInfo, reqLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
 import { $t } from '@/locales';
 import { useRouteStore } from '../route';
-import { clearAuthStorage, getToken, getUserInfo } from './shared';
+import { clearAuthStorage, getToken } from './shared';
 
 export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const routeStore = useRouteStore();
@@ -16,7 +16,13 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const token = ref(getToken());
 
-  let userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
+  const userInfo: Api.Auth.UserInfo = reactive({
+    userId: '',
+    userName: '',
+    roles: [],
+    buttons: [],
+    userInfo: {}
+  });
 
   /** 是静态路由中的超级角色 */
   const isStaticSuper = computed(() => {
@@ -86,7 +92,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     if (userInfores.data) {
       // 2. store user info
       localStg.set('userInfo', userInfores.data);
-      userInfo = userInfores.data;
       // 3. update store
       Object.assign(userInfo, userInfores.data);
 

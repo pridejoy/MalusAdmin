@@ -14,6 +14,7 @@ const authStore = useAuthStore();
 const { routerPushByKey, toLogin } = useRouterPush();
 const { SvgIconVNode } = useSvgIcon();
 
+console.log('authStore', authStore.userInfo.userName);
 function loginOrRegister() {
   toLogin();
 }
