@@ -449,6 +449,16 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
         return EntityContext.Updateable(entity).IgnoreColumns(UpdateIgnoreColumns);
     }
 
+    /// <summary>
+    /// NULL列不更新
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public virtual IUpdateable<TEntity> UpIgnoreAllNull(TEntity entity)
+    {
+        return EntityContext.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true);
+    }
+
     public virtual IUpdateable<TEntity> AsUpdateable(IEnumerable<TEntity> entities)
     {
         return EntityContext.Updateable(entities.ToArray()).IgnoreColumns(UpdateIgnoreColumns);

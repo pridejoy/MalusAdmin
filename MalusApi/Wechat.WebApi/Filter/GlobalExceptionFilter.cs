@@ -19,9 +19,9 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
         //异常进行记录 
         await IOFileHelper.Write("error/", context.Exception.ToJson());
 
-        var ApiResult = new ApiResult(StatusCodes.Status500InternalServerError, context.Exception.Message, "");
+        var ApiJson = new ApiJson(ApiCode.服务器错误, context.Exception.Message, "");
         // 如果是结果异常
-        IActionResult result = new ObjectResult(ApiResult) { StatusCode = StatusCodes.Status200OK };
+        IActionResult result = new ObjectResult(ApiJson) { StatusCode = StatusCodes.Status200OK };
         context.Result = result;
     }
 

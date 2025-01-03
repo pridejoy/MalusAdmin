@@ -32,10 +32,11 @@ public class Program
                 // 全局异常过滤
                 //options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
-                options.Filters.Add<RequestActionFilter>();
+                //options.Filters.Add<RequestActionFilter>();
+                options.Filters.Add<ResultFilter>();
             })
-            .AddDataValidation()
-            .AddApiResult<CustomApiResultProvider>();
+            .AddDataValidation();
+            //.AddApiJson<CustomApiJsonProvider>();
 
         //配置Json选项
         //builder.Services.AddTextJsonOptions();
@@ -104,6 +105,8 @@ public class Program
         app.UseResponseCaching(); // 应用响应缓存
 
         //// 全局异常中间件
+        app.UseMiddleware<GlobalExceptionMiddleware>(); 
+        // 统一结果返回中间件
         app.UseMiddleware<GlobalExceptionMiddleware>(); 
 
         // 身份验证中间件（如果需要在控制器之前执行特定的检查）

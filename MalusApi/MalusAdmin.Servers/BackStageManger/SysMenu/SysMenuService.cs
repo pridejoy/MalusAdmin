@@ -49,7 +49,7 @@ public class SysMenuService
         var isExist = await _sysMenuRep.Where(x => x.RoutePath == input.RoutePath ||
                                                    x.RouteName == input.RouteName || x.MenuName == input.RouteName)
             .AnyAsync();
-        if (isExist) throw ResultHelper.Exception207Bad("当前菜单已存在");
+        if (isExist) throw ApiException.Exception207Bad("当前菜单已存在");
         var entity = input.Adapt<TSysMenu>();
         return await _sysMenuRep.InsertReturnIdentityAsync(entity) > 0;
     }
@@ -63,7 +63,7 @@ public class SysMenuService
     public async Task<bool> Delete(int id)
     {
         var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == id);
-        if (entity == null) throw ResultHelper.Exception200OK("未找到当前菜单");
+        if (entity == null) throw ApiException.Exception207Bad("未找到当前菜单");
         entity.SysIsDelete = true;
         return await _sysMenuRep.UpdateAsync(entity) > 0;
     }
@@ -76,7 +76,7 @@ public class SysMenuService
     public async Task<bool> Update(MenuAddandUpIn input)
     {
         var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) throw ResultHelper.Exception200OK("未找到当前账号");
+        if (entity == null) throw ApiException.Exception207Bad("未找到当前账号");
 
         var sysRole = input.Adapt<TSysMenu>();
         return await _sysMenuRep.AsUpdateable(sysRole).IgnoreColumns(true).ExecuteCommandAsync() > 0;

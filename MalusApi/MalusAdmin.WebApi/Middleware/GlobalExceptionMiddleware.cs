@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MalusAdmin.Repository.Model;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Logging;
+using SqlSugar;
 
 namespace MalusAdmin.Common
 {
@@ -52,11 +53,11 @@ namespace MalusAdmin.Common
             }
             else if (exception is ApiJsonException)
             {
-                var ApiJson = new ApiJson(ApiCode.服务器错误, "Bad request", exception.Message);
+                ApiJson apiJson = ((ApiJsonException)exception).ApiJson;
                 // 设置响应的Content-Type为application/json
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
-                return context.Response.WriteAsync(ApiJson.ToJson(true)); 
+                return context.Response.WriteAsync(apiJson.ToJson(true));
             }
             else
             { 

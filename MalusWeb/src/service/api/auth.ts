@@ -46,3 +46,21 @@ export function fetchRefreshToken(refreshToken: string) {
 export function fetchCustomBackendError(code: string, msg: string) {
   return request({ url: '/auth/error', params: { code, msg } });
 }
+
+// 修改基本资料;
+export function updateUserInfo(data: any) {
+  return request<boolean>({
+    url: '/syslogin/updateuserinfo',
+    method: 'post',
+    data
+  });
+}
+
+// 重置密码
+export function resetPassWord(data: any) {
+  return request<boolean>({
+    url: '/syslogin/resetpassword',
+    method: 'post',
+    data
+  });
+}

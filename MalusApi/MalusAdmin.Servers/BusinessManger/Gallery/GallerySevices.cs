@@ -38,7 +38,7 @@ public class GalleryService
     public async Task<bool> Delete(int id)
     {
         var entity = await _repository.FirstOrDefaultAsync(u => u.ImagesID == id);
-        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前角色"); 
+        if (entity == null) throw ApiException.Exception207Bad("未找到当前角色"); 
         return await _repository.DeleteAsync(entity) > 0;
     }
 }

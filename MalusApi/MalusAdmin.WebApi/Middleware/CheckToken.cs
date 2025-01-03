@@ -80,9 +80,8 @@ public class CheckToken
                     var rolePermissionService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
                     // 检查用户是否有权限
                     if (!await rolePermissionService.HasPermissionAsync(routePattern))
-                    {
-                        await context.Response.WriteAsync("暂无权限");
-                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    { 
+                        throw  ApiException.Exception(ApiCode.缺少权限);
                         return;
                     }
                 }

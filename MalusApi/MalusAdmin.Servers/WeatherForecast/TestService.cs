@@ -81,10 +81,11 @@ public class TestService
         return "";
     }
 
-    public async Task<bool> GetException207Bad()
+    public async Task<bool> GetException207BadBad()
     {
-        //throw new Exception("error12312");
-        throw ResultHelper.Exception207Bad("sdasd,asdasd");
+        //throw new Exception("Exception207Bad");
+        throw ApiException.Exception207Bad("sdasd,asdasd");
+    
     }
 
     public async Task<bool> GetException()

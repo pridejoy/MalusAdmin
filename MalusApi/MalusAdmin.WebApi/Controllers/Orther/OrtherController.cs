@@ -33,9 +33,9 @@ public class OrtherController : ApiControllerBase
     }
 
     [HttpGet]
-    public async Task<dynamic> GetException207Bad22()
+    public async Task<dynamic> GetException207BadBad22()
     {
-        return await _testService.GetException207Bad();
+        return await _testService.GetException207BadBad();
     }
 
     [HttpGet]

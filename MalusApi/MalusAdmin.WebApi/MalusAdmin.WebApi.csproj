@@ -24,8 +24,4 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="logs\sqlexcution\" />
-    </ItemGroup>
 </Project>

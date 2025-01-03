@@ -1,8 +1,7 @@
 using MalusAdmin.Common;
 using MalusAdmin.Common.Components;
 using Microsoft.AspNetCore.HttpOverrides;
-using Wechat.Servers;
-using Wechat.WebApi.Filter;
+using Wechat.Servers; 
 
 namespace Wechat.WebApi;
 
@@ -31,14 +30,15 @@ public class Program
                 options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 //options.Filters.Add<RequestActionFilter>();
+                options.Filters.Add<ResultFilter>();
             })
             // 配置Api行为选项
             .ConfigureApiBehaviorOptions(options =>
             {
                 // 禁用默认模型验证过滤器
                 options.SuppressModelStateInvalidFilter = true;
-            })
-            .AddApiResult<CustomApiResultProvider>();
+            });
+            //.AddApiJson<CustomApiJsonProvider>();
       
 
         // 配置Json选项
@@ -54,7 +54,7 @@ public class Program
         builder.Services.AddSwaggerBaseSetup();
 
         // 自动添加服务层
-        builder.Services.AddAutoServices("Wechat.Servers");
+        //builder.Services.AddAutoServices("Wechat.Servers");
         //添加授权
         builder.Services.AddAuthorization();
         // 添加自定义授权

@@ -8,5 +8,5 @@ namespace MalusAdmin.Common;
 [Authorize] //接口全部需要登录,特殊的除外
 public class ApiControllerBase : ControllerBase
 {
-
+     
 }

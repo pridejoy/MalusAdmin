@@ -22,9 +22,9 @@ public class TestController : ApiControllerBase
     }
 
     [HttpGet]
-    public async Task<dynamic> GetException207Bad()
+    public async Task<dynamic> GetException207BadBad()
     {
-        return await _testService.GetException207Bad();
+        return await _testService.GetException207BadBad();
     }
 
     [HttpGet]

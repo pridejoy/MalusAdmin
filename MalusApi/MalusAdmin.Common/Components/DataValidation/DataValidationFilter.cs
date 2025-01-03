@@ -42,8 +42,8 @@ namespace MalusAdmin.Common
                                    .ToArray();
 
             // 统一返回
-            var result = ApiResultHelper.Result400BadRequest("数据验证不通过！", errors);
-
+            var result = ApiCode.Exception207Bad.RJson(errors); 
+            
             // 设置结果
             context.Result = new ObjectResult(result); 
         }

@@ -1,4 +1,5 @@
 ﻿using MalusAdmin.Servers;
+using MalusAdmin.Servers.SysUser.Dto;
 using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.Authorization;
 
@@ -23,7 +24,7 @@ public class SysLoginController : ApiControllerBase
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async Task<dynamic> Login(SysUserLoginIn input)
+    public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
     {
         return await _sysUserService.Login(input);
     }
@@ -34,8 +35,8 @@ public class SysLoginController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [ResponseCache(Duration = 60 * 60)]
-    public async Task<dynamic> GetUserInfo()
+    //[ResponseCache(Duration = 60 * 60)]
+    public async Task<GetUserInfoOut> GetUserInfo()
     {
         return await _sysUserService.GetUserInfo();
     }
@@ -46,10 +47,33 @@ public class SysLoginController : ApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [ResponseCache(Duration = 60 * 60)]
+    //[ResponseCache(Duration = 60 * 60)]
     [DisabledRequestRecord]
-    public async Task<dynamic> GetUserMenu()
+    public async Task<UserMenuOut> GetUserMenu()
     {
         return await _sysUserService.GetUserMenu();
+    }
+     
+    /// <summary>
+    /// 更改基础资料
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost]
+    [ReadOnly]
+    public async Task<bool> UpdateUserInfo([FromBody]SysUserInfo input)
+    {
+        return await _sysUserService.UpdateUserInfo(input);
+    }
+
+
+    /// <summary>
+    /// 更改密码
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost]
+    [ReadOnly]
+    public async Task<bool> ResetPassWord([FromBody] ResetPassWord input)
+    {
+        return await _sysUserService.ResetPassWord(input);
     }
 }

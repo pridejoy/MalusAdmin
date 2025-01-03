@@ -9,7 +9,7 @@ public class ReadOnlyAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        if (AppSettings.IsDemo) throw ResultHelper.Exception207Bad("演示环境,禁止操作");
+        if (AppSettings.IsDemo) throw ApiException.Exception207Bad("演示环境,禁止操作");
         base.OnActionExecuting(context);
     }
 }

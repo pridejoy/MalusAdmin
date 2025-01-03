@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MalusAdmin.Common;
+using MalusAdmin.Servers.BackStageManger;
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
@@ -46,10 +47,10 @@ public class SysUserService : ISysUserService
        
         var user = await _sysUserRep
             .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
-        if (user == null) throw ResultHelper.Exception207Bad("未找到用户");
+        if (user == null) throw ApiException.Exception207Bad("未找到用户");
 
-        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper()) throw ResultHelper.Exception207Bad("密码输入错误");
-        if (user.Status != 1) throw ResultHelper.Exception207Bad("该账户已被冻结");
+        if (user.PassWord != Md5Util.Encrypt(input.PassWord).ToUpper()) throw ApiException.Exception(ApiCode.自定义错误信息,"密码输入错误");
+        if (user.Status != 1) throw ApiException.Exception207Bad("该账户已被冻结");
 
         var UserRolePer = new List<TSysRolePermission>();
         user.UserRolesId.ForEach(x =>
@@ -87,15 +88,50 @@ public class SysUserService : ISysUserService
     public async Task<GetUserInfoOut> GetUserInfo()
     {
         var user = await _TokenService.GetCurrentUserInfo();
+        var userinfo= await _sysUserRep
+            .Where(t => t.Id==user.UserId).FirstAsync();
         return new GetUserInfoOut
         {
             userId = user.UserId,
             userName = user.UserName,
             roles = user.UserRolesId.Select(x => x.ToString()).ToList(),
-            buttons = user.UserPermiss
+            buttons = user.UserPermiss,
+            userInfo= userinfo.Adapt<SysUserInfo>()
         };
     }
 
+
+
+    /// <summary>
+    /// 更改用户信息
+    /// </summary>
+    /// <returns></returns>
+    public async Task<bool> UpdateUserInfo(SysUserInfo input)
+    {
+        var user = await _TokenService.GetCurrentUserInfo();
+        var userinfo = input.Adapt<TSysUser>();
+        userinfo.Id = user.UserId; 
+        return await _sysUserRep.UpIgnoreAllNull(userinfo)
+            .ExecuteCommandAsync()>0; 
+    }
+
+    /// <summary>
+    /// 更改密码
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public async Task<bool> ResetPassWord(ResetPassWord input)
+    {
+         
+        var currentUser = await _TokenService.GetCurrentUserInfo();
+        var user = await _sysUserRep.Where(x => x.Id == currentUser.UserId).FirstAsync();
+        if (user == null) throw ApiException.Exception207Bad("未找到用户");
+
+        if (user.PassWord != Md5Util.Encrypt(input.OldPassWord).ToUpper()) throw ApiException.Exception207Bad("旧密码不正确");
+        if (user.PassWord == Md5Util.Encrypt(input.NewPassWord).ToUpper()) throw ApiException.Exception207Bad("旧密码不能与新密码相同");
+        user.PassWord = Md5Util.Encrypt(input.NewPassWord);
+        return await _sysUserRep.UpdateAsync(user) > 0; 
+    }
 
     /// <summary>
     /// 用户列表分页
@@ -119,7 +155,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Add(UserAddAndUpIn input)
     {
         var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
-        if (isExist) throw ResultHelper.Exception207Bad("已存在当前账号");
+        if (isExist) throw ApiException.Exception207Bad("已存在当前账号");
         var entity = input.Adapt<TSysUser>();
         entity.PassWord = Md5Util.Encrypt(input.PassWord);
         return await _sysUserRep.InsertReturnIdentityAsync(entity) > 0;
@@ -135,7 +171,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Delete(int userId)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
-        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前账号");
+        if (entity == null) throw ApiException.Exception207Bad("未找到当前账号");
         entity.SysIsDelete = true;
         //Todo 删除用户缓存
 
@@ -151,7 +187,7 @@ public class SysUserService : ISysUserService
     public async Task<bool> Update(UserAddAndUpIn input)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == input.Id);
-        if (entity == null) throw ResultHelper.Exception207Bad("未找到当前账号");
+        if (entity == null) throw ApiException.Exception207Bad("未找到当前账号");
         //Todo 更新用户缓存
         //优化  更新的字段
 
@@ -203,6 +239,7 @@ public class SysUserService : ISysUserService
 
 
     }
+
 
     /// <summary>
     /// 私有方法，转化前端路由
