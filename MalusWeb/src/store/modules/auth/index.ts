@@ -7,22 +7,17 @@ import { getTokenUserInfo, reqLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
 import { $t } from '@/locales';
 import { useRouteStore } from '../route';
-import { clearAuthStorage, getToken } from './shared';
+import { clearAuthStorage, getToken, getUserInfo } from './shared';
 
 export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const routeStore = useRouteStore();
   const { route, toLogin, redirectFromLogin } = useRouterPush(false);
+  // const tabStore = useTabStore();
   const { loading: loginLoading, startLoading, endLoading } = useLoading();
 
   const token = ref(getToken());
 
-  const userInfo: Api.Auth.UserInfo = reactive({
-    userId: '',
-    userName: '',
-    roles: [],
-    buttons: [],
-    userInfo: {}
-  });
+  const userInfo: Api.Auth.UserInfo = reactive(getUserInfo());
 
   /** 是静态路由中的超级角色 */
   const isStaticSuper = computed(() => {
@@ -47,6 +42,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
       await toLogin();
     }
 
+    // tabStore.cacheTabs();
     routeStore.resetStore();
   }
 
@@ -88,12 +84,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     // 1. stored in the localStorage, the later requests need it in headers
     localStg.set('token', loginToken);
     // localStg.set('refreshToken', loginToken.refreshToken);
-    const userInfores = await getTokenUserInfo();
-    if (userInfores.data) {
+    const savedUserInfo = await getTokenUserInfo();
+    if (savedUserInfo) {
       // 2. store user info
-      localStg.set('userInfo', userInfores.data);
+      localStorage.setItem('userInfo', JSON.stringify(savedUserInfo.data));
       // 3. update store
-      Object.assign(userInfo, userInfores.data);
+      Object.assign(userInfo, savedUserInfo.data);
 
       return true;
     }
