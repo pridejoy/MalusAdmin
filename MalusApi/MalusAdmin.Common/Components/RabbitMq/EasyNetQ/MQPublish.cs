@@ -21,21 +21,7 @@ namespace MalusAdmin.Common.Components
             this.bus = bus;
         }
 
-        /// <summary>
-        /// 发布消息
-        /// </summary>
-        /// <param name="routingKey"></param>
-        /// <param name="data"></param>
-        public void PublishMessage(string routingKey, object data)
-        {
-            CreatQueues(routingKey, data);
-            var message = new Message<object>(data);
-            var advancedBus = bus.Advanced;
-            //声明一个队列
-            advancedBus.QueueDeclare(routingKey);
-            advancedBus.Publish(Exchange.Default, routingKey, false, message); 
-        }
-
+ 
         /// <summary>
         /// 发布消息
         /// </summary>
@@ -43,7 +29,8 @@ namespace MalusAdmin.Common.Components
         /// <param name="data"></param>
         public async Task PublishMessageAsync(string routingKey, object data)
         {
-            CreatQueues(routingKey, data);
+            Console.WriteLine($"MQ消息推送，routingKey ：{routingKey} , 推送数据 ：{System.Text.Json.JsonSerializer.Serialize(data)}");
+
             var message = new Message<object>(data);
             var advancedBus = bus.Advanced;
             advancedBus.QueueDeclare(routingKey);
@@ -73,11 +60,6 @@ namespace MalusAdmin.Common.Components
             bus.Advanced.Publish(exDelay, routingKey, false, messageData);
         }
 
-        private void CreatQueues(string routingKey, object data)
-        {
-           
-           Console.WriteLine($"MQ消息推送，routingKey ：{routingKey} , 推送数据 ：{System.Text.Json.JsonSerializer.Serialize(data)}");
-           
-        }
+       
     }
 }

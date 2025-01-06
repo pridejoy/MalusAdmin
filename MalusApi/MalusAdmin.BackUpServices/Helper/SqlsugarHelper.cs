@@ -1,14 +1,20 @@
-﻿using SqlSugar;
+﻿using MalusAdmin.Common;
+using SqlSugar;
 
 namespace MalusAdmin.BackUpServices;
 
-public static class SqlsugarHelper
+public  class SqlsugarHelper
 {
     //创建数据库对象
-    public static SqlSugarClient db = new(new ConnectionConfig
+    public SqlSugarClient db
     {
-        ConnectionString = "",
-        DbType = DbType.SqlServer,
-        IsAutoCloseConnection = true
-    });
+        get {
+            return new SqlSugarClient(new ConnectionConfig
+            {
+                ConnectionString = AppSettings.SqlServerConnection,
+                DbType = DbType.SqlServer,
+                IsAutoCloseConnection = true
+            });
+        }
+    }
 }
