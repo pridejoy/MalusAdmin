@@ -1,16 +1,13 @@
-﻿using MalusAdmin.Common;
-using SqlSugar;
+﻿using SqlSugar;
 
 namespace MalusAdmin.BackUpServices;
 
 public static class SqlsugarSetup
 {
-   
-    public static void AddSqlsugarSetup(this IServiceCollection services )
+    public static void AddSqlsugarSetup(this IServiceCollection services)
     {
- 
         //数据库链接,修改配置里面的SqlServerConnection的字符串
-        var ConnectionString = AppSettings.SqlServerConnection;
+        var ConnectionString = "";
 
         var configConnection = new ConnectionConfig
         {
@@ -96,6 +93,6 @@ public static class SqlsugarSetup
         services.AddSingleton<ISqlSugarClient>(sqlSugar);
 
         // 注册 SqlSugar 仓储
-        //services.AddScoped(typeof(SqlSugarRepository<>));
+        services.AddScoped(typeof(SqlSugarRepository<>));
     }
 }

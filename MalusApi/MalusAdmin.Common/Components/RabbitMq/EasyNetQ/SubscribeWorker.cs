@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace MalusAdmin.Common.Components
 {
-    public class SubscribeWorker : BackgroundService
+    public class SubscribeWorker : BackgroundService, IDisposable
     {
         private readonly MQSubscribe _Service;
 
@@ -19,7 +19,7 @@ namespace MalusAdmin.Common.Components
         // 执行逻辑
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _Service.Init(); 
+            await _Service.Init();
         }
     }
 }

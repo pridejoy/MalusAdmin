@@ -1,8 +1,7 @@
-﻿using System.Globalization; 
-using MalusAdmin.Repository.Model;
+﻿using System.Globalization;
+using MalusAdmin.BackUpServices.Model;
 using Newtonsoft.Json;
 using Quartz;
-using SqlSugar;
 
 namespace MalusAdmin.BackUpServices.QuartzJob;
 
@@ -15,8 +14,7 @@ public class EveryDayBingQuartzJob : IJob
     /// 当前任务执行的Core表达式,meitian8dian1
     /// </summary>
     public static string Cron = "0 0 7 * * ? ";
-    //public static string Cron = "0/1 * * * * ? "; 
- 
+    //public static string Cron = "0 0/1 * * * ? ";
 
     public async Task Execute(IJobExecutionContext context)
     {
@@ -47,7 +45,7 @@ public class EveryDayBingQuartzJob : IJob
                 var StartDate = DateTime.ParseExact(entity.images[dayindex].enddate, "yyyyMMdd",
                     new CultureInfo("zh-CN"), DateTimeStyles.AllowWhiteSpaces);
                 var BingPic = "https://cn.bing.com" + entity.images[dayindex].urlbase + "_1920x1080.jpg";
-                var model = new SqlsugarHelper().db.Queryable<BsBingWallpaper>().Where(x => x.StartDate == StartDate)
+                var model = SqlsugarHelper.db.Queryable<bs_bingwallpaper>().Where(x => x.StartDate == StartDate)
                     .First();
                 if (model != null)
                 {
@@ -56,20 +54,20 @@ public class EveryDayBingQuartzJob : IJob
                     model.MobileUrl = BingPic.Replace("1920x1080.jpg", "1080x1920.jpg");
                     model.StartDate = StartDate;
                     model.IsDeleted = false;
-                    new SqlsugarHelper().db.Updateable(model).ExecuteCommand();
+                    SqlsugarHelper.db.Updateable(model).ExecuteCommand();
                     var str = "更新照片:" + StartDate + entity.images[dayindex].copyright;
                     Console.WriteLine(str);
                     FileHelper.Write("logs/bingrun", $"{str} ");
                 }
                 else
                 {
-                    model = new BsBingWallpaper();
+                    model = new bs_bingwallpaper();
                     model.Url = BingPic;
                     model.MobileUrl = BingPic.Replace("1920x1080.jpg", "1080x1920.jpg");
                     model.CopyRight = entity.images[dayindex].copyright;
                     model.StartDate = StartDate;
                     model.IsDeleted = false;
-                    new SqlsugarHelper().db.Insertable(model).ExecuteCommand();
+                    SqlsugarHelper.db.Insertable(model).ExecuteCommand();
                     var str = "添加照片:" + StartDate + entity.images[dayindex].copyright;
                     Console.WriteLine(str);
                     FileHelper.Write("logs/bingrun", $"{str} \r \n");

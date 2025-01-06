@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.SqlServer.Server;
 
 
 namespace MalusAdmin.Common.Components.SystemTextJson;
@@ -24,20 +23,30 @@ public class DateTimeJsonConverter : System.Text.Json.Serialization.JsonConverte
         Format = format;
     }
 
-    public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    /// <summary>
+    /// 反序列化
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <param name="type"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public override DateTime Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.String)
-        {
-            if (DateTime.TryParse(reader.GetString(), out DateTime dateTime)) return dateTime;
-        }
         return reader.GetDateTime();
     }
 
+    /// <summary>
+    /// 序列化
+    /// </summary>
+    /// <param name="writer"></param>
+    /// <param name="value"></param>
+    /// <param name="options"></param>
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
     {
+        //这里把时间格式做一个自顶一格式的转换就行
         writer.WriteStringValue(value.ToString(Format));
     }
-
+ 
 }
 
  
