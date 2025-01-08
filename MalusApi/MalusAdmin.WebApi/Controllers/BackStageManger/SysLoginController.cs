@@ -9,7 +9,7 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 /// 登录服务
 /// </summary>
 [ApiExplorerSettings(GroupName = "后台管理")]
-[AllowAnonymous]
+
 public class SysLoginController : ApiControllerBase
 {
     private readonly SysUserService _sysUserService;
@@ -23,7 +23,8 @@ public class SysLoginController : ApiControllerBase
     /// 用户登录
     /// </summary>
     /// <returns></returns>
-    [HttpPost] 
+    [HttpPost]
+    [AllowAnonymous]
     public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
     {
         return await _sysUserService.Login(input);

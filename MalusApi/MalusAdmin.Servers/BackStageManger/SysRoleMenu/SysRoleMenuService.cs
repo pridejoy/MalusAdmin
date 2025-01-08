@@ -46,7 +46,7 @@ public class SysRoleMenuService
         await _sysRoleMenuRep.DeleteAsync(x => x.RoleId == input.RoleId);
         var list = new List<TSysRoleMenu>();
         input.MenuId.ForEach(x => { list.Add(new TSysRoleMenu { RoleId = input.RoleId, MenuId = x }); });
-        var ResCount = await _sysRoleMenuRep.InsertAsync(list);
+        var ResCount = await _sysRoleMenuRep.Context.Insertable<TSysRoleMenu>(list).ExecuteCommandAsync();
 
         return ResCount > 0;
     }

@@ -41,7 +41,7 @@ public class TBsSysConfig
     ///Default:
     ///Nullable:True
     /// </summary>
-    public string? ConfigDescribe { get; set; }
+    public string? configDescribe { get; set; }
 
     /// <summary>
     ///Desc:

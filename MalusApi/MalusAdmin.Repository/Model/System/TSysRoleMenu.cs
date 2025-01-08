@@ -9,9 +9,15 @@ namespace MalusAdmin.Repository.Model;
 public class TSysRoleMenu : ModelBase
 {
     /// <summary>
+    /// 主键
+    /// </summary>
+    [SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
+    public int Id { get; set; }
+
+    /// <summary>
     /// 角色ID
     /// </summary>
-    [SugarColumn(ColumnName = "RoleId", IsPrimaryKey = true, IsIdentity = true)]
+    [SugarColumn(ColumnName = "RoleId")]
     public int RoleId { get; set; }
 
     /// <summary>

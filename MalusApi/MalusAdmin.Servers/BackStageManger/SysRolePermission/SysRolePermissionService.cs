@@ -32,6 +32,11 @@ public class SysRolePermissionService : ISysRolePermission
     /// <returns></returns>
     public async Task<bool> HasPermissionAsync(string RouthPath)
     {
+        //不校验权限的接口
+        var nocheckpermiss = new string[]
+        {
+            "api:SysLogin:GetUserInfo" //todo
+        };
         var user = await _tokenService.GetCurrentUserInfo();
          
         return user.UserPermiss.Any(x => x == RouthPath);

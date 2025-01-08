@@ -28,7 +28,7 @@ public class WechatConfigAddandUpIn
     /// Default:
     /// Nullable:True
     /// </summary>
-    public string? ConfigdDescribe { get; set; }
+    public string? configDescribe { get; set; }
 
     /// <summary>
     /// Desc:

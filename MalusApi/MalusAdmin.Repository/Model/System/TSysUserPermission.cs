@@ -10,10 +10,10 @@ namespace MalusAdmin.Repository.Model;
 public class TSysRolePermission : ModelBase
 {
     /// <summary>
-    /// 主键Id
+    /// 主键
     /// </summary>
-    [SugarColumn(ColumnDescription = "Id主键", IsPrimaryKey = true)]
-    public virtual long Id { get; set; }
+    [SugarColumn(ColumnName = "Id", IsPrimaryKey = true, IsIdentity = true)]
+    public int Id { get; set; }
 
     /// <summary>
     /// Desc:角色id
