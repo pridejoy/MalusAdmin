@@ -4,20 +4,18 @@ using Newtonsoft.Json;
 using Quartz;
 using SqlSugar;
 
-namespace MalusAdmin.BackUpServices.QuartzJob;
+namespace MalusAdmin.BackUpServices;
 
 /// <summary>
 /// 要继承IJob
 /// </summary>
+[Cron("0 0 7 * * ? ")]
 public class EveryDayBingQuartzJob : IJob
 {
     /// <summary>
     /// 当前任务执行的Core表达式,meitian8dian1
-    /// </summary>
-    public static string Cron = "0 0 7 * * ? ";
-    //public static string Cron = "0/1 * * * * ? "; 
- 
-
+    /// </summary> 
+    //public static string Cron = "0/1 * * * * ? ";  
     public async Task Execute(IJobExecutionContext context)
     {
         try

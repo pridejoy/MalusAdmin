@@ -22,7 +22,7 @@ public class JobService
         var jobTypes = GetJobTypes(); // 获取所有实现了 IJob 接口的类型
         foreach (var type in jobTypes)
         {
-            Console.WriteLine($"{type.Name}");
+            Console.WriteLine($"当前任务：{type.Name}");
             var jobDetail = JobBuilder.Create(type).Build();
             var trigger = TriggerBuilder.Create().WithCronSchedule(GetCronExpression(type)).Build();
             await scheduler.ScheduleJob(jobDetail, trigger);
@@ -40,6 +40,11 @@ public class JobService
     private string GetCronExpression(Type type)
     {
         // 可以根据需要自定义获取 cron 表达式的逻辑
-        return (string)type.GetField("Cron", BindingFlags.Static | BindingFlags.Public)?.GetValue(null)??"";
+        //return (string)type.GetField("Cron", BindingFlags.Static | BindingFlags.Public)?.GetValue(null)??"";
+        
+        var cron = type.GetCustomAttribute<CronAttribute>().Cron;
+        Console.WriteLine("表达式"+cron);
+        if (string.IsNullOrEmpty(cron)) throw new Exception("当前特性Corn为空，请检查");
+        return cron;
     }
 }

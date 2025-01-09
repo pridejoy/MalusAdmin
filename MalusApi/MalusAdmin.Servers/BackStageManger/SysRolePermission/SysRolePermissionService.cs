@@ -35,8 +35,11 @@ public class SysRolePermissionService : ISysRolePermission
         //不校验权限的接口
         var nocheckpermiss = new string[]
         {
-            "api:SysLogin:GetUserInfo" //todo
+            "api:SysLogin:GetUserInfo" ,//todo 登陆的人都应该有这个接口的权限
+            "api:SysLogin:GetUserMenu"
         };
+        if (nocheckpermiss.Contains(RouthPath)) return true; 
+
         var user = await _tokenService.GetCurrentUserInfo();
          
         return user.UserPermiss.Any(x => x == RouthPath);

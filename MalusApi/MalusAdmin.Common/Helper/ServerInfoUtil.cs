@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -200,18 +201,27 @@ public class ServerInfoUtil
     /// <returns></returns>
     public static MemoryInfo GetWindowsMetrics()
     {
-        var output = ShellUtil.Cmd("wmic", "OS get FreePhysicalMemory,TotalVisibleMemorySize /Value");
         var metrics = new MemoryInfo();
-        var lines = output.Trim().Split('\n', (char)StringSplitOptions.RemoveEmptyEntries);
 
-        if (lines.Length <= 0)
-            return metrics;
+        // 查询总内存
+        using (var searcher = new ManagementObjectSearcher("SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem"))
+        {
+            foreach (var obj in searcher.Get())
+            {
+                metrics.Total = Math.Round(double.Parse(obj["TotalVisibleMemorySize"].ToString()) / 1024, 0);
+            }
+        }
 
-        var freeMemoryParts = lines[0].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
-        var totalMemoryParts = lines[1].Split('=', (char)StringSplitOptions.RemoveEmptyEntries);
+        // 查询空闲内存
+        using (var searcher = new ManagementObjectSearcher("SELECT FreePhysicalMemory FROM Win32_OperatingSystem"))
+        {
+            foreach (var obj in searcher.Get())
+            {
+                metrics.Free = Math.Round(double.Parse(obj["FreePhysicalMemory"].ToString()) / 1024, 0);
+            }
+        }
 
-        metrics.Total = Math.Round(double.Parse(totalMemoryParts[1]) / 1024, 0);
-        metrics.Free = Math.Round(double.Parse(freeMemoryParts[1]) / 1024, 0); //m
+        // 计算已使用内存
         metrics.Used = metrics.Total - metrics.Free;
 
         return metrics;
