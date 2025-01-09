@@ -12,6 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Git identity
+        run: |
+          git config --global user.email "pridejoy@foxmail.com"
+          git config --global user.name "Malus"
+
       - name: Pull from Gitee
         run: |
           git remote add gitee https://gitee.com/Pridejoy/MalusAdmin.git
