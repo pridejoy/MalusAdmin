@@ -16,5 +16,5 @@ jobs:
         run: |
           git remote add gitee https://gitee.com/Pridejoy/MalusAdmin.git
           git fetch gitee master
-          git merge gitee/master
+          git merge gitee/master --allow-unrelated-histories
           git push origin master
