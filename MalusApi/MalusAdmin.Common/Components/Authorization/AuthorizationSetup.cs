@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MalusAdmin.Common.Components;
+using MalusAdmin.Common.Components.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MalusAdmin.Common;
 
@@ -7,18 +12,24 @@ public static class AuthorizationSetup
 {
     public static IServiceCollection AddAuthorizationSetup(this IServiceCollection services)
     {
-        //添加授权
-        services.AddAuthorization();
+        // 启动Jwt授权
+        services.AddJwtSetup();
 
-        // 注入自定义的授权策略提供程序
-        services.AddTransient<IAuthorizationPolicyProvider, SimpleAuthorizationPolicyProvider>();
+        #region 自定义策略授权
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("PermissionPolicy", policyBuilder =>
+            {
+                policyBuilder.Requirements.Add(new PermissionRequirement());
+            });
+        });
 
-        // 注入自定义的授权处理程序
-        services.AddTransient<IAuthorizationHandler, SimpleAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationHandler, RoleHandler>();
+        //// 注入默认的权限检查器
+        services.AddSingleton<IAuthorizationMiddlewareResultHandler, CustomAuthorizationMiddlewareResultHandler>();
 
-        // 注入默认的权限检查器
-        services.AddTransient<IPermissionChecker, DefaultPermissionChecker>();
-
+        #endregion
+         
 
         return services;
     }

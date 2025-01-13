@@ -1,6 +1,8 @@
 ﻿namespace MalusAdmin.Common;
 
-
+/// <summary>
+/// 基于自定义GUID实现的Token
+/// </summary>
 [AutoInjection]
 public class TokenService : ITokenService
 {

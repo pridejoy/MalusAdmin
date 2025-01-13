@@ -14,6 +14,7 @@ public static class InjectionServiceCollectionExtensions
         // 根据名称获取程序集
         var assemblies = AssemblyHelper.GetAssemblies(dllNames);
 
+        //todo 需要优化成根据自定义特性进行注册
         // 获取程序集内名称以 Service 结尾的 class
         var serviceTypes = assemblies.SelectMany(a => a.GetTypes())
             .Where(t => t.Name.EndsWith("Service") && t.IsClass && !t.IsAbstract)
