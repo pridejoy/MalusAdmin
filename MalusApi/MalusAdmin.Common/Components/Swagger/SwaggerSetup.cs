@@ -11,9 +11,7 @@ namespace MalusAdmin.Common;
 public static class SwaggerSetup
 {
     public static IServiceCollection AddSwaggerBaseSetup(this IServiceCollection services)
-    {
-      
-
+    {  
         //默认文档
         services.AddSwaggerGen(SwaggerDocConfiguration.Configure);
         //JWT配置

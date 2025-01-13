@@ -32,17 +32,17 @@ public class ModelBase
     [SugarColumn(ColumnName = "SysUpdateTime", UpdateServerTime  = true, IsOnlyIgnoreInsert = true,IsIgnore = true)]
     public DateTime SysUpdateTime { get; set; }
 
-    /// <summary>
-    ///系统字段-删除人
-    /// </summary>
-    [SugarColumn(ColumnName = "SysDeleteUser")]
-    public int SysDeleteUser { get; set; }
+    ///// <summary>
+    /////系统字段-删除人
+    ///// </summary>
+    //[SugarColumn(ColumnName = "SysDeleteUser")]
+    //public int SysDeleteUser { get; set; }
 
-    /// <summary>
-    /// 系统字段-删除时间
-    /// </summary>
-    [SugarColumn(ColumnName = "SysDeleteTime",UpdateServerTime  = true, IsOnlyIgnoreInsert = true,IsIgnore = true)]
-    public DateTime SysDeleteTime { get; set; }
+    ///// <summary>
+    ///// 系统字段-删除时间
+    ///// </summary>
+    //[SugarColumn(ColumnName = "SysDeleteTime",UpdateServerTime  = true, IsOnlyIgnoreInsert = true,IsIgnore = true)]
+    //public DateTime SysDeleteTime { get; set; }
 
     /// <summary>
     /// 系统字段-删除标记

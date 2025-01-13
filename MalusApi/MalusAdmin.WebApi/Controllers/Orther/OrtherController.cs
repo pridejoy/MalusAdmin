@@ -25,11 +25,11 @@ public class OrtherController : ApiControllerBase
 
 
 
-    [HttpGet("123")]
-    public async Task<dynamic> GetException(string name)
-    {
-        await _mQPublish.PublishMessageAsync("Test",name);
-        return true;
+    [HttpGet("GetEnvironmentn")]
+    public async Task<string> GetEnvironmentn()
+    { 
+        //await _mQPublish.PublishMessageAsync("Test",name);
+        return App.WebHostEnvironment.ToString();
     }
 
     [HttpGet]

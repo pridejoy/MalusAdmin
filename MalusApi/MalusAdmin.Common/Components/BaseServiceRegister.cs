@@ -20,10 +20,9 @@ public static class BaseServiceRegister
 
         //HttpContext
         services.AddHttpContextAccessor();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         services.AddSingleton<ITokenService, TokenService>();
+
 
         return services;
     }

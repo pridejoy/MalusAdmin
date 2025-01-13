@@ -16,12 +16,7 @@ public class ResultFilter : Attribute, IResultFilter
         {
             var result = ApiCode.成功.RJson(json.Value);
             context.Result = new OkObjectResult(result); // 使用OkObjectResult来包装result对象
-        }
-        //else
-        //{
-        //    // 处理json为null的情况
-        //}
-
+        }  
     }
 
     public void OnResultExecuted(ResultExecutedContext context)

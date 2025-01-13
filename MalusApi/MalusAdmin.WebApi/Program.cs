@@ -10,14 +10,14 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args); 
+        var builder = WebApplication.CreateBuilder(args);
+        //App注册 
+        builder.ConfigureApplication();
+        builder.Configuration.ConfigureApplication();
 
         //进行配置注册 | 添加静态文件读取(优先级比较高)
         AppSettings.AddConfigSteup(builder.Configuration); 
-         
-        //进行选项注册
-        builder.Services.AddConfigureSetup(builder.Configuration); 
-
+           
         //缓存
         builder.Services.AddCacheSetup(); 
          
@@ -33,6 +33,7 @@ public class Program
                 //options.Filters.Add<GlobalExceptionFilter>();
                 // 日志过滤器
                 //options.Filters.Add<RequestActionFilter>();
+
                 options.Filters.Add<ResultFilter>();
             })
             .AddDataValidation();
@@ -54,6 +55,7 @@ public class Program
          
         //添加授权
         //builder.Services.AddAuthorization();
+
         // 添加自定义授权
         builder.Services.AddAuthorizationSetup();
  
@@ -74,23 +76,17 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
 
         var app = builder.Build();
-        //写入静态类供全局获取
-        App.ServiceProvider = app.Services;
-        App.Configuration = builder.Configuration;
 
-        //ForwardedHeaders中间件会自动把反向代理服务器转发过来的X-Forwarded-For（客户端真实IP）以及X-Forwarded-Proto（客户端请求的协议）
-        //自动填充到HttpContext.Connection.RemoteIPAddress和HttpContext.Request.Scheme中，这样应用代码中读取到的就是真实的IP和真实的协议了，不需要应用做特殊处理。
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-        });
+        app.ConfigureApplication();
+         
+        if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
 
         // 全局异常中间件
         app.UseMiddleware<GlobalException>();
 
-        //if (app.Environment.IsDevelopment())  
-        if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
-
+        //获取远程真实ip,不是nginx代理部署可以不要
+        app.UseMiddleware<RealIpMiddleware>();
+          
         app.UseHttpsRedirection(); // 确保所有请求都通过HTTPS
 
         app.UseRouting(); // 确定路由
@@ -102,20 +98,17 @@ public class Program
         app.UseAuthorization(); // 启用授权中间件
 
         app.UseStaticFiles(); // 启用静态文件服务
+
         app.UseDefaultFiles(); // 提供默认文件支持
 
         app.UseResponseCaching(); // 应用响应缓存
 
-        
-         
-        // 身份验证中间件（如果需要在控制器之前执行特定的检查）
+        // 身份验证中间件（在控制器之前执行特定的检查）
         app.UseMiddleware<CheckToken>();
-
-        // 映射SignalR Hub
-        app.MapHub<OnlineUserHub>("/hub");
-
-        // 映射控制器
-        app.MapControllers(); 
+         
+        app.MapHub<OnlineUserHub>("/hub");// 映射SignalR Hub
+         
+        app.MapControllers(); // 映射控制器
 
         // 启动服务器
         app.Run(); 

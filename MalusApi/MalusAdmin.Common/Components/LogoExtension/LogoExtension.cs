@@ -36,7 +36,10 @@ public static class LogoExtension
         }
         //Console.WriteLine(content);
         Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("欢迎使用MalusAdmin 后台权限管理系统");
         Console.WriteLine("文档地址：https://www.dotnetshare.com");
-        Console.WriteLine("体验地址：https://malus.dotnetshare.com");
+        Console.WriteLine("在线体验：https://malus.dotnetshare.com");
+        Console.WriteLine("微信号：Puredotnet<备注'项目'> ");
+        Console.ForegroundColor = ConsoleColor.White;
     }
 }

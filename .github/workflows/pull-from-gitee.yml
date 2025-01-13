@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITEE_TOEN }}
 
       - name: Set up Git identity
         run: |
@@ -21,5 +23,5 @@ jobs:
         run: |
           git remote add gitee https://gitee.com/Pridejoy/MalusAdmin.git
           git fetch gitee master
-          git merge gitee/master --allow-unrelated-histories
-          git push origin master
+          git reset --hard gitee/master
+          git push origin master --force

@@ -83,11 +83,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
 
         var app = builder.Build();
-
-        //写入静态类供全局获取
-        App.ServiceProvider = app.Services;
-        App.Configuration = builder.Configuration;
-
+         
         //ForwardedHeaders中间件会自动把反向代理服务器转发过来的X-Forwarded-For（客户端真实IP）以及X-Forwarded-Proto（客户端请求的协议）
         //自动填充到HttpContext.Connection.RemoteIPAddress和HttpContext.Request.Scheme中，这样应用代码中读取到的就是真实的IP和真实的协议了，不需要应用做特殊处理。
         app.UseForwardedHeaders(new ForwardedHeadersOptions

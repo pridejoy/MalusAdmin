@@ -34,7 +34,7 @@ public static class AppSettings
     /// <summary>
     /// 允许跨域请求列表
     /// </summary>
-    public static string[] AllowCors => Configuration.GetSection("AllowCors").Get<string[]>()??new string[] { };
+    public static string[] AllowCors => App.Configuration.GetSection("AllowCors").Get<string[]>()??new string[] { };
 
     /// <summary>
     /// 是否演示环境

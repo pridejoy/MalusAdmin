@@ -42,9 +42,9 @@ public static class InjectionServiceCollectionExtensions
             // 设置默认生命周期为 Transient
             var lifecyleType = ServiceLifetime.Transient;
 
-            Console.WriteLine("注册方式：" + lifecyleType.ToString() + 
-                "名称：" + serviceType.Name, 
-                "实例：" + implementationType.Name);
+            //Console.WriteLine("注册方式：" + lifecyleType.ToString() + 
+            //    "名称：" + serviceType.Name, 
+            //    "实例：" + implementationType.Name);
 
             // 获取服务自动注入标签（AutoInject）
             // 获取服务自动注入标签（AutoInject）
