@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using static MalusAdmin.Common.Constant;
-
+using Microsoft.Extensions.Options;  
 namespace MalusAdmin.Common;
 
 /// <summary>
@@ -43,7 +41,7 @@ public static class App
     public static HttpContext HttpContext =>
     CatchOrDefault(() => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext);
 
-    public static ITokenService HttpUser => GetService<ITokenService>();
+    public static IAppUser User => GetService<IAppUser>();
 
     public static ICacheService Cache => GetService<ICacheService>();
  

@@ -13,18 +13,19 @@ public class WechatController : WxApiControllerBase
 {
     private readonly ISqlSugarClient _db;
     private readonly IHttpContextAccessor _httpContext;
+    private readonly ITokenService _tokenService;
     private readonly WeChatGetOpenId _wechatService;
 
     public WechatController(ISqlSugarClient db, WeChatGetOpenId wechatService,
-        IHttpContextAccessor httpContext)
+        IHttpContextAccessor httpContext, ITokenService tokenService)
     {
         _db = db;
         _wechatService = wechatService;
         _httpContext = httpContext;
+        _tokenService=tokenService;
     }
 
-    private string OpenID => HttpContext?.User.FindFirst("OpenID")?.Value ?? "";
-
+     
 
     /// <summary>
     /// 静默授权登录接口
@@ -56,7 +57,7 @@ public class WechatController : WxApiControllerBase
         };
 
         // 生成刷新Token令牌
-        var token = JwtHelper.Create(dic);
+        var token =await _tokenService.GenerateTokenAsync(dic);
         // 设置Swagger自动登录
         //httpContext.Response.Headers["access-token"] = accessToken;
 
@@ -70,11 +71,9 @@ public class WechatController : WxApiControllerBase
     [HttpGet]
     [Authorize]
     public async Task<dynamic> getInfo()
-    {
-        var openid = OpenID;
-        if (openid == null) throw new Exception("获取用户信息失败，请重新登录");
+    {  
         var user = await _db.Queryable<BsCustomer>()
-            .Where(x => x.OpenID == openid)
+            .Where(x => x.UserID == App.User.Info.UserId)
             .FirstAsync();
         if (user != null) return user;
         throw new Exception("获取用户信息失败，请重新登录");
@@ -102,7 +101,7 @@ public class WechatController : WxApiControllerBase
             { "UserId", customerentity.UserID.ToString() }
         };
         // 生成刷新Token令牌
-        var token = JwtHelper.Create(dic);
+        var token =await _tokenService.GenerateTokenAsync(dic);
 
         // 设置Swagger自动登录
         _httpContext.HttpContext.Response.Headers["access-token"] = token;

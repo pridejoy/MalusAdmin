@@ -20,8 +20,20 @@ public static class BaseServiceRegister
 
         //HttpContext
         services.AddHttpContextAccessor();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
-        services.AddSingleton<ITokenService, TokenService>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+         
+        services.AddTransient<IAppUser,AppUser>();
+
+        switch (AppSettings.AuthenMethod)
+        {
+            case AuthenMethodStatus.Jwt:
+                services.AddSingleton<ITokenService, JwtToken>();
+                break;
+            default:
+                services.AddSingleton<ITokenService, GuidToken>();
+                break;
+        }
+       
 
 
         return services;

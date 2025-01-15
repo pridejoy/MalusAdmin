@@ -1,38 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MalusAdmin.Common.Components
 {
     public class JwtToken : ITokenService
     {
-        public Task<string> GenerateTokenAsync(TokenData tokenData)
+        private readonly ICacheService _cacheService; 
+         
+        private readonly int expiresTime = TokenConstant.TokenExpiresTime;
+
+        public JwtToken(ICacheService cacheService)
         {
-            throw new NotImplementedException();
+            _cacheService = cacheService; 
         }
 
-        public Task<TokenData> GetCurrentUserInfo()
+        public async Task<string> GenerateTokenAsync(Dictionary<string, string> dic)
         {
-            throw new NotImplementedException();
-        }
+            // 获取配置
+            var jwtConfiguration = App.GetOptions<JwtOptions>();
 
-        public Task<string> GetHeadersToken()
-        {
-            throw new NotImplementedException();
-        }
+            var claims = new List<Claim>
+             {
+                new Claim("AppName", "MalusAdmin"), 
+                new Claim("Author", "Malus"), 
+            };
 
-        public Task<TokenData> ParseTokenAsync(string token)
-        {
-            throw new NotImplementedException();
-        }
+            dic.ToList().ForEach(kvp => claims.Add(new Claim(kvp.Key, kvp.Value)));
 
-        public Task RefreshTokenAsync(string token)
-        {
-            throw new NotImplementedException();
-        }
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfiguration.Secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                issuer: jwtConfiguration.Issuer,
+                audience: jwtConfiguration.Audience,
+                claims: claims,
+                expires: DateTime.Now.AddDays(jwtConfiguration.ExpireDays),
+                signingCredentials: creds
+            );
 
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+  
         public Task<bool> ValidateToken(string token)
         {
             throw new NotImplementedException();

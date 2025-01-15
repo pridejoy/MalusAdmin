@@ -13,7 +13,7 @@ public class SysRolePermissionService : ISysRolePermission
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly ICacheService _cacheService;
     private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep; // 仓储 
-    private readonly ITokenService _tokenService;
+    private readonly ISysRolePermission sysRolePermission;
 
     public SysRolePermissionService(SqlSugarRepository<TSysRolePermission> sysuserpermissionRep,
         ICacheService cacheService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,
@@ -22,7 +22,7 @@ public class SysRolePermissionService : ISysRolePermission
         _cacheService = cacheService;
         _sysuserpermissionRep = sysuserpermissionRep;
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
-        _tokenService = tokenService;
+    
     }
 
 
@@ -38,11 +38,11 @@ public class SysRolePermissionService : ISysRolePermission
             "api:SysLogin:GetUserInfo" ,//todo 登陆的人都应该有这个接口的权限
             "api:SysLogin:GetUserMenu"
         };
-        if (nocheckpermiss.Contains(RouthPath)) return true; 
+        if (nocheckpermiss.Contains(RouthPath)) return true;
 
-        var user = await _tokenService.GetCurrentUserInfo();
-         
-        return user.UserPermiss.Any(x => x == RouthPath);
+        var userButton =await GetUserPermiss(App.User.Info.UserId);
+
+        return userButton.Any(x => x == RouthPath);
     }
 
 
@@ -54,7 +54,7 @@ public class SysRolePermissionService : ISysRolePermission
     public async Task<List<AllButtonPermissOut>> GetAllButen()
     {
         //缓存
-        var cacheButtonPermiss = _cacheService.Get<List<AllButtonPermissOut>>(Constant.Cache.AllButtonPermiss);
+        var cacheButtonPermiss = _cacheService.Get<List<AllButtonPermissOut>>(CacheConstant.AllButtonPermiss);
         if (cacheButtonPermiss == null)
         {
             // 获取所有路由信息
@@ -87,7 +87,7 @@ public class SysRolePermissionService : ISysRolePermission
             }
 
             //进行缓存
-            _cacheService.Set(Constant.Cache.AllButtonPermiss, cacheButtonPermiss);
+            _cacheService.Set(CacheConstant.AllButtonPermiss, cacheButtonPermiss);
         }
 
         // 将列表转换为动态类型返回
@@ -129,8 +129,26 @@ public class SysRolePermissionService : ISysRolePermission
     public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
     {
         var roleButtonPermiss = await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();
-        //进行缓存
+        //tode 进行缓存
 
         return roleButtonPermiss;
+    }
+
+    /// <summary>
+    /// 获取当前用户的权限
+    /// </summary>
+    /// <param name="userid"></param>
+    /// <returns></returns>
+    public async Task<List<string>> GetUserPermiss(int userid)
+    {
+     
+        var userbutton = _cacheService.Get<List<string>>(CacheConstant.UserButton+userid)??new List<string>();
+        if (userbutton == null)
+        { 
+            //正常来说缓存是有数据的
+            //进行缓存
+            //_cacheService.Set(CacheConstant.AllButtonPermiss, cacheButtonPermiss);
+        }
+        return userbutton;
     }
 }

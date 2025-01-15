@@ -36,7 +36,8 @@ public class CheckToken
         {
             "/hub"
         };
-
+        await _next(context);
+        return;
         // 检查请求路径是否在允许列表中或者是否允许匿名访问
         if (allowedPaths.Contains(context.Request.Path.ToString()) || IsAllowAnonymous(endpoint))
         {
@@ -46,47 +47,43 @@ public class CheckToken
 
         // 获取并验证令牌
         var tokenService = App.GetService<ITokenService>();
-        var token = await tokenService.GetHeadersToken();
-        var isValidToken = await tokenService.ValidateToken(token);
+        //var token = await tokenService.GetHeadersToken();
+        //var isValidToken = await tokenService.ValidateToken(token);
 
-        if (!isValidToken)
-        {
-            throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
-        }
+        //if (!isValidToken)
+        //{
+        //    throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
+        //}
 
         // 刷新用户的令牌过期时间
-        await tokenService.RefreshTokenAsync(token);
+        //await tokenService.RefreshTokenAsync(token);
 
         // 解析令牌获取用户信息
-        var sysuser = await tokenService.ParseTokenAsync(token);
-        if (sysuser == null)
-        {
-            throw new UnauthorizedAccessException("提供的令牌无效或已过期，请重新登录");
-        }
-
+        //var sysuser = await tokenService.GetCurrentUserInfo();
+         
         // 权限校验
-        if (endpoint is RouteEndpoint routeEndpoint && !sysuser.IsSuperAdmin)
-        {
-            using (var scope = _serviceScopeFactory.CreateScope())
-            { 
-                //var hasPermissionAttribute = routeEndpoint.Metadata.OfType<PermissionAttribute>().Any();
-                //if (hasPermissionAttribute)
-                {
-                    // 获取路由模式并处理，例如：api:SysUser:Delete:{id}
-                    var routePattern = routeEndpoint.RoutePattern.RawText.Replace('/', ':');
-                    // 处理最后一个冒号后面的数字，并将其替换为空字符串
-                    routePattern = Regex.Replace(routePattern, @":\d+$", "");
+        //if (endpoint is RouteEndpoint routeEndpoint && !sysuser.IsSuperAdmin)
+        //{
+        //    using (var scope = _serviceScopeFactory.CreateScope())
+        //    { 
+        //        //var hasPermissionAttribute = routeEndpoint.Metadata.OfType<PermissionAttribute>().Any();
+        //        //if (hasPermissionAttribute)
+        //        {
+        //            // 获取路由模式并处理，例如：api:SysUser:Delete:{id}
+        //            var routePattern = routeEndpoint.RoutePattern.RawText.Replace('/', ':');
+        //            // 处理最后一个冒号后面的数字，并将其替换为空字符串
+        //            routePattern = Regex.Replace(routePattern, @":\d+$", "");
 
-                    var rolePermissionService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
-                    // 检查用户是否有权限
-                    if (!await rolePermissionService.HasPermissionAsync(routePattern))
-                    { 
-                        throw  ApiException.Exception(ApiCode.缺少权限);
-                        return;
-                    }
-                }
-            }
-        }
+        //            var rolePermissionService = scope.ServiceProvider.GetRequiredService<ISysRolePermission>();
+        //            // 检查用户是否有权限
+        //            if (!await rolePermissionService.HasPermissionAsync(routePattern))
+        //            { 
+        //                throw  ApiException.Exception(ApiCode.缺少权限);
+        //                return;
+        //            }
+        //        }
+        //    }
+        //}
 
 
         await _next(context);

@@ -23,7 +23,7 @@ public class BingWallpaperService
     /// <returns></returns>
     public async Task<PageList<BsBingWallpaper>> PageList(PageParamBase input)
     {
-        await _sysLogService.AddLog("后台操作", $"用户{_TokenService.GetCurrentUserInfo().Result.UserName}获取了必应壁纸");
+        await _sysLogService.AddLog("后台操作", $"用户{App.User.Info.UserId}获取了必应壁纸");
         var list = await _repository.AsQueryable()
             .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord),
                 u => u.CopyRight.Contains(input.KeyWord.Trim()) )

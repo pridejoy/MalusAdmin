@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Caching.Memory;
-using static MalusAdmin.Common.Constant;
+using Microsoft.Extensions.Caching.Memory; 
 
 namespace MalusAdmin.Common;
 

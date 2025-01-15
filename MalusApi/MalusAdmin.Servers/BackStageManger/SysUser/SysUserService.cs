@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using MalusAdmin.Common;
+using MalusAdmin.Common.Constant;
 using MalusAdmin.Servers.BackStageManger;
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
@@ -44,8 +45,7 @@ public class SysUserService : ISysUserService
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public async Task<SysUserLoginOut> Login(SysUserLoginIn input)
-    {
-       
+    { 
         var user = await _sysUserRep
             .Where(t => t.Account.ToLower() == input.Account.ToLower()).FirstAsync();
         if (user == null) throw ApiException.Exception207Bad("未找到用户");
@@ -64,17 +64,17 @@ public class SysUserService : ISysUserService
         if (user.IsSuperAdmin)
             button = _sysRolePermissionService.GetAllButen().Result.Select(x => x.PermissionId).ToList();
 
-        var tokenData = new TokenData
+        //缓存当前用户的菜单
+        App.Cache.Set(CacheConstant.UserButton+ user.Id, button); 
+
+        var tokenDictionary = new Dictionary<string, string>
         {
-            UserId = user.Id,
-            UserName = user.Name,
-            UserAccount = user.Account,
-            UserRolesId = user.UserRolesId,
-            IsSuperAdmin = user.IsSuperAdmin,
-            UserPermiss = button
+            { AppUserConst.UserId, user.Id.ToString()},
+            { AppUserConst.UserAccount, user.Account}, 
+            { AppUserConst.IsSuperAdmin, user.IsSuperAdmin.ToString()}, 
         };
 
-        var token = await _TokenService.GenerateTokenAsync(tokenData);
+        var token = await _TokenService.GenerateTokenAsync(tokenDictionary);
 
 
         await _sysLogService.AddLog("后台日志", $"用户{user.Name}登录了系统");
@@ -87,20 +87,20 @@ public class SysUserService : ISysUserService
     /// </summary>
     /// <returns></returns>
     public async Task<GetUserInfoOut> GetUserInfo()
-    {
-        var user = await _TokenService.GetCurrentUserInfo();
+    { 
         var userinfo= await _sysUserRep
-            .Where(t => t.Id==user.UserId).FirstAsync();
+            .Where(t => t.Id== App.User.Info.UserId).FirstAsync();
         var otherButton = new List<string>() 
         {
             //"api:Syslogin:ResetPassword",//修改密码的权限
-        }; 
+        };
+        var userButton = await _sysRolePermissionService.GetUserPermiss(userinfo.Id);
         return new GetUserInfoOut
         {
-            userId = user.UserId,
-            userName = user.UserName,
-            roles = user.UserRolesId.Select(x => x.ToString()).ToList(),
-            buttons = otherButton.Concat(user.UserPermiss).ToList(),
+            userId = userinfo.Id,
+            userName = userinfo.Name,
+            roles = userinfo.UserRolesId.Select(x => x.ToString()).ToList(),
+            buttons = otherButton.Concat(userButton).ToList(),
             userInfo= userinfo.Adapt<SysUserInfo>()
         };
     }
@@ -112,13 +112,11 @@ public class SysUserService : ISysUserService
     /// </summary>
     /// <returns></returns>
     public async Task<bool> UpdateUserInfo(SysUserInfo input)
-    {
-        var currentUser = await _TokenService.GetCurrentUserInfo();
-        if (currentUser == null) return false;
+    { 
         var entity = input.Adapt<TSysUser>(); 
         return await  _sysUserRep.Context.Updateable<TSysUser>(entity)
             .UpdateColumns(x=> new { x.Name,x.Remark,x.Tel,x.Email} )
-            .Where(x => x.Id == currentUser.UserId).ExecuteCommandAsync()>0;
+            .Where(x => x.Id == App.User.Info.UserId).ExecuteCommandAsync()>0;
         //return await _sysUserRep.UpdateAsync(content).where >0; 
     }
 
@@ -128,10 +126,8 @@ public class SysUserService : ISysUserService
     /// <param name="input"></param>
     /// <returns></returns>
     public async Task<bool> ResetPassWord(ResetPassWord input)
-    {
-         
-        var currentUser = await _TokenService.GetCurrentUserInfo();
-        var user = await _sysUserRep.Where(x => x.Id == currentUser.UserId).FirstAsync();
+    { 
+        var user = await _sysUserRep.Where(x => x.Id == App.User.Info.UserId).FirstAsync();
         if (user == null) throw ApiException.Exception207Bad("未找到用户");
 
         if (user.PassWord != Md5Util.Encrypt(input.OldPassWord).ToUpper()) throw ApiException.Exception207Bad("旧密码不正确");
@@ -209,22 +205,22 @@ public class SysUserService : ISysUserService
     /// <returns></returns>
     public async Task<UserMenuOut> GetUserMenu()
     {
-        var user = await _TokenService.GetCurrentUserInfo();
+ 
         //缓存
-        var cache_user_menus = _cacheService.Get<UserMenuOut>(Constant.Cache.UserMenus+ user.UserId);
+        var cache_user_menus = _cacheService.Get<UserMenuOut>(CacheConstant.UserMenus+ App.User.Info.UserId);
         if (cache_user_menus == null)
         {
             var userMenuOut = new UserMenuOut();
         
             ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(user.UserRolesId);
+            var menuid = await _sysRoleMenuService.RoleUserMenu(App.User.Info.UserRolesId);
 
             //获取所有的菜单权限
             var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                 .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
 
             //超级管理官
-            if (user.IsSuperAdmin)
+            if (App.User.Info.IsSuperAdmin)
                 menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                     .ToTree(x => x.Children, x => x.ParentId, 0);
             var res = new List<UserMenu>();
@@ -237,7 +233,7 @@ public class SysUserService : ISysUserService
             userMenuOut.Home = res.FirstOrDefault()?.Name;
             userMenuOut.Routes = res;
             //进行缓存
-            _cacheService.Set(Constant.Cache.UserMenus + user.UserId, userMenuOut, 60*60*60);
+            _cacheService.Set(CacheConstant.UserMenus + App.User.Info.UserId, userMenuOut, 60*60*60);
             return userMenuOut;
         }
         return cache_user_menus;

@@ -50,13 +50,5 @@ public class HomeController : WxApiControllerBase
     {
         return HttpContext?.User.FindFirst("asd").Value;
     }
-
-
-    [HttpPost("gettoken")]
-    public string Inx()
-    {
-        var DIC = new Dictionary<string, string>();
-        DIC.Add("asd", "123");
-        return JwtHelper.Create(DIC);
-    }
+     
 }

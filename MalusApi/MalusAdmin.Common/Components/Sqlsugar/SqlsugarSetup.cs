@@ -48,11 +48,11 @@ public static class SqlsugarSetup
             db.Aop.DataExecuting = (oldValue, entityInfo) =>
             {
                 try
-                {
-                    var tokenserver = App.GetService<ITokenService>();
-                    var user = tokenserver.GetCurrentUserInfo().Result;
+                { 
+
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
+                        var user = App.User.Info;
                         if (entityInfo.PropertyName == "SysCreateUser")
                         {
                             if (user != null) entityInfo.SetValue(user.UserId);
@@ -67,6 +67,7 @@ public static class SqlsugarSetup
                     }
                     else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
                     {
+                        var user = App.User.Info;
                         if (entityInfo.PropertyName == "SysUpdateUser")
                             if (user != null)
                                 entityInfo.SetValue(user.UserId);

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿ 
+using Microsoft.Extensions.Configuration;
 using SqlSugar.Extensions;
 
 namespace MalusAdmin.Common;
@@ -63,9 +64,10 @@ public static class AppSettings
     /// </summary>
     public static class Jwt
     {
-        public static string SecretKey => Configuration["Jwt:SecretKey"] ?? "";
+        public static string Secret => Configuration["Jwt:Secret"] ?? "";
         public static string Issuer => Configuration["Jwt:Issuer"] ?? "";
         public static string Audience => Configuration["Jwt:Audience"] ?? "";
+        public static string ExpireDays => Configuration["Jwt:ExpireDays"] ?? "";
     }
 
 
@@ -78,6 +80,9 @@ public static class AppSettings
         public static string ConnectionString => Configuration["Redis:ConnectionString"] ?? "ConnectionStringError";
         public static string Instance => Configuration["Redis:Instance"] ?? "Default";
     }
+
+    //身份认证鉴权方式[jwt,guid]
+    public const AuthenMethodStatus AuthenMethod = AuthenMethodStatus.Jwt;
 
     #endregion
 }

@@ -63,7 +63,7 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
             ? Parser.GetDefault().Parse(headers["User-Agent"])
             : null;
 
-        var user = await _tokenService.GetCurrentUserInfo();
+        var user =  App.User.Info;
         var userId = user?.UserId.ToString() ?? "";
         var userAccount = user?.UserAccount ?? "";
         var requestIp = httpContext.GetRequestIPv4();
