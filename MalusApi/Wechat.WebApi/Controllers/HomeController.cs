@@ -23,9 +23,9 @@ public class HomeController : WxApiControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public string Index()
+    public int Index()
     {
-        return "string";
+        return UserId;
     }
 
 
