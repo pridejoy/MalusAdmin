@@ -1,62 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
-namespace MalusAdmin.Common
+namespace MalusAdmin.Common;
+
+/// <summary>
+/// 内部App副本
+/// </summary>
+internal static class InternalApp
 {
     /// <summary>
-    /// 内部App副本
+    /// 应用服务
     /// </summary>
-    public static class InternalApp
+    internal static IServiceCollection InternalServices;
+
+    /// <summary>
+    /// 根服务
+    /// </summary>
+    internal static IServiceProvider RootServices;
+
+    /// <summary>
+    /// 配置对象
+    /// </summary>
+    internal static IConfiguration Configuration;
+
+    /// <summary>
+    /// 获取Web主机环境
+    /// </summary>
+    internal static IWebHostEnvironment WebHostEnvironment;
+
+    /// <summary>
+    /// 获取泛型主机环境
+    /// </summary>
+    internal static IHostEnvironment HostEnvironment;
+}
+
+/// <summary>
+/// 内部 App 副本扩展方法
+/// </summary>
+public static class InternalAppExtensions
+{
+    /// <summary>
+    /// 配置应用服务和环境
+    /// </summary>
+    /// <param name="builder">WebApplicationBuilder</param>
+    public static void ConfigureApplication(this WebApplicationBuilder builder)
     {
-        /// <summary>
-        /// 应用服务
-        /// </summary>
-        internal static IServiceCollection InternalServices;
+        // 存储服务提供器
+        InternalApp.InternalServices = builder.Services;
 
-        /// <summary>
-        /// 根服务
-        /// </summary>
-        internal static IServiceProvider RootServices;
+        // 存储配置对象
+        InternalApp.Configuration = builder.Configuration;
 
-        /// <summary>
-        /// 配置对象
-        /// </summary>
-        internal static IConfiguration Configuration;
+        // 存储Web主机环境
+        InternalApp.WebHostEnvironment = builder.Environment;
 
-        /// <summary>
-        /// 获取Web主机环境
-        /// </summary>
-        internal static IWebHostEnvironment WebHostEnvironment;
-
-        /// <summary>
-        /// 获取泛型主机环境
-        /// </summary>
-        internal static IHostEnvironment HostEnvironment;
+        // 存储泛型主机环境
+        InternalApp.HostEnvironment = builder.Environment;
+    }
 
 
-        public static void ConfigureApplication(this WebApplicationBuilder wab)
+    /// <summary>
+    /// 配置中间件
+    /// </summary>
+    /// <param name="app">WebApplication</param>
+    public static void ConfigureApplication(this IApplicationBuilder app)
+    {
+        // 存储根服务提供器
+        InternalApp.RootServices = app.ApplicationServices;
+
+        app.Use(async (context, next) =>
         {
-            HostEnvironment = wab.Environment;
-            WebHostEnvironment = wab.Environment;
-            InternalServices = wab.Services;
-        }
 
-        public static void ConfigureApplication(this IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            await next.Invoke();
 
-        public static void ConfigureApplication(this IHost app)
-        {
-            RootServices = app.Services;
-        }
+            //释放所有未托管的对象
+            App.DisposeUnmanagedObjects();
+        });
     }
 }

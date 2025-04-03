@@ -6,7 +6,7 @@ using MalusAdmin.WebApi;
 var builder = WebApplication.CreateBuilder(args);
 //App注册 
 builder.ConfigureApplication();
-builder.Configuration.ConfigureApplication();
+
 //进行配置注册 | 添加静态文件读取(优先级比较高)
 AppSettings.AddConfigSteup(builder.Configuration);
 builder.Services.AddOptionRegister();
