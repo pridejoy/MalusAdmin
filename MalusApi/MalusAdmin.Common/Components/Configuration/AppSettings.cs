@@ -82,7 +82,7 @@ public static class AppSettings
     }
 
     //身份认证鉴权方式[jwt,guid]
-    public const AuthenMethodStatus AuthenMethod = AuthenMethodStatus.Jwt;
+    public const AuthenMethodStatus AuthenMethod = AuthenMethodStatus.Guid;
 
     #endregion
 }

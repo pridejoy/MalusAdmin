@@ -23,7 +23,7 @@ public static class BaseServiceRegister
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
          
         services.AddTransient<IAppUser,AppUser>();
-
+         
         switch (AppSettings.AuthenMethod)
         {
             case AuthenMethodStatus.Jwt:

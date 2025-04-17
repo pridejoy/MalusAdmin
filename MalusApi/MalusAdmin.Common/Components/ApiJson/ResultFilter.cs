@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MalusAdmin.Common;
 
+/// <summary>
+/// 统一接口返回
+/// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
 public class ResultFilter : Attribute, IResultFilter
 {

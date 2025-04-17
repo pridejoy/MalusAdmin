@@ -13,6 +13,7 @@ namespace MalusAdmin.WebApi.Filter;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class DisabledRequestRecordAttribute : Attribute
 {
+
 }
 
 /// <summary>
@@ -96,9 +97,7 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
             Result = actionContext.Exception?.Message ??
                      (actionContext.Result is FileStreamResult ? null : actionContext.Result.ToJson())
         };
-        _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId();
-        //Console.WriteLine(entity.ToJson());
-        //await _publisher.PublishMessageAsync("TSysLogVis", entity); 
+        _db.Insertable(entity).SplitTable().ExecuteReturnSnowflakeId(); 
     }
 
     public int Order => FilterOrder;
