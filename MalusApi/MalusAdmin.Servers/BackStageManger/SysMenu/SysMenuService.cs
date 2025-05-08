@@ -7,7 +7,7 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 菜单服务
 /// </summary>
-public class SysMenuService
+public class SysMenuService: ISysMenuService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TSysMenu> _sysMenuRep; // 仓储

@@ -1,4 +1,4 @@
-﻿namespace MalusAdmin.Servers.SysRolePermission.Dto;
+﻿namespace MalusAdmin.Servers;
 
 public class UpdateRoleButtonIn
 {

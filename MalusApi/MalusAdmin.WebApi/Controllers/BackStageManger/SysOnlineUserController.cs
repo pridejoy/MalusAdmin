@@ -8,9 +8,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysOnlineUserController : ApiControllerBase
 {
-    private readonly SysOnlineUserService _service;
+    private readonly ISysOnlineUserService _service;
 
-    public SysOnlineUserController(SysOnlineUserService service)
+    public SysOnlineUserController(ISysOnlineUserService service)
     {
         _service = service;
     }

@@ -8,9 +8,9 @@ namespace MalusAdmin.WebApi.Controllers;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysCacheController : ApiControllerBase
 {
-    private readonly SysCacheService _sysCacheService;
+    private readonly ISysCacheService _sysCacheService;
 
-    public SysCacheController(SysCacheService sysCacheService)
+    public SysCacheController(ISysCacheService sysCacheService)
     {
         _sysCacheService = sysCacheService;
     }

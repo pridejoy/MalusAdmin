@@ -10,7 +10,6 @@ global using Newtonsoft.Json.Converters;
 global using Newtonsoft.Json.Serialization;
 global using Swashbuckle.AspNetCore.Swagger;
 global using Swashbuckle.AspNetCore.SwaggerUI;
-global using MalusAdmin.Common;
-global using MalusAdmin.Servers.WeatherForecast;
+global using MalusAdmin.Common; 
 global using Microsoft.AspNetCore.Http; 
 global using  MalusAdmin.Repository.Model;

@@ -9,9 +9,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysMenuController : ApiControllerBase
 {
-    private readonly SysMenuService _service;
+    private readonly ISysMenuService _service;
 
-    public SysMenuController(SysMenuService service)
+    public SysMenuController(ISysMenuService service)
     {
         _service = service;
     }

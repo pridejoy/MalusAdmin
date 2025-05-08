@@ -2,7 +2,7 @@
 
 namespace MalusAdmin.Servers;
 
-public class SysCacheService
+public class SysCacheService: ISysCacheService
 {
     private readonly ICacheService _cacheService;
 

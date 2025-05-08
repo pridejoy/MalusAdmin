@@ -33,8 +33,8 @@ public static class BaseServiceRegister
                 services.AddSingleton<ITokenService, GuidToken>();
                 break;
         }
-       
-
+         
+        
 
         return services;
     }

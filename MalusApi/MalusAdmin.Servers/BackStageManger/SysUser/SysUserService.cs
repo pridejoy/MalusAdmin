@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using MalusAdmin.Common;
-using MalusAdmin.Common.Constant;
-using MalusAdmin.Servers.BackStageManger;
+using MalusAdmin.Common.Constant; 
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
-using MalusAdmin.Servers.SysUser.Dto;
-using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
+using MalusAdmin.Servers.SysUser.Dto; 
 using Mapster;
 
 namespace MalusAdmin.Servers;
@@ -14,18 +12,18 @@ namespace MalusAdmin.Servers;
 public class SysUserService : ISysUserService
 {
     private readonly IHttpContextAccessor _HttpContext;
-    private readonly SysLogService _sysLogService;
-    private readonly SysMenuService _sysMenuService;
-    private readonly SysRoleMenuService _sysRoleMenuService;
-    private readonly SysRolePermissionService _sysRolePermissionService;
+    private readonly ISysLogService _sysLogService;
+    private readonly ISysMenuService _sysMenuService;
+    private readonly ISysRoleMenuService _sysRoleMenuService;
+    private readonly ISysRolePermissionService _sysRolePermissionService;
     private readonly SqlSugarRepository<TSysUser> _sysUserRep; // 仓储
     private readonly ITokenService _TokenService;
     private readonly Common.ICacheService _cacheService;
 
     public SysUserService(SqlSugarRepository<TSysUser> sysUserRep,
-        ITokenService tokenService, SysRoleMenuService sysRoleMenuService,
-        SysMenuService sysMenuService, SysRolePermissionService sysRolePermissionService,
-        SysLogService sysLogService, Common.ICacheService cacheService,
+        ITokenService tokenService, ISysRoleMenuService sysRoleMenuService,
+        ISysMenuService sysMenuService, ISysRolePermissionService sysRolePermissionService,
+        ISysLogService sysLogService, Common.ICacheService cacheService,
         IHttpContextAccessor httpContext)
     {
         _sysUserRep = sysUserRep;

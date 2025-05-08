@@ -7,9 +7,9 @@ using MalusAdmin.Servers;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysConfigController : ApiControllerBase
 {
-    private readonly SysConfigService _server;
+    private readonly ISysConfigService _server;
 
-    public SysConfigController(SysConfigService server)
+    public SysConfigController(ISysConfigService server)
     {
         _server = server;
     }

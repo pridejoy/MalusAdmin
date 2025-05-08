@@ -1,4 +1,4 @@
-﻿namespace MalusAdmin.Servers.SysUserButtonPermiss.Dto;
+﻿namespace MalusAdmin.Servers;
 
 public class AllButtonPermissOut
 {

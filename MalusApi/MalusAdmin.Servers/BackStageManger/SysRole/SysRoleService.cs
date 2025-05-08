@@ -7,7 +7,7 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 角色服务
 /// </summary>
-public class SysRoleService
+public class SysRoleService : ISysRoleService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TSysRole> _sysRoleRep; // 仓储

@@ -3,7 +3,7 @@
 /// <summary>
 /// 基于自定义GUID实现的Token
 /// </summary>
-[AutoInjection]
+[AutoInject]
 public class GuidToken : ITokenService
 {
     private readonly ICacheService _cacheService; 

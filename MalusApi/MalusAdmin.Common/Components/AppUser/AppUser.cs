@@ -67,11 +67,16 @@ namespace MalusAdmin.Common
         {
             get
             {
-                if (  _httpContext.Request.Headers.ContainsKey("Authorization"))
+                if (_httpContext!=null)
                 {
-                    return _httpContext?.Request.Headers["Authorization"].ToString()
-                        .Replace("Bearer ", "").Trim();
+                    if (_httpContext.Request.Headers.ContainsKey("Authorization"))
+                    {
+                        return _httpContext?.Request.Headers["Authorization"].ToString()
+                            .Replace("Bearer ", "").Trim();
+                    }
+
                 }
+               
 
                 return string.Empty;
             }

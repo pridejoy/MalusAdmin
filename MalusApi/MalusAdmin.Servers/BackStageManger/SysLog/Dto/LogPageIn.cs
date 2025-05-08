@@ -1,4 +1,4 @@
-﻿namespace MalusAdmin.Servers.SysLog;
+﻿namespace MalusAdmin.Servers;
 
 public class SysLogPageIn : PageParamBase
 {

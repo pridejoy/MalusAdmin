@@ -1,10 +1,11 @@
 ﻿using MalusAdmin.Common.Components;
+using MalusAdmin.Servers;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MalusAdmin.WebApi.Controllers.BusinessManger;
 
 /// <summary>
-/// 测试业务
+/// 其他
 /// </summary>
 [AllowAnonymous]
 public class OrtherController : ApiControllerBase

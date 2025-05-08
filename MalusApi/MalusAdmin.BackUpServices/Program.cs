@@ -9,9 +9,7 @@ internal class Program
     public static async Task Main(string[] args)
     {
 		try
-		{
-
-
+		{ 
             //为了解耦单独得做成服务
             var builder = WebApplication.CreateBuilder(args);
 

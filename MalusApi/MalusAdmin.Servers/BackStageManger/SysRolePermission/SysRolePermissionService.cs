@@ -1,5 +1,4 @@
-﻿using MalusAdmin.Servers.SysRolePermission.Dto;
-using MalusAdmin.Servers.SysUserButtonPermiss.Dto;
+﻿ 
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using ICacheService = MalusAdmin.Common.ICacheService;
 
@@ -8,12 +7,12 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 用户按钮权限
 /// </summary> 
-public class SysRolePermissionService : ISysRolePermission
+public class SysRolePermissionService : ISysRolePermissionService
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly ICacheService _cacheService;
     private readonly SqlSugarRepository<TSysRolePermission> _sysuserpermissionRep; // 仓储 
-    private readonly ISysRolePermission sysRolePermission;
+  
 
     public SysRolePermissionService(SqlSugarRepository<TSysRolePermission> sysuserpermissionRep,
         ICacheService cacheService, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,

@@ -5,7 +5,7 @@ namespace MalusAdmin.Servers.SysRoleMenu;
 /// <summary>
 /// 角色菜单服务
 /// </summary>
-public class SysRoleMenuService
+public class SysRoleMenuService : ISysRoleMenuService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TSysRoleMenu> _sysRoleMenuRep; // 仓储

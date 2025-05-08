@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyModel;
 
 namespace MalusAdmin.Servers;
 
-public class SysDataService
+public class SysDataService:ISysDataService
 {
     /// <summary>
     /// 获取服务器信息

@@ -1,4 +1,5 @@
 ﻿using MalusAdmin.Servers;
+using MalusAdmin.Servers.SysUser;
 using MalusAdmin.Servers.SysUser.Dto;
 using MalusAdmin.WebApi.Filter;
 using Microsoft.AspNetCore.Authorization;
@@ -12,9 +13,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
 public class SysLoginController : ApiControllerBase
 {
-    private readonly SysUserService _sysUserService;
+    private readonly ISysUserService _sysUserService;
 
-    public SysLoginController(SysUserService userService)
+    public SysLoginController(ISysUserService userService)
     {
         _sysUserService = userService;
     }

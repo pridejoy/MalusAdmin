@@ -10,9 +10,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ResponseCache(Duration = 500)]
 public class SysDataController : ApiControllerBase
 {
-    private readonly SysDataService _dataService;
+    private readonly ISysDataService _dataService;
 
-    public SysDataController(SysDataService dataService)
+    public SysDataController(ISysDataService dataService)
     {
         _dataService = dataService;
     }

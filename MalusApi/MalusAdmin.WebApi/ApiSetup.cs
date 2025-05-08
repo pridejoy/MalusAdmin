@@ -1,5 +1,9 @@
-﻿using MalusAdmin.Common.Components;
+﻿using System.Reflection;
+using MalusAdmin.Common.Components;
+using MalusAdmin.Servers;
 using MalusAdmin.Servers.Hub;
+using MalusAdmin.Servers.SysRoleMenu;
+using MalusAdmin.Servers.SysUser;
 using Microsoft.AspNetCore.Builder;
 
 namespace MalusAdmin.WebApi
@@ -51,13 +55,14 @@ namespace MalusAdmin.WebApi
 
             var dllnames = new string[] { "MalusAdmin.Servers" };
             services.AddAutoServices(dllnames);
+            //services.AddAutoInjection(Assembly.GetExecutingAssembly());
 
             //添加授权
             //services.AddAuthorization();
             services.AddAuthorizationSetup();
 
             // 替换默认 PermissionChecker[权限检查]
-            services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
+            //services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
 
             services.AddCorsSetup();
 
@@ -69,6 +74,14 @@ namespace MalusAdmin.WebApi
             //services.AddRabbitMqClientExtension();
             //services.AddEasyNetQExtension(); 
             services.AddEndpointsApiExplorer();
+
+            services.AddScoped<SysRoleMenuService>();
+            services.AddScoped<TestService>();
+            services.AddEasyNetQExtension();
+            //services.AddScoped<ISysUserService, SysUserService>();
+            //services.AddScoped<SysRoleMenuService>();
+            //services.AddScoped<IPermissionChecker, PermissionChecker>();
+            //services.AddScoped<SysMenuService>();
 
             return services;
         }

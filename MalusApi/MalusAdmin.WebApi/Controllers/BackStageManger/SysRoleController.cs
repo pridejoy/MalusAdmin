@@ -10,9 +10,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysRoleController : ApiControllerBase
 {
-    private readonly SysRoleService _sysRoleService;
+    private readonly ISysRoleService _sysRoleService;
 
-    public SysRoleController(SysRoleService sysRoleService)
+    public SysRoleController(ISysRoleService sysRoleService)
     {
         _sysRoleService = sysRoleService;
     }

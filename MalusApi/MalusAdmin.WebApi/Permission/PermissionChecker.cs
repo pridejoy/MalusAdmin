@@ -7,9 +7,9 @@ namespace MalusAdmin.WebApi
     public class PermissionChecker : IPermissionChecker
     {
         private readonly IAppUser _appUser;
-        private readonly ISysRolePermission _sysRolePermission;
+        private readonly ISysRolePermissionService _sysRolePermission;
 
-        public PermissionChecker(IAppUser appUser, ISysRolePermission sysRolePermission)
+        public PermissionChecker(IAppUser appUser, ISysRolePermissionService sysRolePermission)
         {
             _appUser = appUser;
             _sysRolePermission = sysRolePermission;

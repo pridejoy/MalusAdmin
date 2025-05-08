@@ -1,5 +1,4 @@
-﻿using MalusAdmin.Servers;
-using MalusAdmin.Servers.SysRolePermission.Dto;
+﻿using MalusAdmin.Servers; 
 
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 
@@ -9,9 +8,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysRolePermissionController : ApiControllerBase
 {
-    private readonly SysRolePermissionService _service;
+    private readonly ISysRolePermissionService _service;
 
-    public SysRolePermissionController(SysRolePermissionService service)
+    public SysRolePermissionController(ISysRolePermissionService service)
     {
         _service = service;
     }

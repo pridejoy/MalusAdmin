@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
 
-namespace MalusAdmin.Servers.WeatherForecast;
+namespace MalusAdmin.Servers;
 
 /// <summary>
 /// 测试服务

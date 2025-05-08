@@ -1,5 +1,4 @@
-﻿using MalusAdmin.Servers;
-using MalusAdmin.Servers.SysLog;
+﻿using MalusAdmin.Servers; 
 using MalusAdmin.WebApi.Filter;
 
 namespace MalusAdmin.WebApi.Controllers.BackStageManger;
@@ -11,9 +10,9 @@ namespace MalusAdmin.WebApi.Controllers.BackStageManger;
 [ApiExplorerSettings(GroupName = "后台管理")]
 public class SysLogController : ApiControllerBase
 {
-    private readonly SysLogService _server;
+    private readonly ISysLogService _server;
 
-    public SysLogController(SysLogService server)
+    public SysLogController(ISysLogService server)
     {
         _server = server;
     }

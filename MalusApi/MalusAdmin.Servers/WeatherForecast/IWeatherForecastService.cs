@@ -1,4 +1,4 @@
-﻿namespace MalusAdmin.Servers.WeatherForecast;
+﻿namespace MalusAdmin.Servers;
 
 public interface IWeatherForecastService
 {
