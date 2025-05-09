@@ -31,7 +31,7 @@ namespace MalusAdmin.Common
                 //if (IsAuthenticated)
                 { 
                     var info = new TokenData();
-                    switch (AppSettings.AuthenMethod)
+                    switch (AuthenticateSettings.AuthenMethod)
                     {
                         case AuthenMethodStatus.Jwt:
                             info.UserId=  _httpContext?.User.Claims.FirstOrDefault(s => s.Type == AppUserConst.UserId)?.Value.ObjToInt()??-1;

@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Common.Components;
+﻿using System.Configuration;
+using MalusAdmin.Common.Components;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +15,17 @@ public static class Configure
 
         //services.Configure<RabbitMQConfig>(config.GetSection("RabbitMQConfig"));
 
+        
         //等其他选项
         return services;
     }
+
+    //配置读取的方式
+
+    //方式1
+    //var connection = App.Configuration["Redis:ConnectionString"]?.ToString();
+    //if (connection == null) throw new NullReferenceException("配置读取失败");
+     
+    //读取数组
+    //App.Configuration.GetSection("AllowCors").Get<string[]>()
 }

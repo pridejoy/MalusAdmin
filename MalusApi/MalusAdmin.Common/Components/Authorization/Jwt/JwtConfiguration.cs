@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks; 
 
 namespace MalusAdmin.Common
-{
-    [OptionsSettings]
+{ 
     public class JwtOptions
     {
         public string Issuer { get; set; }

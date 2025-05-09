@@ -1,10 +1,12 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using MalusAdmin.Common.Components;
 using MalusAdmin.Servers;
 using MalusAdmin.Servers.Hub;
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
 using Microsoft.AspNetCore.Builder;
+using SqlSugar.Extensions;
 
 namespace MalusAdmin.WebApi
 { 
@@ -14,12 +16,8 @@ namespace MalusAdmin.WebApi
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-              
-            //进行配置注册 | 添加静态文件读取(优先级比较高)
-            AppSettings.AddConfigSteup(configuration);
-
-            //选项通过特性注册
-            services.AddOptionRegister();
+            //跨域处理
+            services.AddCorsSetup();
 
             //缓存
             services.AddCacheSetup();
@@ -64,24 +62,15 @@ namespace MalusAdmin.WebApi
             // 替换默认 PermissionChecker[权限检查]
             //services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
 
-            services.AddCorsSetup();
-
-            services.AddResponseCaching();
-
-            services.AddSignalR();
-
+          
+             
             //rabbit
             //services.AddRabbitMqClientExtension();
-            //services.AddEasyNetQExtension(); 
-            services.AddEndpointsApiExplorer();
+            services.AddEasyNetQExtension(); 
 
-            services.AddScoped<SysRoleMenuService>();
-            services.AddScoped<TestService>();
-            services.AddEasyNetQExtension();
-            //services.AddScoped<ISysUserService, SysUserService>();
-            //services.AddScoped<SysRoleMenuService>();
-            //services.AddScoped<IPermissionChecker, PermissionChecker>();
-            //services.AddScoped<SysMenuService>();
+           
+             
+            services.AddDynamicApiControllers(); 
 
             return services;
         }
@@ -95,7 +84,7 @@ namespace MalusAdmin.WebApi
              
             app.ConfigureApplication();
 
-            if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
+            if (App.Configuration["DisplaySwaggerDoc"].ObjToBool()) app.UseSwaggerExtension();
 
             // 全局异常中间件
             app.UseMiddleware<GlobalException>();

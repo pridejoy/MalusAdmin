@@ -1,6 +1,7 @@
 using MalusAdmin.Common;
 using MalusAdmin.Common.Components;
 using Microsoft.AspNetCore.HttpOverrides;
+using SqlSugar.Extensions;
 using Wechat.Servers; 
 
 namespace Wechat.WebApi;
@@ -10,18 +11,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        //  进行配置注册 | 添加静态文件读取(优先级比较高)
-        AppSettings.AddConfigSteup(builder.Configuration);
-
-        //进行选项注册
-        builder.Services.AddConfigureSetup(builder.Configuration);
-
+          
         // 缓存
         builder.Services.AddCacheSetup();
 
-        //HttpContext
-        builder.Services.AddHttpContextAccessor();
+       
 
         // 添加过滤器
         builder.Services.AddControllers(options =>
@@ -92,7 +86,8 @@ public class Program
         });
 
         // Configure the HTTP request pipeline.
-        if (AppSettings.DisplaySwaggerDoc) app.UseSwaggerExtension();
+        if (App.Configuration["DisplaySwaggerDoc"].ObjToBool()) app.UseSwaggerExtension();
+
 
         app.UseHttpsRedirection(); // 放在前面，确保所有请求都通过HTTPS
 

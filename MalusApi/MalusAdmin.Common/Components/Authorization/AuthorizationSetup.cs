@@ -12,7 +12,7 @@ public static class AuthorizationSetup
     public static IServiceCollection AddAuthorizationSetup(this IServiceCollection services)
     {
   
-        switch (AppSettings.AuthenMethod)
+        switch (AuthenticateSettings.AuthenMethod)
         {
             case AuthenMethodStatus.Jwt: 
                 // 启动Jwt授权

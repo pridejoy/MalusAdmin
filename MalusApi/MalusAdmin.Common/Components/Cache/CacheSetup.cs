@@ -1,5 +1,6 @@
 ﻿using MalusAdmin.Common.Components.Cache;
 using Microsoft.Extensions.DependencyInjection;
+using SqlSugar.Extensions;
 
 namespace MalusAdmin.Common;
 
@@ -13,7 +14,7 @@ public static class CacheSetup
     public static IServiceCollection AddCacheSetup(this IServiceCollection services)
     {
         // 根据情况，启用 Redis 或 DistributedMemoryCache
-        if (AppSettings.Redis.Enabled)
+        if (App.Configuration["Redis:Enabled"].ObjToBool()) 
         {
             services.AddSingleton<ICacheService, RedisCacheService>();
         }

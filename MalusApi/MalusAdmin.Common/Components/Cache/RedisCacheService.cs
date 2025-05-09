@@ -1,4 +1,5 @@
 ﻿using FreeRedis;
+using SqlSugar.Extensions;
 
 namespace MalusAdmin.Common.Components.Cache;
 
@@ -8,7 +9,7 @@ public class RedisCacheService : ICacheService
 
     public RedisCacheService()
     {
-        var redisconfig = AppSettings.Redis.ConnectionString; 
+        var redisconfig = App.Configuration["Redis:ConnectionString"]?.ToString(); 
         cli = new RedisClient(redisconfig);
         cli.Serialize = obj => JsonConvert.SerializeObject(obj);
         cli.Deserialize = (json, type) => JsonConvert.DeserializeObject(json, type);

@@ -22,11 +22,11 @@ public static class ServiceCollectionExtensions
             .ToArray();
 
 
-        //扫描注册
+     
         foreach (var type in types)
         {
             try
-            {
+            {   //扫描注册
                 if (type.IsClass && !type.IsAbstract && !type.IsGenericType)
                 {
                     var interfaces = type.GetInterfaces();
@@ -40,6 +40,26 @@ public static class ServiceCollectionExtensions
                         }
                     }
                 }
+
+
+                // 获取服务自动注入标签（AutoInject） ：适用于没有注册实现类
+                var autoInjection = type.GetCustomAttribute<AutoInjectAttribute>();
+                if (autoInjection != null)
+                {
+                    Console.WriteLine($"单独注册服务：  {type.Name}，生命周期：{autoInjection.Lifetime}");
+                    switch (autoInjection.Lifetime)
+                    {
+                        case ServiceLifetime.Singleton:
+                            services.AddSingleton(type);
+                            break;
+                        case ServiceLifetime.Scoped:
+                            services.AddScoped(type);
+                            break;
+                        case ServiceLifetime.Transient:
+                            services.AddTransient(type);
+                            break;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -51,30 +71,7 @@ public static class ServiceCollectionExtensions
 
 
 
-        // 获取服务自动注入标签（AutoInject） 
-        //var autoInjection = serviceType.GetCustomAttribute<AutoInjectAttribute>();
-        //if (autoInjection != null)
-
-        //var interfaces = serviceType.GetInterfaces();
-        //foreach (var @interface in interfaces)
-        //{
-        //    if (@interface.Name == "I" + serviceType.Name)
-        //    {
-        //        Console.WriteLine("自动注册：" + autoInjection.Lifetime + "," + @interface.Name);
-        //        switch (autoInjection.Lifetime)
-        //        {
-        //            case ServiceLifetime.Singleton:
-        //                services.AddSingleton(@interface, serviceType);
-        //                break;
-        //            case ServiceLifetime.Scoped:
-        //                services.AddScoped(@interface, serviceType);
-        //                break;
-        //            case ServiceLifetime.Transient:
-        //                services.AddTransient(@interface, serviceType);
-        //                break;
-        //        }
-        //    }
-        //}
+       
 
         return services;
 

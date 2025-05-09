@@ -1,5 +1,6 @@
 ﻿using MalusAdmin.Common;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class CorsServiceCollectionExtensions
@@ -18,14 +19,16 @@ public static class CorsServiceCollectionExtensions
         {
             options.AddDefaultPolicy(policy =>
             {
-                if (AppSettings.AllowCors.Any(c => c == "*"))
+                var allowCors = App.Configuration.GetSection("AllowCors").Get<string[]>();
+
+                if (allowCors.Any(c => c == "*"))
                     // 允许任意跨域
                     policy.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 else
                     // 允许指定域名
-                    policy.WithOrigins(AppSettings.AllowCors);
+                    policy.WithOrigins(allowCors);
             });
         });
 

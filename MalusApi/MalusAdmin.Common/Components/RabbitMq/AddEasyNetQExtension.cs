@@ -14,9 +14,10 @@ namespace MalusAdmin.Common.Components
         //<PackageReference Include = "EasyNetQ.DI.Microsoft" Version="7.8.0" />
         public static IServiceCollection AddEasyNetQExtension(this IServiceCollection services)
         {
-            var a = AppSettings.RabbitMqConnetion;
+            var RabbitMqConnetion = App.Configuration["RabbitMqConnetion"]?.ToString();
+            if (RabbitMqConnetion == null) throw new NullReferenceException("配置读取失败");
 
-            services.RegisterEasyNetQ(a); 
+            services.RegisterEasyNetQ(RabbitMqConnetion); 
             
             services.AddTransient<MQPublish>();
 

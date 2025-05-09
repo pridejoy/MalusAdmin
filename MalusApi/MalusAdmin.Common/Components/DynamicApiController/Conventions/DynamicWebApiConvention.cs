@@ -75,10 +75,10 @@ public class DynamicWebApiConvention : IApplicationModelConvention
                                                     // asp.net core 框架会自动生成一些空白信息，这里移除空白信息，然后实现自定义路由规则
 
 
-        if (controller.Selectors.Any(temp => temp.AttributeRouteModel != null))//如果类已经打上了[Route]特性，则不再添加自定义模版信息(不明白ABP为什么要这么做)
-        {
-            return;
-        }
+        //if (controller.Selectors.Any(temp => temp.AttributeRouteModel != null))//如果类已经打上了[Route]特性，则不再添加自定义模版信息(不明白ABP为什么要这么做)
+        //{
+        //    return;
+        //}
 
         //获取控制器根路径
         var rootPath = GetRootPathOrDefault(controller.ControllerType.AsType());

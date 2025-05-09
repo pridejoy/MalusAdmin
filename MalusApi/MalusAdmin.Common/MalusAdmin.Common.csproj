@@ -37,6 +37,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\MongoDB\" />
+      <Folder Include="Components\Configuration\Options\" />
     </ItemGroup>
 </Project>

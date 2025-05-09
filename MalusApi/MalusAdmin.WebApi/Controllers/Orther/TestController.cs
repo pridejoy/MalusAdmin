@@ -32,4 +32,30 @@ public class TestController : ApiControllerBase
     {
         return await _testService.GetException();
     }
+
+
+    [HttpGet]
+    public async Task<string> GetAppConfig()
+    {
+        return  App.Configuration["IsDemo"]?.ToString();
+    }
+
+    /// <summary>
+    /// 动态api
+    /// </summary>
+    /// <returns></returns>
+    //public async Task<dynamic> PostException2()
+    //{
+    //    return await _testService.GetException();
+    //}
+
+
+    /// <summary>
+    /// 动态api
+    /// </summary>
+    /// <returns></returns>
+    //public async Task<dynamic> GetException3()
+    //{
+    //    return await _testService.GetException();
+    //}
 }

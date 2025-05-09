@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MalusAdmin.Servers;
 
 /// <summary>
 /// 测试服务
 /// </summary>
+[AutoInject(ServiceLifetime.Scoped)]
 public class TestService
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;

@@ -9,3 +9,11 @@ public enum AuthenMethodStatus
     Guid,
     Jwt
 }
+
+
+public static class AuthenticateSettings
+{
+    //身份认证鉴权方式[jwt,guid]
+    public const AuthenMethodStatus AuthenMethod = AuthenMethodStatus.Guid;
+
+}
