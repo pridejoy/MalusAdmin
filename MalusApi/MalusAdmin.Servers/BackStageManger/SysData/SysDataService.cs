@@ -1,6 +1,5 @@
 ﻿using MalusAdmin.Common.Helper;
-using MalusAdmin.Servers.SysData.Dto;
-using Microsoft.Extensions.DependencyModel;
+using MalusAdmin.Servers.SysData.Dto; 
 
 namespace MalusAdmin.Servers;
 
@@ -36,15 +35,23 @@ public class SysDataService:ISysDataService
     /// <returns></returns>
     public async Task<List<NuGetPackage>> GetNuGetPackages()
     {
-        var runtimeDependencies = DependencyContext.Default.RuntimeLibraries;
-        var nuGetPackages = runtimeDependencies
-            //.Where(lib => lib.Type == "package" && lib.Dependencies.Any())
-            .Select(lib => new NuGetPackage
-            {
-                Name = lib.Name,
-                Version = lib.Version
-            });
+        //var runtimeDependencies = DependencyContext.Default.RuntimeLibraries;
+        //var nuGetPackages = runtimeDependencies
+        //    //.Where(lib => lib.Type == "package" && lib.Dependencies.Any())
+        //    .Select(lib => new NuGetPackage
+        //    {
+        //        Name = lib.Name,
+        //        Version = lib.Version
+        //    });
 
-        return nuGetPackages.ToList();
+        //return nuGetPackages.ToList();
+        return new List<NuGetPackage>
+        {
+            new NuGetPackage
+            {
+                Name = "MalusAdmin",
+                Version = "1.0.0"
+            }
+        };
     }
 }

@@ -31,9 +31,9 @@ namespace MalusAdmin.Common
                 //if (IsAuthenticated)
                 { 
                     var info = new TokenData();
-                    switch (AuthenticateSettings.AuthenMethod)
+                    switch (AuthenticationSettings.CurrentAuthenticationMethod)
                     {
-                        case AuthenMethodStatus.Jwt:
+                        case AuthenticationMethod.Jwt:
                             info.UserId=  _httpContext?.User.Claims.FirstOrDefault(s => s.Type == AppUserConst.UserId)?.Value.ObjToInt()??-1;
                             info.UserAccount =  _httpContext?.User.Claims.FirstOrDefault(s => s.Type == AppUserConst.UserAccount)?.Value.ToString()??"";
                             info.IsSuperAdmin =  _httpContext?.User.Claims.FirstOrDefault(s => s.Type == AppUserConst.IsSuperAdmin)?.Value.ObjToBool()??false;

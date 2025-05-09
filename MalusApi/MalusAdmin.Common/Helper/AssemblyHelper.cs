@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyModel;
+using Microsoft.AspNetCore.Authorization; 
 
 public static class AssemblyHelper
 {
@@ -9,20 +8,20 @@ public static class AssemblyHelper
     /// 获取项目程序集（排除系统程序集、NuGet包）
     /// </summary>
     /// <returns></returns>
-    public static IList<Assembly> GetAssemblies()
-    {
+    //public static IList<Assembly> GetAssemblies()
+    //{
         // 参考：https://www.cnblogs.com/yanglang/p/6866165.html
+        // 安装： Microsoft.Extensions.DependencyModel
+        //var result = new List<Assembly>();
+        //var libs = DependencyContext.Default.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
+        //foreach (var lib in libs)
+        //{
+        //    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
+        //    result.Add(assembly);
+        //}
 
-        var result = new List<Assembly>();
-        var libs = DependencyContext.Default.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
-        foreach (var lib in libs)
-        {
-            var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
-            result.Add(assembly);
-        }
-
-        return result;
-    }
+        //return result;
+    //}
 
     /// <summary>
     /// 将程序集加载到 AssemblyLoadContext.Default 中，并且获取这个程序集。
