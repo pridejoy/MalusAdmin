@@ -12,14 +12,14 @@ public static class AuthorizationSetup
     public static IServiceCollection AddAuthorizationSetup(this IServiceCollection services)
     {
   
-        switch (AuthenticateSettings.AuthenMethod)
+        switch (AuthenticationSettings.CurrentAuthenticationMethod)
         {
-            case AuthenMethodStatus.Jwt: 
+            case AuthenticationMethod.Jwt: 
                 // 启动Jwt授权
                 services.AddJwtSetup();
                 break;
 
-            case AuthenMethodStatus.Guid:
+            case AuthenticationMethod.Guid:
                 services.AddAuthorization(); 
                 services.AddTransient<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
                 services.AddTransient<IAuthorizationHandler, CustomAuthorizationHandler>();

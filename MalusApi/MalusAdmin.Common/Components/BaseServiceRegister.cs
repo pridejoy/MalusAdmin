@@ -24,9 +24,9 @@ public static class BaseServiceRegister
          
         services.AddTransient<IAppUser,AppUser>();
          
-        switch (AuthenticateSettings.AuthenMethod)
+        switch (AuthenticationSettings.CurrentAuthenticationMethod)
         {
-            case AuthenMethodStatus.Jwt:
+            case AuthenticationMethod.Jwt:
                 services.AddSingleton<ITokenService, JwtToken>();
                 break;
             default:

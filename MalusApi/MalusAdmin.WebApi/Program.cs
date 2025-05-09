@@ -17,6 +17,7 @@ try
     // ÅäÖÃÖĞ¼ä¼ş
     app.UseApplicationMiddlewares();
 
+    //
     app.MapHub<OnlineUserHub>("/hub");
 
     app.Run();

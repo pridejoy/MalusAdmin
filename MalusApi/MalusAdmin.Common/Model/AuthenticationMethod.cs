@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public enum AuthenMethodStatus
+public enum AuthenticationMethod
 {
     Guid,
     Jwt
 }
 
 
-public static class AuthenticateSettings
+public static class AuthenticationSettings
 {
     //身份认证鉴权方式[jwt,guid]
-    public const AuthenMethodStatus AuthenMethod = AuthenMethodStatus.Guid;
+    public const AuthenticationMethod CurrentAuthenticationMethod = AuthenticationMethod.Guid;
 
 }
