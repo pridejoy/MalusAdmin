@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using MalusAdmin.Common;
+using Microsoft.AspNetCore.SignalR;
 using ICacheService = MalusAdmin.Common.ICacheService;
 using Parser = UAParser.Parser;
 
@@ -24,34 +25,38 @@ public class OnlineUserHub : Hub<IOnlineUserHub>
     /// <returns></returns>
     public override async Task OnConnectedAsync()
     {
-        //await Console.Out.WriteLineAsync("用户连接:" + Context.ConnectionId);
+        await Console.Out.WriteLineAsync("用户连接:" + Context.ConnectionId);
 
-        //var httpContext = Context.GetHttpContext();
-        //var token = httpContext?.Request.Query["token"];
+        var httpContext = Context.GetHttpContext();
+       
+ 
+      
+        var client = Parser.GetDefault().Parse(httpContext.Request.Headers["User-Agent"]);
 
-        //var tokenService = App.GetService<ITokenService>();
-        //// todo 
-        //var user = await tokenService.ParseTokenAsync(token);
-        //var client = Parser.GetDefault().Parse(httpContext.Request.Headers["User-Agent"]);
+        var token = httpContext?.Request.Query["token"].ToString();
+        var user= App.Cache.Get<TokenData>(CacheConstant.UserToken + token);
 
+        if (user is not null)
+        {
+            var onlineUser = new TSysOnlineUser
+            {
+                ConnectionId = Context.ConnectionId,
+                UserId = user.UserId,
+                UserName = user.UserAccount,
+                RealName = user.UserName,
+                Time = DateTime.Now,
+                Ip = httpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(),
+                Browser = client.UA.Family + client.UA.Major,
+                Os = client.OS.Family + client.OS.Major
+            };
 
-        //var onlineUser = new TSysOnlineUser
-        //{
-        //    ConnectionId = Context.ConnectionId,
-        //    UserId = user?.UserId ?? 0,
-        //    UserName = user?.UserAccount,
-        //    RealName = user?.UserName,
-        //    Time = DateTime.Now,
-        //    Ip = httpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(),
-        //    Browser = client.UA.Family + client.UA.Major,
-        //    Os = client.OS.Family + client.OS.Major
-        //};
+            await _rep.InsertAsync(onlineUser);
 
-        //await _rep.InsertAsync(onlineUser);
+            _cacheService.Set(CacheConstant.OnlineUser + Context.ConnectionId, onlineUser, 60 * 60);
 
-        //_cacheService.Set(Constant.Cache.OnlineUser + Context.ConnectionId, onlineUser, 60 * 60);
-
-        //await _onlineUserHubContext.Clients.All.PublicNotice($"{user.UserName},上线了");
+            await _onlineUserHubContext.Clients.All.PublicNotice($"{App.CurrentUser.UserName},上线了");
+        }
+       
     }
 
     /// <summary>
