@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using MalusAdmin.Common;
 using MalusAdmin.Common.Components;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -63,10 +64,9 @@ public class RequestActionFilter : IAsyncActionFilter, IOrderedFilter
         var clientInfo = headers.ContainsKey("User-Agent")
             ? Parser.GetDefault().Parse(headers["User-Agent"])
             : null;
-
-        var user =  App.User.Info;
-        var userId = user?.UserId.ToString() ?? "";
-        var userAccount = user?.UserAccount ?? "";
+         
+        var userId = App.CurrentUser.UserId.ToString() ?? "";
+        var userAccount = App.CurrentUser.UserAccount;
         var requestIp = httpContext.GetRequestIPv4();
         var requestUrl = httpRequest.Path;
         var requestMethod = httpRequest.Method;

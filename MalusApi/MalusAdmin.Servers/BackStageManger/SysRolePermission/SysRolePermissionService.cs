@@ -39,7 +39,7 @@ public class SysRolePermissionService : ISysRolePermissionService
         };
         if (nocheckpermiss.Contains(RouthPath)) return true;
 
-        var userButton =await GetUserPermiss(App.User.Info.UserId);
+        var userButton =await GetUserPermiss(App.CurrentUser.UserId);
 
         return userButton.Any(x => x == RouthPath);
     }

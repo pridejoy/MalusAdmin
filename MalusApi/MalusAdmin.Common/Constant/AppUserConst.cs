@@ -14,6 +14,8 @@ namespace MalusAdmin.Common.Constant
         public static string UserAccount = "UserAccount";
 
         public static string IsSuperAdmin = "IsSuperAdmin";
+
+        public static string UserRolesId = "UserRolesId";
          
     }
 }

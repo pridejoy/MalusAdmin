@@ -12,4 +12,4 @@ global using Swashbuckle.AspNetCore.Swagger;
 global using Swashbuckle.AspNetCore.SwaggerUI;
 global using MalusAdmin.Common; 
 global using Microsoft.AspNetCore.Http; 
-global using  MalusAdmin.Repository.Model;
+global using MalusAdmin.Repository.Model;

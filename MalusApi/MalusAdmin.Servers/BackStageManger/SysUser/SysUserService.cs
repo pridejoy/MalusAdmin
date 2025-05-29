@@ -64,18 +64,17 @@ public class SysUserService : ISysUserService
 
         //缓存当前用户的菜单
         App.Cache.Set(CacheConstant.UserButton+ user.Id, button); 
+         
+        var token = await _TokenService.GenerateTokenAsync(new TokenData { 
+            UserAccount = user.Account,
+            UserId= user.Id, 
+            UserRolesId = user.UserRolesId,
+            UserName = user.Name,
+            UserPermiss = button ,
+            IsSuperAdmin=user.IsSuperAdmin
+        }); 
 
-        var tokenDictionary = new Dictionary<string, string>
-        {
-            { AppUserConst.UserId, user.Id.ToString()},
-            { AppUserConst.UserAccount, user.Account}, 
-            { AppUserConst.IsSuperAdmin, user.IsSuperAdmin.ToString()}, 
-        };
-
-        var token = await _TokenService.GenerateTokenAsync(tokenDictionary);
-
-
-        await _sysLogService.AddLog("后台日志", $"用户{user.Name}登录了系统");
+        //await _sysLogService.AddLog("后台日志", $"用户{user.Name}登录了系统");
 
         return new SysUserLoginOut { Id = user.Id, Name = user.Name, Token = token };
     }
@@ -87,7 +86,12 @@ public class SysUserService : ISysUserService
     public async Task<GetUserInfoOut> GetUserInfo()
     { 
         var userinfo= await _sysUserRep
-            .Where(t => t.Id== App.User.Info.UserId).FirstAsync();
+            .Where(t => t.Id== App.CurrentUser.UserId).FirstAsync();
+        if (userinfo is null)
+        {
+            throw ApiException.Exception401("请重新登录");
+        }
+
         var otherButton = new List<string>() 
         {
             //"api:Syslogin:ResetPassword",//修改密码的权限
@@ -114,7 +118,7 @@ public class SysUserService : ISysUserService
         var entity = input.Adapt<TSysUser>(); 
         return await  _sysUserRep.Context.Updateable<TSysUser>(entity)
             .UpdateColumns(x=> new { x.Name,x.Remark,x.Tel,x.Email} )
-            .Where(x => x.Id == App.User.Info.UserId).ExecuteCommandAsync()>0;
+            .Where(x => x.Id == App.CurrentUser.UserId).ExecuteCommandAsync()>0;
         //return await _sysUserRep.UpdateAsync(content).where >0; 
     }
 
@@ -125,7 +129,7 @@ public class SysUserService : ISysUserService
     /// <returns></returns>
     public async Task<bool> ResetPassWord(ResetPassWord input)
     { 
-        var user = await _sysUserRep.Where(x => x.Id == App.User.Info.UserId).FirstAsync();
+        var user = await _sysUserRep.Where(x => x.Id == App.CurrentUser.UserId).FirstAsync();
         if (user == null) throw ApiException.Exception207Bad("未找到用户");
 
         if (user.PassWord != Md5Util.Encrypt(input.OldPassWord).ToUpper()) throw ApiException.Exception207Bad("旧密码不正确");
@@ -205,20 +209,20 @@ public class SysUserService : ISysUserService
     {
  
         //缓存
-        var cache_user_menus = _cacheService.Get<UserMenuOut>(CacheConstant.UserMenus+ App.User.Info.UserId);
+        var cache_user_menus = _cacheService.Get<UserMenuOut>(CacheConstant.UserMenus+ App.CurrentUser.UserId);
         if (cache_user_menus == null)
         {
             var userMenuOut = new UserMenuOut();
         
             ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(App.User.Info.UserRolesId);
+            var menuid = await _sysRoleMenuService.RoleUserMenu(App.CurrentUser.UserRolesId);
 
             //获取所有的菜单权限
             var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                 .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
 
             //超级管理官
-            if (App.User.Info.IsSuperAdmin)
+            if (App.CurrentUser.IsSuperAdmin)
                 menutree = _sysUserRep.Context.Queryable<TSysMenu>()
                     .ToTree(x => x.Children, x => x.ParentId, 0);
             var res = new List<UserMenu>();
@@ -231,7 +235,7 @@ public class SysUserService : ISysUserService
             userMenuOut.Home = res.FirstOrDefault()?.Name;
             userMenuOut.Routes = res;
             //进行缓存
-            _cacheService.Set(CacheConstant.UserMenus + App.User.Info.UserId, userMenuOut, 60*60*60);
+            _cacheService.Set(CacheConstant.UserMenus + App.CurrentUser.UserId, userMenuOut, 60*60*60);
             return userMenuOut;
         }
         return cache_user_menus;

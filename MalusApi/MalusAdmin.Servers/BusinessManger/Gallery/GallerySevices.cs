@@ -1,5 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace MalusAdmin.Servers.Gallery;
 
+
+[AutoInject(ServiceLifetime.Transient)]
 public class GalleryService
 {
     private readonly ISqlSugarClient _db;

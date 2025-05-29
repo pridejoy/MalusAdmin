@@ -38,10 +38,9 @@ public static class App
     /// <summary>
     /// 获取请求上下文
     /// </summary>
-    public static HttpContext HttpContext =>
-    CatchOrDefault(() => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext);
+    public static HttpContext HttpContext => CatchOrDefault(() => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext);
 
-    public static IAppUser User => GetService<IAppUser>();
+    public static ICurrentUser CurrentUser => GetService<ICurrentUser>();
 
     public static ICacheService Cache => GetService<ICacheService>();
  

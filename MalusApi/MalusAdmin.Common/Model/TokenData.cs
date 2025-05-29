@@ -1,5 +1,10 @@
 ﻿namespace MalusAdmin.Common;
 
+
+
+/// <summary>
+/// redis 存放的数据
+/// </summary>
 public class TokenData
 {
     public int UserId { get; set; }
@@ -14,7 +19,5 @@ public class TokenData
 
     public List<string> UserPermiss { get; set; }
 
-    public DateTime? LoginTime { get; set; }
-
-    public DateTime? ExpireTime { get; set; }
+    public DateTime? LoginTime { get; set; } 
 }

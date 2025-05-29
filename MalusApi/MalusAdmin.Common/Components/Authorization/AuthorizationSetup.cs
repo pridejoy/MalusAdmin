@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Common.Components; 
+﻿using MalusAdmin.Common.Components;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
@@ -20,10 +21,8 @@ public static class AuthorizationSetup
                 break;
 
             case AuthenticationMethod.Guid:
-                services.AddAuthorization(); 
-                services.AddTransient<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
-                services.AddTransient<IAuthorizationHandler, CustomAuthorizationHandler>();
-                services.AddTransient<IPermissionChecker, DefaultPermissionChecker>();
+                services.AddAuthentication("CustomScheme")
+                     .AddScheme<AuthenticationSchemeOptions, CustomTokenAuthenticationHandler>("CustomScheme", null); 
                 break;
         } 
         return services;

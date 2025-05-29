@@ -1,8 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace MalusAdmin.Servers;
 
 /// <summary>
 /// 用户服务
 /// </summary>
+[AutoInject(ServiceLifetime.Transient)]
 public class CustomerService
 {
     private readonly ISqlSugarClient _db;

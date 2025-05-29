@@ -8,6 +8,5 @@ public interface ITokenService
     /// </summary>
     /// <param name="tokenData"></param>
     /// <returns></returns>
-    Task<string> GenerateTokenAsync(Dictionary<string, string> dic);
-     
+    Task<string> GenerateTokenAsync(TokenData tokenData); 
 }

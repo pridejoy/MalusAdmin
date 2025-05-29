@@ -57,13 +57,12 @@ public class WechatController : WxApiControllerBase
         };
 
         // 生成刷新Token令牌
-        var token =await _tokenService.GenerateTokenAsync(dic);
+        //var token =await _tokenService.GenerateTokenAsync(dic);
         // 设置Swagger自动登录
         //httpContext.Response.Headers["access-token"] = accessToken;
 
-        return new WxLoginOutput { token = token, userinfo = customerentity };
+        return new WxLoginOutput { token = "token", userinfo = customerentity };
     }
-
     /// <summary>
     /// 用户基本信息输出
     /// </summary>
@@ -73,7 +72,7 @@ public class WechatController : WxApiControllerBase
     public async Task<dynamic> getInfo()
     {  
         var user = await _db.Queryable<BsCustomer>()
-            .Where(x => x.UserID == App.User.Info.UserId)
+            .Where(x => x.UserID == App.CurrentUser.UserId)
             .FirstAsync();
         if (user != null) return user;
         throw new Exception("获取用户信息失败，请重新登录");
@@ -95,17 +94,17 @@ public class WechatController : WxApiControllerBase
 
         //生成Token
 
-        var dic = new Dictionary<string, string>
-        {
-            { "OpenID", customerentity.OpenID },
-            { "UserId", customerentity.UserID.ToString() }
-        };
-        // 生成刷新Token令牌
-        var token =await _tokenService.GenerateTokenAsync(dic);
+        //var dic = new Dictionary<string, string>
+        //{
+        //    { "OpenID", customerentity.OpenID },
+        //    { "UserId", customerentity.UserID.ToString() }
+        //};
+        //// 生成刷新Token令牌
+        //var token =await _tokenService.GenerateTokenAsync(dic);
 
         // 设置Swagger自动登录
-        _httpContext.HttpContext.Response.Headers["access-token"] = token;
+        //_httpContext.HttpContext.Response.Headers["access-token"] = token;
 
-        return new WxLoginOutput { token = token, userinfo = customerentity };
+        return new WxLoginOutput { token = "token", userinfo = customerentity };
     }
 }

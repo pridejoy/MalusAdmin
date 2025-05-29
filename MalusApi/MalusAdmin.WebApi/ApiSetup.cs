@@ -62,15 +62,11 @@ namespace MalusAdmin.WebApi
             // 替换默认 PermissionChecker[权限检查]
             //services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
 
-          
-             
             //rabbit
             //services.AddRabbitMqClientExtension();
-            services.AddEasyNetQExtension(); 
-
-           
+            //services.AddEasyNetQExtension(); 
              
-            services.AddDynamicApiControllers(); 
+            //services.AddDynamicApiControllers(); 
 
             return services;
         }
@@ -108,8 +104,7 @@ namespace MalusAdmin.WebApi
 
             app.UseResponseCaching(); // 应用响应缓存
 
-            // 身份验证中间件（在控制器之前执行特定的检查）
-            //app.UseMiddleware<CheckToken>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

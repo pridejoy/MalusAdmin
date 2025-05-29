@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MalusAdmin.Common
 { 
+
     public class JwtOptions
     {
         public string Issuer { get; set; }

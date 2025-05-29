@@ -21,30 +21,12 @@ public class GuidToken : ITokenService
     /// 生成token
     /// </summary>
     /// <param name="tokenData"></param>
-    /// <returns></returns>
-    public async Task<string> GenerateTokenAsync(Dictionary<string, string> dic)
+    /// <returns></returns>  
+    public async Task<string> GenerateTokenAsync(TokenData tokenData)
     {
+        //redis存放的是用户信息-TokenData
         var token = Guid.NewGuid().ToString("N");
-        _cacheService.Set(CacheConstant.UserToken + token, dic, 60 * expiresTime);
+        _cacheService.Set(CacheConstant.UserToken + token, tokenData, 60 * expiresTime);
         return token;
     }
-
-
-    /// <summary>
-    /// 检查Token
-    /// </summary>
-    /// <param name="httpContext"></param>
-    /// <returns></returns>
-    public async Task<bool> ValidateToken(string token)
-    {
-        token = token.Replace("Bearer ", "");
-        if (string.IsNullOrWhiteSpace(token)) return false;
-        //是否在缓存，是否过期
-        var userinfo = _cacheService.Get<TokenData>(CacheConstant.UserToken + token);
-        if (userinfo == null || userinfo.ExpireTime < DateTime.Now) return false;
-
-        //此处可增加逻辑，限制单个账号只允许登录一个
-
-        return true;
-    }  
 }

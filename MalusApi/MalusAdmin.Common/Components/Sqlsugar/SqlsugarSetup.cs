@@ -52,25 +52,22 @@ public static class SqlsugarSetup
 
                     if (entityInfo.OperationType == DataFilterType.InsertByObject)
                     {
-                        var user = App.User.Info;
+                     
                         if (entityInfo.PropertyName == "SysCreateUser")
                         {
-                            if (user != null) entityInfo.SetValue(user.UserId);
+                            entityInfo.SetValue(App.CurrentUser.UserId);
                         }
                         else if (entityInfo.PropertyName == "DeptId" && entityInfo.EntityName != "TSysUser")
                         {
-                            if (user != null)
-                            {
+                            
                                 //entityInfo.SetValue(token.UserDept);
-                            }
+                            
                         }
                     }
                     else if (entityInfo.OperationType == DataFilterType.UpdateByObject)
-                    {
-                        var user = App.User.Info;
-                        if (entityInfo.PropertyName == "SysUpdateUser")
-                            if (user != null)
-                                entityInfo.SetValue(user.UserId);
+                    { 
+                        if (entityInfo.PropertyName == "SysUpdateUser") 
+                                entityInfo.SetValue(App.CurrentUser.UserId);
                     }
                 }
                 catch

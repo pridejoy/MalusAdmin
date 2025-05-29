@@ -22,7 +22,7 @@ public static class BaseServiceRegister
         services.AddHttpContextAccessor();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
          
-        services.AddTransient<IAppUser,AppUser>();
+        services.AddTransient<ICurrentUser, CurrentUser>();
          
         switch (AuthenticationSettings.CurrentAuthenticationMethod)
         {

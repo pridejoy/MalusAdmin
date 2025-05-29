@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using MalusAdmin.Common.Constant;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MalusAdmin.Common.Components
@@ -15,18 +16,21 @@ namespace MalusAdmin.Common.Components
             _cacheService = cacheService; 
         }
 
-        public async Task<string> GenerateTokenAsync(Dictionary<string, string> dic)
+        public async Task<string> GenerateTokenAsync(TokenData tokenData)
         {
             // 获取配置
             var jwtConfiguration = App.GetOptions<JwtOptions>();
-
+             
             var claims = new List<Claim>
              {
                 new Claim("AppName", "MalusAdmin"), 
-                new Claim("Author", "Malus"), 
+                new Claim("Author", "Malus"),
+                //和guidtoken存放的内容保持一直
+                new Claim(AppUserConst.UserId, tokenData.UserId.ToString()),
+                new Claim(AppUserConst.UserAccount, tokenData.UserAccount.ToString()),
             };
 
-            dic.ToList().ForEach(kvp => claims.Add(new Claim(kvp.Key, kvp.Value)));
+            //dic.ToList().ForEach(kvp => claims.Add(new Claim(kvp.Key, kvp.Value)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfiguration.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -40,10 +44,6 @@ namespace MalusAdmin.Common.Components
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-  
-        public Task<bool> ValidateToken(string token)
-        {
-            throw new NotImplementedException();
-        }
+   
     }
 }
