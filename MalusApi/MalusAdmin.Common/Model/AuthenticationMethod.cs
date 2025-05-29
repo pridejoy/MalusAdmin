@@ -14,6 +14,6 @@ public enum AuthenticationMethod
 public static class AuthenticationSettings
 {
     //身份认证鉴权方式[jwt,guid]
-    public const AuthenticationMethod CurrentAuthenticationMethod = AuthenticationMethod.Jwt;
+    public const AuthenticationMethod CurrentAuthenticationMethod = AuthenticationMethod.Guid;
 
 }

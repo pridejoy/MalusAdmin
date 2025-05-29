@@ -20,7 +20,10 @@ public static class JwtSetup
         if (services == null) throw new ArgumentNullException(nameof(services));
   
         //读取配置
-        var jwtConfiguration = App.GetOptions<JwtOptions>(); 
+        var jwtConfiguration = new JwtOptions() {
+            Issuer = App.Configuration[""].ToString(),
+
+        }; 
           
         // 获取密钥
         var keyByteArray = Encoding.UTF8.GetBytes(jwtConfiguration.Secret);

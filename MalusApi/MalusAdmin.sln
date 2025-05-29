@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MalusAdmin.Servers", "MalusAdmin.Servers\MalusAdmin.Servers.csproj", "{300CD128-9FE5-4F31-980C-E0ED478AE8CB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{94C2604C-9A1D-4AAE-9D13-CDEDD336DB74}"
+	ProjectSection(SolutionItems) = preProject
+		TODO.md = TODO.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "后台服务", "后台服务", "{FA506B9E-426B-4866-94A8-2C5BCE76B613}"
 EndProject

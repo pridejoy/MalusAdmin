@@ -3,8 +3,10 @@ using System.Reflection;
 using MalusAdmin.Common.Components;
 using MalusAdmin.Servers;
 using MalusAdmin.Servers.Hub;
+using MalusAdmin.Servers.SysOnlineUser;
 using MalusAdmin.Servers.SysRoleMenu;
 using MalusAdmin.Servers.SysUser;
+using MalusAdmin.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using SqlSugar.Extensions;
 
@@ -65,8 +67,22 @@ namespace MalusAdmin.WebApi
             //rabbit
             //services.AddRabbitMqClientExtension();
             //services.AddEasyNetQExtension(); 
-             
+
             //services.AddDynamicApiControllers(); 
+
+            //
+            //services.AddTransient<ISysOnlineUserService, SysOnlineUserService>();
+             
+            // 打印所有注册的服务
+            foreach (var service in services)
+            {
+                Console.WriteLine($"Service: {service.ServiceType.FullName}, " +
+                                  $"Implementation: {service.ImplementationType?.FullName ?? "N/A"}, " +
+                                  $"Lifetime: {service.Lifetime}");
+            }
+
+            // 将 IServiceCollection 注册为单例，以便在中间件中访问
+            services.AddSingleton(services);
 
             return services;
         }
@@ -87,6 +103,8 @@ namespace MalusAdmin.WebApi
 
             //获取远程真实ip,不是nginx代理部署可以不要
             app.UseMiddleware<RealIpMiddleware>();
+
+            app.UseServiceInspector(); // 注册服务查询中间件
 
             app.UseHttpsRedirection(); // 确保所有请求都通过HTTPS
 

@@ -33,6 +33,7 @@ public class OrtherController : ApiControllerBase
         return App.WebHostEnvironment.ToString();
     }
 
+
     [HttpGet]
     public async Task<dynamic> GetException207BadBad22()
     {

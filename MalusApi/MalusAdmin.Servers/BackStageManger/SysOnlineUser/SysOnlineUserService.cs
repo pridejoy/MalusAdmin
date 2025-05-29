@@ -5,7 +5,7 @@ namespace MalusAdmin.Servers.SysOnlineUser;
 
 /// <summary>
 /// </summary>
-public class SysOnlineUserService
+public class SysOnlineUserService: ISysOnlineUserService
 {
     private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
     private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储

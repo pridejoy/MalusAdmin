@@ -33,7 +33,7 @@ public static class ServiceCollectionExtensions
 
                     foreach (var @interface in interfaces)
                     {
-                        Console.WriteLine($"Scoped注册服务：{@interface.Name} -> {type.Name} ");
+                        //Console.WriteLine($"Scoped注册服务：{@interface.Name} -> {type.Name} ");
                         if (@interface.Name == "I" + type.Name && @interface.IsAssignableFrom(type))
                         {
                             services.AddScoped(@interface, type);
@@ -46,7 +46,7 @@ public static class ServiceCollectionExtensions
                 var autoInjection = type.GetCustomAttribute<AutoInjectAttribute>();
                 if (autoInjection != null)
                 {
-                    Console.WriteLine($"单独注册服务：  {type.Name}，生命周期：{autoInjection.Lifetime}");
+                    //Console.WriteLine($"单独注册服务：  {type.Name}，生命周期：{autoInjection.Lifetime}");
                     switch (autoInjection.Lifetime)
                     {
                         case ServiceLifetime.Singleton:

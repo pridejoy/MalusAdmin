@@ -28,4 +28,5 @@ public static class Configure
      
     //读取数组
     //App.Configuration.GetSection("AllowCors").Get<string[]>()
+
 }

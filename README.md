@@ -52,19 +52,21 @@ Malus 是海棠的意思，顾名思义，海棠后台管理系统，读音与�
 
 MalusAdmin 提供了以下演示和文档资源：
 
--   账户信息：（超管） 账号 `admin`，密码 `1q2w3e`
--   账户信息：账号 `pridejoy`，密码 `123456`
+-   账户信息：（超管） 账号 `admin`，密码 `关注公众号获取`
 -   在线演示系统：[https://malus.dotnetshare.com](https://malus.dotnetshare.com/)
 -   后端文档：[https://www.dotnetshare.com](https://www.dotnetshare.com/)
 -   前端文档：[https://docs.soybeanjs.cn](https://docs.soybeanjs.cn/zh/)
 -   Naive UI 文档：[https://www.naiveui.com](https://www.naiveui.com/zh-CN/os-theme/docs/installation)
 -   SqlSugar 文档：[https://www.donet5.com](https://www.donet5.com/Home/Doc?typeId=1215)
 
-> 数据库文件见 [mysql 和 sqlserver](https://gitee.com/Pridejoy/MalusAdmin/tree/master/doc/dbsql)
-> 前端项目同步更新地址：https://gitee.com/Pridejoy/soybean-admin-net
-> 此项目前端代码暂停更新
-
 > PS: 不要乱改密码、权限、删除数据~
+
+## 资源
+
+### 前端项目
+> 前端项目同步更新地址：https://gitee.com/Pridejoy/soybean-admin-net
+### 数据库文件
+> 数据库文件见 [mysql 和 sqlserver](https://gitee.com/Pridejoy/MalusAdmin/tree/master/doc/dbsql)
 
 ## 演示截图
 
