@@ -3,8 +3,11 @@ using SqlSugar.IOC;
 
 namespace MalusAdmin.Servers;
 
-[AutoInject(ServiceLifetime.Transient)]
-public class BingWallpaperService
+/// <summary>
+/// 客户服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BusinessManger))]
+public class BingWallpaperService: ApiControllerBase
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<BsBingWallpaper> _repository; // 仓储

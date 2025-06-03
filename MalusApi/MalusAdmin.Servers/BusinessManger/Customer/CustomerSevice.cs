@@ -3,10 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-/// 用户服务
+/// 客户服务
 /// </summary>
-[AutoInject(ServiceLifetime.Transient)]
-public class CustomerService
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BusinessManger))]
+public class CustomerService: ApiControllerBase
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<BsCustomer> _repository; // 仓储

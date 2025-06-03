@@ -5,7 +5,8 @@ namespace MalusAdmin.Servers.SysRoleMenu;
 /// <summary>
 /// 角色菜单服务
 /// </summary>
-public class SysRoleMenuService : ISysRoleMenuService
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysRoleMenuService : ApiControllerBase, ISysRoleMenuService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TSysRoleMenu> _sysRoleMenuRep; // 仓储
@@ -23,6 +24,8 @@ public class SysRoleMenuService : ISysRoleMenuService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("角色菜单查询")]
     public async Task<List<int>> RoleUserMenu(List<int> RoleId)
     {
         var HideorDisableMenusId = await _sysRoleMenuRep.Context.Queryable<TSysMenu>()
@@ -41,6 +44,9 @@ public class SysRoleMenuService : ISysRoleMenuService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("角色菜单更新")]
+    [ReadOnly]
     public async Task<bool> SetRoleUserMenu(UpdateRoleUserMenuIn input)
     {
         await _sysRoleMenuRep.DeleteAsync(x => x.RoleId == input.RoleId);

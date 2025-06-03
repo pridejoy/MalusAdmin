@@ -3,7 +3,11 @@ using Mapster;
 
 namespace MalusAdmin.Server;
 
-public class SysConfigService : ISysConfigService
+/// <summary>
+/// 配置服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysConfigService : ApiControllerBase, ISysConfigService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TBsSysConfig> _rep; // 仓储
@@ -22,6 +26,7 @@ public class SysConfigService : ISysConfigService
     /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [NonAction]
     public async Task<string> GetTypeKeyConfig(string key, string type)
     {
         var entity = await _rep.Where(x => x.ConfigKey == key && x.ConfigType == type).FirstAsync();
@@ -33,6 +38,8 @@ public class SysConfigService : ISysConfigService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("配置分页查询")]
     public async Task<PageList<TBsSysConfig>> PageList(PageParamBase input)
     {
         var dictTypes = await _rep.AsQueryable()
@@ -47,6 +54,8 @@ public class SysConfigService : ISysConfigService
     /// 添加配置
     /// </summary>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("配置添加")]
     public async Task<bool> Add(WechatConfigAddandUpIn input)
     {
         var isExist = await _rep.Where(x => x.ConfigKey == input.ConfigKey).AnyAsync();
@@ -61,6 +70,8 @@ public class SysConfigService : ISysConfigService
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
+    [HttpPost("{id}")]
+    [Permission("配置删除")]
     public async Task<bool> Delete(int id)
     {
         var entity = await _rep.FirstOrDefaultAsync(u => u.ConfigID == id);
@@ -73,6 +84,8 @@ public class SysConfigService : ISysConfigService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("配置更新")]
     public async Task<bool> Update(WechatConfigAddandUpIn input)
     {
         var entity = await _rep.FirstOrDefaultAsync(u => u.ConfigID == input.ConfigID);

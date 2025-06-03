@@ -9,7 +9,11 @@ using Mapster;
 
 namespace MalusAdmin.Servers;
 
-public class SysUserService : ISysUserService
+/// <summary>
+/// 用户服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysUserService : ApiControllerBase, ISysUserService
 {
     private readonly IHttpContextAccessor _HttpContext;
     private readonly ISysLogService _sysLogService;
@@ -143,6 +147,8 @@ public class SysUserService : ISysUserService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("用户信息分页查询")]
     public async Task<PageList<TSysUser>> PageList(UserPageIn input)
     {
         var dictTypes = await _sysUserRep.AsQueryable()
@@ -157,6 +163,8 @@ public class SysUserService : ISysUserService
     /// 添加用户
     /// </summary>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("用户信息添加")]
     public async Task<bool> Add(UserAddAndUpIn input)
     {
         var isExist = await _sysUserRep.Where(x => x.Account == input.Account).AnyAsync();
@@ -173,6 +181,9 @@ public class SysUserService : ISysUserService
     /// <param name="userId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [HttpPost("{id}")]
+    [Permission("用户信息删除")]
+    [ReadOnly]
     public async Task<bool> Delete(int userId)
     {
         var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
@@ -188,6 +199,8 @@ public class SysUserService : ISysUserService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("用户信息更新")]
     [ReadOnly]
     public async Task<bool> Update(UserAddAndUpIn input)
     {

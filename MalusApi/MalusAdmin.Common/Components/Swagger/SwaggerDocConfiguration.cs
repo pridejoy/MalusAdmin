@@ -14,7 +14,7 @@ namespace MalusAdmin.Common.Components.Swagger
     {  
         public static void Configure(SwaggerGenOptions options)
         {
-            options.SwaggerDoc("vdefault", new OpenApiInfo { Title = "Default API", Version = "v1" });
+            options.DocInclusionPredicate((docName, description) => true);
 
             var basePath = AppContext.BaseDirectory;
 

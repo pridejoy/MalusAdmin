@@ -6,7 +6,9 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 日志服务
 /// </summary>
-public class SysLogService : ISysLogService
+//[DisabledRequestRecord]
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysLogService : ApiControllerBase, ISysLogService
 {
     private readonly SqlSugarRepository<TSysLogVis> _rep; // 仓储
 
@@ -21,6 +23,7 @@ public class SysLogService : ISysLogService
     /// <param name="type"></param>
     /// <param name="Message"></param>
     /// <returns></returns>
+    [NonAction]
     public async Task AddLog(string type, string Message)
     {
         var entity = new TSysLogOp
@@ -36,8 +39,10 @@ public class SysLogService : ISysLogService
     /// 访问 日志列表分页
     /// </summary>
     /// <param name="input"></param>
-    /// <returns></returns>
-    public async Task<PageList<TSysLogVis>> VisPageList(SysLogPageIn input)
+    /// <returns></returns> 
+    [HttpGet]
+
+    public async Task<PageList<TSysLogVis>> VisPageList([FromQuery] SysLogPageIn input)
     {
         var dictTypes = await _rep.Context.Queryable<TSysLogVis>()
             .SplitTable(tabs => tabs.Take(1))
@@ -52,8 +57,9 @@ public class SysLogService : ISysLogService
     /// 异常 日志列表分页
     /// </summary>
     /// <param name="input"></param>
-    /// <returns></returns>
-    public async Task<PageList<TSysLogErr>> ErrPageList(SysLogPageIn input)
+    /// <returns></returns
+    [HttpGet]
+    public async Task<PageList<TSysLogErr>> ErrPageList([FromQuery] SysLogPageIn input)
     {
         var dictTypes = await _rep.Context.Queryable<TSysLogErr>()
             .SplitTable(tabs => tabs.Take(1))
@@ -69,7 +75,8 @@ public class SysLogService : ISysLogService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public async Task<PageList<TSysLogOp>> OpPageList(SysLogPageIn input)
+    [HttpGet]
+    public async Task<PageList<TSysLogOp>> OpPageList([FromQuery] SysLogPageIn input)
     {
         var dictTypes = await _rep.Context.Queryable<TSysLogOp>()
             .SplitTable(tabs => tabs.Take(1))

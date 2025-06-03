@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
-using MalusAdmin.Common.Components;
-using MalusAdmin.Servers.Hub;
+using MalusAdmin.Common.Components; 
 using MalusAdmin.WebApi;
 
 
@@ -18,7 +17,7 @@ try
     app.UseApplicationMiddlewares();
 
     //
-    app.MapHub<OnlineUserHub>("/hub");
+    //app.MapHub<OnlineUserHub>("/hub");
 
     app.Run();
 }

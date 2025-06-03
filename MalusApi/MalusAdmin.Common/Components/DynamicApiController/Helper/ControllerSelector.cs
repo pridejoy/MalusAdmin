@@ -1,17 +1,19 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Simple.DynamicWebApi.Abstractions;
 
-namespace MalusAdmin.Common;
+namespace Simple.DynamicWebApi.Helper;
 
-
-public class ControllerSelector
+/// <summary>
+/// 控制器选择器，用于判断类型是否为动态API控制器。
+/// </summary>
+internal class ControllerSelector
 {
     /// <summary>
     /// 判断类型是否为动态API控制器
     /// </summary>
     /// <param name="type">要检查的类型</param>
     /// <returns>如果类型符合动态 API 控制器的约定条件，则返回 true；否则返回 false</returns>
-    public static bool IsDynamicApiController(Type type)
+    internal static bool IsDynamicWebApiController(Type type)
     {
         if (!type.IsPublic) // 排除非公开类型
         {
@@ -48,6 +50,6 @@ public class ControllerSelector
             return false;
         }
 
-        return typeof(IDynamicApiController).IsAssignableFrom(type);
+        return typeof(IDynamicWebApi).IsAssignableFrom(type) || typeof(IApplicationService).IsAssignableFrom(type);
     }
 }

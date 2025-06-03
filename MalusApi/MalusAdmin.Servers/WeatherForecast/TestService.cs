@@ -1,37 +1,37 @@
-﻿using MalusAdmin.Servers.Hub;
+﻿using MalusAdmin.Servers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
+using Simple.DynamicWebApi.Abstractions;
 
 namespace MalusAdmin.Servers;
 
 /// <summary>
 /// 测试服务
 /// </summary>
-[AutoInject(ServiceLifetime.Scoped)]
-public class TestService
+
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.Default))]
+public class TestService: ApiControllerBase
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly ISqlSugarClient _db;
-    private readonly IHttpContextAccessor _httpContext;
-    private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
+    private readonly IHttpContextAccessor _httpContext; 
     private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
 
-    public TestService(ISqlSugarClient db, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,
-        IHubContext<OnlineUserHub, IOnlineUserHub> onlineUserHubContext, SqlSugarRepository<TSysOnlineUser> rep)
+    public TestService(ISqlSugarClient db, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider,  SqlSugarRepository<TSysOnlineUser> rep)
 
     {
         _rep = rep;
         _db = db;
-        _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
-        _onlineUserHubContext = onlineUserHubContext;
+        _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider; 
     }
 
     /// <summary>
     /// 获取接口所有的路由信息
     /// </summary>
     /// <returns></returns>
+    [NonAction]
     public async Task<dynamic> GetAllButton()
     { 
         // 获取所有路由信息
@@ -76,13 +76,7 @@ public class TestService
     }
 
 
-    public async Task<dynamic> GetOnlineUser()
-    {
-        var a = _onlineUserHubContext.Clients;
-
-        return "";
-    }
-
+   
     public async Task<bool> GetException207BadBad()
     {
         //throw new Exception("Exception207Bad");

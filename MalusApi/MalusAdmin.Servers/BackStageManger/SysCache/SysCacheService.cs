@@ -1,8 +1,13 @@
-﻿using ICacheService = MalusAdmin.Common.ICacheService;
+﻿using Simple.DynamicWebApi.Abstractions;
+using ICacheService = MalusAdmin.Common.ICacheService;
 
 namespace MalusAdmin.Servers;
 
-public class SysCacheService: ISysCacheService
+/// <summary>
+/// 缓存服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysCacheService:  ApiControllerBase, ISysCacheService
 {
     private readonly ICacheService _cacheService;
 
@@ -15,6 +20,8 @@ public class SysCacheService: ISysCacheService
     /// 获取所有缓存的key
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("缓存-获取所有缓存的Key")]
     public List<string> GetAllKeys()
     {
         return _cacheService.GetAllKeys();
@@ -24,6 +31,8 @@ public class SysCacheService: ISysCacheService
     /// 根据key获取缓存的value
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("缓存-根据key获取缓存")]
     public dynamic GetKeys(string key)
     {
         return _cacheService.Get<dynamic>(key);
@@ -34,6 +43,8 @@ public class SysCacheService: ISysCacheService
     /// 删除缓存
     /// </summary>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("缓存-根据key删除缓存")]
     public async Task<long> RemoveAsync(string key)
     {
         return await _cacheService.RemoveAsync(key);

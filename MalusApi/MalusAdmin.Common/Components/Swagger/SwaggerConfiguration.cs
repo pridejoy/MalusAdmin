@@ -28,10 +28,13 @@ namespace MalusAdmin.Common.Components.Swagger
 
         public static void Configure(SwaggerGenOptions option)
         {
+            // 解决Swagger文档中API描述冲突的问题，取第一个描述作为最终结果
             option.ResolveConflictingActions(apiDesc => apiDesc.First());
-            option.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+
+            // 向Swagger中添加JWT Bearer安全定义，便于前端在请求头中传递Token
             option.AddSecurityDefinition(Scheme.Reference.Id, Scheme);
 
+            // 配置Swagger要求在所有API请求中使用上述定义的安全方案（即JWT Bearer Token）
             option.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 { Scheme, Array.Empty<string>() },

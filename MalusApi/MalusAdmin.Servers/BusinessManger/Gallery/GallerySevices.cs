@@ -3,8 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MalusAdmin.Servers.Gallery;
 
 
-[AutoInject(ServiceLifetime.Transient)]
-public class GalleryService
+/// <summary>
+/// 壁纸服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BusinessManger))]
+public class GalleryService:ApiControllerBase
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<BsGallery> _repository; // 仓储

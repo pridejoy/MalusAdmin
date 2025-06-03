@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace MalusAdmin.Servers.SysOnlineUser;
 
+
+
 /// <summary>
+/// 在线用户
 /// </summary>
-public class SysOnlineUserService: ISysOnlineUserService
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysOnlineUserService : ApiControllerBase, ISysOnlineUserService
 {
     private readonly IHubContext<OnlineUserHub, IOnlineUserHub> _onlineUserHubContext;
     private readonly SqlSugarRepository<TSysOnlineUser> _rep; // 仓储
@@ -22,6 +26,8 @@ public class SysOnlineUserService: ISysOnlineUserService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("在线用户分页")]
     public async Task<PageList<TSysOnlineUser>> PageList(OnlineUserPageInput input)
     {
         var data = await _rep.AsQueryable()
@@ -35,6 +41,8 @@ public class SysOnlineUserService: ISysOnlineUserService
     /// </summary>
     /// <param name="connectionId">链接的id</param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("强制用户下线")]
     public async Task<bool> ForceOffline(string connectionId)
     {
         try
@@ -55,6 +63,8 @@ public class SysOnlineUserService: ISysOnlineUserService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("给指定用户发送消息")]
     public async Task<bool> SendMsgToOne(SendMsgOneInput input)
     {
         try

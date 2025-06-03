@@ -5,9 +5,10 @@ using ICacheService = MalusAdmin.Common.ICacheService;
 namespace MalusAdmin.Servers;
 
 /// <summary>
-/// 用户按钮权限
-/// </summary> 
-public class SysRolePermissionService : ISysRolePermissionService
+/// 权限服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysRolePermissionService : ApiControllerBase, ISysRolePermissionService
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly ICacheService _cacheService;
@@ -29,6 +30,7 @@ public class SysRolePermissionService : ISysRolePermissionService
     /// 是否有访问当前接口的权限
     /// </summary>
     /// <returns></returns>
+    [NonAction]
     public async Task<bool> HasPermissionAsync(string RouthPath)
     {
         //不校验权限的接口
@@ -50,6 +52,7 @@ public class SysRolePermissionService : ISysRolePermissionService
     /// </summary>
     /// <param name="values"></param>
     /// <returns></returns>
+    [HttpGet]
     public async Task<List<AllButtonPermissOut>> GetAllButen()
     {
         //缓存
@@ -109,6 +112,9 @@ public class SysRolePermissionService : ISysRolePermissionService
     /// 为角色添加按钮权限
     /// </summary>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("设置角色按钮")]
+    [ReadOnly]
     public async Task<bool> AddRoleButtonPermiss(UpdateRoleButtonIn Input)
     {
         await DeleteRoleButtonPermiss(Input.RoleId);
@@ -125,6 +131,8 @@ public class SysRolePermissionService : ISysRolePermissionService
     /// </summary>
     /// <param name="RoleId"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("获取角色按钮")]
     public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
     {
         var roleButtonPermiss = await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();

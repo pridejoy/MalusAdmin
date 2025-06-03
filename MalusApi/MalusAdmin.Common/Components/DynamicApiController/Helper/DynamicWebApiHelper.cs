@@ -1,14 +1,16 @@
-﻿
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.IdentityModel.Tokens;
+﻿using Simple.DynamicWebApi.Consts;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace MalusAdmin.Common;
+namespace Simple.DynamicWebApi.Helper;
 
-internal static class DynamicApiHelper
+/// <summary>
+/// DynamicWebApiHelper 静态帮助类。
+/// </summary>
+internal static class DynamicWebApiHelper
 {
     /// <summary>
-    /// 移除字符串末尾的指定后缀（默认区分大小写）。
+    /// 移除字符串末尾的指定后缀（默认区分大小写），如:TestAppService -> Test
     /// </summary>
     internal static string RemovePostFix(this string str, params string[] postFixes)
     {
@@ -40,7 +42,7 @@ internal static class DynamicApiHelper
     }
 
     /// <summary>
-    /// 移除字符串开头的指定前缀（默认区分大小写）。
+    /// 移除字符串开头的指定前缀（默认区分大小写），如:GetUserInfo -> UserInfo
     /// </summary>
     internal static string RemovePreFix(this string str, params string[] preFixes)
     {
@@ -48,19 +50,16 @@ internal static class DynamicApiHelper
     }
     internal static string RemovePreFix(this string str, StringComparison comparisonType, params string[] preFixes)
     {
-        // 如果字符串为空或为 null，则直接返回原字符串
         if (str.IsNullOrEmpty())
         {
             return str;
         }
 
-        // 如果没有提供前缀列表，或者前缀列表为空，则直接返回原字符串
         if (preFixes.IsNullOrEmpty())
         {
             return str;
         }
 
-        // 遍历有效前缀
         foreach (var preFix in preFixes.Where(pf => !string.IsNullOrEmpty(pf)))
         {
             // 检查字符串是否以当前前缀开头
@@ -71,45 +70,35 @@ internal static class DynamicApiHelper
             }
         }
 
-        // 如果没有匹配到任何前缀，则返回原字符串
         return str;
     }
 
     /// <summary>
     /// 根据Action名称选择HttpMethod，如果找不到对应的HttpMethod，则返回post;
     /// </summary>
-    /// <param name="actionName"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     internal static string SelectHttpMethod(string actionName)
     {
-        foreach (var conventionalPrefix in DynamicApiConsts.ConventionalPrefixes)
+        foreach (var conventionalPrefix in DynamicWebApiConsts.ConventionalPrefixes)
         {
             if (conventionalPrefix.Value.Any(prefix => actionName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
             {
                 return conventionalPrefix.Key;
             }
         }
-        return DynamicApiConsts.DefaultHttpVerb;
+        return DynamicWebApiConsts.DefaultHttpVerb;
     }
 
     /// <summary>
     /// 获取Action的路由前缀
     /// </summary>
-    /// <param name="action"></param>
-    /// <returns></returns>
-    internal static string GetApiRoutePrefix(ActionModel action)
+    internal static string GetApiRoutePrefix()
     {
-        //可参考abp自行实现IntegrationService
-
-        return DynamicApiConsts.DefaultApiPrefix;
+        return DynamicWebApiConsts.DefaultApiPrefix;
     }
 
     /// <summary>
     /// 驼峰转Kebab命名法（如 "HelloWorld" → "hello-world"）
     /// </summary>
-    /// <param name="str"></param>
-    /// <returns></returns>
     internal static string ToKebabCase(this string str)
     {
         if (string.IsNullOrWhiteSpace(str))
@@ -135,6 +124,9 @@ internal static class DynamicApiHelper
             : char.ToLowerInvariant(str[0]) + str.Substring(1);
     }
 
+    /// <summary>
+    /// 移除HttpMethod前缀（如 "GetHelloWorld" → "HelloWorld"，"PostHelloWorld" → "HelloWorld"）
+    /// </summary>
     internal static string RemoveHttpMethodPrefix(this string actionName, string httpMethod)
     {
 
@@ -147,7 +139,7 @@ internal static class DynamicApiHelper
             throw new ArgumentNullException(nameof(httpMethod));
         }
 
-        DynamicApiConsts.ConventionalPrefixes.TryGetValue(httpMethod, out var prefixes);
+        DynamicWebApiConsts.ConventionalPrefixes.TryGetValue(httpMethod, out var prefixes);
         if (prefixes.IsNullOrEmpty())
         {
             return actionName;
@@ -156,6 +148,9 @@ internal static class DynamicApiHelper
         return actionName.RemovePreFix(prefixes!);
     }
 
+    /// <summary>
+    /// 判断类型是否为扩展原始类型（包括枚举），包含可为空的情况。
+    /// </summary>
     internal static bool IsPrimitiveExtendedIncludingNullable(Type type, bool includeEnums = false)
     {
         if (IsPrimitiveExtended(type, includeEnums))
@@ -171,6 +166,9 @@ internal static class DynamicApiHelper
         return false;
     }
 
+    /// <summary>
+    /// 判断类型是否为扩展原始类型（包括枚举）。
+    /// </summary>
     internal static bool IsPrimitiveExtended(Type type, bool includeEnums)
     {
         if (type.GetTypeInfo().IsPrimitive)
@@ -191,7 +189,10 @@ internal static class DynamicApiHelper
                type == typeof(Guid);
     }
 
-    public static bool IsIn(this string str, params string[] data)
+    /// <summary>
+    /// 判断字符串是否在给定的数据中
+    /// </summary>
+    internal static bool IsIn(this string str, params string[] data)
     {
         foreach (var item in data)
         {
@@ -201,5 +202,21 @@ internal static class DynamicApiHelper
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// 判断字符串是否为空或null
+    /// </summary>
+    internal static bool IsNullOrEmpty( this string? str)
+    {
+        return string.IsNullOrEmpty(str);
+    }
+
+    /// <summary>
+    /// 判断集合是否为空或null
+    /// </summary>
+    internal static bool IsNullOrEmpty<T>(this ICollection<T>? source)
+    {
+        return source == null || source.Count <= 0;
     }
 }

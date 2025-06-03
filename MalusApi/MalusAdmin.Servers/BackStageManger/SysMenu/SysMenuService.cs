@@ -7,7 +7,9 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 菜单服务
 /// </summary>
-public class SysMenuService: ISysMenuService
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+
+public class SysMenuService : ApiControllerBase, ISysMenuService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TSysMenu> _sysMenuRep; // 仓储
@@ -25,6 +27,8 @@ public class SysMenuService: ISysMenuService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("菜单树状列表")]
     public async Task<PageList<TSysMenu>> MenuTreeList()
     {
         var sysmenulist = await _sysMenuRep.Context.Queryable<TSysMenu>()
@@ -44,6 +48,9 @@ public class SysMenuService: ISysMenuService
     /// 添加
     /// </summary>
     /// <returns></returns>
+    [ReadOnly]
+    [HttpPost]
+    [Permission("菜单新增")]
     public async Task<bool> Add(MenuAddandUpIn input)
     {
         var isExist = await _sysMenuRep.Where(x => x.RoutePath == input.RoutePath ||
@@ -60,6 +67,9 @@ public class SysMenuService: ISysMenuService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [ReadOnly]
+    [HttpGet]
+    [Permission("菜单删除")]
     public async Task<bool> Delete(int id)
     {
         var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == id);
@@ -73,6 +83,9 @@ public class SysMenuService: ISysMenuService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("菜单更新")]
+    [ReadOnly]
     public async Task<bool> Update(MenuAddandUpIn input)
     {
         var entity = await _sysMenuRep.FirstOrDefaultAsync(u => u.Id == input.Id);

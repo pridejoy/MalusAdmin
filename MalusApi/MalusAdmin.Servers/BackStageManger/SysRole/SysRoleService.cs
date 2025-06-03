@@ -7,7 +7,8 @@ namespace MalusAdmin.Servers;
 /// <summary>
 /// 角色服务
 /// </summary>
-public class SysRoleService : ISysRoleService
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+public class SysRoleService : ApiControllerBase, ISysRoleService
 {
     private readonly ISqlSugarClient _db;
     private readonly SqlSugarRepository<TSysRole> _sysRoleRep; // 仓储
@@ -25,6 +26,8 @@ public class SysRoleService : ISysRoleService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpGet]
+    [Permission("角色查询分页")]
     public async Task<PageList<TSysRole>> PageList(UserPageIn input)
     {
         var dictTypes = await _sysRoleRep.AsQueryable()
@@ -40,6 +43,8 @@ public class SysRoleService : ISysRoleService
     /// 添加角色
     /// </summary>
     /// <returns></returns>
+    [HttpPost]
+    [Permission("角色添加")]
     public async Task<bool> Add(RoleAddandUpIn input)
     {
         var isExist = await _sysRoleRep.Where(x => x.Name == input.Name).AnyAsync();
@@ -54,6 +59,8 @@ public class SysRoleService : ISysRoleService
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
+    [HttpPost("{id}")]
+    [Permission("角色删除")]
     public async Task<bool> Delete(int id)
     {
         var entity = await _sysRoleRep.FirstOrDefaultAsync(u => u.Id == id);
@@ -66,7 +73,10 @@ public class SysRoleService : ISysRoleService
     /// 更新角色
     /// </summary>
     /// <param name="input"></param>
-    /// <returns></returns>
+    /// <returns></returns
+    [HttpPost]
+    [Permission("角色更新")]
+
     public async Task<bool> Update(RoleAddandUpIn input)
     {
         var entity = await _sysRoleRep.FirstOrDefaultAsync(u => u.Id == input.Id);
@@ -80,6 +90,7 @@ public class SysRoleService : ISysRoleService
     /// 用户列表
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
     public async Task<List<RoleListOut>> List()
     {
         var list = await _sysRoleRep.Context.Queryable<TSysRole>()

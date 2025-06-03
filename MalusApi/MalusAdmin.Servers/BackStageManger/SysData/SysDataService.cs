@@ -1,14 +1,24 @@
 ﻿using MalusAdmin.Common.Helper;
-using MalusAdmin.Servers.SysData.Dto; 
+using MalusAdmin.Servers.SysData.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MalusAdmin.Servers;
 
-public class SysDataService:ISysDataService
+/// <summary>
+/// 基础服务
+/// </summary>
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+[ResponseCache(Duration = 500)]
+[AllowAnonymous]
+public class SysDataService : ApiControllerBase,ISysDataService
 {
     /// <summary>
     /// 获取服务器信息
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
+    [AllowAnonymous]
+
     public async Task<ServerInfo> GetServerInfo()
     {
         var serverInfo = new ServerInfo
@@ -33,6 +43,8 @@ public class SysDataService:ISysDataService
     /// 获取当前使用的Nuget包
     /// </summary>
     /// <returns></returns>
+    [HttpGet]
+    
     public async Task<List<NuGetPackage>> GetNuGetPackages()
     {
         //var runtimeDependencies = DependencyContext.Default.RuntimeLibraries;

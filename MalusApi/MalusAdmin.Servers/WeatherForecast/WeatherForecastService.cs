@@ -1,6 +1,14 @@
-﻿namespace MalusAdmin.Servers;
+﻿using MalusAdmin.Common.Components;
+using MalusAdmin.Common.Components.Swagger;
+using Simple.DynamicWebApi.Abstractions;
 
-public class WeatherForecastService : IWeatherForecastService
+namespace MalusAdmin.Servers;
+
+/// <summary>
+/// 测试服务
+/// </summary>
+[ApiExplorerSettings(GroupName =nameof(ApiVersionGropInfo.Default))]
+public class WeatherForecastService : ApiControllerBase
 {
     private static readonly string[] Summaries =
     {
@@ -26,7 +34,6 @@ public class WeatherForecastService : IWeatherForecastService
             .Where(x => x.StartsWith(values))
             .CreateClassFile("D:\\PrideJoy\\MalusAdmin\\MalusApi\\MalusAdmin.Repository\\Entity");
     }
-
 
     /// <summary>
     /// 生成数据库表

@@ -1,71 +1,73 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
+using Simple.DynamicWebApi.Consts;
+using Simple.DynamicWebApi.Helper;
+using System.Numerics;
 using System.Reflection;
-using System.Text;
-using static System.Collections.Specialized.BitVector32;
 
-namespace MalusAdmin.Common;
+namespace Simple.DynamicWebApi.Conventions;
 
 /// <summary>
 /// 动态接口控制器应用模型转换器
 /// 参考：https://www.cnblogs.com/h82258652/p/12454554.html
-/// https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/routing?view=aspnetcore-9.0
 /// </summary>
-public class DynamicWebApiConvention : IApplicationModelConvention
+internal class DynamicWebApiConvention : IApplicationModelConvention
 {
+    /// <summary>
+    /// 普通方法转换为动态接口控制器
+    /// </summary>
+    /// <param name="application"></param>
     public void Apply(ApplicationModel application)
     {
         //仅需对动态接口控制器进行配置
-        var dynamicControllers = application.Controllers.Where(u => { return ControllerSelector.IsDynamicApiController(u.ControllerType); });
+        var dynamicWebApiControllers = application.Controllers.Where(u => { return ControllerSelector.IsDynamicWebApiController(u.ControllerType); });
 
-        foreach (var controller in dynamicControllers)
+        foreach (var controller in dynamicWebApiControllers)
         {
-            controller.ControllerName = controller.ControllerName.RemovePostFix(DynamicApiConsts.CommonPostfixes);
+            controller.ControllerName = controller.ControllerName.RemovePostFix(DynamicWebApiConsts.CommonPostfixes);
             ConfigureDynamicWebApi(controller);
         }
     }
+
+    /// <summary>
+    /// 配置动态WebApi控制器的文档显示、路由规则、控制器参数
+    /// </summary>
+    /// <param name="controller"></param>
     private void ConfigureDynamicWebApi(ControllerModel controller)
     {
         ConfigureApiExplorer(controller);
         ConfigureSelector(controller);
         ConfigureParameters(controller);
     }
+
     /// <summary>
     /// Swagger/OpenAPI 文档分组、显示
     /// </summary>
     /// <param name="controller"></param>
     private void ConfigureApiExplorer(ControllerModel controller)
     {
-        var controllerApiSettings = controller.Attributes
-            .OfType<ApiExplorerSettingsAttribute>()
-            .FirstOrDefault();
-
-        controller.ApiExplorer.GroupName = controllerApiSettings?.GroupName ?? controller.ControllerName;
-        controller.ApiExplorer.IsVisible = controllerApiSettings != null ? !controllerApiSettings.IgnoreApi : true;
+        if (!controller.ApiExplorer.IsVisible.HasValue)
+        {
+            controller.ApiExplorer.IsVisible = true;
+            controller.ApiExplorer.GroupName = controller.ControllerName;//Swagger文档分组为控制器名称,默认为控制器名称
+        }
 
         foreach (var action in controller.Actions)
         {
-            //根据ApiExplorerSettingsAttribute特性设置Action的显示状态
-            var actionApiSettings = action.Attributes
-                .OfType<ApiExplorerSettingsAttribute>()
-                .FirstOrDefault();
-
-            if (controller.ApiExplorer.IsVisible == false && actionApiSettings?.IgnoreApi != true)
+            if (!action.ApiExplorer.IsVisible.HasValue)
             {
-                action.ApiExplorer.IsVisible = false;
-            }
-            else
-            {
-                action.ApiExplorer.IsVisible = actionApiSettings != null ? !actionApiSettings.IgnoreApi : true;
+                action.ApiExplorer.IsVisible = true;
             }
         }
+
     }
+
+    /// <summary>
+    /// 参数配置
+    /// </summary>
+    /// <param name="controller"></param>
     private void ConfigureSelector(ControllerModel controller)
     {
         RemoveEmptySelectors(controller.Selectors); //每个 SelectorModel 都定义了一个 路由规则，包含
@@ -73,36 +75,37 @@ public class DynamicWebApiConvention : IApplicationModelConvention
                                                     //2.HTTP 方法约束（ActionConstraints）：[HttpGet]、[HttpPost]...
                                                     //3.端点元数据（EndpointMetadata）:[ApiController]、[Authorize]、[AllowAnonymous]、与路由相关的元数据，例如 Swagger 描述、自定义过滤器等。
                                                     // asp.net core 框架会自动生成一些空白信息，这里移除空白信息，然后实现自定义路由规则
-
-
-        //if (controller.Selectors.Any(temp => temp.AttributeRouteModel != null))//如果类已经打上了[Route]特性，则不再添加自定义模版信息(不明白ABP为什么要这么做)
-        //{
-        //    return;
-        //}
-
-        //获取控制器根路径
+                                                    //获取控制器根路径
         var rootPath = GetRootPathOrDefault(controller.ControllerType.AsType());
 
-        //如果action被打上[NonAction]标记，根据 ASP.NET Core 约定，该action不再是一个有效的Action，不会出现在controller.Actions中，所以不用在此处进行对[NonAction]特性的过滤处理
         foreach (var action in controller.Actions)
         {
-            ConfigureActionSelector(rootPath, controller.ControllerName, action);
+            ConfigureActionSelector(controller, rootPath, controller.ControllerName, action);
         }
     }
-    private void ConfigureActionSelector(string rootPath, string controllerName, ActionModel action)
+
+    /// <summary>
+    /// 添加路由规则
+    /// </summary>
+    private void ConfigureActionSelector(ControllerModel controller, string rootPath, string controllerName, ActionModel action)
     {
         RemoveEmptySelectors(action.Selectors);
 
+
         if (!action.Selectors.Any())
         {
-            //正常情况下此方法应该不会执行，因为每个方法至少有一个System.Runtime.CompilerServices.NullableContextAttribute特性，此处只是为了防止万一出现这种情况
+            //todo:研究下action.Selectors为0的情况
             AddApplicationServiceSelector(rootPath, controllerName, action);
         }
         else
         {
-            NormalizeSelectorRoutes(rootPath, controllerName, action);
+            NormalizeSelectorRoutes(controller, rootPath, controllerName, action);
         }
     }
+
+    /// <summary>
+    /// 移除空白信息
+    /// </summary>
     protected virtual void RemoveEmptySelectors(IList<SelectorModel> selectors)
     {
         selectors
@@ -113,9 +116,15 @@ public class DynamicWebApiConvention : IApplicationModelConvention
     protected virtual bool IsEmptySelector(SelectorModel selector)
     {
         return selector.AttributeRouteModel == null
-                && selector.ActionConstraints.IsNullOrEmpty()
-                && selector.EndpointMetadata.IsNullOrEmpty();
+               && (selector.ActionConstraints == null || selector.ActionConstraints.Count <= 0)
+               && (selector.EndpointMetadata == null || selector.EndpointMetadata.Count <= 0);
     }
+
+    /// <summary>
+    /// 获取控制器根路径
+    /// </summary>
+    /// <param name="controllerType"></param>
+    /// <returns></returns>
     protected virtual string GetRootPathOrDefault(Type controllerType)
     {
         //1.此处可以从配置文件中读取，如有需要可自行扩展
@@ -129,9 +138,13 @@ public class DynamicWebApiConvention : IApplicationModelConvention
         }
 
         //3.从DynamicApiConsts.DefaultRootPath中获取
-        return DynamicApiConsts.DefaultRootPath;
+        return DynamicWebApiConsts.DefaultRootPath;
     }
-    private void NormalizeSelectorRoutes(string rootPath, string controllerName, ActionModel action)
+
+    /// <summary>
+    /// 实现自定义路由规则
+    /// </summary>
+    private void NormalizeSelectorRoutes(ControllerModel controller, string rootPath, string controllerName, ActionModel action)
     {
         foreach (var selector in action.Selectors)
         {
@@ -143,14 +156,7 @@ public class DynamicWebApiConvention : IApplicationModelConvention
 
             if (httpMethod == null)
             {
-                httpMethod = DynamicApiHelper.SelectHttpMethod(action.ActionName);
-            }
-
-            // 如果方法没有打上[Route]/[HttpGet]特性，添加默认的路由模板
-            // 例如方法打上了[Route("api/test")]/[HttpGet("api/test")]特性，则selector.AttributeRouteModel 的 Template 会被ASP.NET自动设置为api/test
-            if (selector.AttributeRouteModel == null)
-            {
-                selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(CalculateRouteTemplate(rootPath, controllerName, action, httpMethod)));
+                httpMethod = DynamicWebApiHelper.SelectHttpMethod(action.ActionName);
             }
 
             // 如果没有定义 HTTP 方法约束，则添加默认的 HTTP 方法,如当Action打上[HttpGet]特性时，此处会自动添加[HttpGet]约束
@@ -158,42 +164,132 @@ public class DynamicWebApiConvention : IApplicationModelConvention
             {
                 selector.ActionConstraints.Add(new HttpMethodActionConstraint(new[] { httpMethod }));
             }
+
+
+            // 如果action已存在[Route]特性， ASP.NET Core 会自动对其进行路由模板的处理，此处需要清空掉ASP.NET Core 自动生成的路由模板
+            // 通过类型判断，不能通过是否为空来判断：因为如果是存在[HttpGet]特性，selector.AttributeRouteModel 不为空
+            if (selector.AttributeRouteModel?.Attribute is AttributeRouteModel)
+            {
+                //selector.AttributeRouteModel.Template = string.Empty;
+                //改为报错更清晰
+                throw new InvalidOperationException($"控制器 '{controller.ControllerType.FullName}' 中的方法 '{action.ActionName}' 具有 [Route] 特性，DynamicWebApi 不支持此特性。");
+            }
+
+            var controllerTemplate = controller.ControllerType.GetCustomAttributes().OfType<RouteAttribute>().FirstOrDefault()?.Template;
+
+            //情况1：controllerTemplate为空，即控制器无[Route]特性
+            if (string.IsNullOrEmpty(controllerTemplate))
+            {
+                //情况1.1：控制器无[Route]特性,action存在[HttpMethod]特性
+                if (selector.AttributeRouteModel?.Attribute is Microsoft.AspNetCore.Mvc.Routing.HttpMethodAttribute)
+                {
+                    //对 [HttpGet("")]的情况做报错处理
+                    if (selector.AttributeRouteModel.Template.IsNullOrEmpty())
+                    {
+                        throw new InvalidOperationException($"控制器 '{controller.ControllerType.FullName}' 中的方法 '{action.ActionName}' 具有 [HttpGet] 特性，但没有指定路由模板。");
+                    }
+                    //路由模版为：api/rootPath/controllerName/{selector.AttributeRouteModel.Template}
+                    selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(CalculateRouteTemplate(rootPath, controllerName, selector.AttributeRouteModel.Template!)));
+                    continue;
+                }
+                else
+                {
+                    //情况1.2：控制器无[Route]特性,action不存在[HttpMethod]特性
+                    selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(CalculateRouteTemplate(rootPath, controllerName, FormatActionName(action.ActionName, httpMethod))));
+                    continue;
+                }
+            }
+            else
+            {
+
+                // 情况2：控制器存在[Route]特性
+
+                // 情况2.1：控制器存在[Route]特性,且以[action]结尾
+                if (controllerTemplate.EndsWith("/[action]"))
+                {
+                    //[Route("api/[controller]/[action]")]
+                    //对路由模版置空，避免拼接[HttpGet("GetName")]造成重复拼接问题
+                    if (selector.AttributeRouteModel?.Attribute is Microsoft.AspNetCore.Mvc.Routing.HttpMethodAttribute && !selector.AttributeRouteModel.Template.IsNullOrEmpty())
+                    {
+                        selector.AttributeRouteModel.Template = string.Empty;
+                    }
+
+                    continue;
+                }
+                else
+                {
+                    //情况2.1：控制器存在[Route]特性,action存在[HttpMethod]特性
+                    if (selector.AttributeRouteModel?.Attribute is Microsoft.AspNetCore.Mvc.Routing.HttpMethodAttribute)
+                    {
+                        //对 [HttpGet("")]的情况做报错处理
+                        if (selector.AttributeRouteModel.Template.IsNullOrEmpty())
+                        {
+                            throw new InvalidOperationException($"控制器 '{controller.ControllerType.FullName}' 中的方法 '{action.ActionName}' 具有 [HttpGet] 特性，但没有指定路由模板。");
+                        }
+                        //路由模版为：api/rootPath/controllerName/{selector.AttributeRouteModel.Template}
+                        selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(selector.AttributeRouteModel.Template!));
+                        continue;
+                    }
+                    else
+                    {
+                        //情况2.2：控制器存在[Route]特性,action不存在[HttpMethod]特性
+                        selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(FormatActionName(action.ActionName, httpMethod)));
+                        continue;
+                    }
+                }
+            }
         }
     }
-    private void AddApplicationServiceSelector(string rootPath, string controllerName, ActionModel action)
-    {
-        var httpMethod = DynamicApiHelper.SelectHttpMethod(action.ActionName);
 
-        var selector = new SelectorModel();
-        selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(CalculateRouteTemplate(rootPath, controllerName, action, httpMethod)));
-        selector.ActionConstraints.Add(new HttpMethodActionConstraint(new[] { httpMethod }));
-        action.Selectors.Add(selector);
-    }
-    private string CalculateRouteTemplate(string rootPath, string controllerName, ActionModel action, string httpMethod)
+    /// <summary>
+    ///  计算路由模板，例如：api/v1/users/create-user
+    /// </summary>
+    private string CalculateRouteTemplate(string rootPath, string controllerName, string templateName)
     {
-        // 1. 获取基础路由前缀
-        var apiRoutePrefix = DynamicApiHelper.GetApiRoutePrefix(action);
+        var url = string.Empty;
+
+        // 1. 获取路由前缀
+        var apiRoutePrefix = DynamicWebApiHelper.GetApiRoutePrefix();
 
         // 2. 转换控制器名称为路由格式
         var controllerSegment = controllerName.ToKebabCase();
 
-        // 3. 处理Action名称（移除HTTP方法前缀和Async后缀）
-        var actionSegment = action.ActionName
-            .RemoveHttpMethodPrefix(httpMethod)
-            .RemovePostFix("Async")
-            .ToKebabCase();
 
-        // 4. 构建基础路径（根据配置决定是否包含rootPath）
-        var baseUrl = DynamicApiConsts.DefaultIsRootPathInRoute
-            ? $"{apiRoutePrefix}/{rootPath}/{controllerSegment}"
-            : $"{apiRoutePrefix}/{controllerSegment}";
+        if (DynamicWebApiConsts.DefaultIsRootPathInRoute)
+        {
+            url = $"{apiRoutePrefix}/{rootPath}/{controllerSegment}";
+        }
+        else
+        {
+            url = $"{apiRoutePrefix}/{controllerSegment}";
+        }
 
-        // 5. 附加Action路径段（当存在有效值时）
-        return !actionSegment.IsNullOrEmpty()
-            ? $"{baseUrl}/{actionSegment}"
-            : baseUrl;
+        if (!templateName.IsNullOrEmpty())
+        {
+            url = $"{url}/{templateName}";
+        }
+
+        return url;
     }
 
+
+    /// <summary>
+    /// 添加默认的路由规则
+    /// </summary>
+    private void AddApplicationServiceSelector(string rootPath, string controllerName, ActionModel action)
+    {
+        var httpMethod = DynamicWebApiHelper.SelectHttpMethod(action.ActionName);
+
+        var selector = new SelectorModel();
+        selector.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(CalculateRouteTemplate(rootPath, controllerName, FormatActionName(action.ActionName, httpMethod))));
+        selector.ActionConstraints.Add(new HttpMethodActionConstraint(new[] { httpMethod }));
+        action.Selectors.Add(selector);
+    }
+
+    /// <summary>
+    /// 配置参数绑定信息，将非基础类型参数设置为FromBody绑定
+    /// </summary>
+    /// <param name="controller"></param>
     private void ConfigureParameters(ControllerModel controller)
     {
         foreach (var action in controller.Actions)
@@ -205,7 +301,8 @@ public class DynamicWebApiConvention : IApplicationModelConvention
                     continue;
                 }
 
-                if (!DynamicApiHelper.IsPrimitiveExtended(prm.ParameterInfo.ParameterType, includeEnums: true))
+                // 非基础类型参数设置为FromBody绑定
+                if (!DynamicWebApiHelper.IsPrimitiveExtendedIncludingNullable(prm.ParameterInfo.ParameterType))
                 {
                     if (CanUseFormBodyBinding(action, prm))
                     {
@@ -216,6 +313,9 @@ public class DynamicWebApiConvention : IApplicationModelConvention
         }
     }
 
+    /// <summary>
+    /// 判断是否可以使用FromBody绑定
+    /// </summary>
     protected virtual bool CanUseFormBodyBinding(ActionModel action, ParameterModel parameter)
     {
         if (parameter.ParameterName == "id")
@@ -246,5 +346,19 @@ public class DynamicWebApiConvention : IApplicationModelConvention
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 格式化Action名称（移除HTTP方法前缀和Async后缀），例如GetUsersAsync => users, PostCreateUserAsync => create-user
+    /// </summary>
+    /// <param name="actionName"></param>
+    /// <param name="httpMethod"></param>
+    /// <returns></returns>
+    private string FormatActionName(string actionName, string httpMethod)
+    {
+        return actionName
+            .RemoveHttpMethodPrefix(httpMethod)
+            .RemovePostFix("Async")
+            .ToKebabCase();
     }
 }

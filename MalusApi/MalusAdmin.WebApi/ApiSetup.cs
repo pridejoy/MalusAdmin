@@ -1,13 +1,10 @@
 ﻿using System.Configuration;
 using System.Reflection;
 using MalusAdmin.Common.Components;
-using MalusAdmin.Servers;
-using MalusAdmin.Servers.Hub;
-using MalusAdmin.Servers.SysOnlineUser;
-using MalusAdmin.Servers.SysRoleMenu;
-using MalusAdmin.Servers.SysUser;
+ 
 using MalusAdmin.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
+using Simple.DynamicWebApi.Extensions;
 using SqlSugar.Extensions;
 
 namespace MalusAdmin.WebApi
@@ -68,22 +65,23 @@ namespace MalusAdmin.WebApi
             //services.AddRabbitMqClientExtension();
             //services.AddEasyNetQExtension(); 
 
-            //services.AddDynamicApiControllers(); 
+            services.AddDynamicApiController(); 
 
             //
             //services.AddTransient<ISysOnlineUserService, SysOnlineUserService>();
              
             // 打印所有注册的服务
-            foreach (var service in services)
-            {
-                Console.WriteLine($"Service: {service.ServiceType.FullName}, " +
-                                  $"Implementation: {service.ImplementationType?.FullName ?? "N/A"}, " +
-                                  $"Lifetime: {service.Lifetime}");
-            }
+            //foreach (var service in services)
+            //{
+            //    Console.WriteLine($"Service: {service.ServiceType.FullName}, " +
+            //                      $"Implementation: {service.ImplementationType?.FullName ?? "N/A"}, " +
+            //                      $"Lifetime: {service.Lifetime}");
+            //}
 
-            // 将 IServiceCollection 注册为单例，以便在中间件中访问
             services.AddSingleton(services);
 
+            // 将 IServiceCollection 注册为单例，以便在中间件中访问
+            services.AddSingleton<ApiExplorerService>();
             return services;
         }
     }
@@ -91,12 +89,12 @@ namespace MalusAdmin.WebApi
     // 扩展方法：中间件配置
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder UseApplicationMiddlewares(this IApplicationBuilder app)
+        public static IApplicationBuilder UseApplicationMiddlewares(this WebApplication app)
         {
              
             app.ConfigureApplication();
 
-            if (App.Configuration["DisplaySwaggerDoc"].ObjToBool()) app.UseSwaggerExtension();
+            app.UseSwaggerExtension();
 
             // 全局异常中间件
             app.UseMiddleware<GlobalException>();
@@ -108,6 +106,10 @@ namespace MalusAdmin.WebApi
 
             app.UseHttpsRedirection(); // 确保所有请求都通过HTTPS
 
+            app.UseStaticFiles(); // 启用静态文件服务
+
+            app.UseDefaultFiles(); // 提供默认文件支持
+
             app.UseRouting(); // 确定路由
 
             app.UseCors(); // 配置跨域资源共享
@@ -115,18 +117,22 @@ namespace MalusAdmin.WebApi
             app.UseAuthentication(); // 启用身份验证中间件
 
             app.UseAuthorization(); // 启用授权中间件
-
-            app.UseStaticFiles(); // 启用静态文件服务
-
-            app.UseDefaultFiles(); // 提供默认文件支持
-
+             
             app.UseResponseCaching(); // 应用响应缓存
+             
+            app.MapControllers();
 
+            Console.WriteLine("扫描所有api端口");
+            Console.WriteLine("=============");
 
-            app.UseEndpoints(endpoints =>
+            var service = app.Services.GetRequiredService<ApiExplorerService>();
+            var endpoints = service.GetAllEndpoints();
+            foreach (var endpoint in endpoints)
             {
-                endpoints.MapControllers();
-            });
+                Console.WriteLine(endpoint);
+            }
+
+            Console.WriteLine("=============");
 
             return app;
         }
