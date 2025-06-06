@@ -17,13 +17,14 @@ public class CustomerService: ApiControllerBase
         _repository = repository;
         _TokenService = tokenService;
     }
-    
-     /// <summary>
+
+    /// <summary>
     /// 客户列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public async Task<PageList<BsCustomer>> PageList(PageParamBase input)
+    [HttpGet]
+    public async Task<PageList<BsCustomer>> PageList([FromQuery] PageParamBase input)
     {
         var list = await _repository.AsQueryable()
             .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord),

@@ -31,7 +31,11 @@ namespace MalusAdmin.Common
                 }
 
                 // 假设角色 ID 是用逗号分隔的字符串
-                return rolesValue.Split(',').Select(int.Parse).ToList();
+                return rolesValue?.Trim('[', ']').Split(',')
+                           .Select(s => s.Trim())
+                           .Where(s => int.TryParse(s, out _))
+                           .Select(int.Parse)
+                           .ToList()??new List<int>();
             }
         }
 

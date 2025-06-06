@@ -28,7 +28,7 @@ public class SysOnlineUserService : ApiControllerBase, ISysOnlineUserService
     /// <returns></returns>
     [HttpGet]
     [Permission("在线用户分页")]
-    public async Task<PageList<TSysOnlineUser>> PageList(OnlineUserPageInput input)
+    public async Task<PageList<TSysOnlineUser>> PageList([FromQuery]OnlineUserPageInput input)
     {
         var data = await _rep.AsQueryable()
             .Where(x => x.Time >= DateTime.Now.AddHours(-3))

@@ -21,14 +21,15 @@ public class BingWallpaperService: ApiControllerBase
         _TokenService = tokenService;
         _sysLogService = sysLogService;
     }
-    
-    
+
+
     /// <summary>
     ///  必应壁纸列表分页
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public async Task<PageList<BsBingWallpaper>> PageList(PageParamBase input)
+    [HttpGet]
+    public async Task<PageList<BsBingWallpaper>> PageList([FromQuery] PageParamBase input)
     {
         await _sysLogService.AddLog("后台操作", $"用户{App.CurrentUser.UserId}获取了必应壁纸");
         var list = await _repository.AsQueryable()

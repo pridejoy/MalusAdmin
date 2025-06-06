@@ -68,7 +68,7 @@ public class SysMenuService : ApiControllerBase, ISysMenuService
     /// <param name="input"></param>
     /// <returns></returns>
     [ReadOnly]
-    [HttpGet]
+    [HttpGet("{id}")]
     [Permission("菜单删除")]
     public async Task<bool> Delete(int id)
     {

@@ -65,23 +65,45 @@ namespace MalusAdmin.WebApi
             //services.AddRabbitMqClientExtension();
             //services.AddEasyNetQExtension(); 
 
-            services.AddDynamicApiController(); 
+            services.AddDynamicApiController();
 
             //
             //services.AddTransient<ISysOnlineUserService, SysOnlineUserService>();
-             
-            // 打印所有注册的服务
-            //foreach (var service in services)
-            //{
-            //    Console.WriteLine($"Service: {service.ServiceType.FullName}, " +
-            //                      $"Implementation: {service.ImplementationType?.FullName ?? "N/A"}, " +
-            //                      $"Lifetime: {service.Lifetime}");
-            //}
+
+        
 
             services.AddSingleton(services);
 
             // 将 IServiceCollection 注册为单例，以便在中间件中访问
             services.AddSingleton<ApiExplorerService>();
+
+
+            // 打印所有注册的服务 
+
+            //Console.WriteLine("===== 已注册的服务列表 =====");
+            //foreach (var service in builder.Services)
+            //{
+            //    Console.WriteLine($"服务类型: {service.ServiceType.FullName}");
+            //    Console.WriteLine($"实现类型: {service.ImplementationType?.FullName}");
+            //    Console.WriteLine($"生命周期: {service.Lifetime}");
+            //    Console.WriteLine("----------------------------------");
+            //}
+
+            foreach (var service in services)
+            {
+                string? serviceNs = service.ServiceType?.Namespace ?? "";
+
+                bool isMicrosoftNamespace = serviceNs.StartsWith("Microsoft");
+
+                if (!isMicrosoftNamespace)
+                {
+                    Console.WriteLine($"服务类型: {service.ServiceType.FullName}");
+                    Console.WriteLine($"实现类型: {service.ImplementationType?.FullName ?? "(工厂或实例)"}");
+                    Console.WriteLine($"生命周期: {service.Lifetime}");
+                    Console.WriteLine("----------------------------------");
+                }
+            }
+
             return services;
         }
     }

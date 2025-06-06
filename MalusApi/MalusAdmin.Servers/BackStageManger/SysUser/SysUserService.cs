@@ -149,7 +149,7 @@ public class SysUserService : ApiControllerBase, ISysUserService
     /// <returns></returns>
     [HttpGet]
     [Permission("用户信息分页查询")]
-    public async Task<PageList<TSysUser>> PageList(UserPageIn input)
+    public async Task<PageList<TSysUser>> PageList([FromQuery] UserPageIn input)
     {
         var dictTypes = await _sysUserRep.AsQueryable()
             .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord), u => u.Name.Contains(input.KeyWord.Trim()))
@@ -181,7 +181,7 @@ public class SysUserService : ApiControllerBase, ISysUserService
     /// <param name="userId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    [HttpPost("{id}")]
+    [HttpPost("{userId}")]
     [Permission("用户信息删除")]
     [ReadOnly]
     public async Task<bool> Delete(int userId)

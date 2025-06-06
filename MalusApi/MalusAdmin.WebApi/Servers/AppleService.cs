@@ -11,5 +11,12 @@ namespace MalusAdmin.WebApi.Servers
         {
             return id;
         }
+
+
+        [HttpPost("{id}")]
+        public int post(int id)
+        {
+            return id;
+        }
     }
 }

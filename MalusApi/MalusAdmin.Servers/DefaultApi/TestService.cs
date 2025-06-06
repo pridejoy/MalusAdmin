@@ -1,4 +1,5 @@
 ﻿using MalusAdmin.Servers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
@@ -12,6 +13,7 @@ namespace MalusAdmin.Servers;
 /// </summary>
 
 [ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.Default))]
+[AllowAnonymous]
 public class TestService: ApiControllerBase
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
@@ -87,5 +89,31 @@ public class TestService: ApiControllerBase
     public async Task<bool> GetException()
     {
         throw new Exception("error12312");
+    }
+
+    [HttpGet("GetEnvironmentn")]
+    public async Task<string> GetEnvironmentn()
+    {
+        //await _mQPublish.PublishMessageAsync("Test",name);
+        return App.WebHostEnvironment.ApplicationName;
+    }
+
+
+
+    [HttpGet]
+    public async Task<string> GetAppConfig()
+    {
+        return App.Configuration["IsDemo"]?.ToString();
+    }
+
+
+    /// <summary>
+    /// 获取远程请求的ip
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public string RemoveIp()
+    {
+        return _httpContext.HttpContext?.GetRequestIPv4();
     }
 }

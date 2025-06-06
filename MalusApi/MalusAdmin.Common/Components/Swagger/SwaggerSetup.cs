@@ -32,7 +32,7 @@ public static class SwaggerSetup
                 o.SwaggerDoc(group.Name, new OpenApiInfo
                 {
                     
-                    Title = $"MalusAdmin {group.Name} ",
+                    Title = $"MalusAdmin {group.Name} API",
                     Version = group.Name,
                     Description = $"MalusAdmin {group.Name} API文档"
                 });

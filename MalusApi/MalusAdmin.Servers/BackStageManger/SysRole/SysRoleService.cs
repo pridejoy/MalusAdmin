@@ -28,7 +28,7 @@ public class SysRoleService : ApiControllerBase, ISysRoleService
     /// <returns></returns>
     [HttpGet]
     [Permission("角色查询分页")]
-    public async Task<PageList<TSysRole>> PageList(UserPageIn input)
+    public async Task<PageList<TSysRole>> PageList([FromQuery] UserPageIn input)
     {
         var dictTypes = await _sysRoleRep.AsQueryable()
             .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord),

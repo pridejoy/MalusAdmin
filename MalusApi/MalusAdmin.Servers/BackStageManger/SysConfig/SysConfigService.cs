@@ -40,7 +40,7 @@ public class SysConfigService : ApiControllerBase, ISysConfigService
     /// <returns></returns>
     [HttpGet]
     [Permission("配置分页查询")]
-    public async Task<PageList<TBsSysConfig>> PageList(PageParamBase input)
+    public async Task<PageList<TBsSysConfig>> PageList([FromQuery]PageParamBase input)
     {
         var dictTypes = await _rep.AsQueryable()
             .WhereIF(!string.IsNullOrWhiteSpace(input.KeyWord),
