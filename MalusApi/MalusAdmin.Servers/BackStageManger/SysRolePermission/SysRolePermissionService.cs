@@ -133,7 +133,7 @@ public class SysRolePermissionService : ApiControllerBase, ISysRolePermissionSer
     /// <returns></returns>
     [HttpGet]
     [Permission("获取角色按钮")]
-    public async Task<List<TSysRolePermission>> GetRoleButtonPermiss(int RoleId)
+    public async Task<List<TSysRolePermission>> GetRoleButtonPermiss([FromQuery]int RoleId)
     {
         var roleButtonPermiss = await _sysuserpermissionRep.Where(x => x.RoleId == RoleId).ToListAsync();
         //tode 进行缓存

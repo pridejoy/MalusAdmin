@@ -15,8 +15,7 @@ public class SysDataService : ApiControllerBase,ISysDataService
     /// <summary>
     /// 获取服务器信息
     /// </summary>
-    /// <returns></returns>
-    [HttpGet("ServerInfo2")] 
+    /// <returns></returns> 
     public async Task<ServerInfo> GetSystemInfo()
     {
         var serverInfo = new ServerInfo

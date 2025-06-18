@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.DependencyInjection;
-using Simple.DynamicWebApi.Abstractions;
+using Microsoft.Extensions.DependencyInjection; 
 
 namespace MalusAdmin.Servers;
 

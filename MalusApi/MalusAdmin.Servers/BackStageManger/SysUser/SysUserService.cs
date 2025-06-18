@@ -181,12 +181,12 @@ public class SysUserService : ApiControllerBase, ISysUserService
     /// <param name="userId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    [HttpPost("{userId}")]
+    [HttpPost("{id:int}")]
     [Permission("用户信息删除")]
     [ReadOnly]
-    public async Task<bool> Delete(int userId)
+    public async Task<bool> Delete(int id)
     {
-        var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == userId);
+        var entity = await _sysUserRep.FirstOrDefaultAsync(u => u.Id == id);
         if (entity == null) throw ApiException.Exception207Bad("未找到当前账号");
         entity.SysIsDelete = true;
         //Todo 删除用户缓存
@@ -225,28 +225,36 @@ public class SysUserService : ApiControllerBase, ISysUserService
         var cache_user_menus = _cacheService.Get<UserMenuOut>(CacheConstant.UserMenus+ App.CurrentUser.UserId);
         if (cache_user_menus == null)
         {
+            //返回的菜单权限
             var userMenuOut = new UserMenuOut();
-        
-            ////获取当前用户的菜单权限
-            var menuid = await _sysRoleMenuService.RoleUserMenu(App.CurrentUser.UserRolesId);
-
+           
             //获取所有的菜单权限
-            var menutree = _sysUserRep.Context.Queryable<TSysMenu>()
-                .ToTree(x => x.Children, x => x.ParentId, 0, menuid.Select(x => (object)x).ToArray());
+            var menutree =new List<TSysMenu>(); 
 
-            //超级管理官
-            if (App.CurrentUser.IsSuperAdmin)
-                menutree = _sysUserRep.Context.Queryable<TSysMenu>()
-                    .ToTree(x => x.Children, x => x.ParentId, 0);
-            var res = new List<UserMenu>();
-            //var usermenus = GetMenusByIds(menutree, menuid);
-            foreach (var item in menutree) res.Add(ConvertMenu(item));
 
-            //List直接构造树 要高版本sqlsugar
-            //var a = UtilMethods.BuildTree(_sysUserRep.Context, menutree, "Id", "ParentId", "Children", 0);
+            //超级管理员，直接构建菜单路由
+            if (App.CurrentUser.IsSuperAdmin) 
+            {
+                //所有菜单权限
+                menutree = await _sysUserRep.Context.Queryable<TSysMenu>().ToListAsync(); 
+            }
+            else
+            {
+                //获取当前用户的菜单权限
+                //var menuid = await _sysRoleMenuService.RoleUserMenu();
+                var userroleIds = App.CurrentUser.UserRolesId;
 
-            userMenuOut.Home = res.FirstOrDefault()?.Name;
-            userMenuOut.Routes = res;
+                menutree = await _sysUserRep.Context.Queryable<TSysMenu>()
+                    .LeftJoin<TSysRoleMenu>((m,rm)=>m.Id==rm.MenuId)
+                    .Where((m,rm)=> userroleIds.Contains(rm.RoleId)  )
+                    .ToListAsync();
+            }
+             
+            var menuTree = BuildMenuTree(menutree);
+            var userMenus = menuTree.Select(ConvertMenu).ToList();
+              
+            userMenuOut.Home = userMenus.FirstOrDefault()?.Name;
+            userMenuOut.Routes = userMenus;
             //进行缓存
             _cacheService.Set(CacheConstant.UserMenus + App.CurrentUser.UserId, userMenuOut, 60*60*60);
             return userMenuOut;
@@ -258,12 +266,19 @@ public class SysUserService : ApiControllerBase, ISysUserService
 
     }
 
+    private List<TSysMenu> BuildMenuTree(List<TSysMenu> flatMenus, int? parentId = 0)
+    {
+        return flatMenus
+            .Where(m => m.ParentId == parentId)
+            .OrderBy(m => m.Sort)
+            .Select(m => {
+                m.Children = BuildMenuTree(flatMenus, m.Id);
+                return m;
+            })
+            .ToList();
+    }
 
-    /// <summary>
-    /// 私有方法，转化前端路由
-    /// </summary>
-    /// <param name="menu"></param>
-    /// <returns></returns>
+
     private UserMenu ConvertMenu(TSysMenu menu)
     {
         return new UserMenu
@@ -283,32 +298,8 @@ public class SysUserService : ApiControllerBase, ISysUserService
         };
     }
 
-    /// <summary>
-    /// 私有方法.获取当前角色的路由
-    /// </summary>
-    /// <param name="menutree"></param>
-    /// <param name="menuid"></param>
-    /// <returns></returns>
-    private IEnumerable<TSysMenu> GetMenusByIds(List<TSysMenu> menutree, List<int> menuid)
-    {
-        var userMenus = new List<TSysMenu>(); // 存储用户有权限的菜单
 
-        // 定义递归方法
-        void RecurseTree(List<TSysMenu> tree, List<int> ids)
-        {
-            foreach (var node in tree)
-            {
-                // 如果当前节点的id在用户权限列表中，则添加到结果
-                if (ids.Contains(node.Id)) userMenus.Add(node);
 
-                // 如果有子节点，则递归调用
-                if (node.Children != null && node.Children.Any()) RecurseTree(node.Children, ids);
-            }
-        }
 
-        // 调用递归方法
-        RecurseTree(menutree, menuid);
 
-        return userMenus;
-    }
 }

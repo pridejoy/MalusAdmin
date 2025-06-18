@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Simple.DynamicWebApi.Abstractions;
-
+﻿using Microsoft.AspNetCore.Mvc; 
 namespace Simple.DynamicWebApi.Helper;
 
 /// <summary>

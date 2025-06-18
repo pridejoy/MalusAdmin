@@ -1,12 +1,13 @@
 ﻿using MalusAdmin.Servers;
 using Mapster;
+using Simple.DynamicWebApi;
 
 namespace MalusAdmin.Server;
 
 /// <summary>
 /// 配置服务
-/// </summary>
-[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]
+/// </summary> 
+[ApiExplorerSettings(GroupName = nameof(ApiVersionGropInfo.BackStageManger))]  
 public class SysConfigService : ApiControllerBase, ISysConfigService
 {
     private readonly ISqlSugarClient _db;

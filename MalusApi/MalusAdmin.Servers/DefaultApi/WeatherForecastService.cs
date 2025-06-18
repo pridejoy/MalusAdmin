@@ -1,6 +1,5 @@
 ﻿using MalusAdmin.Common.Components;
-using MalusAdmin.Common.Components.Swagger;
-using Simple.DynamicWebApi.Abstractions;
+using MalusAdmin.Common.Components.Swagger; 
 
 namespace MalusAdmin.Servers;
 

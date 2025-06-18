@@ -211,7 +211,7 @@ internal class DynamicWebApiConvention : IApplicationModelConvention
                     //对路由模版置空，避免拼接[HttpGet("GetName")]造成重复拼接问题
                     if (selector.AttributeRouteModel?.Attribute is Microsoft.AspNetCore.Mvc.Routing.HttpMethodAttribute && !selector.AttributeRouteModel.Template.IsNullOrEmpty())
                     {
-                        selector.AttributeRouteModel.Template = string.Empty;
+                        //selector.AttributeRouteModel.Template = string.Empty;
                     }
 
                     continue;

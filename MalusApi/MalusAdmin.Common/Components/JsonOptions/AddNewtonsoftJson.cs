@@ -11,7 +11,9 @@ public static class JsonCollectionExtensions
     //[Obsolete("不在使用")]
     public static IServiceCollection AddJsonOptions(this IServiceCollection services, Action<JsonSerializerOptions>? setupAction = null)
     {
-  
+
+        // 教程：https://mp.weixin.qq.com/s/4ZdnOqI72zz1kbXinhv-ng
+
         // 配置 JsonOptions
         services.AddControllers()
             .AddNewtonsoftJson(options =>

@@ -1,9 +1,9 @@
 ﻿using System.Configuration;
 using System.Reflection;
-using MalusAdmin.Common.Components;
- 
+using MalusAdmin.Common.Components; 
 using MalusAdmin.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
+using Simple.DynamicWebApi;
 using Simple.DynamicWebApi.Extensions;
 using SqlSugar.Extensions;
 
@@ -38,18 +38,16 @@ namespace MalusAdmin.WebApi
 
             }).AddDataValidation();
 
-            //.AddApiJson<CustomApiJsonProvider>();
-
             //配置Json选项
-            //services.AddTextJsonOptions();
-
             services.AddJsonOptions();
 
+            //添加sqlsugar
             services.AddSqlsugarSetup();
 
+            //添加swagger配置
             services.AddSwaggerBaseSetup();
 
-
+            //自动注入
             var dllnames = new string[] { "MalusAdmin.Servers" };
             services.AddAutoServices(dllnames);
             //services.AddAutoInjection(Assembly.GetExecutingAssembly());
@@ -58,37 +56,22 @@ namespace MalusAdmin.WebApi
             //services.AddAuthorization();
             services.AddAuthorizationSetup();
 
-            // 替换默认 PermissionChecker[权限检查]
-            //services.Replace(new ServiceDescriptor(typeof(IPermissionChecker), typeof(PermissionChecker), ServiceLifetime.Transient));
+            //添加动态接口
+            services.AddDynamicApiController();
 
             //rabbit
             //services.AddRabbitMqClientExtension();
             //services.AddEasyNetQExtension(); 
+               
 
-            services.AddDynamicApiController();
-
-            //
-            //services.AddTransient<ISysOnlineUserService, SysOnlineUserService>();
-
-        
-
-            services.AddSingleton(services);
-
-            // 将 IServiceCollection 注册为单例，以便在中间件中访问
+            //查询所有的接口
+            services.AddSingleton(services); 
+            // 将 IServiceCollection 注册为单例，以便查询所有的端口
             services.AddSingleton<ApiExplorerService>();
 
 
-            // 打印所有注册的服务 
-
-            //Console.WriteLine("===== 已注册的服务列表 =====");
-            //foreach (var service in builder.Services)
-            //{
-            //    Console.WriteLine($"服务类型: {service.ServiceType.FullName}");
-            //    Console.WriteLine($"实现类型: {service.ImplementationType?.FullName}");
-            //    Console.WriteLine($"生命周期: {service.Lifetime}");
-            //    Console.WriteLine("----------------------------------");
-            //}
-
+            // 打印所有注册的服务  
+            Console.WriteLine("===== 已注册的服务列表 =====");
             foreach (var service in services)
             {
                 string? serviceNs = service.ServiceType?.Namespace ?? "";

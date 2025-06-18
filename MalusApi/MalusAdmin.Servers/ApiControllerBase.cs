@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Simple.DynamicWebApi.Abstractions;
-
+using Simple.DynamicWebApi;
 namespace MalusAdmin.Common;
 
-[ApiController]
-[Route("api/[controller]/[action]")]
-[Produces("application/json")] //返回数据的格式 直接约定为Json
+
+[Route("api/[controller]/[action]")] 
 //[Authorize] //接口全部需要登录,特殊的除外
 [Authorize(AuthenticationSchemes = "CustomScheme")]
-public class ApiControllerBase : IDynamicWebApi
+public class ApiControllerBase : IDynamicWebApi //继承动态接口
 {
 
 }

@@ -53,7 +53,7 @@ namespace MalusAdmin.Servers.BackStageManger
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        //[ResponseCache(Duration = 60 * 60)]
+        [ResponseCache(Duration = 60 * 60)]
         //[DisabledRequestRecord]
         public async Task<UserMenuOut> GetUserMenu()
         {
