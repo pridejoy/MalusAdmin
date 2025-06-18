@@ -12,7 +12,8 @@ public static class AuthorizationSetup
 {
     public static IServiceCollection AddAuthorizationSetup(this IServiceCollection services)
     {
-  
+
+        //切换后记得取消 [Authorize(AuthenticationSchemes = "CustomScheme")]
         switch (AuthenticationSettings.CurrentAuthenticationMethod)
         {
             case AuthenticationMethod.Jwt: 
@@ -21,6 +22,7 @@ public static class AuthorizationSetup
                 break;
 
             case AuthenticationMethod.Guid:
+                //需要启用自定义授权 [Authorize(AuthenticationSchemes = "CustomScheme")]
                 services.AddAuthentication("CustomScheme")
                      .AddScheme<AuthenticationSchemeOptions, CustomTokenAuthenticationHandler>("CustomScheme", null); 
                 break;

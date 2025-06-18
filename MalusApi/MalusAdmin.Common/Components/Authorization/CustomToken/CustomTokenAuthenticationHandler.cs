@@ -43,7 +43,7 @@ public class CustomTokenAuthenticationHandler : AuthenticationHandler<Authentica
             new Claim(AppUserConst.UserId, userinfo.UserId.ToString()),
             new Claim(AppUserConst.UserAccount, userinfo.UserAccount.ToString()), 
             new Claim(AppUserConst.UserRolesId, userinfo.UserRolesId.ToJson()), 
-            new Claim(ClaimTypes.Name, "RedisUser")
+            //new Claim(ClaimTypes.Name, "RedisUser")
         };
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);

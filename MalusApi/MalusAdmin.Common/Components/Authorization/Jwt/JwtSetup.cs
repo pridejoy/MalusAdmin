@@ -18,14 +18,10 @@ public static class JwtSetup
     public static IServiceCollection AddJwtSetup(this IServiceCollection services)
     { 
         if (services == null) throw new ArgumentNullException(nameof(services));
-  
-        //读取配置
-        var jwtConfiguration = new JwtOptions() {
-            Issuer = App.Configuration[""].ToString(),
 
-        }; 
-          
-        // 获取密钥
+        var jwtSection = App.Configuration.GetSection("Jwt"); 
+        var jwtConfiguration = jwtSection.Get<JwtOptions>();
+         
         var keyByteArray = Encoding.UTF8.GetBytes(jwtConfiguration.Secret);
         var signingKey = new SymmetricSecurityKey(keyByteArray);
         

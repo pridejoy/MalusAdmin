@@ -14,8 +14,9 @@ public static class Configure
         //services.Configure<PositionOptions>(config.GetSection(PositionOptions.Position));
 
         //services.Configure<RabbitMQConfig>(config.GetSection("RabbitMQConfig"));
+        services.Configure<JwtOptions>(config.GetSection("Jwt"));
 
-        
+
         //等其他选项
         return services;
     }
@@ -25,8 +26,13 @@ public static class Configure
     //方式1
     //var connection = App.Configuration["Redis:ConnectionString"]?.ToString();
     //if (connection == null) throw new NullReferenceException("配置读取失败");
-     
+
     //读取数组
     //App.Configuration.GetSection("AllowCors").Get<string[]>()
+
+
+    //强类型读取
+    //var jwtSection = App.Configuration.GetSection("Jwt");
+    //var jwtConfiguration = jwtSection.Get<JwtOptions>();
 
 }

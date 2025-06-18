@@ -210,7 +210,7 @@ public class SysUserService : ApiControllerBase, ISysUserService
         //优化  更新的字段
 
         var sysUser = input.Adapt<TSysUser>();
-        return await _sysUserRep.AsUpdateable(sysUser).IgnoreColumns(true).ExecuteCommandAsync() > 0;
+        return await _sysUserRep.UpdateNotNullColumnsAsync(sysUser)>0;
     }
 
 
@@ -278,7 +278,11 @@ public class SysUserService : ApiControllerBase, ISysUserService
             .ToList();
     }
 
-
+   /// <summary>
+   /// 构建前端所需路由
+   /// </summary>
+   /// <param name="menu"></param>
+   /// <returns></returns>
     private UserMenu ConvertMenu(TSysMenu menu)
     {
         return new UserMenu

@@ -465,6 +465,24 @@ public class SqlSugarRepository<TEntity> where TEntity : class, new()
         return EntityContext.Updateable(entities.ToArray()).IgnoreColumns(UpdateIgnoreColumns);
     }
 
+
+    public virtual async Task<int> UpdateNotNullColumnsAsync(TEntity entity)
+    {
+        // 获取所有为 null 的属性名
+        var nullProps = entity.GetType()
+            .GetProperties()
+            .Where(p => p.GetValue(entity) == null)
+            .Select(p => p.Name)
+            .ToArray();
+
+        // 忽略所有为 null 的字段和默认忽略字段
+        var ignoreColumns = UpdateIgnoreColumns.Concat(nullProps).ToArray();
+
+        return await EntityContext.Updateable(entity)
+            .IgnoreColumns(ignoreColumns)
+            .ExecuteCommandAsync();
+    }
+
     #endregion
 
     #region 删除
