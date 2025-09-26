@@ -7,6 +7,7 @@
     </PropertyGroup>
  
     <ItemGroup> 
+        <PackageReference Include="CSToolHub" Version="1.0.1" /> 
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.6" />   
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />

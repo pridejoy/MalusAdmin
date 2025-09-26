@@ -1,4 +1,5 @@
-﻿using MalusAdmin.Common;
+﻿using CSToolHub;
+using MalusAdmin.Common;
 using Microsoft.AspNetCore.Builder;
 
 namespace MalusAdmin.BackUpServices;
@@ -31,7 +32,7 @@ internal class Program
 
             await jobService.StartAll();
 
-            await FileHelper.Write("任务开始了", "run");
+            await LogUtils.WriteAsync("任务开始了", "run");
 
             Console.WriteLine("开始执行");
 

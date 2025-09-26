@@ -1,5 +1,6 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using CSToolHub;
 using MalusAdmin.Common.Helper;
 using MalusAdmin.Repository.Model;
 using Microsoft.Extensions.DependencyInjection;
@@ -86,7 +87,7 @@ public static class SqlsugarSetup
                     ((SugarParameter[])ex.Parametres).ToDictionary(it => it.ParameterName, it => it.Value));
                 Console.ForegroundColor = originColor;
                 Console.WriteLine("【" + DateTime.Now + "——执行SQL异常】\r\n" + pars + " \r\n");
-                await IOFileHelper.Write("sqlerror/", ex.ToJson());
+                await LogUtils.WriteAsync("sqlerror/", ex.ToJson());
             };
 
             //监控所有超过1秒的Sql 
@@ -103,7 +104,7 @@ public static class SqlsugarSetup
                     //db.Ado.SqlStackTrace.MyStackTraceList[1].xxx 获取上层方法的信息
 
                     Console.WriteLine("【" + DateTime.Now + "——执行SQL超时】\r\n" + fileName + " \r\n");
-                    await IOFileHelper.Write("sqlexcution/", fileName + sql + fileLine + FirstMethodName);
+                    await LogUtils.WriteAsync("sqlexcution/", fileName + sql + fileLine + FirstMethodName);
                 };
             };
 

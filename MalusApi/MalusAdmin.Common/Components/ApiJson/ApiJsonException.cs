@@ -1,4 +1,6 @@
-﻿namespace MalusAdmin.Common;
+﻿using CSToolHub.Extensions;
+
+namespace MalusAdmin.Common;
 
 /// <summary>
 /// 返回统一结果的异常。

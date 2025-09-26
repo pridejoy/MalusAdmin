@@ -7,7 +7,7 @@ global using System.Net.Http.Json;
 global using System.Text;
 global using System.Threading.Tasks;
 global using MalusAdmin.Common;
-global using MalusAdmin.Encryption;
+global using CSToolHub;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using NetTaste;

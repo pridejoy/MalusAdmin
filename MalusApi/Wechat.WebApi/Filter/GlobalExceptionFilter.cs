@@ -17,7 +17,7 @@ public class GlobalExceptionFilter : IExceptionFilter, IOrderedFilter
         //日志记录
         _logger.LogError(context.Exception, context.Exception.Message);
         //异常进行记录 
-        await IOFileHelper.Write("error/", context.Exception.ToJson());
+        await LogUtils.WriteAsync("error/", context.Exception.ToJson());
 
         var ApiJson = new ApiJson(ApiCode.服务器错误, context.Exception.Message, "");
         // 如果是结果异常
